@@ -1,0 +1,8 @@
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="Lime-Libs" basedir="." default="download-libs">
+	<target name="download-libs">
+		<delete dir="./lib"/>
+		<mkdir dir="./lib"/>
+		<ivy:retrieve pattern="./lib/[conf]/[artifact].[revision](-[classifier]).[ext]" />
+	</target>
+</project>
+	

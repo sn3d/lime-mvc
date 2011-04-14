@@ -1,0 +1,36 @@
+<ivy-module version="2.0">
+    <info organisation="org.zdevra" module="lime-mvc"/>
+
+	<configurations>
+		<conf name="required"  description="required LIBs"/>
+		<conf name="test" extends="required" visibility="private" description="LIBS for testing"/>
+	</configurations>
+	<publications>
+		<artifact name="required-libs" type="jar" conf="required" ext="jar"/>
+		<artifact name="required-libs" type="jar" conf="test" ext="jar"/>
+	</publications>
+
+    <dependencies>
+		<!-- REQUIRED -->
+		<dependency org="org.slf4j" name="slf4j-api" rev="1.6.1" conf="required->default"/>
+		<dependency org="org.slf4j" name="slf4j-simple" rev="1.6.1" conf="required->default"/>
+		<dependency org="com.google.inject" name="guice-parent" rev="3.0" conf="required->default"/>
+		<dependency org="com.google.inject.extensions" name="guice-servlet" rev="3.0" conf="required->default"/>
+
+		<!-- FOR TESTS -->
+		<dependency org="org.testng" name="testng" rev="6.0.1" conf="test->default" />
+		<dependency org="org.easymock" name="easymock" rev="3.0" conf="test->default"/>
+		<dependency org="javax.servlet" name="servlet-api" rev="2.5" conf="test->default"/>
+		<dependency org="net.sourceforge.htmlunit" name="htmlunit" rev="2.8" conf="test->default"/>
+		<dependency org="opensymphony" name="sitemesh" rev="2.4.2" conf="test->default"/>
+
+		<!-- JETTY -->
+		<dependency org="javax.servlet" name="servlet-api" rev="2.5" conf="test->default"/>
+		<dependency org="javax.servlet.jsp" name="jsp-api" rev="2.1" conf="test->default"/>
+		<dependency org="org.eclipse.jetty" name="jetty-server" rev="7.3.1.v20110307" conf="test->default"/>
+		<dependency org="org.eclipse.jetty" name="jetty-webapp" rev="7.3.1.v20110307" conf="test->default"/>
+		<dependency org="org.eclipse.jetty" name="jetty-servlet" rev="7.3.1.v20110307" conf="test->default"/>
+		<dependency org="org.mortbay.jetty" name="jsp-2.1-glassfish" rev="9.1.02.B04.p0" conf="test->default"/>
+
+    </dependencies>
+</ivy-module>

@@ -1,0 +1,5 @@
+instructions how to compile the Lime:
+
+	ant -f ./libs.xml
+	ant
+	ant dist

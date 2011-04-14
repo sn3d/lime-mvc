@@ -1,0 +1,19 @@
+<suite name="suite-lime-unit" verbose="1" >
+
+  <test name="unit-tests" >
+    <classes>
+       <class name="org.zdevra.guice.mvc.ControllerMethodInvokerTest" />
+       <class name="org.zdevra.guice.mvc.MethodParamsBuilderTest" />
+       <class name="org.zdevra.guice.mvc.ExceptionResolverTest" />
+    </classes>
+  </test>
+  
+  <test name="integration-tests" >
+    <classes>
+       <class name="org.zdevra.guice.example.BasicTest" />
+       <class name="org.zdevra.guice.example.SessionTest"/>
+       <class name="org.zdevra.guice.example.ParameterTest" />
+    </classes>
+  </test>
+ 
+</suite>
