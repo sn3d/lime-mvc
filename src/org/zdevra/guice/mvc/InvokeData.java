@@ -21,6 +21,8 @@ import java.util.regex.Matcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.inject.Injector;
+
 
 /**
  * The class collects all data which may be important for 
@@ -29,12 +31,13 @@ import javax.servlet.http.HttpServletResponse;
 public class InvokeData {
 /*---------------------------- m. variables ----------------------------*/
 
-	private final Matcher uriMatcher;
-	private final HttpServletRequest request;
-	private final HttpServletResponse response;
-	private final Model model;
-	private final Object controller;
-	private final RequestType reqType;
+	private Matcher uriMatcher;
+	private HttpServletRequest request;
+	private HttpServletResponse response;
+	private Model model;
+	private Object controller;
+	private RequestType reqType;
+	private Injector injector;
 
 /*---------------------------- constructors ----------------------------*/
 
@@ -42,15 +45,19 @@ public class InvokeData {
 	 * Constructor
 	 */
 	public InvokeData(Matcher uriMatcher, HttpServletRequest request,
-			HttpServletResponse response, Model model, Object controller, RequestType reqType) 
+			HttpServletResponse response, Model model, Object controller, RequestType reqType, Injector injector) 
 	{
-		super();
+		this(controller);
 		this.uriMatcher = uriMatcher;
 		this.request = request;
 		this.response = response;
 		this.model = model;
-		this.controller = controller;
 		this.reqType = reqType;
+		this.injector = injector;
+	}
+	
+	private InvokeData(Object controller) {
+		this.controller = controller;
 	}
 	
 /*-------------------------- getters/setters ---------------------------*/
@@ -78,8 +85,66 @@ public class InvokeData {
 	public RequestType getReqType() {
 		return reqType;
 	}
+
+	public Injector getInjector() {
+		return injector;
+	}
 	
+/*----------------------------------------------------------------------*/
 	
+	public static class Builder {
+		private InvokeData data;
+		
+		public Builder newInstance(Object controller) {
+			data = new InvokeData(controller);
+			return this;
+		}
+		
+		public InvokeData get() {
+			return data;
+		}
+		
+		public Builder from(InvokeData copiedData) {
+			data.controller = copiedData.controller;
+			data.injector = copiedData.injector;
+			data.model = copiedData.model;
+			data.reqType = copiedData.reqType;
+			data.request = copiedData.request;
+			data.response = copiedData.response;
+			data.uriMatcher = copiedData.uriMatcher;
+			return this;
+		}
+		
+		public Builder withUriMatcher(Matcher uriMatcher) {
+			data.uriMatcher = uriMatcher;
+			return this;
+		}
+		
+		public Builder withHttpRequest(HttpServletRequest request) {
+			data.request = request;
+			return this;
+		}
+		
+		public Builder withHttpResponse(HttpServletResponse response) {
+			data.response = response;
+			return this;			
+		}
+				
+		public Builder withModel(Model model) {
+			data.model = model;
+			return this;
+		}
+				
+		public Builder withRequestType(RequestType type) {
+			data.reqType = type;
+			return this;
+		}
+		
+		public Builder withInjector(Injector injector) {
+			data.injector = injector;
+			return this;
+		}		
+	}
 	
 /*----------------------------------------------------------------------*/
 }

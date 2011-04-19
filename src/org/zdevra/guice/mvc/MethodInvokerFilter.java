@@ -57,7 +57,7 @@ public class MethodInvokerFilter implements MethodInvoker {
 			return null;
 		}
 		
-		InvokeData mdata = new InvokeData(m, data.getRequest(), data.getResponse(), data.getModel(), data.getController(), data.getReqType());
+		InvokeData mdata = new InvokeData(m, data.getRequest(), data.getResponse(), data.getModel(), data.getController(), data.getReqType(), data.getInjector());
 		ModelAndView res = decoratedInvoker.invoke(mdata);
 		
 		return res;

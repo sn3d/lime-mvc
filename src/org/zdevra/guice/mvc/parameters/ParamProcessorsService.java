@@ -41,7 +41,8 @@ public class ParamProcessorsService {
 		registerParamProcessor(new ModelParam.Factory());
 		registerParamProcessor(new RequestParam.Factory());
 		registerParamProcessor(new ResponseParam.Factory());
-		
+		registerParamProcessor(new HttpSessionParam.Factory());		
+		registerParamProcessor(new InjectorParam.Factory());				
 		defaultFactory = new DefaultParamFactory(); 
 	}
 	

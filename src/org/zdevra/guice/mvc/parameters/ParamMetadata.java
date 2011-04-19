@@ -20,6 +20,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import org.zdevra.guice.mvc.ConversionService;
+import org.zdevra.guice.mvc.Utils;
 
 /**
  * The class is immutable collection of all method's parameter's metadata like the annotations,
@@ -57,6 +58,12 @@ public class ParamMetadata {
 	public Annotation[] getAnnotations() {
 		return annotations;
 	}
+	
+	
+	public <T extends Annotation> T getAnnotation(Class<T> annotationClazz) {
+		return Utils.getAnnotation(annotationClazz, this.annotations);
+	}
+	
 	
 	public ConversionService getConversionService() {
 		return conversionService;

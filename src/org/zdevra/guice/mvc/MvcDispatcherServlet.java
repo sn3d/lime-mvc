@@ -166,12 +166,13 @@ public class MvcDispatcherServlet extends HttpServlet {
 		List<Method> methods = Arrays.asList(this.controllerClass.getMethods());
 		List<MethodInvoker> scannedInvokers = new LinkedList<MethodInvoker>();
 		for (Method method : methods) {
-			//MethodInvoker invoker = ControllerMethodInvoker.createInvoker(method, new MethodParamsBuilder(method, conversionService));			
-			MethodInvoker invoker = MethodInvokerImpl.createInvoker(method, paramService, conversionService);
 			
-			if (invoker != null) {
-				scannedInvokers.add(invoker);
-			}
+			RequestMapping reqMapping = method.getAnnotation(RequestMapping.class);
+			if (reqMapping != null) {
+				MethodInvoker invoker = MethodInvokerImpl.createInvoker(method, reqMapping, paramService, conversionService);
+				MethodInvoker filteredInvoker = new MethodInvokerFilter(reqMapping, invoker);
+				scannedInvokers.add(filteredInvoker);							
+			}			
 		}
 		
 		this.methodInvokers = Collections.unmodifiableList(scannedInvokers); 
@@ -186,7 +187,7 @@ public class MvcDispatcherServlet extends HttpServlet {
 		int invokedcount = 0;
 		for (MethodInvoker invoker : this.methodInvokers) {
 			
-			InvokeData data = new InvokeData(null, req, resp, mav.getModel(), controllerObj, reqType);
+			InvokeData data = new InvokeData(null, req, resp, mav.getModel(), controllerObj, reqType, injector);
 			ModelAndView methodMav = invoker.invoke(data);
 			
 			if (methodMav != null) {

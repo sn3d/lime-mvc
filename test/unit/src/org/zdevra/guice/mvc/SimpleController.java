@@ -18,10 +18,6 @@ package org.zdevra.guice.mvc;
 
 import javax.inject.Singleton;
 
-import org.zdevra.guice.mvc.Controller;
-import org.zdevra.guice.mvc.RequestMapping;
-import org.zdevra.guice.mvc.UriParameter;
-
 @Controller()
 @Singleton
 public class SimpleController {
@@ -36,5 +32,6 @@ public class SimpleController {
 	public void controllMethod2(@UriParameter(1) String param1, @UriParameter(2) String param2) {
 		System.out.println("invoked with controllMethod2 param1=" + param1 + " param2=" + param2);
 	}
-		
+	
+	
 }

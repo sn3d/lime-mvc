@@ -40,23 +40,41 @@ public class MethodInvokerImpl implements MethodInvoker {
 	
 /*---------------------------- constructors ----------------------------*/
 	
-	public static MethodInvoker createInvoker(Method method, ParamProcessorsService paramService, ConversionService convertService) {		
-		RequestMapping reqMapping = method.getAnnotation(RequestMapping.class);
-		if (reqMapping == null) {
-			return null;
-		}
-
+	/**
+	 * The factory method construct a method invoked which has no view and
+	 * result of the invoked method is stored into test-result
+	 */
+	public static MethodInvoker createInvokerForTest(Method method, ParamProcessorsService paramService) {
+		List<ParamProcessor> processors = scanParams(method, paramService, null);
+		return new MethodInvokerImpl(null, "test-result", method, processors);
+	}
+	
+	/**
+	 * The regular factory method used by Lime
+	 * 
+	 * @param method
+	 * @param reqMapping
+	 * @param paramService
+	 * @param convertService
+	 * @return
+	 */
+	public static MethodInvoker createInvoker(Method method, RequestMapping reqMapping, ParamProcessorsService paramService, ConversionService convertService) {		
 		String resultName = reqMapping.nameOfResult();
 		View methodView = JspView.create(reqMapping.toView());
-		List<ParamProcessor> processors = scanParams(method, paramService, convertService);
 		
-		MethodInvoker invoker = new MethodInvokerImpl(methodView, resultName, method, processors);
-		MethodInvoker filteredInvoker = new MethodInvokerFilter(reqMapping, invoker);
-				
-		return filteredInvoker; 
+		List<ParamProcessor> processors = scanParams(method, paramService, convertService);				
+		MethodInvoker invoker = new MethodInvokerImpl(methodView, resultName, method, processors);				
+		return invoker; 
 	}
 
 	
+	/**
+	 * Hidden constructor. The Invoker is construted throught the factory methods.
+	 * @param defaultView
+	 * @param resultName
+	 * @param method
+	 * @param paramProcs
+	 */
 	private MethodInvokerImpl(View defaultView, String resultName, Method method, List<ParamProcessor> paramProcs) {
 		this.defaultView = defaultView;
 		this.resultName = resultName;

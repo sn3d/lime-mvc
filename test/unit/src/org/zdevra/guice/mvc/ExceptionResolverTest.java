@@ -36,7 +36,7 @@ import org.testng.annotations.Test;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
-@Test(singleThreaded=false)
+@Test
 public class ExceptionResolverTest {
 	
 /*---------------------------- m. variables ----------------------------*/
@@ -70,7 +70,7 @@ public class ExceptionResolverTest {
 	}
 
 	
-	@Test (threadPoolSize=5, invocationCount=100)
+	@Test
 	public void testExceptionNpe() {
 		NullPointerException e = createMock(NullPointerException.class);
 		expect(e.getMessage()).andReturn("NPE").times(2);
@@ -81,7 +81,7 @@ public class ExceptionResolverTest {
 	}
 	
 
-	@Test(threadPoolSize=5, invocationCount=100)
+	@Test
 	public void testExceptionState() {
 		IllegalStateException e = createMock(IllegalStateException.class);
 		expect(e.getMessage()).andReturn("STATE").times(2);
@@ -92,7 +92,7 @@ public class ExceptionResolverTest {
 	}
 	
 	
-	@Test(threadPoolSize=5, invocationCount=100)
+	@Test
 	public void testExceptionOutOfMemory() {
 		OutOfMemoryError e = createMock(OutOfMemoryError.class);
 		expect(e.getMessage()).andReturn("OOM").times(1);
@@ -103,7 +103,7 @@ public class ExceptionResolverTest {
 	}
 	
 	
-	@Test(threadPoolSize=5, invocationCount=100)
+	@Test
 	public void testExceptionIO() {
 		IOException e = createMock(IOException.class);
 		expect(e.getMessage()).andReturn("ARGUMENT").times(2);
