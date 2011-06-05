@@ -53,6 +53,11 @@ public class MvcConfiguration extends GuiceServletContextListener {
 						.withController(ParameterController.class)
 						.toView(JspView.create("/param.jsp"))
 						.set();
+
+                    control("/simple/*")
+                        .withController(SimpleController.class)
+                        .toView(JspView.create("/test.jsp"))
+                        .set();
 				}				
 			}
 		);

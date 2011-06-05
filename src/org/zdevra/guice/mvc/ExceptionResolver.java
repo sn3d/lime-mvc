@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.zdevra.guice.mvc.exceptions.MethodInvokingException;
 
 
 /**
@@ -69,7 +70,11 @@ public class ExceptionResolver {
 	 */
 	public void handleException(Throwable t, HttpServletRequest req, HttpServletResponse resp) {
 		int handledCount = 0;
-		
+
+        if (t.getClass() == MethodInvokingException.class) {
+            t = t.getCause();
+        }
+        
 		this.exceptionHandlers.entrySet().iterator();		
 		for (Entry<Class<? extends Throwable>, ExceptionHandler> entry : exceptionHandlers.entrySet()) {
 			Class<? extends Throwable> clazz = entry.getKey();

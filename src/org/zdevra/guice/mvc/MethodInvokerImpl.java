@@ -100,7 +100,6 @@ public class MethodInvokerImpl implements MethodInvoker {
 	}
 	
 	
-	@Override
 	public ModelAndView invoke(InvokeData data) 
 	{
 		try {
@@ -117,7 +116,7 @@ public class MethodInvokerImpl implements MethodInvoker {
 		} catch (IllegalAccessException e) {
 			throw new MethodInvokingException(method, e);
 		} catch (InvocationTargetException e) {
-			throw new MethodInvokingException(method, e);
+			throw new MethodInvokingException(method, e.getCause());
 		}
 	}
 	

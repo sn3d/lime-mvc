@@ -49,5 +49,11 @@ public class SimpleController {
 	public String getCatalog(@UriParameter(1) String catalogId, @RequestParameter("val1") String val1) {
 		return catalogId + " val1=" + val1;
 	}
+
+    
+    @RequestMapping(path="/exception")
+    public void raiseException() {
+        throw new IllegalStateException("test exception");
+    }
 	
 }

@@ -36,7 +36,8 @@ public class JspExceptionHandler extends ExceptionHandler {
 /*---------------------------- m. variables ----------------------------*/
 	
 	private final String jspPath;
-	
+    
+
 /*---------------------------- constructors ----------------------------*/
 	
 	public JspExceptionHandler(String jspPath) {
@@ -49,14 +50,14 @@ public class JspExceptionHandler extends ExceptionHandler {
 	public void handleException(Throwable t, HttpServletRequest request, HttpServletResponse response) 
 	{
 		try {
-			request = new HttpRequestForForward(request, this.jspPath);
-			RequestDispatcher dispatcher = request.getRequestDispatcher(this.jspPath);
+            HttpRequestForForward newRequest = new HttpRequestForForward(request, this.jspPath);
+			RequestDispatcher dispatcher = newRequest.getRequestDispatcher(this.jspPath);
 			if (dispatcher == null) {
 				throw new InvalidJspViewException(jspPath);
 			}
 			
-			dispatcher.forward(request, response);
-			request = null;
+			dispatcher.forward(newRequest, response);
+			newRequest = null;
 			
 		} catch (ServletException e) {
 			throw new IllegalStateException("can't redirect to the JSP:" + jspPath, e);

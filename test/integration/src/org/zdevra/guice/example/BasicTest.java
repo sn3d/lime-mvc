@@ -32,7 +32,7 @@ public class BasicTest extends IntegrationTest {
 	
 // ------------------------------------------------------------------------
 	
-	@Test(threadPoolSize=5, invocationCount=50)	
+	@Test
 	public void basicDepartmentTest() throws FailingHttpStatusCodeException, MalformedURLException, IOException {
 		WebClient webClient = new WebClient();
 		webClient.getCookieManager().clearCookies();
@@ -48,7 +48,7 @@ public class BasicTest extends IntegrationTest {
 	}
 	
 	
-	@Test(threadPoolSize=5, invocationCount=50)
+	@Test
 	public void basicEmployeeTest() throws FailingHttpStatusCodeException, MalformedURLException, IOException {
 		WebClient webClient = new WebClient();
 		webClient.getCookieManager().clearCookies();
@@ -65,7 +65,7 @@ public class BasicTest extends IntegrationTest {
 	
 	
 	
-	@Test(threadPoolSize=5, invocationCount=50)
+	@Test
 	public void basicUrlParamsTest() throws FailingHttpStatusCodeException, MalformedURLException, IOException {
 		WebClient webClient = new WebClient();
 		webClient.getCookieManager().clearCookies();
@@ -86,7 +86,7 @@ public class BasicTest extends IntegrationTest {
 	}
 	
 
-	@Test(threadPoolSize=5, invocationCount=50)
+	@Test
 	public void incorrectUrlTest() throws FailingHttpStatusCodeException, MalformedURLException, IOException {
 		WebClient webClient = new WebClient();
 		webClient.getCookieManager().clearCookies();
@@ -96,6 +96,17 @@ public class BasicTest extends IntegrationTest {
 		int index = text.indexOf("ERROR");
 		Assert.assertTrue(index >= 0);
 	}
+
+
+    @Test
+    public void exceptionTest() throws IOException {
+        WebClient webClient = new WebClient();
+        webClient.getCookieManager().clearCookies();
+
+        HtmlPage page = webClient.getPage("http://localhost:7374/test/simple/exception");
+        String text = page.asText();
+        System.out.println("text:" + text);
+    }
 
 	
 // ------------------------------------------------------------------------

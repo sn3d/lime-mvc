@@ -43,7 +43,7 @@ import org.zdevra.guice.mvc.Utils;
  * }
  * </code><pre>
  */
-public class UriParam implements ParamProcessor {
+public final class UriParam implements ParamProcessor {
 
 /*---------------------------- m. variables ----------------------------*/
 
@@ -53,7 +53,7 @@ public class UriParam implements ParamProcessor {
 /*----------------------------------------------------------------------*/
 	
 	public static class Factory implements ParamProcessorFactory {
-		@Override
+
 		public ParamProcessor buildParamProcessor(ParamMetadata metadata) {
 			Annotation[] paramAnnotations = metadata.getAnnotations();
 			ConversionService convrtService = metadata.getConversionService();
@@ -82,7 +82,6 @@ public class UriParam implements ParamProcessor {
 	}		
 
 	
-	@Override
 	public Object getValue(InvokeData data) {
 		String stringValue = data.getUriMatcher().group(group);
 		Object convertedValue = convertor.convert(stringValue);

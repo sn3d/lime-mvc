@@ -57,7 +57,7 @@ public class ParameterTest extends IntegrationTest {
 		String text = page.asText();
 
 		int idx = text.indexOf("param1='123', param2='456'");
-		Assert.assertTrue(idx >= 0);				
+		Assert.assertTrue(idx >= 0);				 
 	}
 	
 	

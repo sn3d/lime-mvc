@@ -46,7 +46,7 @@ import org.zdevra.guice.mvc.Utils;
  * 
  *
  */
-public class BooleanConvertor extends ArrayConvertor<Boolean> implements Convertor {
+public final class BooleanConvertor extends ArrayConvertor<Boolean> implements Convertor {
 	
 /*---------------------------- m. variables ----------------------------*/
 	
@@ -57,7 +57,6 @@ public class BooleanConvertor extends ArrayConvertor<Boolean> implements Convert
 	
 	public static class Factory implements ConvertorFactory {
 
-		@Override
 		public Convertor createConvertor(Class<?> type, Annotation[] annotations) {
 			BooleanConv ba = Utils.getAnnotation(BooleanConv.class, annotations); 
 			return new BooleanConvertor(ba, type);
@@ -71,8 +70,7 @@ public class BooleanConvertor extends ArrayConvertor<Boolean> implements Convert
 		
 /*------------------------------- methods ------------------------------*/
 	
-	@Override
-	public Object convert(String stringValue) 
+	public Object convert(String stringValue)
 	{
 		if (boolAnnotation != null) {
 			
@@ -87,8 +85,7 @@ public class BooleanConvertor extends ArrayConvertor<Boolean> implements Convert
 		return Boolean.parseBoolean(stringValue);
 	}
 
-	
-	@Override
+    
 	public Object convert(String[] stringArray) {
 		return convertArray(stringArray, this, type);
 	}

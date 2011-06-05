@@ -45,7 +45,7 @@ import org.zdevra.guice.mvc.convertors.StringConvertor;
 public class ConversionService {
 /*---------------------------- m. variables ----------------------------*/
 
-	final Logger logger = LoggerFactory.getLogger(ConversionService.class);	
+	private final static Logger logger = LoggerFactory.getLogger(ConversionService.class);
 	private Map<Class<?>, ConvertorFactory> regiConvertorFactories;
 	private ConvertorFactory defaultConvertor;
 	
@@ -140,9 +140,9 @@ public class ConversionService {
 		if (!type.isArray()) {
 			return null;
 		}
-		
-		type = type.getComponentType();
-		Convertor convertor = getConvertor(type, annotations);
+
+        Class<?> componentType = type.getComponentType();
+		Convertor convertor = getConvertor(componentType, annotations);
 		Object convertedVal = convertor.convert(stringValue);
 		
 		return convertedVal;		

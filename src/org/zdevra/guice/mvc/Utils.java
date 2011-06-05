@@ -28,8 +28,15 @@ public class Utils {
 
 /*----------------------------------------------------------------------*/
 
+    /**
+     * Hidden constructor
+     */
+    private Utils() {
+    }
+    
+
 	/**
-	 * Method search supplied annotation in annotations array and return 
+	 * Method searchs annotation in annotations array and return
 	 * it. If annotation is not occured, then method return null.
 	 *  
 	 * @param lookingForAnnotation
@@ -43,8 +50,7 @@ public class Utils {
 	{
 		if (annotations != null) {
 			for (int i = 0; i < annotations.length; ++i) {
-				boolean res = lookingFor.isInstance(annotations[i]);
-				if (res == true) {
+				if (lookingFor.isInstance(annotations[i])) {
 					return (T) annotations[i];
 				}
 			}

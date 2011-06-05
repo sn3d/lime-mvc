@@ -20,7 +20,7 @@ package org.zdevra.guice.mvc;
 public interface MethodInvoker {
 
 	/**
-	 * This method is called by {@link MvcServletDispatcher} and invoke
+	 * This method is called by MvcServletDispatcher and invoke
 	 * concrete method of controller with correct parameters.
 	 * 
 	 * Method is called always when is requested controller.

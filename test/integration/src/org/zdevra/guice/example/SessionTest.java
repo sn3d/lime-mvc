@@ -43,7 +43,7 @@ public class SessionTest extends IntegrationTest {
 /*----------------------------------------------------------------------*/
 	
 	
-	@Test(threadPoolSize=4, invocationCount=10, dataProvider="counters-data")
+	@Test(dataProvider="counters-data")
 	public void testAutoincrement(String counter) throws FailingHttpStatusCodeException, MalformedURLException, IOException {
 		WebClient webClient = new WebClient();
 		webClient.getCookieManager().clearCookies();
@@ -54,7 +54,6 @@ public class SessionTest extends IntegrationTest {
 		//reset cookies
 		webClient.getCookieManager().clearCookies();
 		callInOrder(webClient, counter, 1);
-
 	}
 	
 	

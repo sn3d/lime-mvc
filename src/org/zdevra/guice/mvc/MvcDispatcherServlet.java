@@ -64,7 +64,10 @@ public class MvcDispatcherServlet extends HttpServlet {
 		this(controllerClass, defaultView, conversionService, paramService, null);
 	}
 	
-	public MvcDispatcherServlet(Class<?> controllerClass, View defaultView, ConversionService conversionService, ParamProcessorsService paramService, Injector injector) {
+	public MvcDispatcherServlet(Class<?> controllerClass, View defaultView, ConversionService aConversionService, ParamProcessorsService aParamService, Injector injector) {
+        ConversionService conversionService = aConversionService;
+        ParamProcessorsService paramService = aParamService;
+
 		if (injector != null) {
 			this.injector = injector;
 		}
