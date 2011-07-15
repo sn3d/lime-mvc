@@ -52,7 +52,7 @@ public class MethodInvokerFilter implements MethodInvoker {
 
 		
 		String path = data.getRequest().getPathInfo();
-		if ((path == null) && (path.length() == 0)) {
+		if ((path == null) || (path.length() == 0)) {
 			path = data.getRequest().getServletPath();			
 		}
 
