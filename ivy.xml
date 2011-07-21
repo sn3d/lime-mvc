@@ -1,14 +1,10 @@
 <ivy-module version="2.0">
-    <info organisation="org.zdevra" module="lime-mvc"/>
+    <info organisation="org.zdevra" module="lime"/>
 
 	<configurations>
 		<conf name="required"  description="required LIBs"/>
 		<conf name="test" extends="required" visibility="private" description="LIBS for testing"/>
 	</configurations>
-	<publications>
-		<artifact name="required-libs" type="jar" conf="required" ext="jar"/>
-		<artifact name="required-libs" type="jar" conf="test" ext="jar"/>
-	</publications>
 
     <dependencies>
 		<!-- REQUIRED -->

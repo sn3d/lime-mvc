@@ -50,11 +50,11 @@
 	</target>
 	
 	<target name="dist" depends="compile, doc">
-		<jar jarfile="${lime.dest}/lime-${version}.jar">
+		<jar jarfile="${lime.dest}/lime.jar">
 			<fileset dir="${lime.classes}" />
 		</jar>
 		
-		<jar jarfile="${lime.dest}/lime-${version}-with-libraries.jar">
+		<jar jarfile="${lime.dest}/lime-with-libraries.jar">
 			<fileset dir="${lime.classes}" />
 			<fileset dir="${lib}/required" />
 			<manifest>
