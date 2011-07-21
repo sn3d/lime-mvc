@@ -19,8 +19,7 @@ package org.zdevra.guice.mvc;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.logging.Logger;
 import org.zdevra.guice.mvc.MvcModule.ControllerBindingBuilder;
 
 
@@ -28,7 +27,7 @@ public class ControllerModuleBuilder  {
 	
 // ------------------------------------------------------------------------
 	
-	private static final Logger logger = LoggerFactory.getLogger(ControllerBindingBuilder.class);
+	private static final Logger logger = Logger.getLogger(ControllerBindingBuilder.class.getName());
 	
 	private List<ControllerDefinition> controllerDefinitions = new LinkedList<ControllerDefinition>();
 	

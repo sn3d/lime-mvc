@@ -21,8 +21,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.zdevra.guice.mvc.convertors.BooleanConvertor;
 import org.zdevra.guice.mvc.convertors.DateConvertor;
 import org.zdevra.guice.mvc.convertors.DefaultConvertor;
@@ -45,7 +43,6 @@ import org.zdevra.guice.mvc.convertors.StringConvertor;
 public class ConversionService {
 /*---------------------------- m. variables ----------------------------*/
 
-	private final static Logger logger = LoggerFactory.getLogger(ConversionService.class);
 	private Map<Class<?>, ConvertorFactory> regiConvertorFactories;
 	private ConvertorFactory defaultConvertor;
 	

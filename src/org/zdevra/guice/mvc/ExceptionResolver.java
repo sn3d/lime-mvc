@@ -20,12 +20,12 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.zdevra.guice.mvc.exceptions.MethodInvokingException;
 
 
@@ -41,7 +41,7 @@ public class ExceptionResolver {
 	
 /*---------------------------- m. variables ----------------------------*/
 	
-	private static final Logger logger = LoggerFactory.getLogger(ExceptionResolver.class);
+	private static final Logger logger = Logger.getLogger(ExceptionResolver.class.getName());
 	private final Map<Class<? extends Throwable>, ExceptionHandler> exceptionHandlers;
 	
 /*---------------------------- constructors ----------------------------*/
@@ -89,7 +89,7 @@ public class ExceptionResolver {
 		
 		if (handledCount == 0) {
 			try {
-				logger.error("Unhandled exception has been throwed (" + t.getClass().getName() + "). Please register handler for this exception." , t);
+				logger.log(Level.FINEST, "Unhandled exception has been throwed (" + t.getClass().getName() + "). Please register handler for this exception." , t);
 				resp.getOutputStream().println("<HTML><BODY>ERROR</BODY></HTML>");
 			} catch (IOException e) {
 				throw new IllegalStateException("No exception handler is registered.");

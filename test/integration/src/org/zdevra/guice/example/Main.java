@@ -16,6 +16,11 @@
  *****************************************************************************/
 package org.zdevra.guice.example;
 
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.testng.annotations.AfterTest;
@@ -32,9 +37,10 @@ public class Main {
 		
 	@BeforeTest()
 	public void startServer() throws Exception {
-		
+			
 		//start jetty server
 		try {
+			initDebugLogger();
 			server = new Server(7374);
 			WebAppContext wac = new WebAppContext();
 			wac.setContextPath("/test");
@@ -45,7 +51,28 @@ public class Main {
 			System.err.println("ERROR:" + e.getMessage() );
 		}
 	}
+	
+	
+	private void initDebugLogger() {
+	    Logger topLogger = java.util.logging.Logger.getLogger("");
+
+	    Handler consoleHandler = null;
+	    for (Handler handler : topLogger.getHandlers()) {
+	        if (handler instanceof ConsoleHandler) {
+	            consoleHandler = handler;
+	            break;
+	        }
+	    }
+	    	    
+	    if (consoleHandler == null) {
+	        consoleHandler = new ConsoleHandler();
+	        topLogger.addHandler(consoleHandler);
+	    }
+	    
+	    consoleHandler.setLevel(Level.ALL);
+	}
 		
+	
 	@AfterTest
 	public void endServlet() throws Exception {		
 		server.stop();		

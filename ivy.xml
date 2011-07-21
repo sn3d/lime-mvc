@@ -8,8 +8,6 @@
 
     <dependencies>
 		<!-- REQUIRED -->
-		<dependency org="org.slf4j" name="slf4j-api" rev="1.6.1" conf="required->default"/>
-		<dependency org="org.slf4j" name="slf4j-simple" rev="1.6.1" conf="required->default"/>
 		<dependency org="com.google.inject" name="guice-parent" rev="3.0" conf="required->default"/>
 		<dependency org="com.google.inject.extensions" name="guice-servlet" rev="3.0" conf="required->default"/>
 

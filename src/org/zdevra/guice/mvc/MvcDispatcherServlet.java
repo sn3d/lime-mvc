@@ -24,6 +24,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -31,8 +33,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.zdevra.guice.mvc.exceptions.NoMethodInvoked;
 import org.zdevra.guice.mvc.parameters.ParamProcessorsService;
 
@@ -46,7 +46,7 @@ public class MvcDispatcherServlet extends HttpServlet {
 	
 // ------------------------------------------------------------------------
 	
-	private static final Logger logger = LoggerFactory.getLogger(MvcDispatcherServlet.class);
+	private static final Logger logger = Logger.getLogger(MvcDispatcherServlet.class.getName());
 	
 	@Inject
 	private Injector injector;
@@ -124,19 +124,25 @@ public class MvcDispatcherServlet extends HttpServlet {
 		throws ServletException, IOException
 	{
 		try {			
-			logger.info("request '" + req.getRequestURL().toString() +  "' is executed by controller '" + this.controllerClass.getName() + "' ");
+			if (logger.isLoggable(Level.FINEST)) {
+				logger.finest("request '" + req.getRequestURL().toString() +  "' is executed by controller '" + this.controllerClass.getName() + "' ");
+			}
 			
 			Object controllerObj = injector.getInstance(controllerClass);								
 			ModelAndView mav = invokeMethods(controllerObj, req, resp, reqType);
 			
-			logger.info("controller produce model " + mav.getModel().toString() );
+			if (logger.isLoggable(Level.FINEST)) {
+				logger.finest("controller produce model " + mav.getModel().toString() );
+			}
 			
 			mav.getModel().moveObjectsToSession(this.sessionAttributes, req.getSession(true));
 			mav.getModel().moveObjectsToRequestAttrs(req);
 			
 			View view = mav.getView();
 			if (view != null) {
-				logger.info("redirect to view " + view.toString());
+				if (logger.isLoggable(Level.FINEST)) {
+					logger.finest("redirect to view " + view.toString());
+				}
 				mav.getView().redirectToView(this, req, resp);
 			}
 			mav = null;
@@ -146,7 +152,7 @@ public class MvcDispatcherServlet extends HttpServlet {
 			if (resolver != null) {
 				resolver.handleException(e, req, resp);
 			} else { 
-				logger.error("Caught exception for the request '" + req.getRequestURL().toString() + ":", e);
+				logger.info("Caught exception for the request '" + req.getRequestURL().toString() + ":" + e.toString());				
 			}
 		}		
 	}
