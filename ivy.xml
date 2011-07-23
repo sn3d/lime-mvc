@@ -1,0 +1,26 @@
+<ivy-module version="2.0">
+  <info organisation="org.zdevra" module="lime"/>
+  
+	<configurations>
+		<conf name="java" description="Regular lib dependencies"/>
+		<conf name="test" visibility="private" description="Libs for testing"/>
+		<conf name="system" visibility="private" description="Dependencies like servletx etc.."/>
+	</configurations>
+  
+	<dependencies>
+		<!-- SYSTEM -->
+		<dependency org="javax.servlet" name="servlet-api" rev="2.5" conf="system->default"/>
+
+		<!-- JAVA -->
+		<dependency org="com.google.inject" name="guice-parent" rev="3.0" conf="java->default"/>
+		<dependency org="com.google.inject.extensions" name="guice-servlet" rev="3.0" conf="java->default"/>
+
+    	<!-- TEST -->    
+		<dependency org="org.testng" name="testng" rev="6.0.1" conf="test->default" />
+		<dependency org="org.easymock" name="easymock" rev="3.0" conf="test->default"/>
+	
+
+    </dependencies>
+
+</ivy-module>
+

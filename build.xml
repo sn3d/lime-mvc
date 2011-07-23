@@ -1,0 +1,156 @@
+<project xmlns:ivy="antlib:org.apache.ivy.ant" basedir="." default="dist" >
+
+	<!--============== PATHS & PROPERTIES ==============-->
+	
+	<property file="build.properties"/>   
+
+	<property name="lib" value="./lib"/>
+	<property name="java.lib" value="./lib/java"/>
+	<property name="system.lib" value="./lib/system"/>
+	<property name="test.lib" value="./lib/test"/>
+
+	<property name="target"                  value="./target" />
+	<property name="javalib.target"          value="${target}/javalib" />
+	<property name="javalib-withsrc.target"  value="${target}/javalib-withsrc" />
+	<property name="testout.target"          value="${target}/test-out" />
+
+	<property name="classes"       value="${target}/classes" />
+	<property name="java.classes"  value="${classes}/java"/>
+	<property name="test.classes"  value="${classes}/test"/>
+
+	<property name="java.src"   value="./src/"/>
+	<property name="java.test"  value="./test/"/>
+
+	<property name="docs" value="./docs" />
+	<property name="javaapi.docs"  value="./docs/java-api" />
+
+	<property name="javalib.output" value="./${name.project}-${version.project}.jar"/>
+	<property name="javalib-withsrc.output" value="./${name.project}-${version.project}-src.jar"/>
+
+	<!--================ INITIALIZATION ================-->
+
+	<target name="preinit">
+		<condition property="isAllinone">
+			<and>
+			<isset property="allinone.build"/>
+			</and>
+		</condition>
+
+		<condition property="isProxy">
+			<and>
+			<isset property="proxy.host"/>
+			<isset property="proxy.port"/>
+			</and>
+		</condition>
+	</target>
+
+	<target name="init-dirs">
+		<mkdir dir="${target}"/>	
+		<mkdir dir="${classes}"/>
+	</target>
+
+	<target name="proxy" if="isProxy">
+		<setproxy proxyhost="localhost" proxyport="5865"/>
+	</target>
+
+	<target name="retrieve-libs" depends="preinit, proxy" >
+		<ivy:retrieve pattern="${lib}/[conf]/[artifact](-[classifier]).[ext]"/>
+	</target>
+
+	<target name="init" depends="preinit, init-dirs, retrieve-libs">
+		<taskdef name="testng" classname="org.testng.TestNGAntTask" >
+			<classpath>
+				<fileset dir="${test.lib}">
+				<include name="*.jar"/>
+				</fileset>
+			</classpath>			
+		</taskdef>
+	</target>
+
+	
+	<!--================ COMPILATION ================-->
+
+	<target name="compile-java" depends="init">
+		<mkdir dir="${java.classes}" />
+		<javac srcdir="${java.src}" destdir="${java.classes}" debug="${java.debug}" includeantruntime="false">
+			<classpath>
+				<pathelement location="${java.classes}" />
+				<fileset dir="${java.lib}"><include name="*.jar"/></fileset>
+				<fileset dir="${system.lib}"><include name="*.jar"/></fileset>
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="compile-java-test" depends="compile-java">
+		<mkdir dir="${test.classes}" />
+		<javac srcdir="${java.test}" destdir="${test.classes}" debug="${java.debug}" includeantruntime="false">
+			<classpath>
+				<pathelement location="${java.classes}" />
+				<pathelement location="${test.classes}" />
+				<fileset dir="${java.lib}"><include name="*.jar"/></fileset>
+				<fileset dir="${system.lib}"><include name="*.jar"/></fileset>
+				<fileset dir="${test.lib}"><include name="*.jar"/></fileset>
+			</classpath>
+		</javac>
+	</target>
+
+	<!--================ TESTING ================-->
+
+	<target name="test" depends="compile-java-test" description="make a distribution and test it">
+		<mkdir dir="${testout.target}" />
+		<testng outputdir="./target/test-out" workingDir=".">
+			<classpath>
+				<pathelement location="${java.classes}" />
+				<pathelement location="${test.classes}" />
+				<fileset dir="${java.lib}"><include name="*.jar"/></fileset>
+				<fileset dir="${system.lib}"><include name="*.jar"/></fileset>
+				<fileset dir="${test.lib}"><include name="*.jar"/></fileset>
+			</classpath>
+			<xmlfileset dir="." includes="testng.xml"/>	
+		</testng>
+	</target>
+	
+	<!--================ PACKAGING ================-->
+
+	<target name="dist" depends="test" description="make a distribution">
+		<!-- Make a plain binary library -->
+		<mkdir dir="${javalib.target}"/>
+		<copy todir="${javalib.target}">
+			<fileset dir="${java.classes}" />			
+		</copy>
+		<jar jarfile="${javalib.output}" basedir="${javalib.target}"/>
+
+		<!-- Make a library with source code -->
+		<mkdir dir="${javalib-withsrc.target}"/>
+		<copy todir="${javalib-withsrc.target}">
+			<fileset dir="${java.classes}" />			
+		</copy>
+		<copy todir="${javalib-withsrc.target}">
+			<fileset dir="${java.src}" />
+		</copy>
+		<jar jarfile="${javalib-withsrc.output}" basedir="${javalib-withsrc.target}"/>
+
+	</target>
+
+	<!--================ DOCS ================-->
+
+	<target name="docs" depends="dist" description="generate API documentation">
+		<mkdir dir="${javaapi.docs}" />
+		<javadoc access="public" destdir="./docs/java-api" author="true" version="true" use="true" windowtitle="org.Super.CSV.API" >
+			<fileset dir="${java.src}" defaultexcludes="yes">
+				<include name="**/*.java"/>
+			</fileset>
+		</javadoc>
+	</target>
+
+	<!--================ CLEANUP ================-->
+
+	<target name="clean" description="clean up the building files">
+		<delete dir="${target}" />
+		<delete dir="${javaapi.docs}" />
+		<delete file="${javalib.output}" />
+		<delete file="${javalib-withsrc.output}" />
+	</target>
+	
+</project>
+	
