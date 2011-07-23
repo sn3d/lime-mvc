@@ -24,8 +24,8 @@
 	<property name="docs" value="./docs" />
 	<property name="javaapi.docs"  value="./docs/java-api" />
 
-	<property name="javalib.output" value="./${name.project}-${version.project}.jar"/>
-	<property name="javalib-withsrc.output" value="./${name.project}-${version.project}-src.jar"/>
+	<property name="javalib.output" value="./${name.project}.jar"/>
+	<property name="javalib-withsrc.output" value="./${name.project}-src.jar"/>
 
 	<!--================ INITIALIZATION ================-->
 
