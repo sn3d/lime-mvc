@@ -23,6 +23,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.zdevra.guice.mvc.views.JspView;
+
 public interface View {
 	
 	public static final View NULL_VIEW = JspView.create("");

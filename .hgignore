@@ -11,6 +11,7 @@
 ^lib$
 ^target$
 glob:./**/*.jar
+glob:*.jar
 glob:target/**/*
 glob:lib/**/*
 glob:target/*

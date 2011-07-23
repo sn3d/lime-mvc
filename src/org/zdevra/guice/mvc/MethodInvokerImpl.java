@@ -27,6 +27,7 @@ import org.zdevra.guice.mvc.exceptions.MethodInvokingException;
 import org.zdevra.guice.mvc.parameters.ParamMetadata;
 import org.zdevra.guice.mvc.parameters.ParamProcessor;
 import org.zdevra.guice.mvc.parameters.ParamProcessorsService;
+import org.zdevra.guice.mvc.views.JspView;
 
 
 public class MethodInvokerImpl implements MethodInvoker {
