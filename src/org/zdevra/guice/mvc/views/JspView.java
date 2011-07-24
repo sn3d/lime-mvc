@@ -14,7 +14,7 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-package org.zdevra.guice.mvc;
+package org.zdevra.guice.mvc.views;
 
 import java.io.IOException;
 
@@ -24,6 +24,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.zdevra.guice.mvc.HttpRequestForForward;
+import org.zdevra.guice.mvc.View;
 import org.zdevra.guice.mvc.exceptions.InvalidJspViewException;
 
 public class JspView implements View {
@@ -37,7 +39,11 @@ public class JspView implements View {
 	public static View create(String viewName) {
 		if (viewName == null || viewName.length() == 0) {
 			return View.NULL_VIEW;
-		} 
+		}
+		
+		if ( !viewName.startsWith("/") ) {
+			viewName = "/" + viewName;
+		}
 		
 		return new JspView(viewName);		
 	}
@@ -51,8 +57,6 @@ public class JspView implements View {
 	
 	@Override
 	public void redirectToView(HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//TODO: maybe it's good idea to have a some kind of the view resolver
-		
 		request = new HttpRequestForForward(request, viewName);
 		RequestDispatcher dispatcher = servlet.getServletContext().getRequestDispatcher(viewName);
 		if (dispatcher == null) {
