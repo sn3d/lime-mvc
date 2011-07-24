@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -48,8 +49,9 @@ public class ExceptionResolverTest {
 	public static class TestHandler extends ExceptionHandler
 	{
 		@Override
-		public void handleException(Throwable t, HttpServletRequest req, HttpServletResponse resp) {			
+		public boolean handleException(Throwable t, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {			
 			t.getMessage();
+			return false;
 		}		
 	}
 	
@@ -76,7 +78,7 @@ public class ExceptionResolverTest {
 		expect(e.getMessage()).andReturn("NPE").times(2);
 		replay(e);
 		
-		resolver.handleException(e, null, null);
+		resolver.handleException(e, null, null, null);
 		verify(e);
 	}
 	
@@ -87,7 +89,7 @@ public class ExceptionResolverTest {
 		expect(e.getMessage()).andReturn("STATE").times(2);
 		replay(e);
 		
-		resolver.handleException(e, null, null);
+		resolver.handleException(e, null, null, null);
 		verify(e);		
 	}
 	
@@ -98,7 +100,7 @@ public class ExceptionResolverTest {
 		expect(e.getMessage()).andReturn("OOM").times(1);
 		replay(e);
 		
-		resolver.handleException(e, null, null);
+		resolver.handleException(e, null, null, null);
 		verify(e);				
 	}
 	
@@ -109,13 +111,13 @@ public class ExceptionResolverTest {
 		expect(e.getMessage()).andReturn("ARGUMENT").times(2);
 		replay(e);
 		
-		resolver.handleException(e, null, null);
+		resolver.handleException(e, null, null, null);
 		verify(e);						
 	}
 	
 	
 	@Test
-	public void testExceptionResolverInModule() {
+	public void testExceptionResolverOrder() {
 		Injector injector =  Guice.createInjector(
 				new MvcModule() {
 					@Override
@@ -124,10 +126,20 @@ public class ExceptionResolverTest {
 						this.exception(IllegalStateException.class)
 							.handledBy(new ExceptionHandler() {					
 								@Override
-								public void handleException(Throwable t, HttpServletRequest req, HttpServletResponse resp) {
-									System.out.println("exception is:" + t.getMessage());
+								public boolean handleException(Throwable t, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {
+									System.out.println("Illegal exception is:" + t.getMessage());
+									return true;
 								}
-							});						
+							});
+						
+						this.exception(Exception.class)
+							.handledBy(new ExceptionHandler() {					
+								@Override
+								public boolean handleException(Throwable t, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {
+									System.out.println("Normal exception is:" + t.getMessage());
+									return true;
+								}
+						});						
 					}					
 				}
 		);
@@ -135,6 +147,8 @@ public class ExceptionResolverTest {
 		ExceptionResolver exceptionResolver = injector.getInstance(ExceptionResolver.class);
 		Assert.assertNotNull(exceptionResolver);
 		
-		exceptionResolver.handleException(new IllegalStateException("test"), null, null);
+		exceptionResolver.handleException(new IllegalStateException("test1"), null, null, null);
+		exceptionResolver.handleException(new NullPointerException("test"), null, null, null);
 	}
+	
 }

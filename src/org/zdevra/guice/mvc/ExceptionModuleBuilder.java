@@ -48,6 +48,12 @@ public class ExceptionModuleBuilder {
 		public void handledBy(ExceptionHandler handler) {
 			handlers.put(exceptionClass, handler);
 		}
+
+		@Override
+		public void toView(View exceptionView) {
+			this.handledBy(new ViewExceptionHandler(exceptionView));			
+		}
+				
 	}
 
 /*------------------------------- methods ------------------------------*/

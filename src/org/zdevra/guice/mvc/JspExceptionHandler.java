@@ -20,6 +20,7 @@ import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -29,8 +30,12 @@ import org.zdevra.guice.mvc.exceptions.InvalidJspViewException;
 /**
  * The exception handler implementation show the given JSP
  * when the exception is throwed.
+ * 
+ * !!Deprecated!! Use ViewExceptionHandler and JspView or 
+ * exception(Exception.class).toView(...) in MvcModule instead 
  *
  */
+@Deprecated
 public class JspExceptionHandler extends ExceptionHandler {
 	
 /*---------------------------- m. variables ----------------------------*/
@@ -47,7 +52,7 @@ public class JspExceptionHandler extends ExceptionHandler {
 /*------------------------------- methods ------------------------------*/
 	
 	@Override
-	public void handleException(Throwable t, HttpServletRequest request, HttpServletResponse response) 
+	public boolean handleException(Throwable t, HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) 
 	{
 		try {
             HttpRequestForForward newRequest = new HttpRequestForForward(request, this.jspPath);
@@ -57,13 +62,13 @@ public class JspExceptionHandler extends ExceptionHandler {
 			}
 			
 			dispatcher.forward(newRequest, response);
-			newRequest = null;
-			
+			newRequest = null;			
 		} catch (ServletException e) {
 			throw new IllegalStateException("can't redirect to the JSP:" + jspPath, e);
 		} catch (IOException e) {
 			throw new IllegalStateException("can't redirect to the JSP:" + jspPath, e);
 		}
+		return true;
 	}
 
 }

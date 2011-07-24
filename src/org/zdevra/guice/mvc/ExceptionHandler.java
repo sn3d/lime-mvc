@@ -16,6 +16,7 @@
  *****************************************************************************/
 package org.zdevra.guice.mvc;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -43,8 +44,11 @@ public abstract  class ExceptionHandler {
 	/**
 	 * Is invoked when in the controller was throwed exception which 
 	 * is instance of registered class.
+	 * 
+	 * @return when method returns true, the resolver stop working 
+	 *         when method returns false, the resolver continue going through other handlers
 	 */
-	public abstract void handleException(Throwable t, HttpServletRequest req, HttpServletResponse resp);
+	public abstract boolean handleException(Throwable t, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp);
 	
 /*----------------------------------------------------------------------*/
 

@@ -23,6 +23,7 @@ import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -68,7 +69,7 @@ public class ExceptionResolver {
 	 * throw some exception. This method go throught all registered
 	 * exception handlers and invoke correct handlers for that exception.
 	 */
-	public void handleException(Throwable t, HttpServletRequest req, HttpServletResponse resp) {
+	public void handleException(Throwable t, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {
 		int handledCount = 0;
 
         if (t.getClass() == MethodInvokingException.class) {
@@ -82,14 +83,18 @@ public class ExceptionResolver {
 			
 			boolean isInstance = clazz.isInstance(t);
 			if (isInstance) {
-				handler.handleException(t, req, resp);
-				handledCount++;
+				boolean res = handler.handleException(t, servlet, req, resp);
+				if (res) {
+					return;
+				} else {
+					handledCount++;
+				}
 			}
 		}
 		
 		if (handledCount == 0) {
 			try {
-				logger.log(Level.FINEST, "Unhandled exception has been throwed (" + t.getClass().getName() + "). Please register handler for this exception." , t);
+				logger.log(Level.SEVERE, "Unhandled exception has been throwed (" + t.getClass().getName() + "). Please register handler for this exception." , t);
 				resp.getOutputStream().println("<HTML><BODY>ERROR</BODY></HTML>");
 			} catch (IOException e) {
 				throw new IllegalStateException("No exception handler is registered.");

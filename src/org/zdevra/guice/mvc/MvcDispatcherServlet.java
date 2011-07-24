@@ -150,7 +150,7 @@ public class MvcDispatcherServlet extends HttpServlet {
 		} catch (Throwable e) {
 			ExceptionResolver resolver = injector.getInstance(ExceptionResolver.class);
 			if (resolver != null) {
-				resolver.handleException(e, req, resp);
+				resolver.handleException(e, this, req, resp);
 			} else { 
 				logger.info("Caught exception for the request '" + req.getRequestURL().toString() + ":" + e.toString());				
 			}
@@ -164,7 +164,7 @@ public class MvcDispatcherServlet extends HttpServlet {
 	{
 		Controller controllerAnotation = controllerClass.getAnnotation(Controller.class);
 		if (controllerAnotation == null) {
-			throw new IllegalStateException("it's not controller. Missing @Controller annotation.");
+			throw new IllegalStateException("Class is not defined as a controller. Missing @Controller annotation.");
 		}
 
 		//scan session attributes

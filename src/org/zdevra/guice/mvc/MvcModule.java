@@ -42,6 +42,11 @@ import com.google.inject.servlet.ServletModule;
  *     Injector injector =  Guice.createInjector(
  *        new MvcModule() {
  *           protected void configureControllers() {
+ *             
+ *             //exception handlers
+ *             
+ *              
+ *             //controllers
  *              control("/someController/*")
  *                .withController(SomeController.class)
  *                .set();
@@ -164,6 +169,7 @@ public abstract class MvcModule extends ServletModule {
 	public static interface ExceptionBindingBuilder 
 	{
 		public void handledBy(ExceptionHandler handler);
+		public void toView(View exceptionView);
 	}
 	
 // ------------------------------------------------------------------------
