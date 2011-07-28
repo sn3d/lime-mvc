@@ -16,11 +16,9 @@
  *****************************************************************************/
 package org.zdevra.guice.mvc;
 
-import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServlet;
@@ -42,8 +40,11 @@ public class ExceptionResolver {
 	
 /*---------------------------- m. variables ----------------------------*/
 	
+	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(ExceptionResolver.class.getName());
+	
 	private final Map<Class<? extends Throwable>, ExceptionHandler> exceptionHandlers;
+	private final ExceptionHandler defaultHandler = new DefaultExceptionHandler();
 	
 /*---------------------------- constructors ----------------------------*/
 	
@@ -92,13 +93,9 @@ public class ExceptionResolver {
 			}
 		}
 		
+		//unhandlend exception is forwarded into default handler 
 		if (handledCount == 0) {
-			try {
-				logger.log(Level.SEVERE, "Unhandled exception has been throwed (" + t.getClass().getName() + "). Please register handler for this exception." , t);
-				resp.getOutputStream().println("<HTML><BODY>ERROR</BODY></HTML>");
-			} catch (IOException e) {
-				throw new IllegalStateException("No exception handler is registered.");
-			}
+			this.defaultHandler.handleException(t, servlet, req, resp);
 		}
 	}
 }
