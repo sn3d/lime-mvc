@@ -5,6 +5,9 @@
        <class name="org.zdevra.guice.mvc.ExceptionResolverTest" />
        <class name="org.zdevra.guice.mvc.ParamProcessorTest" />
        <class name="org.zdevra.guice.mvc.ConversionServiceTest" />
+       
+       <class name="org.zdevra.guice.mvc.case1.Case1Test" />
+       <class name="org.zdevra.guice.mvc.case2.Case2Test" />
     </classes>
   </test>
 

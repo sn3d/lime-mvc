@@ -15,10 +15,10 @@
 		<dependency org="com.google.inject" name="guice-parent" rev="3.0" conf="java->default"/>
 		<dependency org="com.google.inject.extensions" name="guice-servlet" rev="3.0" conf="java->default"/>
 
-    	<!-- TEST -->    
+		<!-- TEST -->    
 		<dependency org="org.testng" name="testng" rev="6.0.1" conf="test->default" />
 		<dependency org="org.easymock" name="easymock" rev="3.0" conf="test->default"/>
-	
+		<dependency org="httpunit" name="httpunit" rev="1.7" conf="test->default"/>
 
     </dependencies>
 

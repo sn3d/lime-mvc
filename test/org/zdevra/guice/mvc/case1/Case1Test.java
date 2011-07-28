@@ -1,0 +1,95 @@
+package org.zdevra.guice.mvc.case1;
+
+import java.io.IOException;
+
+import javax.servlet.Servlet;
+import javax.servlet.ServletException;
+
+import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import com.meterware.httpunit.GetMethodWebRequest;
+import com.meterware.httpunit.WebRequest;
+import com.meterware.httpunit.WebResponse;
+import com.meterware.servletunit.InvocationContext;
+import com.meterware.servletunit.ServletRunner;
+import com.meterware.servletunit.ServletUnitClient;
+
+/**
+ * This case tests the basic functionality like invoking right method,
+ * manipulation with session, exception handling etc..
+ */
+@Test
+public class Case1Test {
+	
+	private ServletRunner sr;
+
+	@BeforeClass
+	public void prepare() {
+		sr = new ServletRunner();
+		sr.registerServlet("test/*", Case1DispatcherServlet.class.getName());
+	}
+	
+	@Test
+	public void testSimpleRequest() throws IOException, ServletException {
+		//prepare request
+		ServletUnitClient sc = sr.newClient();
+		WebRequest request   = new GetMethodWebRequest( "http://www.bookstore.com/test/do/simplecall" );
+		InvocationContext ic = sc.newInvocation( request );		
+		
+		//invoke request
+		Servlet ss = ic.getServlet();
+		ss.service(ic.getRequest(), ic.getResponse());			
+		WebResponse response = ic.getServletResponse();
+		
+		//process response
+		String out = response.getText();
+		System.out.println(out);
+		Assert.assertTrue( out.contains("simple call") );
+	}
+	
+	
+	
+	public void testException() throws IOException, ServletException {
+		//prepare request
+		ServletUnitClient sc = sr.newClient();
+		WebRequest request   = new GetMethodWebRequest( "http://www.bookstore.com/test/do/exception" );
+		InvocationContext ic = sc.newInvocation( request );
+		
+		//invoke request
+		Servlet ss = ic.getServlet();
+		ss.service(ic.getRequest(), ic.getResponse());			
+		WebResponse response = ic.getServletResponse();
+		
+		//process response
+		String out = response.getText();
+		System.out.println(out);
+		Assert.assertTrue(out.length() > 0);		
+	}
+	
+
+	
+	public void testFromSession() throws IOException, ServletException {
+		//prepare request
+		ServletUnitClient sc = sr.newClient();
+		WebRequest request   = new GetMethodWebRequest( "http://www.bookstore.com/test/do/session" );
+		InvocationContext ic = sc.newInvocation( request );		
+		ic.getRequest().getSession(true).setAttribute("author", "Shakespeare");
+		ic.getRequest().getSession(true).setAttribute("year",   1564);
+		
+		//invoke request
+		Servlet ss = ic.getServlet();
+		ss.service(ic.getRequest(), ic.getResponse());			
+		WebResponse response = ic.getServletResponse();
+
+		//process response
+		String out = response.getText();
+		System.out.println(out);
+		Assert.assertTrue( out.contains("Shakespeare 1564"));
+		
+		String book = (String)ic.getRequest().getSession().getAttribute("book");
+		System.out.println(book);
+		Assert.assertTrue( book.contains("Hamlet"));
+	}
+}

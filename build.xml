@@ -50,10 +50,10 @@
 	</target>
 
 	<target name="proxy" if="isProxy">
-		<setproxy proxyhost="localhost" proxyport="5865"/>
+		<setproxy proxyhost="${proxy.host}" proxyport="${proxy.port}"/>
 	</target>
 
-	<target name="retrieve-libs" depends="preinit, proxy" >
+	<target name="retrieve-libs" depends="preinit, proxy" description="retrieve libs">
 		<ivy:retrieve pattern="${lib}/[conf]/[artifact](-[classifier]).[ext]"/>
 	</target>
 
