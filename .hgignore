@@ -13,6 +13,7 @@
 glob:./**/*.jar
 glob:*.jar
 glob:target/**/*
+glob:docs/java-api/*
 glob:lib/**/*
 glob:target/*
 glob:target
