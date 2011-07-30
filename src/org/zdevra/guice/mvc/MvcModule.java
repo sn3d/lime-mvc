@@ -19,7 +19,9 @@ package org.zdevra.guice.mvc;
 
 import org.zdevra.guice.mvc.ConversionService.ConvertorFactory;
 import org.zdevra.guice.mvc.parameters.ParamProcessorsService;
+import org.zdevra.guice.mvc.views.JspView;
 
+import com.google.inject.name.Names;
 import com.google.inject.servlet.ServletModule;
 
 /**
@@ -134,6 +136,30 @@ public abstract class MvcModule extends ServletModule {
 // ------------------------------------------------------------------------
 	
 	/**
+	 * Method bind view instance to view's name. This binding is used by view resolver.
+	 */
+	protected final void bindView(String viewName, View view) {
+		bind(View.class).annotatedWith(Names.named(viewName)).toInstance(view);
+	}
+	
+	
+	/**
+	 * Method bind view class to view's name. This binding is used by view resolver.
+	 */	
+	protected final void bindView(String viewName, Class<? extends View> viewClazz) {
+		bind(View.class).annotatedWith(Names.named(viewName)).to(viewClazz);
+	}	
+	
+	
+	/**
+	 * Method bind JSP page to view's name. This binding is used by view resolver.
+	 */		
+	protected final void bindView(String viewName, String jsp) {
+		bind(View.class).annotatedWith(Names.named(viewName)).toInstance(new JspView(jsp));
+	}
+	
+	
+	/**
 	 * The method registers a custom convertor which converts strings to the
 	 * concrete types. These convertors are used for conversions from a HTTP request 
 	 * to the method's parameters.
@@ -162,6 +188,7 @@ public abstract class MvcModule extends ServletModule {
 	{
 		public ControllerBindingBuilder withController(Class<?> controller);
 		public ControllerBindingBuilder toView(View view);
+		public ControllerBindingBuilder toView(String viewName);
 		public void set();
 	}
 	

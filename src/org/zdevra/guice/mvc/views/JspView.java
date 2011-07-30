@@ -17,6 +17,8 @@
 package org.zdevra.guice.mvc.views;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -28,51 +30,57 @@ import org.zdevra.guice.mvc.HttpRequestForForward;
 import org.zdevra.guice.mvc.View;
 import org.zdevra.guice.mvc.exceptions.InvalidJspViewException;
 
+/**
+ * The JSP view redirecting request to concrete JSP or HTML page  
+ */
 public class JspView implements View {
 	
-/*---------------------------- m. variables ----------------------------*/
+// ------------------------------------------------------------------------	
+
+	private static final Logger logger = Logger.getLogger(JspView.class.getName());
+	private final String jspPath;
 	
-	private final String viewName;
+// ------------------------------------------------------------------------
 	
-/*---------------------------- constructors ----------------------------*/
 	
-	public static View create(String viewName) {
-		if (viewName == null || viewName.length() == 0) {
-			return View.NULL_VIEW;
+	public JspView(String jspPath) {
+		if (jspPath == null || jspPath.length() == 0) {
+			this.jspPath = "";
+		} else if ( !jspPath.startsWith("/") ) {
+			this.jspPath = "/" + jspPath;
+		} else {
+			this.jspPath = jspPath;
 		}
-		
-		if ( !viewName.startsWith("/") ) {
-			viewName = "/" + viewName;
-		}
-		
-		return new JspView(viewName);		
 	}
 	
-	private JspView(String viewName) {
-		this.viewName = viewName;
-	}
-	
-/*------------------------------- methods ------------------------------*/
+// ------------------------------------------------------------------------
 	
 	
 	@Override
-	public void redirectToView(HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request = new HttpRequestForForward(request, viewName);
-		RequestDispatcher dispatcher = servlet.getServletContext().getRequestDispatcher(viewName);
+	public void render(HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) {
+		request = new HttpRequestForForward(request, jspPath);
+		RequestDispatcher dispatcher = servlet.getServletContext().getRequestDispatcher(jspPath);
 		if (dispatcher == null) {
-			throw new InvalidJspViewException(viewName);
+			throw new InvalidJspViewException(jspPath);
 		}
 		
-		dispatcher.forward(request, response);
+		try {
+			dispatcher.forward(request, response);
+		} catch (ServletException e) {
+			logger.log(Level.SEVERE, "Error in JspView", e);
+		} catch (IOException e) {
+			logger.log(Level.SEVERE, "Error in JspView", e);
+		}
+		
 		request = null;
 	}
 
 	
 	@Override
 	public String toString() {
-		return "JspView [viewName=" + viewName + "]";
+		return "JspView [jsp=" + jspPath + "]";
 	}
 	
-/*----------------------------------------------------------------------*/
+// ------------------------------------------------------------------------
 
 }

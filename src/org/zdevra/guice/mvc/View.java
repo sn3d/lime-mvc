@@ -16,19 +16,20 @@
  *****************************************************************************/
 package org.zdevra.guice.mvc;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.zdevra.guice.mvc.views.JspView;
+import org.zdevra.guice.mvc.views.NamedView;
 
+/**
+ * Interface representing view abstraction. Implement this interface if you
+ * want your own view rendering/processing.
+ */
 public interface View {
 	
-	public static final View NULL_VIEW = JspView.create("");
-		
-	public void redirectToView(HttpServlet servlet, HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException;
+	public final static View NULL_VIEW = NamedView.create("");
+	
+	public void render(HttpServlet servlet, HttpServletRequest request, HttpServletResponse response);
 	
 }

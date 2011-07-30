@@ -33,7 +33,7 @@ import org.zdevra.guice.mvc.exceptions.MethodInvokingException;
  * these exceptions into concrete registered {@link ExceptionHandler}.
  * <p>
  * 
- * Keep this class mutable and thread-safe.
+ * Keep this class immutable and thread-safe.
  * 
  */
 public class ExceptionResolver {

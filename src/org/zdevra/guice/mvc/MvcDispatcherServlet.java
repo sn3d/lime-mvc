@@ -35,8 +35,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.zdevra.guice.mvc.exceptions.NoMethodInvoked;
 import org.zdevra.guice.mvc.parameters.ParamProcessorsService;
+import org.zdevra.guice.mvc.views.JspView;
+import org.zdevra.guice.mvc.views.NamedView;
 
+import com.google.inject.ConfigurationException;
 import com.google.inject.Injector;
+import com.google.inject.Key;
+import com.google.inject.name.Names;
 
 /**
  * The Dispatcher servlet dispatch a request to the concrete 
@@ -132,8 +137,8 @@ public class MvcDispatcherServlet extends HttpServlet {
 			}
 			
 			Object controllerObj = injector.getInstance(controllerClass);								
-			ModelAndView mav = invokeMethods(controllerObj, req, resp, reqType);
 			
+			ModelAndView mav = invokeMethods(controllerObj, req, resp, reqType);			
 			if (logger.isLoggable(Level.FINEST)) {
 				logger.finest("controller produce model " + mav.getModel().toString() );
 			}
@@ -141,13 +146,7 @@ public class MvcDispatcherServlet extends HttpServlet {
 			mav.getModel().moveObjectsToSession(this.sessionAttributes, req.getSession(true));
 			mav.getModel().moveObjectsToRequestAttrs(req);
 			
-			View view = mav.getView();
-			if (view != null) {
-				if (logger.isLoggable(Level.FINEST)) {
-					logger.finest("redirect to view " + view.toString());
-				}
-				mav.getView().redirectToView(this, req, resp);
-			}
+			resolveView(mav.getView(), req, resp);
 			mav = null;
 
 		} catch (Throwable e) {
@@ -210,10 +209,24 @@ public class MvcDispatcherServlet extends HttpServlet {
 		}
 		
 		if (invokedcount == 0) {
-			throw new NoMethodInvoked(req);
+			throw new NoMethodInvoked(req, controllerObj.getClass().getName());
 		}
 		
 		return mav;
+	}
+	
+	
+	private void resolveView(View view, HttpServletRequest req, HttpServletResponse resp) {		
+		if (view instanceof NamedView) {
+			String viewName = ((NamedView)view).getName();
+			try {
+				view = injector.getInstance(Key.get(View.class, Names.named(viewName)));
+			} catch (ConfigurationException e) {
+				view = new JspView(viewName);
+			}
+		} 
+		
+		view.render(this, req, resp);	
 	}
 		
 // ------------------------------------------------------------------------

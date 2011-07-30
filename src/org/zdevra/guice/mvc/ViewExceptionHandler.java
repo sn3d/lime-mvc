@@ -16,10 +16,8 @@
  *****************************************************************************/
 package org.zdevra.guice.mvc;
 
-import java.io.IOException;
 import java.util.logging.Logger;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,6 +33,7 @@ public class ViewExceptionHandler extends ExceptionHandler {
 	
 /*---------------------------- m. variables ----------------------------*/
 	
+	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(MvcDispatcherServlet.class.getName());	
 	private final View exceptionView;
 
@@ -51,15 +50,9 @@ public class ViewExceptionHandler extends ExceptionHandler {
 /*------------------------------- methods ------------------------------*/
 	
 	@Override
-	public boolean handleException(Throwable t, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {
-		try {
-			req.setAttribute("exception", t);
-			exceptionView.redirectToView(servlet, req, resp);			
-		} catch (ServletException e) {
-			logger.severe("exception caught in ViewExceptionHandler:" + e.getMessage() );
-		} catch (IOException e) {
-			logger.severe("exception caught in ViewExceptionHandler:" + e.getMessage() );
-		}
+	public boolean handleException(Throwable t, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {		
+		req.setAttribute("exception", t);
+		exceptionView.render(servlet, req, resp);					
 		return true;
 	}
 	

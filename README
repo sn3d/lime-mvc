@@ -1,5 +1,6 @@
-instructions how to compile the Lime:
+Dependencies:
+	- Guice v3.0
+	- Guice servlet extension v3.0
 
-	ant -f ./libs.xml
-	ant
-	ant dist
+Instructions how to compile the Lime:
+	- just run ant
