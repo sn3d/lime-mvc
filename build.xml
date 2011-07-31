@@ -136,11 +136,23 @@
 
 	<target name="docs" depends="dist" description="generate API documentation">
 		<mkdir dir="${javaapi.docs}" />
-		<javadoc access="public" destdir="./docs/java-api" author="true" version="true" use="true" windowtitle="org.Super.CSV.API" >
-			<fileset dir="${java.src}" defaultexcludes="yes">
-				<include name="**/*.java"/>
-			</fileset>
-		</javadoc>
+      
+		<javadoc packagenames="orb.zdevra.*"
+		         destdir="${javaapi.docs}"
+		         docletpath="${system.lib}/doclava.jar"
+		         bootclasspath="${java.home}/lib/rt.jar"
+		         maxmemory="512M"
+		         classpath="${java.lib}/javax.inject.jar${path.separator}${java.lib}/aopalliance.jar">
+
+         <fileset dir="${java.src}" defaultexcludes="yes">
+            <include name="**/*.java"/>
+         </fileset>
+
+         <doclet name="com.google.doclava.Doclava">
+            <param name="-hdf"/> <param name="project.name"/> <param name="Lime MVC"/>
+         </doclet>
+      </javadoc>
+
 	</target>
 
 	<!--================ CLEANUP ================-->
