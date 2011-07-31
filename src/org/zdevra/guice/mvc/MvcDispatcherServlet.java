@@ -35,13 +35,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.zdevra.guice.mvc.exceptions.NoMethodInvoked;
 import org.zdevra.guice.mvc.parameters.ParamProcessorsService;
-import org.zdevra.guice.mvc.views.JspView;
-import org.zdevra.guice.mvc.views.NamedView;
 
-import com.google.inject.ConfigurationException;
 import com.google.inject.Injector;
-import com.google.inject.Key;
-import com.google.inject.name.Names;
 
 /**
  * The Dispatcher servlet dispatch a request to the concrete 
@@ -146,7 +141,9 @@ public class MvcDispatcherServlet extends HttpServlet {
 			mav.getModel().moveObjectsToSession(this.sessionAttributes, req.getSession(true));
 			mav.getModel().moveObjectsToRequestAttrs(req);
 			
-			resolveView(mav.getView(), req, resp);
+			ViewResolver resolver = injector.getInstance(ViewResolver.class);
+			resolver.resolve(mav.getView(), this, req, resp);
+
 			mav = null;
 
 		} catch (Throwable e) {
@@ -215,19 +212,6 @@ public class MvcDispatcherServlet extends HttpServlet {
 		return mav;
 	}
 	
-	
-	private void resolveView(View view, HttpServletRequest req, HttpServletResponse resp) {		
-		if (view instanceof NamedView) {
-			String viewName = ((NamedView)view).getName();
-			try {
-				view = injector.getInstance(Key.get(View.class, Names.named(viewName)));
-			} catch (ConfigurationException e) {
-				view = new JspView(viewName);
-			}
-		} 
-		
-		view.render(this, req, resp);	
-	}
-		
+			
 // ------------------------------------------------------------------------
 }

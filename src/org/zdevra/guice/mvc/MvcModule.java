@@ -108,6 +108,9 @@ public abstract class MvcModule extends ServletModule {
 		exceptionModuleBuilder = new ExceptionModuleBuilder();
 		
 		try {
+			//default registrations
+			this.bind(ViewResolver.class).to(DefaultViewResolver.class);
+			
 			configureControllers();
 			
 			//register MVC controllers

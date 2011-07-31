@@ -17,18 +17,18 @@
 package org.zdevra.guice.mvc.case1;
 
 import org.zdevra.guice.mvc.MvcDispatcherServlet;
+import org.zdevra.guice.mvc.MvcModule;
 import org.zdevra.guice.mvc.TestView;
 
-import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 
-class BookstoreModule extends AbstractModule {
+class BookstoreModule extends MvcModule {
 
 	@Override
-	protected void configure() {
+	protected void configureControllers() {
 		
 	}
-	
+
 }
 
 /**
