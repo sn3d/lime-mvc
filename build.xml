@@ -141,12 +141,17 @@
 		         destdir="${javaapi.docs}"
 		         docletpath="${system.lib}/doclava.jar"
 		         bootclasspath="${java.home}/lib/rt.jar"
-		         maxmemory="512M"
-		         classpath="${java.lib}/javax.inject.jar${path.separator}${java.lib}/aopalliance.jar">
+		         maxmemory="512M" >
 
          <fileset dir="${java.src}" defaultexcludes="yes">
             <include name="**/*.java"/>
          </fileset>
+
+			<classpath>
+				<pathelement location="${java.classes}" />
+				<fileset dir="${java.lib}"><include name="*.jar"/></fileset>
+				<fileset dir="${system.lib}"><include name="*.jar"/></fileset>
+			</classpath>
 
          <doclet name="com.google.doclava.Doclava">
             <param name="-hdf"/> <param name="project.name"/> <param name="Lime MVC"/>
