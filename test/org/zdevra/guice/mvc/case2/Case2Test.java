@@ -24,7 +24,6 @@ import javax.servlet.ServletException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.zdevra.guice.mvc.AbstractTest;
-import org.zdevra.guice.mvc.MvcModule;
 import org.zdevra.guice.mvc.TestServlet;
 
 import com.meterware.httpunit.GetMethodWebRequest;
@@ -41,8 +40,8 @@ import com.meterware.servletunit.ServletUnitClient;
 @Test
 public class Case2Test extends AbstractTest {
 
-	static class Case2Servlet extends TestServlet {
-		public Case2Servlet(Class<?> controllerClass, MvcModule module) {
+	public static class Case2Servlet extends TestServlet {
+		public Case2Servlet() {
 			super(Case2Controller.class, new Case2Module());
 		}	
 	}
