@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletResponse;
  * request.getAttribute("exception") in JSP.
  * 
  */
-public class ViewExceptionHandler extends ExceptionHandler {
+public class ViewExceptionHandler implements ExceptionHandler {
 	
 /*---------------------------- m. variables ----------------------------*/
 	

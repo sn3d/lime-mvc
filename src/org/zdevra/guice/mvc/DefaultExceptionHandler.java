@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletResponse;
  * Implementation of default exception handler. All unhandled  
  * exceptions are routed from ExceptionResolver to this handler.
  */
-public class DefaultExceptionHandler extends ExceptionHandler {
+public class DefaultExceptionHandler implements ExceptionHandler {
 	
-	private static final Logger logger = Logger.getLogger(ExceptionResolver.class.getName());
+	private static final Logger logger = Logger.getLogger(DefaultExceptionResolver.class.getName());
 
 	@Override
 	public boolean handleException(Throwable t, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {

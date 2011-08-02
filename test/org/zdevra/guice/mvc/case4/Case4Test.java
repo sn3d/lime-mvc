@@ -45,13 +45,12 @@ public class Case4Test extends AbstractTest {
 		String out = resp.getText();
 		Assert.assertTrue(out.contains("customized handler:AdvancedCustomException->CustomException"));		
 	}
-	
-	
-	@Test 
+		
+	@Test
 	public void testAdvancedHandled() throws ServletException, IOException {
 		WebResponse resp = executeSimpleUrl("http://www.test.com/test/expetion/advancedhandledexception");
 		String out = resp.getText();
-		Assert.assertTrue(out.contains("customized handler:AdvancedHandledException->CustomException"));		
+		Assert.assertTrue(out.contains("AdvancedHandledException->CustomException"));		
 	}
 
 

@@ -65,7 +65,7 @@ public class ExceptionModuleBuilder {
 	
 	
 	ExceptionResolver build() {
-		return new ExceptionResolver(this.handlers);
+		return new DefaultExceptionResolver(this.handlers);
 	}
 
 /*----------------------------------------------------------------------*/

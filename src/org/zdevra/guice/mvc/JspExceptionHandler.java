@@ -36,7 +36,7 @@ import org.zdevra.guice.mvc.exceptions.InvalidJspViewException;
  *
  */
 @Deprecated
-public class JspExceptionHandler extends ExceptionHandler {
+public class JspExceptionHandler implements ExceptionHandler {
 	
 /*---------------------------- m. variables ----------------------------*/
 	

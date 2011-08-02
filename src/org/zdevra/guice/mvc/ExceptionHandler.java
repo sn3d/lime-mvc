@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Abstraction for all exception handlers. All handlers are
- * registered in {@link ExceptionResolver} via
+ * registered in {@link DefaultExceptionResolver} via
  * {@link MvcModule}.
  * <p>
  * 
@@ -37,7 +37,7 @@ import javax.servlet.http.HttpServletResponse;
  *       called parallelly from different threads.
  * </pre>
  */
-public abstract  class ExceptionHandler {
+public interface ExceptionHandler {
 		
 /*------------------------------- methods ------------------------------*/
 	

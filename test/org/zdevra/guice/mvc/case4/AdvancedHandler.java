@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.zdevra.guice.mvc.ExceptionHandler;
 
-public class AdvancedHandler extends ExceptionHandler {
+public class AdvancedHandler implements ExceptionHandler {
 
 	@Override
 	public boolean handleException(Throwable t, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {

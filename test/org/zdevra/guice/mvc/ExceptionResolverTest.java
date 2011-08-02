@@ -46,7 +46,7 @@ public class ExceptionResolverTest {
 	
 /*----------------------------------------------------------------------*/
 	
-	public static class TestHandler extends ExceptionHandler
+	public static class TestHandler implements ExceptionHandler
 	{
 		@Override
 		public boolean handleException(Throwable t, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {			
@@ -68,7 +68,7 @@ public class ExceptionResolverTest {
 		handlers.put(IOException.class, new TestHandler() );
 		handlers.put(Exception.class, new TestHandler() );				
 		
-		resolver = new ExceptionResolver(handlers);
+		resolver = new DefaultExceptionResolver(handlers);
 	}
 
 	
@@ -144,7 +144,7 @@ public class ExceptionResolverTest {
 				}
 		);
 		
-		ExceptionResolver exceptionResolver = injector.getInstance(ExceptionResolver.class);
+		ExceptionResolver exceptionResolver = injector.getInstance(DefaultExceptionResolver.class);
 		Assert.assertNotNull(exceptionResolver);
 		
 		exceptionResolver.handleException(new IllegalStateException("test1"), null, null, null);
