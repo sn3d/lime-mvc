@@ -13,10 +13,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class DefaultExceptionHandler implements ExceptionHandler {
 	
-	private static final Logger logger = Logger.getLogger(DefaultExceptionResolver.class.getName());
+	private static final Logger logger = Logger.getLogger(DefaultExceptionHandler.class.getName());
 
 	@Override
-	public boolean handleException(Throwable t, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {
+	public void handleException(Throwable t, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {
 		try {			
 			
 			logger.log(Level.SEVERE, "Unhandled exception caught by Lime default handler (" + t.getClass().getName() + ")" , t);
@@ -33,11 +33,9 @@ public class DefaultExceptionHandler implements ExceptionHandler {
 			resp.getWriter().write("<BR><BR><B>Stack trace:</B><pre class=\"stacktrace\">\n");
 			t.printStackTrace(resp.getWriter());			
 			resp.getWriter().write("\n</pre>Lime MVC default exception handler</BODY></HTML>");
-						
-			return false;		
+								
 		} catch (Exception e) {
-			e.printStackTrace();
-			return false;		
+			logger.log(Level.SEVERE, "Error in default handler", e);		
 		}
 	}
 

@@ -11,6 +11,9 @@ import org.zdevra.guice.mvc.TestServlet;
 
 import com.meterware.httpunit.WebResponse;
 
+/**
+ * This is a testing class for Exception handling mechanism. 
+ */
 @Test
 public class Case4Test extends AbstractTest {
 	

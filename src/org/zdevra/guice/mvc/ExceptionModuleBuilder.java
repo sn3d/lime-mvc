@@ -21,6 +21,10 @@ import java.util.Map;
 
 import org.zdevra.guice.mvc.MvcModule.ExceptionBindingBuilder;
 
+/**
+ * This class is obsolete and should be removed in next release
+ */
+@Deprecated
 public class ExceptionModuleBuilder {
 /*---------------------------- m. variables ----------------------------*/
 	

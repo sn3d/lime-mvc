@@ -23,12 +23,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * This handler should be removed in next release.
+ * 
  * This handler's implementation redirect exception to the some 
  * error-view. Exception is stored in a request's attribute 
  * called 'exception' and you can access to this value via
  * request.getAttribute("exception") in JSP.
- * 
  */
+@Deprecated
 public class ViewExceptionHandler implements ExceptionHandler {
 	
 /*---------------------------- m. variables ----------------------------*/
@@ -50,10 +52,9 @@ public class ViewExceptionHandler implements ExceptionHandler {
 /*------------------------------- methods ------------------------------*/
 	
 	@Override
-	public boolean handleException(Throwable t, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {		
+	public void handleException(Throwable t, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {		
 		req.setAttribute("exception", t);
 		exceptionView.render(servlet, req, resp);					
-		return true;
 	}
 	
 /*----------------------------------------------------------------------*/

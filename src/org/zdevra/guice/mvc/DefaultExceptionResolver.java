@@ -35,7 +35,10 @@ import org.zdevra.guice.mvc.exceptions.MethodInvokingException;
  * 
  * Keep this class immutable and thread-safe.
  * 
+ * The resolver should be removed in next release and replaced by new
+ * GuiceExceptionResolver
  */
+@Deprecated
 class DefaultExceptionResolver implements ExceptionResolver {
 	
 /*---------------------------- m. variables ----------------------------*/
@@ -83,12 +86,8 @@ class DefaultExceptionResolver implements ExceptionResolver {
 			
 			boolean isInstance = clazz.isInstance(t);
 			if (isInstance) {
-				boolean res = handler.handleException(t, servlet, req, resp);
-				if (res) {
-					return;
-				} else {
-					handledCount++;
-				}
+				handler.handleException(t, servlet, req, resp);
+				handledCount++;
 			}
 		}
 		

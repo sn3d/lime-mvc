@@ -52,7 +52,7 @@ public class JspExceptionHandler implements ExceptionHandler {
 /*------------------------------- methods ------------------------------*/
 	
 	@Override
-	public boolean handleException(Throwable t, HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) 
+	public void handleException(Throwable t, HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) 
 	{
 		try {
             HttpRequestForForward newRequest = new HttpRequestForForward(request, this.jspPath);
@@ -68,7 +68,6 @@ public class JspExceptionHandler implements ExceptionHandler {
 		} catch (IOException e) {
 			throw new IllegalStateException("can't redirect to the JSP:" + jspPath, e);
 		}
-		return true;
 	}
 
 }

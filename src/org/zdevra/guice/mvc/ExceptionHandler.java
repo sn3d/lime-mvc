@@ -48,7 +48,7 @@ public interface ExceptionHandler {
 	 * @return when method returns true, the resolver stop working 
 	 *         when method returns false, the resolver continue going through other handlers
 	 */
-	public abstract boolean handleException(Throwable t, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp);
+	public abstract void handleException(Throwable t, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp);
 	
 /*----------------------------------------------------------------------*/
 

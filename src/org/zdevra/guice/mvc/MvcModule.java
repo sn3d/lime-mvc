@@ -18,6 +18,7 @@ package org.zdevra.guice.mvc;
 
 
 import org.zdevra.guice.mvc.ConversionService.ConvertorFactory;
+import org.zdevra.guice.mvc.exceptions.ObsoleteException;
 import org.zdevra.guice.mvc.parameters.ParamProcessorsService;
 import org.zdevra.guice.mvc.views.JspView;
 
@@ -81,7 +82,8 @@ public abstract class MvcModule extends ServletModule {
 		
 	private ParamProcessorsService paramService;
 	private ConversionService conversionService;
-	private ExceptionModuleBuilder exceptionModuleBuilder;
+	private ExceptionModuleBuilder exceptionModuleBuilder; //should be removed
+	private ExceptionResolverBuilder exceptionResolverBuilder;
 	private ControllerModuleBuilder controllerModuleBuilder;
 
 // ------------------------------------------------------------------------
@@ -104,12 +106,20 @@ public abstract class MvcModule extends ServletModule {
 		
 		paramService = new ParamProcessorsService();
 		conversionService = new ConversionService();
-		controllerModuleBuilder = new ControllerModuleBuilder();
-		exceptionModuleBuilder = new ExceptionModuleBuilder();
+		controllerModuleBuilder = new ControllerModuleBuilder();		
+		exceptionResolverBuilder = new ExceptionResolverBuilder(binder());
+		exceptionModuleBuilder = new ExceptionModuleBuilder();  //should be removed
 		
 		try {
 			//default registrations
-			this.bind(ViewResolver.class).to(DefaultViewResolver.class);
+			bind(ViewResolver.class).to(DefaultViewResolver.class);
+			
+			bind(ExceptionResolver.class)
+				.to(GuiceExceptionResolver.class);
+			
+			bind(ExceptionHandler.class)
+				.annotatedWith(Names.named(GuiceExceptionResolver.DEFAULT_EXCEPTIONHANDLER_NAME))
+				.to(DefaultExceptionHandler.class);
 			
 			configureControllers();
 			
@@ -124,19 +134,17 @@ public abstract class MvcModule extends ServletModule {
 				serve(pattern).with(dispatcher);				
 			}
 						
-			//register exception resolver
-			ExceptionResolver exceptionResolver = exceptionModuleBuilder.build();
-			this.bind(ExceptionResolver.class).toInstance(exceptionResolver);
-			
 		} finally {
-			exceptionModuleBuilder = null;
+			exceptionModuleBuilder = null; //should be removed
+			exceptionResolverBuilder = null;
 			controllerModuleBuilder = null;
 			paramService = null;
-			conversionService = null;
+			conversionService = null;			
 		}
 	}
 		
 // ------------------------------------------------------------------------
+	
 	
 	/**
 	 * Method bind view instance to view's name. This binding is used by view resolver.
@@ -174,9 +182,15 @@ public abstract class MvcModule extends ServletModule {
 	}
 	
 	
+	@Deprecated
 	protected final ExceptionBindingBuilder exception(Class<? extends Throwable> exceptionClazz) 
 	{
-		return this.exceptionModuleBuilder.exception(exceptionClazz);
+		throw new ObsoleteException("bindException()");
+	}
+	
+	
+	protected final ExceptionResolverBindingBuilder bindException(Class<? extends Throwable> exceptionClazz) {
+		return this.exceptionResolverBuilder.bindException(exceptionClazz);
 	}
 	
 	
@@ -200,6 +214,12 @@ public abstract class MvcModule extends ServletModule {
 	{
 		public void handledBy(ExceptionHandler handler);
 		public void toView(View exceptionView);
+	}
+	
+	
+	public static interface ExceptionResolverBindingBuilder {
+		public void toHandler(Class<? extends ExceptionHandler> handlerClass);
+		public void toHandlerInstance(ExceptionHandler handler);
 	}
 	
 // ------------------------------------------------------------------------

@@ -6,8 +6,8 @@ public class Case4Module extends MvcModule {
 
 	@Override
 	protected void configureControllers() {		
-		exception(CustomException.class).handledBy(new CustomExceptionHandler());		
-		exception(AdvancedHandledException.class).handledBy(new AdvancedHandler());
+		bindException(CustomException.class).toHandler(CustomExceptionHandler.class);
+		bindException(AdvancedHandledException.class).toHandlerInstance(new AdvancedHandler());
 	}
 
 }

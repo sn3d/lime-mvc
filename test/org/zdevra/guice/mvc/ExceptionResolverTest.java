@@ -49,9 +49,8 @@ public class ExceptionResolverTest {
 	public static class TestHandler implements ExceptionHandler
 	{
 		@Override
-		public boolean handleException(Throwable t, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {			
+		public void handleException(Throwable t, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {			
 			t.getMessage();
-			return false;
 		}		
 	}
 	
@@ -126,18 +125,16 @@ public class ExceptionResolverTest {
 						this.exception(IllegalStateException.class)
 							.handledBy(new ExceptionHandler() {					
 								@Override
-								public boolean handleException(Throwable t, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {
+								public void handleException(Throwable t, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {
 									System.out.println("Illegal exception is:" + t.getMessage());
-									return true;
 								}
 							});
 						
 						this.exception(Exception.class)
 							.handledBy(new ExceptionHandler() {					
 								@Override
-								public boolean handleException(Throwable t, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {
+								public void handleException(Throwable t, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {
 									System.out.println("Normal exception is:" + t.getMessage());
-									return true;
 								}
 						});						
 					}					
@@ -150,5 +147,6 @@ public class ExceptionResolverTest {
 		exceptionResolver.handleException(new IllegalStateException("test1"), null, null, null);
 		exceptionResolver.handleException(new NullPointerException("test"), null, null, null);
 	}
+	
 	
 }

@@ -11,13 +11,12 @@ import org.zdevra.guice.mvc.ExceptionHandler;
 public class AdvancedHandler implements ExceptionHandler {
 
 	@Override
-	public boolean handleException(Throwable t, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {
+	public void handleException(Throwable t, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {
 		try {
 			resp.getWriter().write("advanced handler:" + t.getMessage());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return true;
 	}
 
 }
