@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.zdevra.guice.mvc.exceptions.MethodInvokingException;
+
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
@@ -38,14 +40,18 @@ public class GuiceExceptionResolver implements ExceptionResolver {
 	
 	@Override
 	public void handleException(Throwable t, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {
-		Throwable throwedException = t.getCause();
+		if (t instanceof MethodInvokingException) {
+			t = t.getCause();
+		}
+		
 		for (ExceptionBind bind : binds) {
-			if (bind.getExceptionClass().isInstance(throwedException)) {
-				bind.getHandler(injector).handleException(throwedException, servlet, req, resp);
+			if (bind.getExceptionClass().isInstance(t)) {
+				bind.getHandler(injector).handleException(t, servlet, req, resp);
 				return;
 			}
 		}		
-		defaultHandler.handleException(throwedException, servlet, req, resp);
+		
+		defaultHandler.handleException(t, servlet, req, resp);
 	}
 
 }

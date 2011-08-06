@@ -24,7 +24,7 @@ public class MethodInvokingException extends MvcException {
 	 * Constructor
 	 */
 	public MethodInvokingException(Method method, Throwable e) {
-		super("Exception raised in the method '" + method.getName() + "()'", e);
+		super("Exception raised in the method '" + ( method != null ? method.getName() : ""  ) + "()'", e);
 	}
 
 }

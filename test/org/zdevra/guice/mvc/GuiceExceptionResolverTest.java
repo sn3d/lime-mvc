@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.zdevra.guice.mvc.exceptions.MethodInvokingException;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
@@ -144,6 +145,25 @@ public class GuiceExceptionResolverTest {
 		Assert.assertTrue(Output.getInstance().msg.contains("DefaulHandler:runtime"));
 				
 	}	
+	
+	@Test
+	public void testHandlingMethodException() {
+		Injector injector = Guice.createInjector(new TestExceptionModule());
+		ExceptionResolver resolver = injector.getInstance(ExceptionResolver.class);
+			
+		resolver.handleException(new MethodInvokingException(null, new NullPointerException()), null, null, null);		
+		Assert.assertTrue(Output.getInstance().msg.contains("FirstCustomHandler"));
+		
+		resolver.handleException(new MethodInvokingException(null, new Custom1ArgumentException()), null, null, null);
+		Assert.assertTrue(Output.getInstance().msg.contains("SecondCustomHandler:Custom1ArgumentException"));
+		
+		resolver.handleException(new MethodInvokingException(null, new IllegalArgumentException()), null, null, null);
+		Assert.assertTrue(Output.getInstance().msg.contains("SecondCustomHandler:IllegalArgumentException"));
+		
+		resolver.handleException(new MethodInvokingException(null, new RuntimeException("runtime")), null, null, null);
+		Assert.assertTrue(Output.getInstance().msg.contains("DefaulHandler:runtime"));
+				
+	}
 	
 	@Test
 	public void testHandlingInheritance() {
