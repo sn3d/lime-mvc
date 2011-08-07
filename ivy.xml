@@ -15,6 +15,7 @@
 		<!-- JAVA -->
 		<dependency org="com.google.inject" name="guice-parent" rev="3.0" conf="java->default"/>
 		<dependency org="com.google.inject.extensions" name="guice-servlet" rev="3.0" conf="java->default"/>
+		<dependency org="com.google.inject.extensions" name="guice-multibindings" rev="3.0" conf="java->default"/>
 
 		<!-- TEST -->    
 		<dependency org="org.testng" name="testng" rev="6.0.1" conf="test->default" />

@@ -2,13 +2,14 @@
 
   <test name="unit-tests" >
     <classes>    
-       <class name="org.zdevra.guice.mvc.ExceptionResolverTest" />
+       <class name="org.zdevra.guice.mvc.GuiceExceptionResolverTest" />
        <class name="org.zdevra.guice.mvc.ParamProcessorTest" />
        <class name="org.zdevra.guice.mvc.ConversionServiceTest" />
        
        <class name="org.zdevra.guice.mvc.case1.Case1Test" />
        <class name="org.zdevra.guice.mvc.case2.Case2Test" />
        <class name="org.zdevra.guice.mvc.case3.Case3Test" />
+       <class name="org.zdevra.guice.mvc.case4.Case4Test" />
     </classes>
   </test>
 

@@ -24,24 +24,14 @@ import org.zdevra.guice.mvc.UriParameter;
 import org.zdevra.guice.mvc.Utils;
 
 /**
- * The parameter processor for @UriParameter annotation.
+ * The parameter's parameter processor for {@link org.zdevra.guice.mvc.UriParameter} annotation.
+ * 
+ * The Url in {@literal @}RequestMapping of the method can be a regular expression. 
+ * {@link org.zdevra.guice.mvc.UriParameter} pick up the value of some regexp. group and put it into method's parameter.
  * <p>
  * 
- * The Url in @RequestMapping of the method can be a regular expression. @UriParameter
- * take the value of some regexp. group and put it into method's parameter.
- * <p>
+ * Processor uses the same type conversion like RequestParam processor.
  * 
- * Processor implements the same conversion like RequestParam processor.
- * 
- * for example:
- * <pre><code>
- * @RequestMapping("/controller/([a..z]+)/([0..9]+)"
- * public void controllerMethod(@UriParameter(1) String param1, @UriParameter(2) param2) {
- *    //param1 == value in group [a..z]+;
- *    //param2 == value in group [0..9]+; 
- * ...
- * }
- * </code><pre>
  */
 public final class UriParam implements ParamProcessor {
 
@@ -52,7 +42,7 @@ public final class UriParam implements ParamProcessor {
 	
 /*----------------------------------------------------------------------*/
 	
-	public static class Factory implements ParamProcessorFactory {
+	static class Factory implements ParamProcessorFactory {
 
 		public ParamProcessor buildParamProcessor(ParamMetadata metadata) {
 			Annotation[] paramAnnotations = metadata.getAnnotations();

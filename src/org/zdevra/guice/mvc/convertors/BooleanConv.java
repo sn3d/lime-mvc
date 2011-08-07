@@ -23,7 +23,23 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * The annontation tell to convertor how to convert string to boolean.
+ * The annontation tell to convertor how to convert a string to boolean.
+ * 
+ * Let's assume that we don't want convert regular 'true' 'false' strings, but
+ * we want convert Y like true a N like false:
+ * 
+ * <pre class="prettyprint">
+ * {@literal @}Controller
+ * public class MyController {
+ * 
+ *    {@literal @}RequestMapping(path="/method")
+ *    public void doSomething( {@literal @}RequestParameter("bool-param") {@literal @}BooleanConv(trueVal="Y", falseVal="N") boolean param) 
+ *    {
+ *    	
+ *    }
+ * }
+ * </pre>
+ *
  * 
  * @see BooleanConvertor
  */

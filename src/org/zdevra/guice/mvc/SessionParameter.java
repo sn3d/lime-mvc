@@ -28,15 +28,17 @@ import java.lang.annotation.Target;
  * <p>
  * 
  * example of picking up of the value for the 'user' session param:
- * <pre><code>
- * @@Controller
+ * <pre class="prettyprint">
+ * {@literal @}Controller
  * class MyController {
- *    @@RequestMapping("/department");
- *    public String handleRequest( @@SessionParameter("user") String user ) {
+ *    {@literal @}RequestMapping("/department");
+ *    public String handleRequest( {@literal @}SessionParameter("user") String user ) {
  *    	return "user is:" + user;
  *    }
  * }
- * </code></pre> 
+ * </pre>
+ * 
+ * @see org.zdevra.guice.mvc.parameters.SessionAttributeParam
  */
 @Retention(RUNTIME)
 @Target({ ElementType.FIELD, ElementType.PARAMETER })

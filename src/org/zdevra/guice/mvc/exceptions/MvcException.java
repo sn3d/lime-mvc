@@ -16,6 +16,9 @@
  *****************************************************************************/
 package org.zdevra.guice.mvc.exceptions;
 
+/**
+ * All Lime exceptions are derived from this exception 
+ */
 public class MvcException extends RuntimeException {
 
 	public MvcException(String arg0, Throwable arg1) {

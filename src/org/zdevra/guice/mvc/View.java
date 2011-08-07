@@ -23,8 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.zdevra.guice.mvc.views.NamedView;
 
 /**
- * Interface representing view abstraction. Implement this interface if you
- * want your own view rendering/processing.
+ * You will implement this interface if you want your own view rendering.
  */
 public interface View {
 	

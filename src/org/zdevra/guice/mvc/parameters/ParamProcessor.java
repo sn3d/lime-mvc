@@ -18,6 +18,14 @@ package org.zdevra.guice.mvc.parameters;
 
 import org.zdevra.guice.mvc.InvokeData;
 
+/**
+ * You will implement this interface for your custom parameter processing.The processor
+ * is builded via {@link ParamProcessorFactory} implementation. This factory implementation is then
+ * registered in {@link ParamProcessorService}
+ * 
+ * @see ParamProcessorFactory
+ * @see ParamProcessorService
+ */
 public interface ParamProcessor {
 	public Object getValue(InvokeData data);
 }

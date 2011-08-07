@@ -31,14 +31,31 @@ import org.zdevra.guice.mvc.convertors.LongConvertor;
 import org.zdevra.guice.mvc.convertors.StringConvertor;
 
 /**
- * The class is responsible for converting strings to a various 
- * datatypes. 
+ * The class provides conversions from incomming strings from HTTP requests 
+ * to a various datatypes. If there is no convertor for that datatype, 
+ * then is used {@link DefaultConvertor}. 
  * 
- * It's a composition of convertors with ability to registering a custom
- * convertors. Your own convertor must have to implement the 
- * ConversionService.Convertor interface.
+ * The class is used internally by {@link MethodInvokerImpl}.
  * 
- * If there is no convertor for that datatype, then is used DefaultConvertor.
+ * You may implement and register your own convertor. Just
+ * implements the {@link ConvertorService.Convertor}, {@link ConvertorService.ConvertorFactory} 
+ * interfaces and in your configureControllers() register the convertor:
+ * 
+ * <pre class="prettyprint">
+ * class MyModule extends MvcModule {
+ * 
+ *    protected void configureControllers() {
+ *       ...
+ *       registerConvertor(MyType.class, new MyConvertorFactory());
+ *       ...
+ *    }
+ * }
+ * </pre>
+ * 
+ * All supported convertors in Lime are placed in package {@link org.zdevra.guice.mvc.convertors}.
+ * 
+ * @see ConversionService.Convertor
+ * @see ConversionService.ConvertorFactory
  */
 public class ConversionService {
 /*---------------------------- m. variables ----------------------------*/

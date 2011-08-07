@@ -16,6 +16,25 @@
  *****************************************************************************/
 package org.zdevra.guice.mvc;
 
+/**
+ * Class prepresents composition of view and data model. Your controller's 
+ * method would return an object of this class with data and view.
+ *
+ * <p>example:
+ * <pre class="prettyprint">
+ * {@literal @}Controller
+ * public class BookController  {
+ *    
+ *    {@literal @}RequestMapping(path="/home")
+ *    public ModelAndView allBooks() {
+ *       Model m = ...;
+ *       View  v = ...;
+ *       ...
+ *       return new ModelAndView(m, v);
+ *    }
+ * }
+ * </pre>
+ */
 public class ModelAndView {
 
 /*---------------------------- m. variables ----------------------------*/
@@ -25,14 +44,29 @@ public class ModelAndView {
 	
 /*---------------------------- constructors ----------------------------*/
 	
+	/**
+	 * constructs a ModelAndView object and as a view is set
+	 * undefined view View.NULL_VIEW.
+	 */
 	public ModelAndView() {
 		this(new Model(), View.NULL_VIEW);
 	}
 
+	/**
+	 * constructs a ModelAndView object with empty model 
+	 * and concrete view.
+	 * @param view
+	 */
 	public ModelAndView(View view) {
 		this(new Model(), view);
 	}
 	
+	/**
+	 * constructos a ModelAndView object with concrete model
+	 * and view. 
+	 * @param model
+	 * @param view
+	 */
 	public ModelAndView(Model model, View view) {
 		this.model = model;
 		this.view = view;
@@ -49,13 +83,6 @@ public class ModelAndView {
 		return view;
 	}
 	
-	
-	public void mergeModelAndView(ModelAndView mav) {
-		this.addModel(mav.model);
-		this.addView(mav.view);
-	}
-	
-	
 	public void addModel(Model m) {
 		this.model.addModel(m);
 	}
@@ -65,7 +92,18 @@ public class ModelAndView {
 		if (v != View.NULL_VIEW) { 
 			this.view = v;
 		}
+	}	
+	
+	/**
+	 * Method is used internally by {@link MvcDispatcherServlet}.
+	 * @param mav
+	 */
+	void mergeModelAndView(ModelAndView mav) {
+		this.addModel(mav.model);
+		this.addView(mav.view);
 	}
+	
+	
 	
 /*---------------------------------------------------------------------*/
 }

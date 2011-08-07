@@ -23,18 +23,18 @@ import org.zdevra.guice.mvc.SessionParameter;
 import org.zdevra.guice.mvc.Utils;
 
 /**
- * This param. processor is associated with {@link SessionParameter} annotation
+ * The parameter's processor is associated with {@link SessionParameter} annotation
  * and supports building process of arguments with this annotation.
  * <p>
  * 
  * for example:
- * <pre><code>
- *  @RequestMapping(path="/loggeduserinfo") 
- *  public void getInfoAboutLoggedUser(@SessionParameter("loggeduser") Customer customer) {
+ * <pre class="prettyprint">
+ *  {@literal @}RequestMapping(path="/loggeduserinfo") 
+ *  public void getInfoAboutLoggedUser({@literal @}SessionParameter("loggeduser") Customer customer) {
  *    ...			
  *	}
- * </code></pre>
- * <p>
+ * </pre>
+ * 
  * 
  * In this case, processor build the customer's argument and fills it with the value from the 
  * session with the name 'loggeduser'. If this attribute doesn't exist in the session, then is 
@@ -50,7 +50,7 @@ public class SessionAttributeParam implements ParamProcessor {
 	
 /*----------------------------------------------------------------------*/
 	
-	public static class Factory implements ParamProcessorFactory {
+	static class Factory implements ParamProcessorFactory {
 
 		@Override
 		public ParamProcessor buildParamProcessor(ParamMetadata metadata) {

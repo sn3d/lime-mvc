@@ -29,18 +29,18 @@ import org.zdevra.guice.mvc.RequestParameter;
 import org.zdevra.guice.mvc.Utils;
 
 /**
- * This processor is executed when method's parameter is annotated by
+ * The parameter's processor is executed when method's parameter is annotated by
  * the RequestParameter annotation and take the value from the request's 
  * parameter.
  * <p>
  * 
  * Example:
- * <pre><code>
- * @RequestMapping("/control");
- * public void controllerMethod(@RequestParameter("val1") String val1) {
+ * <pre class="prettyprint">
+ * {@literal @}RequestMapping("/control");
+ * public void controllerMethod({@literal @}RequestParameter("val1") String val1) {
  *    ...
  * }
- * </code><pre>
+ * </pre>
  * 
  * Example executes the controllerMethod() method when "www.someplace.com/control?val1=somevalue" is
  * requested and puts 'somevalue' into val1 argument.
@@ -49,13 +49,14 @@ import org.zdevra.guice.mvc.Utils;
  * The RequestParam supports arrays as well. Let's assume that we have input fields named like 
  * param[0], param[1], param[2] which contains the integer values, we might use the following controlling method:
  * 
- * <pre><code>
- * @RequestMapping("/control");
- * public void controllerMethod(@RequestParameter("param") int[] values) {
+ * <pre class="prettyprint">
+ * {@literal @}RequestMapping("/control");
+ * public void controllerMethod({@literal @}RequestParameter("param") int[] values) {
  *    ...
  * }
- * </code><pre>
+ * </pre>
  *   
+ * @see org.zdevra.guice.mvc.RequestParameter
  */
 public class HttpPostParam implements ParamProcessor {
 /*---------------------------- m. variables ----------------------------*/
@@ -66,7 +67,7 @@ public class HttpPostParam implements ParamProcessor {
 
 /*----------------------------------------------------------------------*/
 	
-	public static class Factory implements ParamProcessorFactory {
+	static class Factory implements ParamProcessorFactory {
 
 		@Override
 		public ParamProcessor buildParamProcessor(ParamMetadata metadata) {

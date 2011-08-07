@@ -17,7 +17,16 @@
 package org.zdevra.guice.mvc;
 
 
-public interface MethodInvoker {
+/**
+ * Interface to intercept invokation of controller's method.
+ * The {@link MethodInvokerImpl} implementing an execution
+ * of the controller's method. This can be decorated
+ * by another functionality like {@link MethodInvokerFilter}.
+ * 
+ * @see MethodInvokerFilter
+ * @see MethodInvokerImpl
+ */
+interface MethodInvoker {
 
 	/**
 	 * This method is called by MvcServletDispatcher and invoke

@@ -18,13 +18,18 @@ package org.zdevra.guice.mvc.exceptions;
 
 import java.lang.reflect.Method;
 
+/**
+ * Wrapper exception. Each exception throwed from controller is wrapped by this
+ * exception.
+ *
+ */
 public class MethodInvokingException extends MvcException {
 	
 	/**
 	 * Constructor
 	 */
 	public MethodInvokingException(Method method, Throwable e) {
-		super("Exception raised in the method '" + method.getName() + "()'", e);
+		super("Exception raised in the method '" + ( method != null ? method.getName() : ""  ) + "()'", e);
 	}
 
 }

@@ -22,14 +22,14 @@ import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.zdevra.guice.mvc.AbstractTest;
+import org.zdevra.guice.mvc.TestServlet;
 
 import com.meterware.httpunit.GetMethodWebRequest;
 import com.meterware.httpunit.WebRequest;
 import com.meterware.httpunit.WebResponse;
 import com.meterware.servletunit.InvocationContext;
-import com.meterware.servletunit.ServletRunner;
 import com.meterware.servletunit.ServletUnitClient;
 
 /**
@@ -38,15 +38,18 @@ import com.meterware.servletunit.ServletUnitClient;
  * implementation.
  */
 @Test
-public class Case2Test {
+public class Case2Test extends AbstractTest {
 
-	private ServletRunner sr;
-
-	@BeforeClass
-	public void prepare() {
-		sr = new ServletRunner();
-		sr.registerServlet("test/*", Case2DispatcherServlet.class.getName());
+	public static class Case2Servlet extends TestServlet {
+		public Case2Servlet() {
+			super(Case2Controller.class, new Case2Module());
+		}	
 	}
+		
+	public Case2Test() {
+		super(Case2Servlet.class);
+	}
+	
 	
 	@Test
 	public void testSimple() throws IOException, ServletException {

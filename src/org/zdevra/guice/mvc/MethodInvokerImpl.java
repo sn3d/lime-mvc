@@ -29,8 +29,15 @@ import org.zdevra.guice.mvc.parameters.ParamProcessor;
 import org.zdevra.guice.mvc.parameters.ParamProcessorsService;
 import org.zdevra.guice.mvc.views.NamedView;
 
-
-public class MethodInvokerImpl implements MethodInvoker {
+/**
+ * Class prepare data for controller's method, call the method
+ * and process the method's result.
+ * 
+ * For data preparation is used {@link ParamProcessorsService} which use
+ * different processors defined in a package {@link org.zdevra.guice.mvc.parameters} 
+ *
+ */
+class MethodInvokerImpl implements MethodInvoker {
 	
 /*---------------------------- m. variables ----------------------------*/
 	

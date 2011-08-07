@@ -23,11 +23,11 @@ import org.zdevra.guice.mvc.ConversionService;
 import org.zdevra.guice.mvc.Utils;
 
 /**
- * The class is immutable collection of all method's parameter's metadata like the annotations,
+ * The class is immutable collection of all method's parameter metadata like annotations,
  * type, parameter builder, etc.
  * 
  * This metadata object is consumed by the parameter processor factory and the 
- * factory construct parameter processor from metadata.
+ * factory constructs parameter processor from metadata.
  * 
  */
 public class ParamMetadata {

@@ -16,6 +16,12 @@
  *****************************************************************************/
 package org.zdevra.guice.mvc.parameters;
 
+/**
+ * You will implement this interface which build your parameter processor.
+ * 
+ * @see ParamProcessor
+ * @see ParamProcessorService
+ */
 public interface ParamProcessorFactory {	
 	public ParamProcessor buildParamProcessor(ParamMetadata metadata);	
 }

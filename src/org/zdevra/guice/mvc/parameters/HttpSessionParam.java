@@ -5,15 +5,15 @@ import javax.servlet.http.HttpSession;
 import org.zdevra.guice.mvc.InvokeData;
 
 /**
- * The processor forwards the session object into the method's parameter. 
+ * The parameter's processor forwards the session object into the method's parameter. 
  * <p>
  * 
- * <pre><code>
- *  @RequestMapping(path="/somepath") 
+ * <pre class="prettyprint">
+ *  {@literal @}RequestMapping(path="/somepath") 
  *  public void getInfoAboutLoggedUser(HttpSession session) {
  *    ...			
  *	}
- * </code></pre>
+ * </pre>
  * <p>
  *
  */
@@ -21,7 +21,7 @@ public class HttpSessionParam implements ParamProcessor {
 
 /*----------------------------------------------------------------------*/
 	
-	public static class Factory implements ParamProcessorFactory {
+	static class Factory implements ParamProcessorFactory {
 		
 		private final ParamProcessor processor = new HttpSessionParam();
 		

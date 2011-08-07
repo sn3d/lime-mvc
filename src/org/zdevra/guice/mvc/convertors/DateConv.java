@@ -24,9 +24,9 @@ import java.lang.annotation.Target;
 
 /**
  * The annontation tells to the convertor how to convert a string value to the date.
- * See the DateConvertor class if you are insteresting how to use this annotation.
+ * See the {@link DateConvertor} class if you are insteresting how to use this annotation.
  * 
- * @see BooleanConvertor
+ * @see DateConvertor
  */
 @Retention(RUNTIME)
 @Target({ ElementType.FIELD, ElementType.PARAMETER })

@@ -16,6 +16,13 @@
  *****************************************************************************/
 package org.zdevra.guice.mvc;
 
+/**
+ * Enumeration of the request's types
+ * 
+ * The annotation {@link RequestMapping} can specify for which
+ * request types the method will be invoked.
+ *
+ */
 public enum RequestType {
 	ALL,
 	GET,

@@ -22,7 +22,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Class contain static utility methods.
+ * The class contains static utility methods.
  */
 public class Utils {
 

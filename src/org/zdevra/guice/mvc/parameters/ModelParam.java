@@ -20,15 +20,15 @@ import org.zdevra.guice.mvc.InvokeData;
 import org.zdevra.guice.mvc.Model;
 
 /**
- * This param. processor take care of the {@link Model} parameter in the method.
+ * The parameter's processor take care of the {@link org.zdevra.guice.mvc.Model} parameter in the method.
  * 
  * for example:
- * <pre><code>
- * @RequestMapping("/control");
+ * <pre class="prettyprint">
+ * {@literal @}RequestMapping("/control");
  * public void controllerMethod(Model model) {
  *   ...
  * }
- * </code></pre>
+ * </pre>
  */
 public class ModelParam implements ParamProcessor {
 /*---------------------------- constructors ----------------------------*/
@@ -36,7 +36,7 @@ public class ModelParam implements ParamProcessor {
 	/**
 	 * Factory for model parameter processor
 	 */
-	public static class Factory implements ParamProcessorFactory {
+	static class Factory implements ParamProcessorFactory {
 		
 		private final ParamProcessor processor;
 		

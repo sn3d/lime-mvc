@@ -16,7 +16,13 @@
  *****************************************************************************/
 package org.zdevra.guice.mvc;
 
-public class ControllerDefinition {
+/**
+ * Class is representing data-structure used internally by Lime and
+ * compose the all necessary data for controller.
+ * 
+ * This class is mainly used by {@link MvcDispatcherServlet}
+ */
+class ControllerDefinition {
 	
 // ------------------------------------------------------------------------
 	

@@ -6,28 +6,32 @@ import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.zdevra.guice.mvc.AbstractTest;
+import org.zdevra.guice.mvc.TestServlet;
 
 import com.meterware.httpunit.GetMethodWebRequest;
 import com.meterware.httpunit.WebRequest;
 import com.meterware.httpunit.WebResponse;
 import com.meterware.servletunit.InvocationContext;
-import com.meterware.servletunit.ServletRunner;
 import com.meterware.servletunit.ServletUnitClient;
 
 
 /**
  * This test is testing view resolver functionality
  */
-public class Case3Test {
+@Test
+public class Case3Test extends AbstractTest {
 
-	private ServletRunner sr;
-
-	@BeforeClass
-	public void prepare() {
-		sr = new ServletRunner();
-		sr.registerServlet("test/*", Case3DispatcherServlet.class.getName());
+	public static class Case3Servlet extends TestServlet {
+		public Case3Servlet() {
+			super(Case3Controller.class, new Case3Module());
+		}	
+	}
+	
+	
+	public Case3Test() {
+		super(Case3Servlet.class);
 	}
 	
 	
@@ -137,11 +141,5 @@ public class Case3Test {
 		String out = response.getText();
 		Assert.assertTrue( out.contains("viewId=4") );
 	}
-
-
-
-
-
-
 
 }

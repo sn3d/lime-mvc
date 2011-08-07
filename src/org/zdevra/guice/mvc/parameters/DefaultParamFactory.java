@@ -16,7 +16,10 @@
  *****************************************************************************/
 package org.zdevra.guice.mvc.parameters;
 
-
+/**
+ * Default factory is used for all unknown parameters and throws 
+ * exception.
+ */
 public class DefaultParamFactory implements ParamProcessorFactory {
 	
 // ------------------------------------------------------------------------

@@ -32,7 +32,9 @@ import org.zdevra.guice.mvc.View;
  * 
  * Prefer this view as a controller's return view, because only named views
  * are handled by the Lime view resolver.
- *
+ * 
+ * @see org.zdevra.guice.mvc.ViewResolver
+ * @see org.zdevra.guice.mvc.MvcModule
  */
 public final class NamedView implements View {
 	
@@ -69,7 +71,7 @@ public final class NamedView implements View {
 	
 	@Override
 	public String toString() {
-		return "NamedView [viewName=" + name + "]";
+		return "NamedView [name=" + name + "]";
 	}
 
 		

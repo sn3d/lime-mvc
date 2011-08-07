@@ -19,60 +19,54 @@ package org.zdevra.guice.mvc;
 
 import org.zdevra.guice.mvc.ConversionService.ConvertorFactory;
 import org.zdevra.guice.mvc.parameters.ParamProcessorsService;
-import org.zdevra.guice.mvc.views.JspView;
 
 import com.google.inject.name.Names;
 import com.google.inject.servlet.ServletModule;
 
 /**
- * MVC module for GUICE. 
+ * <i>MVC module</i> for GUICE. 
  * <p>
  * 
- * First at one read how to use GUICE with web applications. If you are fammiliar 
- * with GUICE servlet, then using of MVC is pretty straight forward.
+ * If you are fammiliar with the GUICE servlets, then using of the Lime MVC is pretty straight forward.
+ * MvcModule is basically extended version of Guice's ServletModule and you can use all ServletModule's
+ * methods in configureControllers() method implementation (like serve() etc..).
  * <p>
  * 
- * In your web application, into GuiceServletContextListener implementation,
- * which is instatiating Injector, put new MvcModule with implemented configureControllers() method.
- * <p>
+ * In your web application, put new MvcModule with implemented configureControllers() method 
+ * into GuiceServletContextListener implementation.
  * 
- * example:
- * <pre><code>
+ * 
+ * <p>example:
+ * <pre class="prettyprint">
  * public class WebAppConfiguration extends GuiceServletContextListener {
  * ...
  *   protected Injector getInjector() {
  *     Injector injector =  Guice.createInjector(
  *        new MvcModule() {
  *           protected void configureControllers() {
- *             
- *             //exception handlers
- *             
  *              
- *             //controllers
- *              control("/someController/*")
+ *             control("/someController/*")
  *                .withController(SomeController.class)
- *                .set();
- *            
- *              control("/anotherController/*")
- *                .withController(AnotherController.class)
- *                .toView(BasicView.create("welcome.jsp"))
- *                .set();
- *
+ *                .set();        
  *              ...
  *           }
  *        }
  *     );
- *     
  *     return injector;
  *   }
- *   
- *   
  * }
- * </code></pre>
- * <p>
+ * </pre>
+ * Example shows the basic usage and registers the simple controller class. 
+ * All requests which stars with '/someController/' will be processed by the SomeController. 
  * 
- * MvcModule is extended version of Guice's ServletModule and you can use all ServletModule's
- * methods in configureControllers() method implementation (like serve() etc..).
+ * <p>
+ *
+ * @see Controller 
+ * @see Model
+ * @see ModelAndView
+ * @see View
+ * @see ViewResolver
+ * @see ExceptionResolver
  *  
  */
 public abstract class MvcModule extends ServletModule {
@@ -81,7 +75,8 @@ public abstract class MvcModule extends ServletModule {
 		
 	private ParamProcessorsService paramService;
 	private ConversionService conversionService;
-	private ExceptionModuleBuilder exceptionModuleBuilder;
+	private ExceptionResolverBuilder exceptionResolverBuilder;
+	private NamedViewBuilder namedViewBudiler;
 	private ControllerModuleBuilder controllerModuleBuilder;
 
 // ------------------------------------------------------------------------
@@ -104,12 +99,20 @@ public abstract class MvcModule extends ServletModule {
 		
 		paramService = new ParamProcessorsService();
 		conversionService = new ConversionService();
-		controllerModuleBuilder = new ControllerModuleBuilder();
-		exceptionModuleBuilder = new ExceptionModuleBuilder();
+		controllerModuleBuilder = new ControllerModuleBuilder();		
+		exceptionResolverBuilder = new ExceptionResolverBuilder(binder());
+		namedViewBudiler = new NamedViewBuilder(binder());
 		
 		try {
 			//default registrations
-			this.bind(ViewResolver.class).to(DefaultViewResolver.class);
+			bind(ViewResolver.class).to(DefaultViewResolver.class);
+			
+			bind(ExceptionResolver.class)
+				.to(GuiceExceptionResolver.class);
+			
+			bind(ExceptionHandler.class)
+				.annotatedWith(Names.named(ExceptionResolver.DEFAULT_EXCEPTIONHANDLER_NAME))
+				.to(DefaultExceptionHandler.class);
 			
 			configureControllers();
 			
@@ -124,43 +127,25 @@ public abstract class MvcModule extends ServletModule {
 				serve(pattern).with(dispatcher);				
 			}
 						
-			//register exception resolver
-			ExceptionResolver exceptionResolver = exceptionModuleBuilder.build();
-			this.bind(ExceptionResolver.class).toInstance(exceptionResolver);
-			
 		} finally {
-			exceptionModuleBuilder = null;
+			exceptionResolverBuilder = null;
 			controllerModuleBuilder = null;
+			namedViewBudiler = null;
 			paramService = null;
-			conversionService = null;
+			conversionService = null;			
 		}
 	}
 		
 // ------------------------------------------------------------------------
 	
+	
 	/**
-	 * Method bind view instance to view's name. This binding is used by view resolver.
+	 * Method bind to view's name some view.
 	 */
-	protected final void bindView(String viewName, View view) {
-		bind(View.class).annotatedWith(Names.named(viewName)).toInstance(view);
+	protected final NamedViewBindingBuilder bindViewName(String viewName) {
+		return this.namedViewBudiler.bindViewName(viewName);
 	}
-	
-	
-	/**
-	 * Method bind view class to view's name. This binding is used by view resolver.
-	 */	
-	protected final void bindView(String viewName, Class<? extends View> viewClazz) {
-		bind(View.class).annotatedWith(Names.named(viewName)).to(viewClazz);
-	}	
-	
-	
-	/**
-	 * Method bind JSP page to view's name. This binding is used by view resolver.
-	 */		
-	protected final void bindView(String viewName, String jsp) {
-		bind(View.class).annotatedWith(Names.named(viewName)).toInstance(new JspView(jsp));
-	}
-	
+		
 	
 	/**
 	 * The method registers a custom convertor which converts strings to the
@@ -174,12 +159,21 @@ public abstract class MvcModule extends ServletModule {
 	}
 	
 	
-	protected final ExceptionBindingBuilder exception(Class<? extends Throwable> exceptionClazz) 
-	{
-		return this.exceptionModuleBuilder.exception(exceptionClazz);
+	/**
+	 * Method binds the exception handler to concrete exception type
+	 * @param exceptionClazz
+	 * @return
+	 */
+	protected final ExceptionResolverBindingBuilder bindException(Class<? extends Throwable> exceptionClazz) {
+		return this.exceptionResolverBuilder.bindException(exceptionClazz);
 	}
 	
 	
+	/**
+	 * Method bind controller class to the concrete url.
+	 * @param urlPattern
+	 * @return
+	 */
 	protected final ControllerBindingBuilder control(String urlPattern) 
 	{
 		return this.controllerModuleBuilder.control(urlPattern);
@@ -194,12 +188,18 @@ public abstract class MvcModule extends ServletModule {
 		public ControllerBindingBuilder toView(String viewName);
 		public void set();
 	}
+		
+	
+	public static interface ExceptionResolverBindingBuilder {
+		public void toHandler(Class<? extends ExceptionHandler> handlerClass);
+		public void toHandlerInstance(ExceptionHandler handler);	
+	}
 	
 	
-	public static interface ExceptionBindingBuilder 
-	{
-		public void handledBy(ExceptionHandler handler);
-		public void toView(View exceptionView);
+	public static interface NamedViewBindingBuilder {
+		public void toView(Class<? extends View> viewCLass);
+		public void toViewInstance(View view);
+		public void toJsp(String pathToJsp);
 	}
 	
 // ------------------------------------------------------------------------

@@ -26,18 +26,30 @@ import javax.servlet.http.HttpServletResponse;
  * {@link MvcModule}.
  * <p>
  * 
+ * Example of registration:
+ * <pre class="prettyprint">
+ * public class MyModule extends MvcModule {
+ *
+ *   protected void configureControllers() {
+ *      ...		
+ *      bindException(CustomException.class).toHandler(CustomExceptionHandler.class);
+ *      ...
+ *   }
+ * </pre>
+ * 
  * Method handleException is invoked in case when controller throw some
  * kind of exception which is instance of exceptionClass.
  * <p>
  *
- * <pre>
- * Warn: Please avoid to use any states or member variables in handler, or
- *       minimize it and use final keyword. Handler's instance is existing only
- *       one per servlet instance and handler's method handleException() is
- *       called parallelly from different threads.
- * </pre>
+ * <b>Warn:</b> Please avoid to use any states or member variables in handler, or
+ *              minimize it and use final keyword. Handler's instance is existing only
+ *              one per servlet instance and handler's method handleException() is
+ *              called parallelly from different threads.
+ * 
+ * @see MvcModule
+ * @see ExceptionResolver
  */
-public abstract  class ExceptionHandler {
+public interface ExceptionHandler {
 		
 /*------------------------------- methods ------------------------------*/
 	
@@ -48,7 +60,7 @@ public abstract  class ExceptionHandler {
 	 * @return when method returns true, the resolver stop working 
 	 *         when method returns false, the resolver continue going through other handlers
 	 */
-	public abstract boolean handleException(Throwable t, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp);
+	public void handleException(Throwable t, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp);
 	
 /*----------------------------------------------------------------------*/
 
