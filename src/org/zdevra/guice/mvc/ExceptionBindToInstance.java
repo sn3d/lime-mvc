@@ -2,6 +2,15 @@ package org.zdevra.guice.mvc;
 
 import com.google.inject.Injector;
 
+
+/**
+ * This binding class bind an exception to concrete instance 
+ * of the {@link ExceptionHandler}. 
+ * 
+ * @see ExceptionHandler
+ * @see ExceptionBind
+ * @see GuiceExceptionResolver
+ */
 public class ExceptionBindToInstance extends ExceptionBind {
 
 	private final ExceptionHandler handler;

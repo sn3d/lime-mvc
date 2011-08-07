@@ -11,10 +11,13 @@ import com.google.inject.Injector;
  * There are 2 implementations of the binding. {@link ExceptionBindToClass} and
  * {@link ExceptionBindToInstance} 
  * 
- * @see ExceptionBindToClass;
- * @see ExceptionBindToInstance;
+ * 
+ * @see GuiceExceptionResolver
+ * @see ExceptionBindToClass
+ * @see ExceptionBindToInstance
+ * @see ExceptionHandler
  */
-public abstract class ExceptionBind implements Comparable<ExceptionBind> {
+abstract class ExceptionBind implements Comparable<ExceptionBind> {
 		
 	protected final Class<? extends Throwable> exceptionClass;
 	protected final int order;

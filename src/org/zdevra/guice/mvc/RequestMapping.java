@@ -22,21 +22,24 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This method annotation map HTTP request to method.
+ * This annotation map a HTTP request to concrete method.
  * <p>
  * 
- * Regular expressions are allowed in mapping and regexp groups 
- * as well.
+ * In mapping, there are allowed regular expressions. You may use
+ * a regexp groups and {@link UriParameter} for extraction of data 
+ * from URL.
  * <p>
  * 
  * example:
- * <pre><code>
- * @Controller
+ * <pre class="prettyprint">
+ * {@literal @}Controller
  * class MyController {
- *    @RequestMapping("/department/(.*)");
- *    public void handleRequest();
+ *    {@literal @}RequestMapping(path="/department/(.*)");
+ *    public void handleRequest(@UriParameter(1) String departmentId) {
+ *    ...
+ *    }
  * }
- * </code></pre>
+ * <pre>
  * 
  */
 @Retention(RetentionPolicy.RUNTIME)

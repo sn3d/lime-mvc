@@ -34,7 +34,7 @@ public class FloatConvertor extends ArrayConvertor<Float> implements Convertor {
 /*---------------------------- constructors ----------------------------*/
 	
 	/**
-	 * Factory object
+	 * Factory for {@link FloatConvertor}
 	 */
 	public static class Factory implements ConvertorFactory {
 		

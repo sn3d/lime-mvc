@@ -23,45 +23,45 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * This parameter annotation tell to the LIME that parameter 
- * is filled by value picked from URL request.
+ * This parameter annotation tell to the LIME that method's parameter 
+ * is filled up by a value, which is picked up from an URL request.
  * <p>
  * 
  * Let's assume request www.someserver.com/myapp/mycontroller/method?param1=value1
  * example of picking up of the param1 'value1' like a parameter of method:
  * <p>
  * 
- * <pre><code>
- * @Controller
+ * <pre class="prettyprint">
+ * {@literal @}Controller
  * class MyController {
  * 
- *    @RequestMapping(path="/method")
- *    public String method( @RequestParameter("param1") String param1 ) {
+ *    {@literal @}RequestMapping(path="/method")
+ *    public String method( {@literal @}RequestParameter("param1") String param1 ) {
  *       return "parameter is:" + param1;
  *    } 
  * } 
- * </code></pre>
+ * </pre>
  * 
  * <p>
  * Annotation also might process an array of values from request. Let's assume
  * that we have an array of values in html:
- * <pre><code>
+ * <pre class="prettyprint">
  * <input name="someval[1]" type="text" size="20" maxlength="40" />
  * <input name="someval[2]" type="text" size="20" maxlength="40" />
  * <input name="someval[3]" type="text" size="20" maxlength="40" />
- * </code></pre>
+ * </pre>
  * 
  * The example code for this example, which process the array, looks like:
- * <pre><code>
- * @Controller
+ * <pre class="prettyprint">
+ * {@literal @}Controller
  * class MyController {
  * 
- *    @RequestMapping(path="/method")
- *    public void method( @RequestParameter("someval") int[] param1 ) {
+ *    {@literal @}RequestMapping(path="/method")
+ *    public void method( {@literal @}RequestParameter("someval") int[] param1 ) {
  *       ...
  *    } 
  * } 
- * </code></pre>
+ * </pre>
  * <
  */
 @Retention(RUNTIME)

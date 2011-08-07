@@ -20,7 +20,7 @@ package org.zdevra.guice.mvc.exceptions;
 
 /**
  * The exception is throwed when MVC is not able converts
- * string value, picked up from URL or from Request, to 
+ * a string value, which is picked up from URL or from Request, to 
  * the method's parameter of the controller.
  * 
  * If the exception is raised, check the mapping of the controller's 

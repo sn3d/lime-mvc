@@ -23,27 +23,13 @@ import org.zdevra.guice.mvc.ConversionService.ConvertorFactory;
 import org.zdevra.guice.mvc.Utils;
 
 /**
- * This impl. of convertor is responsible for converting string
- * to boolean. 
+ * This convertor is responsible for converting from strings
+ * to boolean value. 
  * 
  * The parameter may be annotated by BooleanParam annotation which
  * carying metadata information about string form for true and false.
  * 
- * Let's assume that we don't want convert regular 'true' 'false' strings, but
- * we want convert Y like true a N like false:
- * 
- * <pre><code>
- * @Controller
- * public class MyController {
- * 
- *    @RequestMapping(path="/method")
- *    public void doSomething( @RequestParameter("bool-param") @BooleanConv(trueVal="Y", falseVal="N") boolean param) 
- *    {
- *    	
- *    }
- * }
- * </pre><code>
- * 
+ * @see BooleanConv 
  *
  */
 public final class BooleanConvertor extends ArrayConvertor<Boolean> implements Convertor {
@@ -55,6 +41,9 @@ public final class BooleanConvertor extends ArrayConvertor<Boolean> implements C
 	
 /*---------------------------- constructors ----------------------------*/
 	
+	/**
+	 * Factory for {@link BooleanConvertor}
+	 */
 	public static class Factory implements ConvertorFactory {
 
 		public Convertor createConvertor(Class<?> type, Annotation[] annotations) {

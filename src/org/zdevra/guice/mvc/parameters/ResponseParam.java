@@ -21,24 +21,24 @@ import javax.servlet.http.HttpServletResponse;
 import org.zdevra.guice.mvc.InvokeData;
 
 /**
- * This param processor is executed when the method has a parameter, 
+ * The parameter's processor is executed when the method has a parameter, 
  * which is a instance of HttpResponseRequest, and put the response object
  * into this parameter.
  * <p>
  * 
  * for example:
- * <pre><code>
- * @RequestMapping("/control");
+ * <pre class="prettyprint">
+ * {@literal @}RequestMapping("/control");
  * public void controllerMethod(HttpServletResponse response) {
  *    ...
  * }
- * </code></pre>
+ * </pre>
  */
 public class ResponseParam implements ParamProcessor {
 	
 /*----------------------------------------------------------------------*/
 	
-	public static class Factory implements ParamProcessorFactory 
+	static class Factory implements ParamProcessorFactory 
 	{
 		private ParamProcessor processor = new ResponseParam();
 		

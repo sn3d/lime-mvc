@@ -92,7 +92,7 @@ public class InvokeData {
 	
 /*----------------------------------------------------------------------*/
 	
-	public static class Builder {
+	static class Builder {
 		private InvokeData data;
 		
 		public Builder newInstance(Object controller) {

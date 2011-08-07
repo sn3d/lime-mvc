@@ -11,12 +11,11 @@ import com.google.inject.Key;
 import com.google.inject.name.Named;
 
 /**
- * The parameter processor get the instance from Guice and forward the instance
+ * The parameter's processor pick up the instance from Guice and forward the instance
  * to the method's parameter. 
  * 
- * Method must be annotated with @Inject annocation. The @Named annotation
+ * Method must be annotated with {@literal @}Inject annocation. The {@literal @}Named annotation
  * for the method's parameters is supported as well.
- * 
  * 
  */
 public class InjectorParam implements ParamProcessor {
@@ -26,7 +25,7 @@ public class InjectorParam implements ParamProcessor {
 
 /*----------------------------------------------------------------------*/
 	
-	public static class Factory implements ParamProcessorFactory {
+	static class Factory implements ParamProcessorFactory {
 
 		
 		@Override

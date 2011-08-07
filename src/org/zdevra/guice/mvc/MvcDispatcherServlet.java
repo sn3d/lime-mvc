@@ -39,10 +39,11 @@ import org.zdevra.guice.mvc.parameters.ParamProcessorsService;
 import com.google.inject.Injector;
 
 /**
- * The Dispatcher servlet dispatch a request to the concrete 
- * controller.
+ * The Core Dispatcher servlet forward a request to the concrete 
+ * controller and after that, the producet model is forwarded into
+ * view resolver.
  */
-public class MvcDispatcherServlet extends HttpServlet {
+class MvcDispatcherServlet extends HttpServlet {
 	
 // ------------------------------------------------------------------------
 	

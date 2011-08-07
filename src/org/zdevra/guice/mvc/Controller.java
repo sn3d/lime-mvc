@@ -20,22 +20,30 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
- * Classes annotated by this annotation are regular MVC conctrolers
- * and can be handled by MVC Dispatcher.
+ * All classes annotated by this annotation are regular MVC conctrolers
+ * and can be handled by a MVC Dispatcher.
+ * Also this annotation tells to the LIME which attributes stored in the
+ * model should be stored in the session as well.
  * <p>
  * 
- * Also this annotation tell to the LIME which attributes are stored
- * in the session.
+ * Example of the controller with 2 attributes, they will be 
+ * stored in the session.
  * <p>
  * 
- * Example of the controller with 2 parameters stored in the session.
- * <p>
- * 
- * <pre><code>
- * @Controller(sessionAttributes={"param1", "param2"})
+ * <pre class="prettyprint">
+ * {@literal @}Controller(sessionAttributes={"username", "country"})
  * class MyController() {
+ *     ...
+ *     {@literal @}RequestMapping(path="/home")
+ *     public Model doSomething() {
+ *     	   ...
+ *         Model m = new Model();
+ *         m.addObject("username", username);
+ *         m.addObject("country",  country);
+ *         return m;
+ *     }
  * }
- * </code></pre>
+ * <code></pre>
  */
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Controller {

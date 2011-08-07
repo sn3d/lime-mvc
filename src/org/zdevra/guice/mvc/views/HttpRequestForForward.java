@@ -14,7 +14,7 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-package org.zdevra.guice.mvc;
+package org.zdevra.guice.mvc.views;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
@@ -34,7 +34,7 @@ import javax.servlet.http.HttpServletRequestWrapper;
  * <p>
  *
  */
-public class HttpRequestForForward extends HttpServletRequestWrapper {
+class HttpRequestForForward extends HttpServletRequestWrapper {
 	
 	private String pathForForward;
 

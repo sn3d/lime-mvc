@@ -9,7 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Implementation of default exception handler. All unhandled  
- * exceptions are routed from ExceptionResolver to this handler.
+ * exceptions are routed from {@link ExceptionResolver} to this handler.
+ * 
+ * @see ExceptionResolver
+ * @see GuiceExceptionResolver 
  */
 public class DefaultExceptionHandler implements ExceptionHandler {
 	

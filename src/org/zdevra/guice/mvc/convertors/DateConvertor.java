@@ -39,30 +39,30 @@ import org.zdevra.guice.mvc.exceptions.IllegalConversionException;
  * <p>
  * 
  * example of the scenario 1:
- * <pre><code>
- * @Controller
+ * <pre class="prettyprint">
+ * {@literal @}Controller
  * public class MyController {
  * 
- *    @RequestMapping(path="/method")
- *    public void doSomething( @RequestParameter("date-param") @DateConv("YYYYMMDD") Date param) 
+ *    {@literal @}RequestMapping(path="/method")
+ *    public void doSomething( {@literal @}RequestParameter("date-param") {@literal @}DateConv("YYYYMMDD") Date param) 
  *    {
  *    	...
  *    }
  * }
- * </code></pre>
- * <p>
- * example of the scenario 2:
- * <pre><code>
- * @Controller
+ * </pre>
+ * 
+ * <p>example of the scenario 2:
+ * <pre class="prettyprint">
+ * {@literal @}Controller
  * public class MyController {
  * 
- *    @RequestMapping(path="/method")
- *    public void doSomething( @RequestParameter("date-param") @DateConv("YYYYMMDD", defaultValue="19900101") Date param) 
+ *    {@literal @}RequestMapping(path="/method")
+ *    public void doSomething( {@literal @}RequestParameter("date-param") {@literal @}DateConv("YYYYMMDD", defaultValue="19900101") Date param) 
  *    {
  *    	...
  *    }
  * }
- * </code></pre>
+ * </pre>
  *
  */
 public class DateConvertor extends ArrayConvertor<Date> implements Convertor {
@@ -75,6 +75,9 @@ public class DateConvertor extends ArrayConvertor<Date> implements Convertor {
 /*---------------------------- constructors ----------------------------*/
 	
 	
+	/**
+	 * Factory for {@link DateConvertor}
+	 */
 	public static class Factory implements ConvertorFactory {
 		@Override
 		public Convertor createConvertor(Class<?> type, Annotation[] annotations) {

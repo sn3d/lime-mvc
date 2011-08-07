@@ -5,16 +5,16 @@ import org.zdevra.guice.mvc.MvcModule.ExceptionResolverBindingBuilder;
 import com.google.inject.Binder;
 import com.google.inject.multibindings.Multibinder;
 
-/**
- * This builder is used internally by {@link MvcModule}. 
+/** 
  * The builder is responsible for building a bindings
  * between exceptions and exception handlers for
  * {@link GuiceExceptionResolver}
+ * This builder is used internally by {@link MvcModule}.
  * 
  * @see MvcModule
  * @see GuiceExceptionResolver
  */
-public class ExceptionResolverBuilder {
+class ExceptionResolverBuilder {
 	
 	private final Multibinder<ExceptionBind> exceptionBinder; 
 	private int orderIndex;

@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
  * has required type (RequestType)
  *
  */
-public class MethodInvokerFilter implements MethodInvoker {
+class MethodInvokerFilter implements MethodInvoker {
 /*---------------------------- m. variables ----------------------------*/
 	
 	private final Pattern pathPattern;

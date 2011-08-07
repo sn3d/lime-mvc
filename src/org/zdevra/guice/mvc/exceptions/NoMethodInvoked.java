@@ -18,6 +18,10 @@ package org.zdevra.guice.mvc.exceptions;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * The lime throws this exception when no method is invoked for URL request.
+ *
+ */
 public class NoMethodInvoked extends MvcException {
 
 	public NoMethodInvoked(HttpServletRequest request, String controllerName) {

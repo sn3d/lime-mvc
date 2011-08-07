@@ -14,23 +14,15 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-package org.zdevra.guice.mvc.exceptions;
 
 /**
- * All Lime exceptions are derived from this exception 
+ * In the package are various classes responsible for processing of various parameters 
+ * in controller methods. These parameter-processors are used when Lime invoke 
+ * controller's method.
+ * 
+ * This is a right place if you need more informations about how the concrete 
+ * parameter is processed.
+ * 
  */
-public class MvcException extends RuntimeException {
 
-	public MvcException(String arg0, Throwable arg1) {
-		super(arg0, arg1);
-	}
-
-	public MvcException(String arg0) {
-		super(arg0);
-	}
-
-	public MvcException(Throwable arg0) {
-		super(arg0);
-	}
-	
-}
+package org.zdevra.guice.mvc.parameters;

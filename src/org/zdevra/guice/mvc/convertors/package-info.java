@@ -14,23 +14,23 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-package org.zdevra.guice.mvc.exceptions;
 
 /**
- * All Lime exceptions are derived from this exception 
+ * This package contains all classes and related annotations, which provide conversions 
+ * from strings to concrete data types.
+ * 
+ * Numbers converts automatically. Special cases are Boolean and Date types. For
+ * parameters of these types are used special annotations: 
+ * 
+ * <dl>
+ * <dt>{@link org.zdevra.guice.mvc.convertors.BooleanConv}
+ * <dd>The annotation define how the string will convert to boolean.
+ * 
+ * <dt>{@link org.zdevra.guice.mvc.convertors.DateConv}
+ * <dd>The annotation define how the string will convert to Date.
+ * </dl>
+ * 
+ *  
+ *  
  */
-public class MvcException extends RuntimeException {
-
-	public MvcException(String arg0, Throwable arg1) {
-		super(arg0, arg1);
-	}
-
-	public MvcException(String arg0) {
-		super(arg0);
-	}
-
-	public MvcException(Throwable arg0) {
-		super(arg0);
-	}
-	
-}
+package org.zdevra.guice.mvc.convertors;

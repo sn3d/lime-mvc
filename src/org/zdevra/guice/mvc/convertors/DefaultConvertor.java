@@ -26,6 +26,12 @@ import org.zdevra.guice.mvc.exceptions.IllegalConversionException;
 import org.zdevra.guice.mvc.FactoryMethod;
 import org.zdevra.guice.mvc.Utils;
 
+/**
+ * Default convertor is used in case, when no convertor
+ * is matched to parameter's type and in most cases throws 
+ * {@link org.zdevra.guice.mvc.exceptions.IllegalConversionException}.
+ * 
+ */
 public class DefaultConvertor implements Convertor {
 	
 /*---------------------------- m. variables ----------------------------*/
@@ -35,6 +41,9 @@ public class DefaultConvertor implements Convertor {
 	
 /*----------------------------------------------------------------------*/
 	
+	/**
+	 * Factory class for {@link DefaultConvertor}
+	 */
 	public static class Factory implements ConvertorFactory {		
 		@Override
 		public Convertor createConvertor(Class<?> type, Annotation[] annotations) {

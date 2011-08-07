@@ -25,6 +25,26 @@ import java.util.Map.Entry;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * Class represents a data model produced by the controllers.
+ * 
+ * <p>example:
+ * <pre class="prettyprint">
+ * {@literal @}Controller
+ * class BookController {
+ * 
+ *    {@literal @}RequestMapping(...)
+ *    public Model doSomeAtion() {
+ *       ...
+ *       Model m = new Model();
+ *       m.addObject("user", user);
+ *       m.addObject("books", books);
+ *       return m;
+ *    } 
+ * }
+ * 
+ * </pre>
+ */
 public class Model {
 	
 // ------------------------------------------------------------------------
@@ -42,14 +62,31 @@ public class Model {
 	
 // ------------------------------------------------------------------------
 	
+	/**
+	 * Method merge two models. Basically method 
+	 * add to the model all data from another model.  
+	 */
 	public void addModel(Model m) {
 		this.modelObjects.putAll(m.modelObjects);
 	}
 	
+	/**
+	 * Method put the object into model under concrete 
+	 * name.
+	 * 
+	 * @param name
+	 * @param obj
+	 */
 	public void addObject(String name, Object obj) {
 		this.modelObjects.put(name, obj);
 	}
 	
+	
+	/**
+	 * Method returns the object for concrete name 
+	 * @param name
+	 * @return
+	 */
 	public Object getObject(String name) {
 		return this.modelObjects.get(name);
 	}
@@ -62,12 +99,12 @@ public class Model {
 	}
 
 
-	public void getObjectsFromSession(String[] names, HttpSession session) {
+	void getObjectsFromSession(String[] names, HttpSession session) {
 		getObjectsFromSession(Arrays.asList(names), session);
 	}
 
 	
-	public void getObjectsFromSession(List<String> names, HttpSession session) {
+	void getObjectsFromSession(List<String> names, HttpSession session) {
 		for (String name : names) {
 			Object obj = session.getAttribute(name);
 			addObject(name, obj);
@@ -75,12 +112,12 @@ public class Model {
 	}
 
 
-	public void moveObjectsToSession(String[] names, HttpSession session) {
+	void moveObjectsToSession(String[] names, HttpSession session) {
 		moveObjectsToSession(Arrays.asList(names), session);
 	}
 
 	
-	public void moveObjectsToSession(List<String> names, HttpSession session) {
+	void moveObjectsToSession(List<String> names, HttpSession session) {
 		for (String name: names) {
 			Object obj = modelObjects.get(name);
 			session.setAttribute(name, obj);
@@ -89,7 +126,7 @@ public class Model {
 	}
 	
 		
-	public void moveObjectsToRequestAttrs(HttpServletRequest request) {
+	void moveObjectsToRequestAttrs(HttpServletRequest request) {
 		for (Entry<String, Object> entry : this.modelObjects.entrySet()) {
 			request.setAttribute(entry.getKey(), entry.getValue());
 		}

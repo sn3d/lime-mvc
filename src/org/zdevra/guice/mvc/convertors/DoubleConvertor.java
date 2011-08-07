@@ -34,7 +34,7 @@ public class DoubleConvertor extends ArrayConvertor<Double> implements Convertor
 /*---------------------------- constructors ----------------------------*/
 	
 	/**
-	 * Factory object for double convertor
+	 * Factory class for {@link DoubleConvertor}
 	 */
 	public static class Factory implements ConvertorFactory {
 		

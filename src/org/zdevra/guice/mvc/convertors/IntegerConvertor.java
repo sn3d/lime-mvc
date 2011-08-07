@@ -35,7 +35,7 @@ public class IntegerConvertor extends ArrayConvertor<Integer> implements Convert
 /*---------------------------- constructors ----------------------------*/
 	
 	/**
-	 * The factory class for integer convertor
+	 * The factory class for {@link IntegerConvertor}
 	 */
 	public static class Factory implements ConvertorFactory {
 		

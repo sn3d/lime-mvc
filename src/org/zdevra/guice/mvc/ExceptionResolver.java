@@ -11,16 +11,24 @@ import javax.servlet.http.HttpServletResponse;
  * The default implementation of resolving in Lime MVC is used {@link GuiceExceptionResolver}.
  * It can be changed easy in @{link MvcModule}'s configureControllers() method.
  * 
- * Example:
- * <pre>
- * public void configureControllers() {
  * 
+ * 
+ * Example:
+ * <pre class="prettyprint">
+ * public void configureControllers() {
+ *    ...
+ *    bindException(Custom1Exception.class).toHandler(Custom1ExceptionHandler.class);
+ *    bindException(Custom2Exception.class).toHandlerInstance( new Custom2ExceptionHandler() );
+ *    ...
  * }
  * </pre>
- * 
- * @see
+ *  
+ * @see ExceptionHandler
+ * @see MvcModule
  */
 public interface ExceptionResolver {
+	
+	public static final String DEFAULT_EXCEPTIONHANDLER_NAME = "defaultExceptionHandler";
 
 	/**
 	 * Method is invoked in {@link MvcDispatcherServlet}, when a controller

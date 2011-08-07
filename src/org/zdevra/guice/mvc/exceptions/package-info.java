@@ -14,23 +14,8 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-package org.zdevra.guice.mvc.exceptions;
 
 /**
- * All Lime exceptions are derived from this exception 
+ * The package contains all Lime exceptions.
  */
-public class MvcException extends RuntimeException {
-
-	public MvcException(String arg0, Throwable arg1) {
-		super(arg0, arg1);
-	}
-
-	public MvcException(String arg0) {
-		super(arg0);
-	}
-
-	public MvcException(Throwable arg0) {
-		super(arg0);
-	}
-	
-}
+package org.zdevra.guice.mvc.exceptions;

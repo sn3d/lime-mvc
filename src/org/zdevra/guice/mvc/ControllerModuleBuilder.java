@@ -24,7 +24,13 @@ import org.zdevra.guice.mvc.MvcModule.ControllerBindingBuilder;
 import org.zdevra.guice.mvc.views.NamedView;
 
 
-public class ControllerModuleBuilder  {
+/** 
+ * Builder provide building of controller. It's used
+ * internally by {@link MvcModule}
+ * 
+ * @see MvcModule
+ */
+class ControllerModuleBuilder  {
 	
 // ------------------------------------------------------------------------
 	

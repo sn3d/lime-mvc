@@ -3,10 +3,14 @@ package org.zdevra.guice.mvc;
 import com.google.inject.Injector;
 
 /**
- * This binding bind exception to handler's class. 
- * A handler's lifecycle is under Guice's control. 
+ * This binding class bind an exception to handler's class. 
+ * A handler lifecycle is under Guice's control.
+ * 
+ * @see ExceptionHandler
+ * @see ExceptionBind
+ * @see GuiceExceptionResolver
  */
-public class ExceptionBindToClass extends ExceptionBind {
+class ExceptionBindToClass extends ExceptionBind {
 	
 	private final Class<? extends ExceptionHandler> handlerClass;
 

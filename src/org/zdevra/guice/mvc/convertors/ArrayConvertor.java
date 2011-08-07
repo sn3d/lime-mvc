@@ -20,6 +20,11 @@ import java.lang.reflect.Array;
 
 import org.zdevra.guice.mvc.ConversionService.Convertor;
 
+/**
+ * Class provide conversion to arrays.
+ * 
+ * @param <T>
+ */
 public class ArrayConvertor<T> {
 	
 	protected Object convertArray(String[] stringArray, Convertor conv, Class<?> clazz) {

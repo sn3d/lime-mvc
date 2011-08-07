@@ -26,54 +26,49 @@ import com.google.inject.name.Names;
 import com.google.inject.servlet.ServletModule;
 
 /**
- * MVC module for GUICE. 
+ * <i>MVC module</i> for GUICE. 
  * <p>
  * 
- * First at one read how to use GUICE with web applications. If you are fammiliar 
- * with GUICE servlet, then using of MVC is pretty straight forward.
+ * If you are fammiliar with the GUICE servlets, then using of the Lime MVC is pretty straight forward.
+ * MvcModule is basically extended version of Guice's ServletModule and you can use all ServletModule's
+ * methods in configureControllers() method implementation (like serve() etc..).
  * <p>
  * 
- * In your web application, into GuiceServletContextListener implementation,
- * which is instatiating Injector, put new MvcModule with implemented configureControllers() method.
- * <p>
+ * In your web application, put new MvcModule with implemented configureControllers() method 
+ * into GuiceServletContextListener implementation.
  * 
- * example:
- * <pre><code>
+ * 
+ * <p>example:
+ * <pre class="prettyprint">
  * public class WebAppConfiguration extends GuiceServletContextListener {
  * ...
  *   protected Injector getInjector() {
  *     Injector injector =  Guice.createInjector(
  *        new MvcModule() {
  *           protected void configureControllers() {
- *             
- *             //exception handlers
- *             
  *              
- *             //controllers
- *              control("/someController/*")
+ *             control("/someController/*")
  *                .withController(SomeController.class)
- *                .set();
- *            
- *              control("/anotherController/*")
- *                .withController(AnotherController.class)
- *                .toView(BasicView.create("welcome.jsp"))
- *                .set();
- *
+ *                .set();        
  *              ...
  *           }
  *        }
  *     );
- *     
  *     return injector;
  *   }
- *   
- *   
  * }
- * </code></pre>
- * <p>
+ * </pre>
+ * Example shows the basic usage and registers the simple controller class. 
+ * All requests which stars with '/someController/' will be processed by the SomeController. 
  * 
- * MvcModule is extended version of Guice's ServletModule and you can use all ServletModule's
- * methods in configureControllers() method implementation (like serve() etc..).
+ * <p>
+ *
+ * @see Controller 
+ * @see Model
+ * @see ModelAndView
+ * @see View
+ * @see ViewResolver
+ * @see ExceptionResolver
  *  
  */
 public abstract class MvcModule extends ServletModule {
@@ -82,7 +77,6 @@ public abstract class MvcModule extends ServletModule {
 		
 	private ParamProcessorsService paramService;
 	private ConversionService conversionService;
-	private ExceptionModuleBuilder exceptionModuleBuilder; //should be removed
 	private ExceptionResolverBuilder exceptionResolverBuilder;
 	private ControllerModuleBuilder controllerModuleBuilder;
 
@@ -108,7 +102,6 @@ public abstract class MvcModule extends ServletModule {
 		conversionService = new ConversionService();
 		controllerModuleBuilder = new ControllerModuleBuilder();		
 		exceptionResolverBuilder = new ExceptionResolverBuilder(binder());
-		exceptionModuleBuilder = new ExceptionModuleBuilder();  //should be removed
 		
 		try {
 			//default registrations
@@ -118,7 +111,7 @@ public abstract class MvcModule extends ServletModule {
 				.to(GuiceExceptionResolver.class);
 			
 			bind(ExceptionHandler.class)
-				.annotatedWith(Names.named(GuiceExceptionResolver.DEFAULT_EXCEPTIONHANDLER_NAME))
+				.annotatedWith(Names.named(ExceptionResolver.DEFAULT_EXCEPTIONHANDLER_NAME))
 				.to(DefaultExceptionHandler.class);
 			
 			configureControllers();
@@ -135,7 +128,6 @@ public abstract class MvcModule extends ServletModule {
 			}
 						
 		} finally {
-			exceptionModuleBuilder = null; //should be removed
 			exceptionResolverBuilder = null;
 			controllerModuleBuilder = null;
 			paramService = null;

@@ -34,6 +34,9 @@ public class LongConvertor extends ArrayConvertor<Long> implements Convertor {
 	
 /*---------------------------- constructors ----------------------------*/
 	
+	/**
+	 * Factory class for {@link LongConvertor}
+	 */
 	public static class Factory implements ConvertorFactory {
 		
 		private final Convertor longConvertor;

@@ -21,10 +21,16 @@ import java.lang.annotation.Annotation;
 import org.zdevra.guice.mvc.ConversionService.Convertor;
 import org.zdevra.guice.mvc.ConversionService.ConvertorFactory;
 
+/**
+ * Class provide no-conversion if in your controller's method is string. 
+ */
 public class StringConvertor implements Convertor {
 
 /*----------------------------------------------------------------------*/
 	
+	/**
+	 * Factory class for {@link StringConvertor}
+	 */
 	public static class Factory implements ConvertorFactory {
 		
 		private Convertor stringConvertor;
