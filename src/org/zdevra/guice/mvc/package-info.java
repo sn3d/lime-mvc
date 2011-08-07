@@ -70,7 +70,7 @@
  * 
  * The main concept is regular MVC described in many articles and in the SUN's blueprint as well. The core of Lime MVC is 
  * Servlet dispatcher which provide all necessary conversions, invokes the Controller's methods,
- * and send produced model to the selected view. 
+ * and sendg produced model to the selected view. 
  * 
  * 
  * 
@@ -164,8 +164,9 @@
  * public class MyWebAppModule extends MvcModule {
  *   protected void configureControllers() {
  *     ...
- *     bindView("users_view", "users.jsp");
- *     bindView("books_view", new JspView("books_view") );
+ *     bindViewName("users_view").toJsp("users.jsp");
+ *     bindViewName("books_view").toViewInstance(new JspView("books_view") );
+ *     bindVIewName("custom_view").toView(CustomView.class);
  *     ...
  *   }
  * }  

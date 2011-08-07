@@ -18,9 +18,7 @@ package org.zdevra.guice.mvc;
 
 
 import org.zdevra.guice.mvc.ConversionService.ConvertorFactory;
-import org.zdevra.guice.mvc.exceptions.ObsoleteException;
 import org.zdevra.guice.mvc.parameters.ParamProcessorsService;
-import org.zdevra.guice.mvc.views.JspView;
 
 import com.google.inject.name.Names;
 import com.google.inject.servlet.ServletModule;
@@ -78,6 +76,7 @@ public abstract class MvcModule extends ServletModule {
 	private ParamProcessorsService paramService;
 	private ConversionService conversionService;
 	private ExceptionResolverBuilder exceptionResolverBuilder;
+	private NamedViewBuilder namedViewBudiler;
 	private ControllerModuleBuilder controllerModuleBuilder;
 
 // ------------------------------------------------------------------------
@@ -102,6 +101,7 @@ public abstract class MvcModule extends ServletModule {
 		conversionService = new ConversionService();
 		controllerModuleBuilder = new ControllerModuleBuilder();		
 		exceptionResolverBuilder = new ExceptionResolverBuilder(binder());
+		namedViewBudiler = new NamedViewBuilder(binder());
 		
 		try {
 			//default registrations
@@ -130,6 +130,7 @@ public abstract class MvcModule extends ServletModule {
 		} finally {
 			exceptionResolverBuilder = null;
 			controllerModuleBuilder = null;
+			namedViewBudiler = null;
 			paramService = null;
 			conversionService = null;			
 		}
@@ -139,28 +140,12 @@ public abstract class MvcModule extends ServletModule {
 	
 	
 	/**
-	 * Method bind view instance to view's name. This binding is used by view resolver.
+	 * Method bind to view's name some view.
 	 */
-	protected final void bindView(String viewName, View view) {
-		bind(View.class).annotatedWith(Names.named(viewName)).toInstance(view);
+	protected final NamedViewBindingBuilder bindViewName(String viewName) {
+		return this.namedViewBudiler.bindViewName(viewName);
 	}
-	
-	
-	/**
-	 * Method bind view class to view's name. This binding is used by view resolver.
-	 */	
-	protected final void bindView(String viewName, Class<? extends View> viewClazz) {
-		bind(View.class).annotatedWith(Names.named(viewName)).to(viewClazz);
-	}	
-	
-	
-	/**
-	 * Method bind JSP page to view's name. This binding is used by view resolver.
-	 */		
-	protected final void bindView(String viewName, String jsp) {
-		bind(View.class).annotatedWith(Names.named(viewName)).toInstance(new JspView(jsp));
-	}
-	
+		
 	
 	/**
 	 * The method registers a custom convertor which converts strings to the
@@ -174,18 +159,21 @@ public abstract class MvcModule extends ServletModule {
 	}
 	
 	
-	@Deprecated
-	protected final ExceptionBindingBuilder exception(Class<? extends Throwable> exceptionClazz) 
-	{
-		throw new ObsoleteException("bindException()");
-	}
-	
-	
+	/**
+	 * Method binds the exception handler to concrete exception type
+	 * @param exceptionClazz
+	 * @return
+	 */
 	protected final ExceptionResolverBindingBuilder bindException(Class<? extends Throwable> exceptionClazz) {
 		return this.exceptionResolverBuilder.bindException(exceptionClazz);
 	}
 	
 	
+	/**
+	 * Method bind controller class to the concrete url.
+	 * @param urlPattern
+	 * @return
+	 */
 	protected final ControllerBindingBuilder control(String urlPattern) 
 	{
 		return this.controllerModuleBuilder.control(urlPattern);
@@ -200,18 +188,18 @@ public abstract class MvcModule extends ServletModule {
 		public ControllerBindingBuilder toView(String viewName);
 		public void set();
 	}
-	
-	
-	public static interface ExceptionBindingBuilder 
-	{
-		public void handledBy(ExceptionHandler handler);
-		public void toView(View exceptionView);
-	}
-	
+		
 	
 	public static interface ExceptionResolverBindingBuilder {
 		public void toHandler(Class<? extends ExceptionHandler> handlerClass);
-		public void toHandlerInstance(ExceptionHandler handler);
+		public void toHandlerInstance(ExceptionHandler handler);	
+	}
+	
+	
+	public static interface NamedViewBindingBuilder {
+		public void toView(Class<? extends View> viewCLass);
+		public void toViewInstance(View view);
+		public void toJsp(String pathToJsp);
 	}
 	
 // ------------------------------------------------------------------------
