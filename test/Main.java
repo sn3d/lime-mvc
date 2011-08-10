@@ -6,9 +6,9 @@ public class Main {
 	public static void main(String[] args) {
 		try {
 			GuiceExceptionResolverTest t = new GuiceExceptionResolverTest();
-			//t.testHandling();
+			t.testHandling();
 			t.testHandlingMethodException();
-			//t.testHandlingInheritance();
+			t.testHandlingInheritance();			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

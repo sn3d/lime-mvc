@@ -16,6 +16,8 @@
  *****************************************************************************/
 package org.zdevra.guice.mvc;
 
+import org.zdevra.guice.mvc.views.NamedView;
+
 /**
  * Class is representing data-structure used internally by Lime and
  * compose the all necessary data for controller.
@@ -37,9 +39,9 @@ class ControllerDefinition {
 	}
 	
 	
-	public ControllerDefinition(String urlPattern, Class<?> controllerClass) {
-		this.defaultView = View.NULL_VIEW;
+	public ControllerDefinition(String urlPattern, Class<?> controllerClass) {		
 		this.controllerClass = controllerClass;
+		this.defaultView = NamedView.create(controllerClass);
 		this.urlPattern = urlPattern;
 	}
 	

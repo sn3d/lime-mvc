@@ -60,6 +60,16 @@ public class Model {
 		this.modelObjects = new HashMap<String, Object>();
 	}
 	
+	/**
+	 * Constructor creates the model with data
+	 * @param name
+	 * @param value
+	 */
+	public Model(String name, Object value) {
+		this();
+		addObject(name, value);
+	}
+	
 // ------------------------------------------------------------------------
 	
 	/**

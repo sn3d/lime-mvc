@@ -21,7 +21,7 @@ import java.util.List;
 
 import java.util.logging.Logger;
 import org.zdevra.guice.mvc.MvcModule.ControllerBindingBuilder;
-import org.zdevra.guice.mvc.views.NamedView;
+
 
 
 /** 
@@ -50,27 +50,11 @@ class ControllerModuleBuilder  {
 		}
 		
 		@Override
-		public final ControllerBindingBuilder withController(Class<?> controller) {
+		public final void withController(Class<?> controller) {
 			actualDefinition = new ControllerDefinition(urlPattern, controller);
-			return this;
-		}	
-				
-		public final void set() {
 			logger.info("register controller " + actualDefinition.toString());
 			controllerDefinitions.add(actualDefinition);
-		}
-
-		@Override
-		public ControllerBindingBuilder toView(View view) {
-			actualDefinition.setDefaultView(view);
-			return this;
-		}
-
-		@Override
-		public ControllerBindingBuilder toView(String viewName) {
-			actualDefinition.setDefaultView(NamedView.create(viewName));
-			return this;
-		}
+		}					
 	}
 	
 	

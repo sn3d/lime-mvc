@@ -70,7 +70,7 @@
  * 
  * The main concept is regular MVC described in many articles and in the SUN's blueprint as well. The core of Lime MVC is 
  * Servlet dispatcher which provide all necessary conversions, invokes the Controller's methods,
- * and sendg produced model to the selected view. 
+ * and send produced model to the selected view. 
  * 
  * 
  * 

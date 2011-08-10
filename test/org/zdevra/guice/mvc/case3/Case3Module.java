@@ -17,7 +17,7 @@ public class Case3Module extends MvcModule {
 	protected void configureControllers() {
 		bindViewName("one").toViewInstance( new TestView("1") );
 		bindViewName("two").toViewInstance( new TestView("2") );
-		bindViewName("three").toView( ThreeView.class );			
+		bindViewName("three").toView( ThreeView.class );
 	}
 
 }

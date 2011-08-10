@@ -27,7 +27,7 @@ import org.zdevra.guice.mvc.views.NamedView;
  */
 public interface View {
 	
-	public final static View NULL_VIEW = NamedView.create("");
+	public final static View NULL_VIEW = NamedView.create("NULL");
 	
 	public void render(HttpServlet servlet, HttpServletRequest request, HttpServletResponse response);
 	

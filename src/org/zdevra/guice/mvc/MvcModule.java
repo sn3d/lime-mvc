@@ -46,8 +46,7 @@ import com.google.inject.servlet.ServletModule;
  *           protected void configureControllers() {
  *              
  *             control("/someController/*")
- *                .withController(SomeController.class)
- *                .set();        
+ *                .withController(SomeController.class)        
  *              ...
  *           }
  *        }
@@ -183,10 +182,7 @@ public abstract class MvcModule extends ServletModule {
 	
 	public static interface ControllerBindingBuilder 
 	{
-		public ControllerBindingBuilder withController(Class<?> controller);
-		public ControllerBindingBuilder toView(View view);
-		public ControllerBindingBuilder toView(String viewName);
-		public void set();
+		public void withController(Class<?> controller);
 	}
 		
 	

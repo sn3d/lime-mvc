@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.zdevra.guice.mvc.Controller;
 import org.zdevra.guice.mvc.View;
 
 /**
@@ -43,6 +44,24 @@ public final class NamedView implements View {
 	private final String name;
 
 // ------------------------------------------------------------------------
+	
+	/**
+	 * Method construct named view from {@literal @}Controller annotation
+	 * and his parameter toView.
+	 *  
+	 * @param controllerClass
+	 * @return instance of NamedView
+	 */
+	public static View create(Class<?> controllerClass) {
+		Controller controllerAnotation = controllerClass.getAnnotation(Controller.class);
+		if (controllerAnotation != null) {
+			String viewName = controllerAnotation.toView();
+			if (viewName != null && viewName.length() > 0) {
+				return new NamedView(viewName);
+			}
+		}				
+		return View.NULL_VIEW;
+	}
 	
 	
 	public static View create(String name) {
