@@ -16,8 +16,12 @@
  *****************************************************************************/
 package org.zdevra.guice.mvc.parameters;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Set;
+
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 /**
  * This class collect the all registered processor factories for parameters
@@ -27,33 +31,23 @@ import java.util.List;
  * @see ParamProcessorFactory
  * @see ParamProcessor
  */
+@Singleton
 public class ParamProcessorsService {
 /*---------------------------- m. variables ----------------------------*/
 	
-	private final List<ParamProcessorFactory> factories;
-	private final ParamProcessorFactory defaultFactory;
+	private final ParamProcessorFactory defaultFactory;	
+	private final Collection<ParamProcessorFactory> factories;
 
 /*---------------------------- constructors ----------------------------*/
 	
-	public ParamProcessorsService() {
-		factories = new LinkedList<ParamProcessorFactory>();
-		
-		registerParamProcessor(new HttpPostParam.Factory());
-		registerParamProcessor(new UriParam.Factory());
-		registerParamProcessor(new SessionAttributeParam.Factory());
-		registerParamProcessor(new ModelParam.Factory());
-		registerParamProcessor(new RequestParam.Factory());
-		registerParamProcessor(new ResponseParam.Factory());
-		registerParamProcessor(new HttpSessionParam.Factory());		
-		registerParamProcessor(new InjectorParam.Factory());				
-		defaultFactory = new DefaultParamFactory(); 
+	@Inject
+	public ParamProcessorsService(Set<ParamProcessorFactory> factories) {
+		this.factories = new ArrayList<ParamProcessorFactory>(factories);
+		this.defaultFactory = new DefaultParamFactory();
 	}
-	
+		
 /*------------------------------- methods ------------------------------*/
 	
-	public void registerParamProcessor(ParamProcessorFactory processorFactory) {
-		factories.add(processorFactory);
-	}
 	
 	public ParamProcessor createProcessor(ParamMetadata metadata) {
 		for (ParamProcessorFactory factory : factories) {

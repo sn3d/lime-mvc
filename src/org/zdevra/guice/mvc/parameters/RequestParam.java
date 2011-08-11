@@ -38,10 +38,9 @@ public class RequestParam implements ParamProcessor {
 /*----------------------------------------------------------------------*/
 	
 	/**
-	 * Factory sub-class constructs a request parameter processor only once
-	 * because the processor is stateless.
+	 * Factory class for {@link RequestParam}
 	 */
-	static class Factory implements ParamProcessorFactory 
+	public static class Factory implements ParamProcessorFactory 
 	{
 		private final ParamProcessor processor;
 		

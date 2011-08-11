@@ -5,14 +5,10 @@ public class Main {
 
 	public static void main(String[] args) {
 		try {
-			//GuiceExceptionResolverTest t = new GuiceExceptionResolverTest();
-			//t.testHandling();
-			//t.testHandlingMethodException();
-			//t.testHandlingInheritance();
-			
 			Case1Test t = new Case1Test();
 			t.prepare();
 			t.testSimpleRequest();
+			t.testFromSession();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

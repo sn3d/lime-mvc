@@ -41,11 +41,10 @@ public class Case1Test extends AbstractTest {
 	
 	public static class Case1Servlet extends TestServlet {
 		public Case1Servlet() {
-			super(Case1Controller.class, new Case1Module());
+			super(Case1Controller.class, new Case1Module() );
 		}	
 	}
-	
-	
+		
 	public Case1Test() {
 		super(Case1Servlet.class);
 	}

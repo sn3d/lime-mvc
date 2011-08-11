@@ -34,9 +34,9 @@ public class ModelParam implements ParamProcessor {
 /*---------------------------- constructors ----------------------------*/
 	
 	/**
-	 * Factory for model parameter processor
+	 * Factory class for {@link ModelParam}
 	 */
-	static class Factory implements ParamProcessorFactory {
+	public  static class Factory implements ParamProcessorFactory {
 		
 		private final ParamProcessor processor;
 		

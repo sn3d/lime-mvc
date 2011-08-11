@@ -38,7 +38,10 @@ public class ResponseParam implements ParamProcessor {
 	
 /*----------------------------------------------------------------------*/
 	
-	static class Factory implements ParamProcessorFactory 
+	/**
+	 * Factory class for {@link ResponseParam}
+	 */
+	public static class Factory implements ParamProcessorFactory 
 	{
 		private ParamProcessor processor = new ResponseParam();
 		

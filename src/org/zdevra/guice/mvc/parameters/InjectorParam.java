@@ -24,9 +24,11 @@ public class InjectorParam implements ParamProcessor {
 	private final Key<?> key;
 
 /*----------------------------------------------------------------------*/
-	
-	static class Factory implements ParamProcessorFactory {
 
+	/**
+	 * Factory class for {@link InjectorParam}
+	 */
+	public  static class Factory implements ParamProcessorFactory {
 		
 		@Override
 		public ParamProcessor buildParamProcessor(ParamMetadata metadata) {

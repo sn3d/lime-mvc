@@ -18,7 +18,17 @@ package org.zdevra.guice.mvc;
 
 
 import org.zdevra.guice.mvc.ConversionService.ConvertorFactory;
+import org.zdevra.guice.mvc.parameters.HttpPostParam;
+import org.zdevra.guice.mvc.parameters.HttpSessionParam;
+import org.zdevra.guice.mvc.parameters.InjectorParam;
+import org.zdevra.guice.mvc.parameters.ModelParam;
+import org.zdevra.guice.mvc.parameters.ParamProcessor;
+import org.zdevra.guice.mvc.parameters.ParamProcessorFactory;
 import org.zdevra.guice.mvc.parameters.ParamProcessorsService;
+import org.zdevra.guice.mvc.parameters.RequestParam;
+import org.zdevra.guice.mvc.parameters.ResponseParam;
+import org.zdevra.guice.mvc.parameters.SessionAttributeParam;
+import org.zdevra.guice.mvc.parameters.UriParam;
 
 import com.google.inject.name.Names;
 import com.google.inject.servlet.ServletModule;
@@ -72,11 +82,11 @@ public abstract class MvcModule extends ServletModule {
 	
 // ------------------------------------------------------------------------
 		
-	private ParamProcessorsService paramService;
 	private ConversionService conversionService;
 	private ExceptionResolverBuilder exceptionResolverBuilder;
 	private NamedViewBuilder namedViewBudiler;
 	private ControllerModuleBuilder controllerModuleBuilder;
+	private ParamProcessorBuilder paramProcessorBuilder;
 
 // ------------------------------------------------------------------------
 	
@@ -96,11 +106,11 @@ public abstract class MvcModule extends ServletModule {
 			throw new IllegalStateException("Re-entry is not allowed.");
 		}
 		
-		paramService = new ParamProcessorsService();
 		conversionService = new ConversionService();
 		controllerModuleBuilder = new ControllerModuleBuilder();		
 		exceptionResolverBuilder = new ExceptionResolverBuilder(binder());
 		namedViewBudiler = new NamedViewBuilder(binder());
+		paramProcessorBuilder = new ParamProcessorBuilder(binder());
 		
 		try {
 			//default registrations
@@ -113,29 +123,35 @@ public abstract class MvcModule extends ServletModule {
 				.annotatedWith(Names.named(ExceptionResolver.DEFAULT_EXCEPTIONHANDLER_NAME))
 				.to(DefaultExceptionHandler.class);
 			
+			bind(ParamProcessorsService.class);
+			registerParameterProc(HttpPostParam.Factory.class);			
+			registerParameterProc(UriParam.Factory.class);
+			registerParameterProc(SessionAttributeParam.Factory.class);
+			registerParameterProc(ModelParam.Factory.class);
+			registerParameterProc(RequestParam.Factory.class);
+			registerParameterProc(ResponseParam.Factory.class);
+			registerParameterProc(HttpSessionParam.Factory.class);
+			registerParameterProc(InjectorParam.Factory.class);
+			
 			configureControllers();
 			
 			//register MVC controllers
 			for (ControllerDefinition def : controllerModuleBuilder.getControllerDefinitions()) {
 				String pattern = def.getUrlPattern();				
-				MvcDispatcherServlet dispatcher = new MvcDispatcherServlet(
-						def.getControllerClass(), 
-						conversionService,
-						paramService);
+				MvcDispatcherServlet dispatcher = new MvcDispatcherServlet(def.getControllerClass());
 				serve(pattern).with(dispatcher);				
 			}
 						
 		} finally {
 			exceptionResolverBuilder = null;
 			controllerModuleBuilder = null;
+			paramProcessorBuilder = null;
 			namedViewBudiler = null;
-			paramService = null;
 			conversionService = null;			
 		}
 	}
 		
 // ------------------------------------------------------------------------
-	
 	
 	/**
 	 * Method bind to view's name some view.
@@ -154,6 +170,21 @@ public abstract class MvcModule extends ServletModule {
 	 */
 	protected final void registerConvertor(Class<?> type, ConvertorFactory convertorFactory) {
 		this.conversionService.registerConvertor(type, convertorFactory);
+	}
+	
+	
+	/**
+	 * The method registers a custom parameter processor. The parameter processors
+	 * converts/prepares/fills the values into invoked method's parameters.  
+	 * All predefined processors are placed in 'parameters' sub-package.
+	 * 
+	 * @param paramProcFactory
+	 * 
+	 * @see ParamProcessorFactory
+	 * @see ParamProcessor
+	 */
+	protected final void registerParameterProc(Class<? extends ParamProcessorFactory> paramProcFactory) {
+		paramProcessorBuilder.registerParamProc(paramProcFactory);
 	}
 	
 	
@@ -196,6 +227,6 @@ public abstract class MvcModule extends ServletModule {
 		public void toViewInstance(View view);
 		public void toJsp(String pathToJsp);
 	}
-	
+		
 // ------------------------------------------------------------------------
 }

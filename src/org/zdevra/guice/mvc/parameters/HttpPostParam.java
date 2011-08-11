@@ -67,7 +67,7 @@ public class HttpPostParam implements ParamProcessor {
 
 /*----------------------------------------------------------------------*/
 	
-	static class Factory implements ParamProcessorFactory {
+	public static class Factory implements ParamProcessorFactory {
 
 		@Override
 		public ParamProcessor buildParamProcessor(ParamMetadata metadata) {

@@ -19,7 +19,7 @@ public class Case4Test extends AbstractTest {
 	
 	public static class Case4Servlet extends TestServlet {
 		public Case4Servlet() {
-			super(Case4Controller.class, new Case4Module());
+			super(Case4Controller.class, new Case4Module() );
 		}	
 	}
 	

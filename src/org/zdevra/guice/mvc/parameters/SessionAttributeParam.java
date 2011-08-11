@@ -50,7 +50,10 @@ public class SessionAttributeParam implements ParamProcessor {
 	
 /*----------------------------------------------------------------------*/
 	
-	static class Factory implements ParamProcessorFactory {
+	/**
+	 * Factory class for {@link SessionAttributeParam}
+	 */
+	public static class Factory implements ParamProcessorFactory {
 
 		@Override
 		public ParamProcessor buildParamProcessor(ParamMetadata metadata) {

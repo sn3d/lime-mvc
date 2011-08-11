@@ -21,7 +21,7 @@ public class HttpSessionParam implements ParamProcessor {
 
 /*----------------------------------------------------------------------*/
 	
-	static class Factory implements ParamProcessorFactory {
+	public static class Factory implements ParamProcessorFactory {
 		
 		private final ParamProcessor processor = new HttpSessionParam();
 		

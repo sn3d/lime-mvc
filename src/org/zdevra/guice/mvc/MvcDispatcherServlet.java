@@ -50,45 +50,40 @@ class MvcDispatcherServlet extends HttpServlet {
 	
 	private static final Logger logger = Logger.getLogger(MvcDispatcherServlet.class.getName());
 	
-	@Inject
-	private Injector injector;
-	
+	@Inject private Injector injector;	
+	@Inject private ViewResolver viewResolver;
+	@Inject private ExceptionResolver exceptionResolver;
+	@Inject private ConversionService conversionService;
+	@Inject private ParamProcessorsService paramService;
 	
 	private final Class<?> controllerClass;
 	private View defaultView;
 	private List<MethodInvoker> methodInvokers;
 	private List<String> sessionAttributes;
-	private ConversionService conversionService;
-	private ParamProcessorsService paramService;
+	
 	
 // ------------------------------------------------------------------------
 	
+	/**
+	 * Constructor for testing purpose
+	 * @param controllerClass
+	 * @param injector
+	 */
 	public MvcDispatcherServlet(Class<?> controllerClass, Injector injector) {
-		this(controllerClass, null, null, injector);
-	}
-		
-	public MvcDispatcherServlet(Class<?> controllerClass, ConversionService conversionService, ParamProcessorsService paramService) 
-	{
-		this(controllerClass, conversionService, paramService, null);
+		this(controllerClass);
+		this.injector = injector;
+		this.paramService = injector.getInstance(ParamProcessorsService.class);
+		this.viewResolver = injector.getInstance(ViewResolver.class);
+		this.conversionService = injector.getInstance(ConversionService.class);
+		this.exceptionResolver = injector.getInstance(ExceptionResolver.class);
 	}
 	
-	public MvcDispatcherServlet(Class<?> controllerClass, ConversionService aConversionService, ParamProcessorsService aParamService, Injector injector) {
-        conversionService = aConversionService;
-        paramService = aParamService;
-
-		if (injector != null) {
-			this.injector = injector;
-		}
-		
-		if (conversionService == null) {
-			conversionService = new ConversionService();
-		}
-				
-		if (paramService == null) {
-			paramService = new ParamProcessorsService();
-		}
-		
-		this.controllerClass = controllerClass;				
+	/**
+	 * Constructor used by MvcModule
+	 * @param controllerClass
+	 */
+	public MvcDispatcherServlet(Class<?> controllerClass) {
+		this.controllerClass = controllerClass;
 	}
 	
 // ------------------------------------------------------------------------
@@ -127,7 +122,7 @@ class MvcDispatcherServlet extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
-		scanAnotationsOfClass(conversionService, paramService);
+		scanAnotationsOfClass(conversionService);
 		super.init();
 	}
 
@@ -150,25 +145,18 @@ class MvcDispatcherServlet extends HttpServlet {
 			mav.getModel().moveObjectsToSession(this.sessionAttributes, req.getSession(true));
 			mav.getModel().moveObjectsToRequestAttrs(req);
 			
-			ViewResolver resolver = injector.getInstance(ViewResolver.class);
-			resolver.resolve(mav.getView(), this, req, resp);
-
+			viewResolver.resolve(mav.getView(), this, req, resp);
 			mav = null;
 
-		} catch (Throwable e) {
-			ExceptionResolver resolver = injector.getInstance(ExceptionResolver.class);
-			if (resolver != null) {
-				resolver.handleException(e, this, req, resp);
-			} else { 
-				logger.info("Caught exception for the request '" + req.getRequestURL().toString() + ":" + e.toString());				
-			}
+		} catch (Throwable e) {			
+			exceptionResolver.handleException(e, this, req, resp); 			
 		}		
 	}
 
 	
 // ------------------------------------------------------------------------
 		
-	private void scanAnotationsOfClass(ConversionService conversionService, ParamProcessorsService paramService) 
+	private void scanAnotationsOfClass(ConversionService conversionService) 
 	{
 		Controller controllerAnotation = controllerClass.getAnnotation(Controller.class);
 		if (controllerAnotation == null) {

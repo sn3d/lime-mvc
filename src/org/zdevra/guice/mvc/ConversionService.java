@@ -30,6 +30,8 @@ import org.zdevra.guice.mvc.convertors.IntegerConvertor;
 import org.zdevra.guice.mvc.convertors.LongConvertor;
 import org.zdevra.guice.mvc.convertors.StringConvertor;
 
+import com.google.inject.Singleton;
+
 /**
  * The class provides conversions from incomming strings from HTTP requests 
  * to a various datatypes. If there is no convertor for that datatype, 
@@ -57,6 +59,7 @@ import org.zdevra.guice.mvc.convertors.StringConvertor;
  * @see ConversionService.Convertor
  * @see ConversionService.ConvertorFactory
  */
+@Singleton
 public class ConversionService {
 /*---------------------------- m. variables ----------------------------*/
 

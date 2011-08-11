@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
  * </pre>
  *  
  * @see ExceptionHandler
+ * @see GuiceExceptionResolver
  * @see MvcModule
  */
 public interface ExceptionResolver {

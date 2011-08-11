@@ -42,7 +42,10 @@ public final class UriParam implements ParamProcessor {
 	
 /*----------------------------------------------------------------------*/
 	
-	static class Factory implements ParamProcessorFactory {
+	/**
+	 * Factory class for {@link UriParam}
+	 */
+	public static class Factory implements ParamProcessorFactory {
 
 		public ParamProcessor buildParamProcessor(ParamMetadata metadata) {
 			Annotation[] paramAnnotations = metadata.getAnnotations();

@@ -40,10 +40,7 @@ import com.google.inject.name.Names;
 public class ParamProcessorTest {
 	
 	private Injector injector;
-	private ParamProcessorsService paramService;
-	
-	
-	
+		
 	@BeforeClass
 	public void prepare() {
 		this.injector = Guice.createInjector(new AbstractModule() {
@@ -52,14 +49,16 @@ public class ParamProcessorTest {
 				bind(BillingService.class).annotatedWith(Names.named("ImplA")).to(BillingServiceImplA.class);
 				bind(BillingService.class).annotatedWith(Names.named("ImplB")).to(BillingServiceImplB.class);
 				bind(Printer.class).toInstance(new Printer());
-			}			
-		});
-		
-		this.paramService = new ParamProcessorsService();		
+
+				install(new MvcModule(){
+					@Override
+					protected void configureControllers() {						
+					}
+				});			
+			}
+		});		
 	}
-	
-	
-	
+		
 	@Test
 	public void testInjectorParam() throws SecurityException, NoSuchMethodException 
 	{			
@@ -79,7 +78,8 @@ public class ParamProcessorTest {
 	}
 	
 	
-	private void invokeAndTestInjectorMethod(Method method, String expectedResult) {	
+	private void invokeAndTestInjectorMethod(Method method, String expectedResult) {
+		ParamProcessorsService paramService = injector.getInstance(ParamProcessorsService.class);
 		MethodInvoker invoker = MethodInvokerImpl.createInvokerForTest(method, paramService);		
 		InvokeData data = new InvokeData(null, null, null, null, new InjectorController(), null, injector);		
 		ModelAndView mav = invoker.invoke(data);				
@@ -95,6 +95,7 @@ public class ParamProcessorTest {
 	public void testHttpSessionParam() throws SecurityException, NoSuchMethodException 
 	{
 		//prepare mocks and data
+		ParamProcessorsService paramService = injector.getInstance(ParamProcessorsService.class);
 		HttpSession session = createMock(HttpSession.class);
 		expect(session.getAttribute("test")).andReturn("testval");
 		
