@@ -16,7 +16,6 @@
  *****************************************************************************/
 package org.zdevra.guice.mvc;
 
-import org.zdevra.guice.mvc.views.NamedView;
 
 /**
  * Class is representing data-structure used internally by Lime and
@@ -30,7 +29,6 @@ class ControllerDefinition {
 	
 	private Class<?> controllerClass;
 	private String urlPattern;
-	private View defaultView;
 	
 // ------------------------------------------------------------------------
 
@@ -41,7 +39,6 @@ class ControllerDefinition {
 	
 	public ControllerDefinition(String urlPattern, Class<?> controllerClass) {		
 		this.controllerClass = controllerClass;
-		this.defaultView = NamedView.create(controllerClass);
 		this.urlPattern = urlPattern;
 	}
 	
@@ -50,8 +47,7 @@ class ControllerDefinition {
 	@Override
 	public String toString() {
 		return "ControllerDefinition [controllerClass=" + controllerClass
-				+ ", urlPattern=" + urlPattern + ", defaultView=" + defaultView
-				+ "]";
+				+ ", urlPattern=" + urlPattern + "]";
 	}
 	
 	
@@ -62,14 +58,6 @@ class ControllerDefinition {
 	public String getUrlPattern() {
 		return urlPattern;
 	}	
-	
-	public View getDefaultView() {
-		return defaultView;
-	}
-	
-	public void setDefaultView(View view) {
-		this.defaultView = view;
-	}
-	
+		
 // ------------------------------------------------------------------------
 }

@@ -20,7 +20,7 @@ import org.zdevra.guice.mvc.Controller;
 import org.zdevra.guice.mvc.RequestMapping;
 import org.zdevra.guice.mvc.UriParameter;
 
-@Controller
+@Controller(toView="default")
 public interface Case2Controller {
 
 	@RequestMapping(path="/getcar/(.*)", nameOfResult="testmsg")

@@ -35,6 +35,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.zdevra.guice.mvc.exceptions.NoMethodInvoked;
 import org.zdevra.guice.mvc.parameters.ParamProcessorsService;
+import org.zdevra.guice.mvc.views.NamedView;
 
 import com.google.inject.Injector;
 
@@ -52,25 +53,28 @@ class MvcDispatcherServlet extends HttpServlet {
 	@Inject
 	private Injector injector;
 	
-	private final View defaultView;
+	
 	private final Class<?> controllerClass;
+	private View defaultView;
 	private List<MethodInvoker> methodInvokers;
 	private List<String> sessionAttributes;
+	private ConversionService conversionService;
+	private ParamProcessorsService paramService;
 	
 // ------------------------------------------------------------------------
 	
-	public MvcDispatcherServlet(Class<?> controllerClass, View defaultView, Injector injector) {
-		this(controllerClass, defaultView, null, null, injector);
+	public MvcDispatcherServlet(Class<?> controllerClass, Injector injector) {
+		this(controllerClass, null, null, injector);
 	}
 		
-	public MvcDispatcherServlet(Class<?> controllerClass, View defaultView, ConversionService conversionService, ParamProcessorsService paramService) 
+	public MvcDispatcherServlet(Class<?> controllerClass, ConversionService conversionService, ParamProcessorsService paramService) 
 	{
-		this(controllerClass, defaultView, conversionService, paramService, null);
+		this(controllerClass, conversionService, paramService, null);
 	}
 	
-	public MvcDispatcherServlet(Class<?> controllerClass, View defaultView, ConversionService aConversionService, ParamProcessorsService aParamService, Injector injector) {
-        ConversionService conversionService = aConversionService;
-        ParamProcessorsService paramService = aParamService;
+	public MvcDispatcherServlet(Class<?> controllerClass, ConversionService aConversionService, ParamProcessorsService aParamService, Injector injector) {
+        conversionService = aConversionService;
+        paramService = aParamService;
 
 		if (injector != null) {
 			this.injector = injector;
@@ -84,10 +88,7 @@ class MvcDispatcherServlet extends HttpServlet {
 			paramService = new ParamProcessorsService();
 		}
 		
-		this.defaultView = defaultView;
-		this.controllerClass = controllerClass;
-		
-		scanAnotationsOfClass(conversionService, paramService);				
+		this.controllerClass = controllerClass;				
 	}
 	
 // ------------------------------------------------------------------------
@@ -122,16 +123,23 @@ class MvcDispatcherServlet extends HttpServlet {
 	{
 		processRequest(req, resp, RequestType.PUT);
 	}
+	
 
+	@Override
+	public void init() throws ServletException {
+		scanAnotationsOfClass(conversionService, paramService);
+		super.init();
+	}
 
+	
 	private void processRequest(HttpServletRequest req, HttpServletResponse resp, RequestType reqType)
 		throws ServletException, IOException
 	{
-		try {			
+		try {						
 			if (logger.isLoggable(Level.FINEST)) {
 				logger.finest("request '" + req.getRequestURL().toString() +  "' is executed by controller '" + this.controllerClass.getName() + "' ");
 			}
-			
+						
 			Object controllerObj = injector.getInstance(controllerClass);								
 			
 			ModelAndView mav = invokeMethods(controllerObj, req, resp, reqType);			
@@ -167,9 +175,10 @@ class MvcDispatcherServlet extends HttpServlet {
 			throw new IllegalStateException("Class is not defined as a controller. Missing @Controller annotation.");
 		}
 
-		//scan session attributes
+		//scan session attributes & default view
 		List<String> sessionAttrList = Arrays.asList(controllerAnotation.sessionAttributes());
 		this.sessionAttributes = Collections.unmodifiableList(sessionAttrList);
+		this.defaultView = NamedView.create(this.controllerClass);		
 				
 		//scan methods
 		List<Method> methods = Arrays.asList(this.controllerClass.getMethods());

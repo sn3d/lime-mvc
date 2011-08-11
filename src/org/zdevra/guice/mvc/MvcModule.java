@@ -120,7 +120,6 @@ public abstract class MvcModule extends ServletModule {
 				String pattern = def.getUrlPattern();				
 				MvcDispatcherServlet dispatcher = new MvcDispatcherServlet(
 						def.getControllerClass(), 
-						def.getDefaultView(),
 						conversionService,
 						paramService);
 				serve(pattern).with(dispatcher);				

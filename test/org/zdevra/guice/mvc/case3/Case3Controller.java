@@ -6,7 +6,7 @@ import org.zdevra.guice.mvc.TestView;
 import org.zdevra.guice.mvc.View;
 import org.zdevra.guice.mvc.views.NamedView;
 
-@Controller
+@Controller(toView="default")
 public class Case3Controller {
 	
 	@RequestMapping(path="/view/default")

@@ -23,7 +23,7 @@ import org.zdevra.guice.mvc.Model;
 import org.zdevra.guice.mvc.RequestMapping;
 import org.zdevra.guice.mvc.SessionParameter;
 
-@Controller(sessionAttributes= { "book" })
+@Controller(sessionAttributes= { "book" }, toView="default")
 @Singleton
 public class Case1Controller {
 	
