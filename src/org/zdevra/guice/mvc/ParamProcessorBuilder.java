@@ -18,7 +18,11 @@ import com.google.inject.multibindings.Multibinder;
 
 public class ParamProcessorBuilder {
 	
+// ------------------------------------------------------------------------
+	
 	private final Multibinder<ParamProcessorFactory> paramBinder;
+	
+// ------------------------------------------------------------------------
 	
 	public ParamProcessorBuilder(Binder binder) {
 		this.paramBinder = 
@@ -28,4 +32,6 @@ public class ParamProcessorBuilder {
 	public void registerParamProc(Class<? extends ParamProcessorFactory> paramProcFactory) {
 		paramBinder.addBinding().to(paramProcFactory);
 	}
+	
+// ------------------------------------------------------------------------
 }

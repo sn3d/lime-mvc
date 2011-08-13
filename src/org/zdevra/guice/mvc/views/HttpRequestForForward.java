@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequestWrapper;
  * Workaround for ServletDispatcher's forward and guice's request object.
  * <p>
  * 
- * Problematic part was forwarding from dispatcher servlet to jsp or html (or
+ * Problematic part was a forwarding from dispatcher servlet to jsp or html (or
  * any content). In Guice's case is used special request object {@link ServletDefinition}
  * which is doing special calculations and operations over getPathInfo() method.
  * <p>

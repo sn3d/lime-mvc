@@ -29,6 +29,7 @@ import org.zdevra.guice.mvc.parameters.RequestParam;
 import org.zdevra.guice.mvc.parameters.ResponseParam;
 import org.zdevra.guice.mvc.parameters.SessionAttributeParam;
 import org.zdevra.guice.mvc.parameters.UriParam;
+import org.zdevra.guice.mvc.views.NamedViewScanner;
 
 import com.google.inject.name.Names;
 import com.google.inject.servlet.ServletModule;
@@ -76,6 +77,7 @@ import com.google.inject.servlet.ServletModule;
  * @see View
  * @see ViewResolver
  * @see ExceptionResolver
+ * @see ViewScannerService
  *  
  */
 public abstract class MvcModule extends ServletModule {
@@ -87,6 +89,7 @@ public abstract class MvcModule extends ServletModule {
 	private NamedViewBuilder namedViewBudiler;
 	private ControllerModuleBuilder controllerModuleBuilder;
 	private ParamProcessorBuilder paramProcessorBuilder;
+	private ViewScannerBuilder viewScannerBuilder;
 
 // ------------------------------------------------------------------------
 	
@@ -111,6 +114,7 @@ public abstract class MvcModule extends ServletModule {
 		exceptionResolverBuilder = new ExceptionResolverBuilder(binder());
 		namedViewBudiler = new NamedViewBuilder(binder());
 		paramProcessorBuilder = new ParamProcessorBuilder(binder());
+		viewScannerBuilder = new ViewScannerBuilder(binder());
 		
 		try {
 			//default registrations
@@ -123,6 +127,9 @@ public abstract class MvcModule extends ServletModule {
 				.annotatedWith(Names.named(ExceptionResolver.DEFAULT_EXCEPTIONHANDLER_NAME))
 				.to(DefaultExceptionHandler.class);
 			
+			bind(ConversionService.class)
+				.toInstance(conversionService);
+			
 			bind(ParamProcessorsService.class);
 			registerParameterProc(HttpPostParam.Factory.class);			
 			registerParameterProc(UriParam.Factory.class);
@@ -132,6 +139,10 @@ public abstract class MvcModule extends ServletModule {
 			registerParameterProc(ResponseParam.Factory.class);
 			registerParameterProc(HttpSessionParam.Factory.class);
 			registerParameterProc(InjectorParam.Factory.class);
+			
+			
+			bind(ViewScannerService.class);
+			registerViewScanner(NamedViewScanner.class);
 			
 			configureControllers();
 			
@@ -145,6 +156,7 @@ public abstract class MvcModule extends ServletModule {
 		} finally {
 			exceptionResolverBuilder = null;
 			controllerModuleBuilder = null;
+			viewScannerBuilder = null;
 			paramProcessorBuilder = null;
 			namedViewBudiler = null;
 			conversionService = null;			
@@ -171,6 +183,28 @@ public abstract class MvcModule extends ServletModule {
 	protected final void registerConvertor(Class<?> type, ConvertorFactory convertorFactory) {
 		this.conversionService.registerConvertor(type, convertorFactory);
 	}
+	
+		
+	/**
+	 * The method register into {@link ViewScannerService} a custom
+	 * view scanner as a class
+	 * 
+	 * @see ViewScannerService
+	 */
+	protected final void registerViewScanner(Class<? extends ViewScanner> scannerClass) {
+		this.viewScannerBuilder.as(scannerClass);
+	}
+	
+	
+	/**
+	 * The method register into {@link ViewScannerService} a custom
+	 * view scanner as a instance.
+	 * 
+	 * @see ViewScannerService
+	 */
+	protected final void registerViewScanner(ViewScanner scannerInstance) {
+		this.viewScannerBuilder.asInstance(scannerInstance);
+	}	
 	
 	
 	/**

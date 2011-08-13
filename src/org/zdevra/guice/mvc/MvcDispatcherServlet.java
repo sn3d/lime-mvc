@@ -35,7 +35,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.zdevra.guice.mvc.exceptions.NoMethodInvoked;
 import org.zdevra.guice.mvc.parameters.ParamProcessorsService;
-import org.zdevra.guice.mvc.views.NamedView;
 
 import com.google.inject.Injector;
 
@@ -55,6 +54,7 @@ class MvcDispatcherServlet extends HttpServlet {
 	@Inject private ExceptionResolver exceptionResolver;
 	@Inject private ConversionService conversionService;
 	@Inject private ParamProcessorsService paramService;
+	@Inject private ViewScannerService viewScannerService;
 	
 	private final Class<?> controllerClass;
 	private View defaultView;
@@ -76,6 +76,7 @@ class MvcDispatcherServlet extends HttpServlet {
 		this.viewResolver = injector.getInstance(ViewResolver.class);
 		this.conversionService = injector.getInstance(ConversionService.class);
 		this.exceptionResolver = injector.getInstance(ExceptionResolver.class);
+		this.viewScannerService = injector.getInstance(ViewScannerService.class);
 	}
 	
 	/**
@@ -166,7 +167,7 @@ class MvcDispatcherServlet extends HttpServlet {
 		//scan session attributes & default view
 		List<String> sessionAttrList = Arrays.asList(controllerAnotation.sessionAttributes());
 		this.sessionAttributes = Collections.unmodifiableList(sessionAttrList);
-		this.defaultView = NamedView.create(this.controllerClass);		
+		this.defaultView = viewScannerService.scan(controllerClass.getAnnotations());		
 				
 		//scan methods
 		List<Method> methods = Arrays.asList(this.controllerClass.getMethods());
@@ -175,7 +176,7 @@ class MvcDispatcherServlet extends HttpServlet {
 			
 			RequestMapping reqMapping = method.getAnnotation(RequestMapping.class);
 			if (reqMapping != null) {
-				MethodInvoker invoker = MethodInvokerImpl.createInvoker(method, reqMapping, paramService, conversionService);
+				MethodInvoker invoker = MethodInvokerImpl.createInvoker(method, reqMapping, paramService, conversionService, viewScannerService);
 				MethodInvoker filteredInvoker = new MethodInvokerFilter(reqMapping, invoker);
 				scannedInvokers.add(filteredInvoker);							
 			}			

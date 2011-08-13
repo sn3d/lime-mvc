@@ -27,7 +27,6 @@ import org.zdevra.guice.mvc.exceptions.MethodInvokingException;
 import org.zdevra.guice.mvc.parameters.ParamMetadata;
 import org.zdevra.guice.mvc.parameters.ParamProcessor;
 import org.zdevra.guice.mvc.parameters.ParamProcessorsService;
-import org.zdevra.guice.mvc.views.NamedView;
 
 /**
  * Class prepare data for controller's method, call the method
@@ -66,9 +65,9 @@ class MethodInvokerImpl implements MethodInvoker {
 	 * @param convertService
 	 * @return
 	 */
-	public static MethodInvoker createInvoker(Method method, RequestMapping reqMapping, ParamProcessorsService paramService, ConversionService convertService) {		
+	public static MethodInvoker createInvoker(Method method, RequestMapping reqMapping, ParamProcessorsService paramService, ConversionService convertService, ViewScannerService viewScannerService) {		
 		String resultName = reqMapping.nameOfResult();
-		View methodView = NamedView.create(reqMapping.toView());		
+		View methodView = viewScannerService.scan(method.getAnnotations());		
 		List<ParamProcessor> processors = scanParams(method, paramService, convertService);				
 		MethodInvoker invoker = new MethodInvokerImpl(methodView, resultName, method, processors);				
 		return invoker; 
