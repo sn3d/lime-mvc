@@ -52,6 +52,6 @@ public interface ViewResolver {
 	 * Keep the implementation small and fast. It's part of 
 	 * code which is called often.
 	 */
-	public void resolve(View view, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp);
+	public void resolve(View view, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) throws Exception;
 	
 }

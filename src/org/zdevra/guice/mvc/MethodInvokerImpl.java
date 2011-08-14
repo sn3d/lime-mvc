@@ -65,7 +65,7 @@ class MethodInvokerImpl implements MethodInvoker {
 	 * @param convertService
 	 * @return
 	 */
-	public static MethodInvoker createInvoker(Method method, RequestMapping reqMapping, ParamProcessorsService paramService, ConversionService convertService, ViewScannerService viewScannerService) {		
+	public static MethodInvoker createInvoker(Method method, RequestMapping reqMapping, ParamProcessorsService paramService, ConversionService convertService, ViewScannerService viewScannerService) throws Exception {		
 		String resultName = reqMapping.nameOfResult();
 		View methodView = viewScannerService.scan(method.getAnnotations());		
 		List<ParamProcessor> processors = scanParams(method, paramService, convertService);				

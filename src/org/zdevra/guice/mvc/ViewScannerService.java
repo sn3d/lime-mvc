@@ -58,7 +58,7 @@ public class ViewScannerService {
 	}
 	
 	
-	public View scan(Annotation[] controllerAnnotations) {
+	public View scan(Annotation[] controllerAnnotations) throws Exception {
 		for (ViewScanner scanner : scanners) {
 			View view = scanner.scan(controllerAnnotations);
 			if (view != null && view != View.NULL_VIEW) {

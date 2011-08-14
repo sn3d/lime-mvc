@@ -25,5 +25,5 @@ import java.lang.annotation.Annotation;
  * @see ViewScannerService
  */
 public interface ViewScanner {	
-	public View scan(Annotation[] controllerAnotations);
+	public View scan(Annotation[] controllerAnotations) throws Exception;
 }

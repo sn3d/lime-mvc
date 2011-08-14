@@ -51,7 +51,7 @@ public class DefaultViewResolver implements ViewResolver {
 // ------------------------------------------------------------------------
 
 	@Override
-	public void resolve(View view, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {
+	public void resolve(View view, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		if (view instanceof NamedView) {
 			String viewName = ((NamedView)view).getName();
 			try {

@@ -123,8 +123,13 @@ class MvcDispatcherServlet extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
-		scanAnotationsOfClass(conversionService);
-		super.init();
+		try {
+			scanAnotationsOfClass(conversionService);
+			super.init();
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "Error in the servlet's initialization:" + e.getMessage(), e);
+			throw new ServletException(e);
+		}		
 	}
 
 	
@@ -157,7 +162,7 @@ class MvcDispatcherServlet extends HttpServlet {
 	
 // ------------------------------------------------------------------------
 		
-	private void scanAnotationsOfClass(ConversionService conversionService) 
+	private void scanAnotationsOfClass(ConversionService conversionService) throws Exception
 	{
 		Controller controllerAnotation = controllerClass.getAnnotation(Controller.class);
 		if (controllerAnotation == null) {
