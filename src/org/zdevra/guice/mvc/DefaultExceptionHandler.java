@@ -16,6 +16,7 @@
  *****************************************************************************/
 package org.zdevra.guice.mvc;
 
+import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,22 +37,24 @@ public class DefaultExceptionHandler implements ExceptionHandler {
 
 	@Override
 	public void handleException(Throwable t, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {
-		try {			
-			
+		try {						
 			logger.log(Level.SEVERE, "Unhandled exception caught by Lime default handler (" + t.getClass().getName() + ")" , t);
 			
-			resp.getWriter().write(
+			String msg = t.getLocalizedMessage() == null ? "" : t.getLocalizedMessage();
+			PrintWriter writer = resp.getWriter();
+			
+			writer.write(
 					"<HTML><STYLE>body {font-family: Arial,Helvetica,sans-serif;} .stacktrace " +
 			        "{background: #EEE; padding-left: 10px; padding-top: 5px; padding-bottom: 5px;" +
 					"margin-top: 0px; margin-bottom: 10px; display: block; font-family: monospace; }" +
 			        "</STYLE> <BODY> <H2>Unhandled exception caught (");
 			
-			resp.getWriter().write(t.getClass().getName());			
-			resp.getWriter().write(")</H2><B>Message:</B>");			
-			resp.getWriter().write(t.getLocalizedMessage());			
-			resp.getWriter().write("<BR><BR><B>Stack trace:</B><pre class=\"stacktrace\">\n");
-			t.printStackTrace(resp.getWriter());			
-			resp.getWriter().write("\n</pre>Lime MVC default exception handler</BODY></HTML>");
+			writer.write(t.getClass().getName());			
+			writer.write(")</H2><B>Message:</B>");		
+			writer.write(msg);			
+			writer.write("<BR><BR><B>Stack trace:</B><pre class=\"stacktrace\">\n");
+			t.printStackTrace(writer);			
+			writer.write("\n</pre>Lime MVC default exception handler</BODY></HTML>");
 								
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Error in default handler", e);		
