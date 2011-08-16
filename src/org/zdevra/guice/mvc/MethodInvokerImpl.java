@@ -28,6 +28,8 @@ import org.zdevra.guice.mvc.parameters.ParamMetadata;
 import org.zdevra.guice.mvc.parameters.ParamProcessor;
 import org.zdevra.guice.mvc.parameters.ParamProcessorsService;
 
+import com.google.inject.Injector;
+
 /**
  * Class prepare data for controller's method, call the method
  * and process the method's result.
@@ -40,6 +42,7 @@ class MethodInvokerImpl implements MethodInvoker {
 	
 /*---------------------------- m. variables ----------------------------*/
 	
+	private final Class<?> controllerClass;
 	private final View defaultView;
 	private final String resultName;
 	private final Method method;
@@ -47,30 +50,23 @@ class MethodInvokerImpl implements MethodInvoker {
 	
 /*---------------------------- constructors ----------------------------*/
 	
-	/**
-	 * The factory method construct a method invoked which has no view and
-	 * result of the invoked method is stored into test-result
-	 */
-	public static MethodInvoker createInvokerForTest(Method method, ParamProcessorsService paramService) {
-		List<ParamProcessor> processors = scanParams(method, paramService, null);
-		return new MethodInvokerImpl(null, "test-result", method, processors);
-	}
 	
-	/**
-	 * The regular factory method used by Lime
-	 * 
-	 * @param method
-	 * @param reqMapping
-	 * @param paramService
-	 * @param convertService
-	 * @return
-	 */
-	public static MethodInvoker createInvoker(Method method, RequestMapping reqMapping, ParamProcessorsService paramService, ConversionService convertService, ViewScannerService viewScannerService) throws Exception {		
-		String resultName = reqMapping.nameOfResult();
-		View methodView = viewScannerService.scan(method.getAnnotations());		
-		List<ParamProcessor> processors = scanParams(method, paramService, convertService);				
-		MethodInvoker invoker = new MethodInvokerImpl(methodView, resultName, method, processors);				
-		return invoker; 
+	public static MethodInvoker createInvoker(Class<?> controllerClass, Method method, RequestMapping reqMapping, Injector injector) throws Exception {
+		
+		ParamProcessorsService paramService = injector.getInstance(ParamProcessorsService.class);
+		ConversionService convertService = injector.getInstance(ConversionService.class);
+		ViewScannerService viewScannerService = injector.getInstance(ViewScannerService.class);
+				
+		View defaultView = viewScannerService.scan(method.getAnnotations());
+		if (defaultView == View.NULL_VIEW) {
+			defaultView = viewScannerService.scan(controllerClass.getAnnotations());
+		}		
+				
+		List<ParamProcessor> processors = scanParams(method, paramService, convertService);
+		
+		String resultName = reqMapping.nameOfResult();				
+		MethodInvoker invoker = new MethodInvokerImpl(controllerClass, method, defaultView, resultName, processors);		
+		return invoker;  
 	}
 
 	
@@ -81,7 +77,8 @@ class MethodInvokerImpl implements MethodInvoker {
 	 * @param method
 	 * @param paramProcs
 	 */
-	private MethodInvokerImpl(View defaultView, String resultName, Method method, List<ParamProcessor> paramProcs) {
+	private MethodInvokerImpl(Class<?> controllerClass, Method method, View defaultView, String resultName, List<ParamProcessor> paramProcs) {
+		this.controllerClass = controllerClass;
 		this.defaultView = defaultView;
 		this.resultName = resultName;
 		this.method = method;
@@ -109,7 +106,10 @@ class MethodInvokerImpl implements MethodInvoker {
 	public ModelAndView invoke(InvokeData data) 
 	{
 		try {
-			Object controllerObj = data.getController();
+			Object controllerObj = data.getInjector().getInstance(controllerClass);
+			if (controllerObj == null) {
+				throw new NullPointerException("null controller");
+			}
 	
 			Object[] args = getValues(data);			
 			Object result = method.invoke(controllerObj, args);

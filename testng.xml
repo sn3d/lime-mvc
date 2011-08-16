@@ -3,7 +3,6 @@
   <test name="unit-tests" >
     <classes>    
        <class name="org.zdevra.guice.mvc.GuiceExceptionResolverTest" />
-       <class name="org.zdevra.guice.mvc.ParamProcessorTest" />
        <class name="org.zdevra.guice.mvc.ConversionServiceTest" />
        <class name="org.zdevra.guice.mvc.NamedViewTest"/>
        <class name="org.zdevra.guice.mvc.ModelTest"/>

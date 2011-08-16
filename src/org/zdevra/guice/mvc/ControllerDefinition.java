@@ -16,6 +16,9 @@
  *****************************************************************************/
 package org.zdevra.guice.mvc;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * Class is representing data-structure used internally by Lime and
@@ -27,34 +30,30 @@ class ControllerDefinition {
 	
 // ------------------------------------------------------------------------
 	
-	private Class<?> controllerClass;
+	private List<Class<?>> controllers;
 	private String urlPattern;
 	
 // ------------------------------------------------------------------------
 
-	public ControllerDefinition() {
-		this(null, null);
-	}
 	
-	
-	public ControllerDefinition(String urlPattern, Class<?> controllerClass) {		
-		this.controllerClass = controllerClass;
+	public ControllerDefinition(String urlPattern) {
 		this.urlPattern = urlPattern;
+		this.controllers = new ArrayList<Class<?>>(10);
 	}
+	
 	
 // ------------------------------------------------------------------------
-
-	@Override
-	public String toString() {
-		return "ControllerDefinition [controllerClass=" + controllerClass
-				+ ", urlPattern=" + urlPattern + "]";
-	}
 	
-	
-	public Class<?> getControllerClass() {
-		return controllerClass;
+	public void addController(Class<?> controller) {
+		controllers.add(controller);
 	}
 
+	
+	public List<Class<?>> getControllers() {
+		return controllers;
+	}
+
+	
 	public String getUrlPattern() {
 		return urlPattern;
 	}	

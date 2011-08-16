@@ -18,9 +18,9 @@ package org.zdevra.guice.mvc;
 
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -34,7 +34,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.zdevra.guice.mvc.exceptions.NoMethodInvoked;
-import org.zdevra.guice.mvc.parameters.ParamProcessorsService;
 
 import com.google.inject.Injector;
 
@@ -52,12 +51,8 @@ class MvcDispatcherServlet extends HttpServlet {
 	@Inject private Injector injector;	
 	@Inject private ViewResolver viewResolver;
 	@Inject private ExceptionResolver exceptionResolver;
-	@Inject private ConversionService conversionService;
-	@Inject private ParamProcessorsService paramService;
-	@Inject private ViewScannerService viewScannerService;
-	
-	private final Class<?> controllerClass;
-	private View defaultView;
+
+	private final Collection<Class<?>> controllers;
 	private List<MethodInvoker> methodInvokers;
 	private List<String> sessionAttributes;
 	
@@ -72,19 +67,26 @@ class MvcDispatcherServlet extends HttpServlet {
 	public MvcDispatcherServlet(Class<?> controllerClass, Injector injector) {
 		this(controllerClass);
 		this.injector = injector;
-		this.paramService = injector.getInstance(ParamProcessorsService.class);
 		this.viewResolver = injector.getInstance(ViewResolver.class);
-		this.conversionService = injector.getInstance(ConversionService.class);
 		this.exceptionResolver = injector.getInstance(ExceptionResolver.class);
-		this.viewScannerService = injector.getInstance(ViewScannerService.class);
 	}
+	
 	
 	/**
 	 * Constructor used by MvcModule
 	 * @param controllerClass
 	 */
 	public MvcDispatcherServlet(Class<?> controllerClass) {
-		this.controllerClass = controllerClass;
+		this( Arrays.asList( new Class<?>[] { controllerClass } ) );
+	}
+	
+	
+	/**
+	 * Constructor used by MvcModule
+	 * @param controllers
+	 */	
+	public MvcDispatcherServlet(List<Class<?>> controllers) {
+		this.controllers = Collections.unmodifiableCollection(controllers);
 	}
 	
 // ------------------------------------------------------------------------
@@ -124,7 +126,9 @@ class MvcDispatcherServlet extends HttpServlet {
 	@Override
 	public void init() throws ServletException {
 		try {
-			scanAnotationsOfClass(conversionService);
+			for (Class<?> controller : controllers) {
+				scanAnotationsOfClass(controller);
+			}
 			super.init();
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Error in the servlet's initialization:" + e.getMessage(), e);
@@ -136,21 +140,35 @@ class MvcDispatcherServlet extends HttpServlet {
 	private void processRequest(HttpServletRequest req, HttpServletResponse resp, RequestType reqType)
 		throws ServletException, IOException
 	{
-		try {						
-			if (logger.isLoggable(Level.FINEST)) {
-				logger.finest("request '" + req.getRequestURL().toString() +  "' is executed by controller '" + this.controllerClass.getName() + "' ");
-			}
-						
-			Object controllerObj = injector.getInstance(controllerClass);								
+		try {
 			
-			ModelAndView mav = invokeMethods(controllerObj, req, resp, reqType);			
+			if (logger.isLoggable(Level.FINEST)) {
+				logger.finest("request '" + req.getRequestURL().toString() +  "' is handled by Lime MVC Servler ");
+			}
+											
+			//prepare invoke data
+			Model sessionModel = new Model();
+			sessionModel.getObjectsFromSession(this.sessionAttributes, req.getSession(true));
+			
+			InvokeData data = 
+				new InvokeData(
+					req,
+					resp,
+					sessionModel,
+					reqType,
+					injector );
+			
+			//invoke method
+			ModelAndView mav = invokeMethods(data);			
 			if (logger.isLoggable(Level.FINEST)) {
 				logger.finest("controller produce model " + mav.getModel().toString() );
 			}
 			
+			//post-production in model
 			mav.getModel().moveObjectsToSession(this.sessionAttributes, req.getSession(true));
 			mav.getModel().moveObjectsToRequestAttrs(req);
 			
+			//resolve view
 			viewResolver.resolve(mav.getView(), this, req, resp);
 			mav = null;
 
@@ -162,7 +180,7 @@ class MvcDispatcherServlet extends HttpServlet {
 	
 // ------------------------------------------------------------------------
 		
-	private void scanAnotationsOfClass(ConversionService conversionService) throws Exception
+	private void scanAnotationsOfClass(Class<?> controllerClass) throws Exception
 	{
 		Controller controllerAnotation = controllerClass.getAnnotation(Controller.class);
 		if (controllerAnotation == null) {
@@ -171,17 +189,16 @@ class MvcDispatcherServlet extends HttpServlet {
 
 		//scan session attributes & default view
 		List<String> sessionAttrList = Arrays.asList(controllerAnotation.sessionAttributes());
-		this.sessionAttributes = Collections.unmodifiableList(sessionAttrList);
-		this.defaultView = viewScannerService.scan(controllerClass.getAnnotations());		
+		this.sessionAttributes = Collections.unmodifiableList(sessionAttrList);		
 				
 		//scan methods
-		List<Method> methods = Arrays.asList(this.controllerClass.getMethods());
+		List<Method> methods = Arrays.asList(controllerClass.getMethods());
 		List<MethodInvoker> scannedInvokers = new LinkedList<MethodInvoker>();
 		for (Method method : methods) {
 			
 			RequestMapping reqMapping = method.getAnnotation(RequestMapping.class);
 			if (reqMapping != null) {
-				MethodInvoker invoker = MethodInvokerImpl.createInvoker(method, reqMapping, paramService, conversionService, viewScannerService);
+				MethodInvoker invoker = MethodInvokerImpl.createInvoker(controllerClass, method, reqMapping, injector);
 				MethodInvoker filteredInvoker = new MethodInvokerFilter(reqMapping, invoker);
 				scannedInvokers.add(filteredInvoker);							
 			}			
@@ -190,18 +207,13 @@ class MvcDispatcherServlet extends HttpServlet {
 		this.methodInvokers = Collections.unmodifiableList(scannedInvokers); 
 	}
 	
-	
-	private ModelAndView invokeMethods(Object controllerObj, HttpServletRequest req, HttpServletResponse resp, RequestType reqType) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
-		ModelAndView mav = new ModelAndView(this.defaultView);
-		mav.getModel().getObjectsFromSession(this.sessionAttributes, req.getSession(true));
 		
-		//invoking methods
-		int invokedcount = 0;
+	private ModelAndView invokeMethods(InvokeData data) {
+		ModelAndView mav = new ModelAndView();
+				
+		int invokedcount = 0;		
 		for (MethodInvoker invoker : this.methodInvokers) {
-			
-			InvokeData data = new InvokeData(null, req, resp, mav.getModel(), controllerObj, reqType, injector);
-			ModelAndView methodMav = invoker.invoke(data);
-			
+			ModelAndView methodMav = invoker.invoke(data);			
 			if (methodMav != null) {
 				mav.mergeModelAndView(methodMav);
 				methodMav = null;
@@ -210,12 +222,10 @@ class MvcDispatcherServlet extends HttpServlet {
 		}
 		
 		if (invokedcount == 0) {
-			throw new NoMethodInvoked(req, controllerObj.getClass().getName());
+			throw new NoMethodInvoked(data.getRequest());
 		}
 		
 		return mav;
 	}
-	
-			
 // ------------------------------------------------------------------------
 }

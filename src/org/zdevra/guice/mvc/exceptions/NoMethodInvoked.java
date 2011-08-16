@@ -23,6 +23,10 @@ import javax.servlet.http.HttpServletRequest;
  *
  */
 public class NoMethodInvoked extends MvcException {
+	
+	public NoMethodInvoked(HttpServletRequest request) {
+		super("no method has been invoked for the url:" + request.getRequestURL().toString());
+	}
 
 	public NoMethodInvoked(HttpServletRequest request, String controllerName) {
 		super("no method in the controller " + controllerName + " has been invoked for the url:" + request.getRequestURL().toString());

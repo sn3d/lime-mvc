@@ -31,35 +31,35 @@ import com.google.inject.Injector;
 public class InvokeData {
 /*---------------------------- m. variables ----------------------------*/
 
-	private Matcher uriMatcher;
-	private HttpServletRequest request;
-	private HttpServletResponse response;
-	private Model model;
-	private Object controller;
-	private RequestType reqType;
-	private Injector injector;
+	private final Matcher uriMatcher;
+	private final HttpServletRequest request;
+	private final HttpServletResponse response;
+	private final Model model;
+	private final RequestType reqType;
+	private final Injector injector;
 
 /*---------------------------- constructors ----------------------------*/
 
-	/**
-	 * Constructor
-	 */
-	public InvokeData(Matcher uriMatcher, HttpServletRequest request,
-			HttpServletResponse response, Model model, Object controller, RequestType reqType, Injector injector) 
-	{
-		this(controller);
-		this.uriMatcher = uriMatcher;
+	
+	public InvokeData(HttpServletRequest request, HttpServletResponse response, Model model, RequestType reqType, Injector injector) {
 		this.request = request;
 		this.response = response;
 		this.model = model;
 		this.reqType = reqType;
 		this.injector = injector;
+		this.uriMatcher = null;
 	}
 	
-	private InvokeData(Object controller) {
-		this.controller = controller;
-	}
 	
+	public InvokeData(Matcher uriMatcher, InvokeData copy) {
+		this.uriMatcher = uriMatcher;
+		this.request = copy.request;
+		this.response = copy.response;
+		this.model = copy.model;
+		this.reqType = copy.reqType;
+		this.injector = copy.injector;
+	}
+		
 /*-------------------------- getters/setters ---------------------------*/
 
 	public Matcher getUriMatcher() {
@@ -78,10 +78,6 @@ public class InvokeData {
 		return model;
 	}
 
-	public Object getController() {
-		return controller;
-	}
-
 	public RequestType getReqType() {
 		return reqType;
 	}
@@ -90,61 +86,6 @@ public class InvokeData {
 		return injector;
 	}
 	
-/*----------------------------------------------------------------------*/
-	
-	static class Builder {
-		private InvokeData data;
-		
-		public Builder newInstance(Object controller) {
-			data = new InvokeData(controller);
-			return this;
-		}
-		
-		public InvokeData get() {
-			return data;
-		}
-		
-		public Builder from(InvokeData copiedData) {
-			data.controller = copiedData.controller;
-			data.injector = copiedData.injector;
-			data.model = copiedData.model;
-			data.reqType = copiedData.reqType;
-			data.request = copiedData.request;
-			data.response = copiedData.response;
-			data.uriMatcher = copiedData.uriMatcher;
-			return this;
-		}
-		
-		public Builder withUriMatcher(Matcher uriMatcher) {
-			data.uriMatcher = uriMatcher;
-			return this;
-		}
-		
-		public Builder withHttpRequest(HttpServletRequest request) {
-			data.request = request;
-			return this;
-		}
-		
-		public Builder withHttpResponse(HttpServletResponse response) {
-			data.response = response;
-			return this;			
-		}
-				
-		public Builder withModel(Model model) {
-			data.model = model;
-			return this;
-		}
-				
-		public Builder withRequestType(RequestType type) {
-			data.reqType = type;
-			return this;
-		}
-		
-		public Builder withInjector(Injector injector) {
-			data.injector = injector;
-			return this;
-		}		
-	}
 	
 /*----------------------------------------------------------------------*/
 }

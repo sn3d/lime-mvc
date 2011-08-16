@@ -149,7 +149,7 @@ public abstract class MvcModule extends ServletModule {
 			//register MVC controllers
 			for (ControllerDefinition def : controllerModuleBuilder.getControllerDefinitions()) {
 				String pattern = def.getUrlPattern();				
-				MvcDispatcherServlet dispatcher = new MvcDispatcherServlet(def.getControllerClass());
+				MvcDispatcherServlet dispatcher = new MvcDispatcherServlet(def.getControllers());
 				serve(pattern).with(dispatcher);				
 			}
 						
@@ -246,7 +246,7 @@ public abstract class MvcModule extends ServletModule {
 	
 	public static interface ControllerBindingBuilder 
 	{
-		public void withController(Class<?> controller);
+		public ControllerBindingBuilder withController(Class<?> controller);
 	}
 		
 	

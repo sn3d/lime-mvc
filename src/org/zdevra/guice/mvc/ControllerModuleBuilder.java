@@ -19,7 +19,6 @@ package org.zdevra.guice.mvc;
 import java.util.LinkedList;
 import java.util.List;
 
-import java.util.logging.Logger;
 import org.zdevra.guice.mvc.MvcModule.ControllerBindingBuilder;
 
 
@@ -33,27 +32,19 @@ import org.zdevra.guice.mvc.MvcModule.ControllerBindingBuilder;
 class ControllerModuleBuilder  {
 	
 // ------------------------------------------------------------------------
-	
-	private static final Logger logger = Logger.getLogger(ControllerBindingBuilder.class.getName());
-	
+		
+	private ControllerDefinition actualDefinition = null;
 	private List<ControllerDefinition> controllerDefinitions = new LinkedList<ControllerDefinition>();
 	
 // ------------------------------------------------------------------------
 	
 	private class ControllerBindingBuilderImpl implements ControllerBindingBuilder {
 		
-		private String urlPattern;
-		private ControllerDefinition actualDefinition;
-		
-		public ControllerBindingBuilderImpl(String urlPattern) {
-			this.urlPattern = urlPattern;
-		}
 		
 		@Override
-		public final void withController(Class<?> controller) {
-			actualDefinition = new ControllerDefinition(urlPattern, controller);
-			logger.info("register controller " + actualDefinition.toString());
-			controllerDefinitions.add(actualDefinition);
+		public final ControllerBindingBuilder withController(Class<?> controller) {
+			actualDefinition.addController(controller);
+			return this;
 		}					
 	}
 	
@@ -61,7 +52,12 @@ class ControllerModuleBuilder  {
 // ------------------------------------------------------------------------
 		
 	public final ControllerBindingBuilder control(String urlPattern) {
-		return new ControllerBindingBuilderImpl(urlPattern);
+		if (actualDefinition != null) {
+			controllerDefinitions.add(actualDefinition);
+		}
+		
+		actualDefinition = new ControllerDefinition(urlPattern);
+		return new ControllerBindingBuilderImpl();
 	}
 	
 	
