@@ -14,24 +14,36 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-package org.zdevra.guice.mvc.case6;
+package org.zdevra.guice.mvc.casePerformance;
 
-import org.zdevra.guice.mvc.Controller;
-import org.zdevra.guice.mvc.RequestMapping;
-import org.zdevra.guice.mvc.views.ToView;
+import java.util.Arrays;
+import java.util.List;
 
-@Controller
-@ToView("cars.jsp")
-public class Case6ControllerCars {
+import com.google.inject.Singleton;
 
-	@RequestMapping(path="/common", nameOfResult="msg2")
-	public String commonMethod() {
-		return "cars common";
+@Singleton
+public class BlogDao {
+	
+	private final String[] articles = 
+		{
+			"Article 1",
+			"Article 2",
+			"Article 3",
+			"Article 4",
+			"Article 5" 
+		};
+	
+	
+	public List<String> getAllArticles() {
+		return Arrays.asList(articles);
 	}
-		
-	@RequestMapping(path="/cars", nameOfResult="msg1")
-	public String carsMethod() {
-		return "cars method";
+	
+	
+	public String getArticle(int id) {
+		if (id >= articles.length) {
+			return "unknown";
+		}
+		return articles[id];
 	}
 
 }

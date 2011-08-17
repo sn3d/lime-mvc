@@ -14,24 +14,19 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-package org.zdevra.guice.mvc.case6;
+package org.zdevra.guice.mvc.casePerformance;
 
-import org.zdevra.guice.mvc.Controller;
-import org.zdevra.guice.mvc.RequestMapping;
-import org.zdevra.guice.mvc.views.ToView;
+import org.zdevra.guice.mvc.TestServlet;
 
-@Controller
-@ToView("cars.jsp")
-public class Case6ControllerCars {
+public class PerfServlet extends TestServlet {
 
-	@RequestMapping(path="/common", nameOfResult="msg2")
-	public String commonMethod() {
-		return "cars common";
+	public PerfServlet() {
+		super(
+			new Class<?>[] { 
+				IBlogArticlesController.class 
+			},
+			new BlogModule() 
+		);
 	}
-		
-	@RequestMapping(path="/cars", nameOfResult="msg1")
-	public String carsMethod() {
-		return "cars method";
-	}
-
+	
 }

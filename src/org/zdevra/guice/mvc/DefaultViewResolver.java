@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.zdevra.guice.mvc.exceptions.MvcException;
 import org.zdevra.guice.mvc.views.JspView;
 import org.zdevra.guice.mvc.views.NamedView;
 
@@ -59,7 +60,12 @@ public class DefaultViewResolver implements ViewResolver {
 			} catch (ConfigurationException e) {
 				view = new JspView(viewName);
 			}
-		} 
+		}  else {
+			if (view == null || view == View.NULL_VIEW) {
+				throw new MvcException("Controler has invalid or non-defined view");
+			}
+		}
+		
 		
 		view.render(servlet, req, resp);	
 	}

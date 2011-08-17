@@ -14,24 +14,33 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-package org.zdevra.guice.mvc.case6;
+package org.zdevra.guice.mvc.casePerformance;
+
+import java.util.List;
 
 import org.zdevra.guice.mvc.Controller;
+import org.zdevra.guice.mvc.ModelAndView;
 import org.zdevra.guice.mvc.RequestMapping;
+import org.zdevra.guice.mvc.UriParameter;
 import org.zdevra.guice.mvc.views.ToView;
 
 @Controller
-@ToView("cars.jsp")
-public class Case6ControllerCars {
+public interface IBlogArticlesController {
+	
+	@RequestMapping(path="/blog/allarticles/namedview", nameOfResult="allarticles")
+	@ToView("allarticles.jsp")
+	public List<String> showAllArticles();
 
-	@RequestMapping(path="/common", nameOfResult="msg2")
-	public String commonMethod() {
-		return "cars common";
-	}
-		
-	@RequestMapping(path="/cars", nameOfResult="msg1")
-	public String carsMethod() {
-		return "cars method";
-	}
+	
+	@RequestMapping(path="/blog/allarticles/directview")
+	public ModelAndView showAllArticlesDirect();
 
+	
+	@RequestMapping(path="/blog/article/(\\d+)/namedview", nameOfResult="article")
+	@ToView("article.jsp")
+	public String showArticle(@UriParameter(1) int id);
+
+
+	@RequestMapping(path="/blog/article/(\\d+)/directview")
+	public ModelAndView showArticleDirect(@UriParameter(1) int id);
 }

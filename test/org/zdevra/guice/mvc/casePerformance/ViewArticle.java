@@ -14,24 +14,22 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-package org.zdevra.guice.mvc.case6;
+package org.zdevra.guice.mvc.casePerformance;
 
-import org.zdevra.guice.mvc.Controller;
-import org.zdevra.guice.mvc.RequestMapping;
-import org.zdevra.guice.mvc.views.ToView;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-@Controller
-@ToView("cars.jsp")
-public class Case6ControllerCars {
+import org.zdevra.guice.mvc.View;
 
-	@RequestMapping(path="/common", nameOfResult="msg2")
-	public String commonMethod() {
-		return "cars common";
-	}
+public class ViewArticle implements View {
+
+	@Override
+	public void render(HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) throws Exception {		
+		String article = (String) request.getAttribute("article");
 		
-	@RequestMapping(path="/cars", nameOfResult="msg1")
-	public String carsMethod() {
-		return "cars method";
+		response.getWriter().write("Article detail\n");
+		response.getWriter().write("Article:" + article + "\n");
 	}
 
 }
