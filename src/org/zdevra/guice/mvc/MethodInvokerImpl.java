@@ -71,7 +71,7 @@ class MethodInvokerImpl implements MethodInvoker {
 
 	
 	/**
-	 * Hidden constructor. The Invoker is construted throught the factory methods.
+	 * Hidden constructor. The Invoker is constructed through the factory methods.
 	 * @param defaultView
 	 * @param resultName
 	 * @param method

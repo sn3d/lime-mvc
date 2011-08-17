@@ -5,6 +5,11 @@ import com.google.inject.Injector;
 
 
 public class TestServlet extends MvcDispatcherServlet {
+	
+	public TestServlet(Class<?>[] controllers, MvcModule module) {
+		super(controllers, Guice.createInjector(module) );
+	}
+
 	public TestServlet(Class<?> controllerClass, Injector injector) {
 		super(controllerClass, injector);
 	}

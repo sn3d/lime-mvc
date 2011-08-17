@@ -37,7 +37,7 @@ public class AbstractTest {
 	public AbstractTest(Class<? extends MvcDispatcherServlet> servletClass) {
 		this(servletClass, "test/*");
 	}
-	
+		
 
 	@BeforeClass
 	public void prepare() {

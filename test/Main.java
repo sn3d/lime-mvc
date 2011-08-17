@@ -1,16 +1,19 @@
-import org.zdevra.guice.mvc.case5.Case5Test;
+import org.zdevra.guice.mvc.case6.Case6Test;
 
 
 public class Main {
 
 	public static void main(String[] args) {
 		try {
-			Case5Test t = new Case5Test();
+			Case6Test t = new Case6Test();
 			t.prepare();
-			t.testDefaultView();
-			t.testToViewAnnotation();
-			t.testToViewParam();
-			t.testCustomAnnotation();
+			
+			t.testCarsMethod();
+			t.testPeopleMethod();
+			t.testCommonMethod();
+			
+			t.testUnknownMethod();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

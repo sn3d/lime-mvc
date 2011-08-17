@@ -39,7 +39,7 @@ import com.google.inject.Injector;
 
 /**
  * The Core Dispatcher servlet forward a request to the concrete 
- * controller and after that, the producet model is forwarded into
+ * controller and after that, the produced model is forwarded into
  * view resolver.
  */
 class MvcDispatcherServlet extends HttpServlet {
@@ -53,7 +53,7 @@ class MvcDispatcherServlet extends HttpServlet {
 	@Inject private ExceptionResolver exceptionResolver;
 
 	private final Collection<Class<?>> controllers;
-	private List<MethodInvoker> methodInvokers;
+	private Collection<MethodInvoker> methodInvokers;
 	private List<String> sessionAttributes;
 	
 	
@@ -71,7 +71,20 @@ class MvcDispatcherServlet extends HttpServlet {
 		this.exceptionResolver = injector.getInstance(ExceptionResolver.class);
 	}
 	
-	
+
+	/**
+	 * Constructor for testing purpose
+	 * @param controllerClass
+	 * @param injector
+	 */
+	public MvcDispatcherServlet(Class<?>[] controllers, Injector injector) {
+		this( controllers );
+		this.injector = injector;
+		this.viewResolver = injector.getInstance(ViewResolver.class);
+		this.exceptionResolver = injector.getInstance(ExceptionResolver.class);
+	}
+
+		
 	/**
 	 * Constructor used by MvcModule
 	 * @param controllerClass
@@ -83,6 +96,15 @@ class MvcDispatcherServlet extends HttpServlet {
 	
 	/**
 	 * Constructor used by MvcModule
+	 * @param controllerClass
+	 */
+	public MvcDispatcherServlet(Class<?>[] controllers) {
+		this( Arrays.asList( controllers ) );
+	}
+
+	
+	/**
+	 * Main constructor used by MvcModule
 	 * @param controllers
 	 */	
 	public MvcDispatcherServlet(List<Class<?>> controllers) {
@@ -126,9 +148,13 @@ class MvcDispatcherServlet extends HttpServlet {
 	@Override
 	public void init() throws ServletException {
 		try {
+			List<MethodInvoker> allInvokers = new LinkedList<MethodInvoker>();
 			for (Class<?> controller : controllers) {
-				scanAnotationsOfClass(controller);
+				List<MethodInvoker> controllerInvokers = scanAnotationsOfClass(controller);
+				allInvokers.addAll(controllerInvokers);
 			}
+			this.methodInvokers = Collections.unmodifiableCollection(allInvokers);
+			
 			super.init();
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Error in the servlet's initialization:" + e.getMessage(), e);
@@ -180,7 +206,7 @@ class MvcDispatcherServlet extends HttpServlet {
 	
 // ------------------------------------------------------------------------
 		
-	private void scanAnotationsOfClass(Class<?> controllerClass) throws Exception
+	private List<MethodInvoker> scanAnotationsOfClass(Class<?> controllerClass) throws Exception
 	{
 		Controller controllerAnotation = controllerClass.getAnnotation(Controller.class);
 		if (controllerAnotation == null) {
@@ -204,10 +230,10 @@ class MvcDispatcherServlet extends HttpServlet {
 			}			
 		}
 		
-		this.methodInvokers = Collections.unmodifiableList(scannedInvokers); 
+		return scannedInvokers; 
 	}
 	
-		
+	
 	private ModelAndView invokeMethods(InvokeData data) {
 		ModelAndView mav = new ModelAndView();
 				
