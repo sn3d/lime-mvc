@@ -18,7 +18,6 @@ package org.zdevra.guice.mvc;
 
 
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -53,9 +52,7 @@ class MvcDispatcherServlet extends HttpServlet {
 	@Inject private ExceptionResolver exceptionResolver;
 
 	private final Collection<Class<?>> controllers;
-	private Collection<MethodInvoker> methodInvokers;
-	private List<String> sessionAttributes;
-	
+	private Collection<ClassInvoker> classInvokers;	
 	
 // ------------------------------------------------------------------------
 	
@@ -114,7 +111,7 @@ class MvcDispatcherServlet extends HttpServlet {
 // ------------------------------------------------------------------------
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+	protected final void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException 
 	{
 		processRequest(req, resp, RequestType.GET);
@@ -122,7 +119,7 @@ class MvcDispatcherServlet extends HttpServlet {
 	
 
 	@Override
-	protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
+	protected final void doDelete(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException 
 	{
 		processRequest(req, resp, RequestType.DELETE);
@@ -130,7 +127,7 @@ class MvcDispatcherServlet extends HttpServlet {
 
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+	protected final void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException 
 	{
 		processRequest(req, resp, RequestType.POST);
@@ -138,7 +135,7 @@ class MvcDispatcherServlet extends HttpServlet {
 
 
 	@Override
-	protected void doPut(HttpServletRequest req, HttpServletResponse resp)
+	protected final void doPut(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException 
 	{
 		processRequest(req, resp, RequestType.PUT);
@@ -146,15 +143,16 @@ class MvcDispatcherServlet extends HttpServlet {
 	
 
 	@Override
-	public void init() throws ServletException {
+	public final void init() throws ServletException {
 		try {
-			List<MethodInvoker> allInvokers = new LinkedList<MethodInvoker>();
+			List<ClassInvoker> allInvokers = new LinkedList<ClassInvoker>();
+			ClassScanner scanner = new ClassScanner();
 			for (Class<?> controller : controllers) {
-				List<MethodInvoker> controllerInvokers = scanAnotationsOfClass(controller);
-				allInvokers.addAll(controllerInvokers);
+				ClassInvoker classInvoker = scanner.scan(controller, injector);
+				allInvokers.add( classInvoker );
 			}
-			this.methodInvokers = Collections.unmodifiableCollection(allInvokers);
 			
+			this.classInvokers = Collections.unmodifiableCollection(allInvokers);			
 			super.init();
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Error in the servlet's initialization:" + e.getMessage(), e);
@@ -174,7 +172,7 @@ class MvcDispatcherServlet extends HttpServlet {
 											
 			//prepare invoke data
 			Model sessionModel = new Model();
-			sessionModel.getObjectsFromSession(this.sessionAttributes, req.getSession(true));
+			//sessionModel.getObjectsFromSession(this.sessionAttributes, req.getSession(true));
 			
 			InvokeData data = 
 				new InvokeData(
@@ -184,16 +182,12 @@ class MvcDispatcherServlet extends HttpServlet {
 					reqType,
 					injector );
 			
-			//invoke method
-			ModelAndView mav = invokeMethods(data);			
+			//invoke method in controller
+			ModelAndView mav = invoke(data);			
 			if (logger.isLoggable(Level.FINEST)) {
 				logger.finest("controller produce model " + mav.getModel().toString() );
 			}
-			
-			//post-production in model
-			mav.getModel().moveObjectsToSession(this.sessionAttributes, req.getSession(true));
-			mav.getModel().moveObjectsToRequestAttrs(req);
-			
+						
 			//resolve view
 			viewResolver.resolve(mav.getView(), this, req, resp);
 			mav = null;
@@ -205,40 +199,12 @@ class MvcDispatcherServlet extends HttpServlet {
 
 	
 // ------------------------------------------------------------------------
-		
-	private List<MethodInvoker> scanAnotationsOfClass(Class<?> controllerClass) throws Exception
-	{
-		Controller controllerAnotation = controllerClass.getAnnotation(Controller.class);
-		if (controllerAnotation == null) {
-			throw new IllegalStateException("Class is not defined as a controller. Missing @Controller annotation.");
-		}
-
-		//scan session attributes & default view
-		List<String> sessionAttrList = Arrays.asList(controllerAnotation.sessionAttributes());
-		this.sessionAttributes = Collections.unmodifiableList(sessionAttrList);		
-				
-		//scan methods
-		List<Method> methods = Arrays.asList(controllerClass.getMethods());
-		List<MethodInvoker> scannedInvokers = new LinkedList<MethodInvoker>();
-		for (Method method : methods) {
 			
-			RequestMapping reqMapping = method.getAnnotation(RequestMapping.class);
-			if (reqMapping != null) {
-				MethodInvoker invoker = MethodInvokerImpl.createInvoker(controllerClass, method, reqMapping, injector);
-				MethodInvoker filteredInvoker = new MethodInvokerFilter(reqMapping, invoker);
-				scannedInvokers.add(filteredInvoker);							
-			}			
-		}
-		
-		return scannedInvokers; 
-	}
-	
-	
-	private ModelAndView invokeMethods(InvokeData data) {
+	private ModelAndView invoke(InvokeData data) {
 		ModelAndView mav = new ModelAndView();
 				
 		int invokedcount = 0;		
-		for (MethodInvoker invoker : this.methodInvokers) {
+		for (ClassInvoker invoker : this.classInvokers) {
 			ModelAndView methodMav = invoker.invoke(data);			
 			if (methodMav != null) {
 				mav.mergeModelAndView(methodMav);
@@ -250,6 +216,12 @@ class MvcDispatcherServlet extends HttpServlet {
 		if (invokedcount == 0) {
 			throw new NoMethodInvoked(data.getRequest());
 		}
+		
+		//post-production of model
+		for (ClassInvoker classInvoker : this.classInvokers) {
+			classInvoker.moveDataToSession(mav.getModel(), data.getRequest().getSession(true));
+		}
+		mav.getModel().moveObjectsToRequestAttrs(data.getRequest());
 		
 		return mav;
 	}

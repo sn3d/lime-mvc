@@ -17,6 +17,7 @@
 package org.zdevra.guice.mvc;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -127,7 +128,7 @@ public class Model {
 	}
 
 	
-	void moveObjectsToSession(List<String> names, HttpSession session) {
+	void moveObjectsToSession(Collection<String> names, HttpSession session) {
 		for (String name: names) {
 			Object obj = modelObjects.get(name);
 			session.setAttribute(name, obj);
