@@ -14,7 +14,8 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-import org.zdevra.guice.mvc.case6.Case6Test;
+import org.zdevra.guice.mvc.case1.Case1Test;
+import org.zdevra.guice.mvc.case2.Case2Test;
 
 
 /**
@@ -26,14 +27,14 @@ public class Main {
 
 	public static void main(String[] args) {
 		try {
-			Case6Test t = new Case6Test();
+			/*
+			Case1Test t = new Case1Test();
+			t.prepare();			
+			t.testFromSessionModel();
+			*/
+			
+			Case2Test t = new Case2Test();
 			t.prepare();
-			
-			t.testCarsMethod();
-			t.testPeopleMethod();
-			t.testCommonMethod();
-			
-			t.testUnknownMethod();			
 			
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -50,6 +50,13 @@ public class Case1Controller {
 		m.addObject("book", "Hamlet");
 		return m;
 	}
+		
+	@RequestMapping(path="/do/sessionmodel", nameOfResult="testmsg")
+	public String getDataFromSessionAsModel(Model m) {
+		String out = "in session is book:" + m.getObject("book");
+		m.addObject("book", "Romeo&Juliette");
+		return out;
+	}
 	
 	
 }

@@ -107,4 +107,28 @@ public class Case1Test extends AbstractTest {
 		String book = (String)ic.getRequest().getSession().getAttribute("book");
 		Assert.assertTrue( book.contains("Hamlet"));
 	}
+	
+	
+	@Test
+	public void testFromSessionModel() throws Exception {
+		//prepare request
+		ServletUnitClient sc = sr.newClient();
+		WebRequest request   = new GetMethodWebRequest( "http://www.bookstore.com/test/do/sessionmodel" );
+		InvocationContext ic = sc.newInvocation( request );		
+		ic.getRequest().getSession(true).setAttribute("author", "Shakespeare");
+		ic.getRequest().getSession(true).setAttribute("year",   1564);
+		ic.getRequest().getSession(true).setAttribute("book",   "Hamlet");
+
+		//invoke request
+		Servlet ss = ic.getServlet();
+		ss.service(ic.getRequest(), ic.getResponse());			
+		WebResponse response = ic.getServletResponse();
+
+		//process response
+		String out = response.getText();
+		String sessionOut = (String)ic.getRequest().getSession().getAttribute("book");
+		
+		System.out.println("out:" + out);
+		System.out.println("sessionout:" + sessionOut);
+	}
 }

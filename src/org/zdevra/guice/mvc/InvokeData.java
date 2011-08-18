@@ -59,6 +59,15 @@ public class InvokeData {
 		this.reqType = copy.reqType;
 		this.injector = copy.injector;
 	}
+	
+	public InvokeData(Model m, InvokeData copy) {
+		this.model = m;
+		this.uriMatcher = copy.uriMatcher;
+		this.request = copy.request;
+		this.response = copy.response;		
+		this.reqType = copy.reqType;
+		this.injector = copy.injector;		
+	}
 		
 /*-------------------------- getters/setters ---------------------------*/
 

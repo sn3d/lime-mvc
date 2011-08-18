@@ -55,11 +55,14 @@ public class ClassInvoker {
 	 * It invokes concrete methods of the controller class.
 	 * @param data
 	 */
-	public ModelAndView invoke(InvokeData data) {		
-		ModelAndView mav = new ModelAndView();		
+	public ModelAndView invoke(InvokeData data) {			
+		ModelAndView mav = new ModelAndView();				
+		mav.getModel().getObjectsFromSession(sessionAttrs, data.getRequest().getSession(true));
+		InvokeData dataWithModel = new InvokeData(mav.getModel(), data);
+		
 		int invokedcount = 0;				
 		for (MethodInvoker invoker : this.methodInvokers) {
-			ModelAndView methodMav = invoker.invoke(data);			
+			ModelAndView methodMav = invoker.invoke(dataWithModel);			
 			if (methodMav != null) {
 				mav.mergeModelAndView(methodMav);
 				invokedcount++;
@@ -69,8 +72,7 @@ public class ClassInvoker {
 		if (invokedcount == 0) {
 			return null;
 		}
-		
-				
+						
 		return mav;	
 	}
 	

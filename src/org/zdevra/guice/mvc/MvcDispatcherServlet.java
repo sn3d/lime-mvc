@@ -171,14 +171,11 @@ class MvcDispatcherServlet extends HttpServlet {
 			}
 											
 			//prepare invoke data
-			Model sessionModel = new Model();
-			//sessionModel.getObjectsFromSession(this.sessionAttributes, req.getSession(true));
-			
 			InvokeData data = 
 				new InvokeData(
 					req,
 					resp,
-					sessionModel,
+					null,
 					reqType,
 					injector );
 			
