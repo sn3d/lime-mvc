@@ -41,8 +41,7 @@ public class DefaultExceptionHandler implements ExceptionHandler {
 			logger.log(Level.SEVERE, "Unhandled exception caught by Lime default handler (" + t.getClass().getName() + ")" , t);
 			
 			String msg = t.getLocalizedMessage() == null ? "" : t.getLocalizedMessage();
-			PrintWriter writer = resp.getWriter();
-			
+			PrintWriter writer = resp.getWriter();			
 			writer.write(
 					"<HTML><STYLE>body {font-family: Arial,Helvetica,sans-serif;} .stacktrace " +
 			        "{background: #EEE; padding-left: 10px; padding-top: 5px; padding-bottom: 5px;" +
@@ -54,8 +53,7 @@ public class DefaultExceptionHandler implements ExceptionHandler {
 			writer.write(msg);			
 			writer.write("<BR><BR><B>Stack trace:</B><pre class=\"stacktrace\">\n");
 			t.printStackTrace(writer);			
-			writer.write("\n</pre>Lime MVC default exception handler</BODY></HTML>");
-								
+			writer.write("\n</pre>Lime MVC default exception handler</BODY></HTML>");		
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Error in default handler", e);		
 		}

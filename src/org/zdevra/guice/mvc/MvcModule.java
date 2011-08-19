@@ -133,8 +133,12 @@ public abstract class MvcModule extends ServletModule {
 				.annotatedWith(Names.named(ExceptionResolver.DEFAULT_EXCEPTIONHANDLER_NAME))
 				.to(DefaultExceptionHandler.class);
 			
-			bind(ConversionService.class)
-				.toInstance(conversionService);
+			try {
+				bind(ConversionService.class)
+					.toInstance(conversionService);
+			} catch (Exception e) {
+				logger.warning("Conversion service warning:" + e.getMessage());
+			}
 			
 			bind(ParamProcessorsService.class);
 			registerParameterProc(HttpPostParam.Factory.class);			
