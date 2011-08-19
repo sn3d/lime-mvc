@@ -25,5 +25,18 @@ import java.lang.annotation.Annotation;
  * @see ViewScannerService
  */
 public interface ViewScanner {	
+	
+	/**
+	 * Here you will implement looking for your annotation.
+	 * If your annotation is not presents, then you will return 
+	 * View.NULL_VIEW.
+	 *   
+	 * @param controllerAnotations
+	 * 
+	 * @return instance of view for your annotation or View.NULL. Avoid to
+	 * null value.
+	 * 
+	 * @throws Exception
+	 */
 	public View scan(Annotation[] controllerAnotations) throws Exception;
 }

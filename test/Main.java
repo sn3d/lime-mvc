@@ -15,7 +15,6 @@
  * 
  *****************************************************************************/
 import org.zdevra.guice.mvc.case1.Case1Test;
-import org.zdevra.guice.mvc.case2.Case2Test;
 
 
 /**
@@ -27,15 +26,9 @@ public class Main {
 
 	public static void main(String[] args) {
 		try {
-			/*
 			Case1Test t = new Case1Test();
 			t.prepare();			
 			t.testFromSessionModel();
-			*/
-			
-			Case2Test t = new Case2Test();
-			t.prepare();
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

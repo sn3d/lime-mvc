@@ -17,6 +17,10 @@
 package org.zdevra.guice.mvc;
 
 
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.zdevra.guice.mvc.ConversionService.ConvertorFactory;
 import org.zdevra.guice.mvc.parameters.HttpPostParam;
 import org.zdevra.guice.mvc.parameters.HttpSessionParam;
@@ -84,6 +88,8 @@ public abstract class MvcModule extends ServletModule {
 	
 // ------------------------------------------------------------------------
 		
+	private static final Logger logger = Logger.getLogger(MvcModule.class.getName());
+	
 	private ConversionService conversionService;
 	private ExceptionResolverBuilder exceptionResolverBuilder;
 	private NamedViewBuilder namedViewBudiler;
@@ -147,7 +153,12 @@ public abstract class MvcModule extends ServletModule {
 			configureControllers();
 			
 			//register MVC controllers
-			for (ControllerDefinition def : controllerModuleBuilder.getControllerDefinitions()) {
+			List<ControllerDefinition> defs = controllerModuleBuilder.getControllerDefinitions();
+			if (defs.size() == 0) {
+				logger.log(Level.WARNING, "None controller has been defined in the MVC module");
+			}
+			
+			for (ControllerDefinition def : defs) {
 				String pattern = def.getUrlPattern();				
 				MvcDispatcherServlet dispatcher = new MvcDispatcherServlet(def.getControllers());
 				serve(pattern).with(dispatcher);				

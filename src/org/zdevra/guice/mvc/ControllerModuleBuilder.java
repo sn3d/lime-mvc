@@ -62,6 +62,9 @@ class ControllerModuleBuilder  {
 	
 	
 	public List<ControllerDefinition> getControllerDefinitions() {
+		if (actualDefinition != null) {
+			controllerDefinitions.add(actualDefinition);
+		}
 		return controllerDefinitions;
 	}
 	
