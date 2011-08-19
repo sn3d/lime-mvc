@@ -162,6 +162,7 @@ public abstract class MvcModule extends ServletModule {
 				String pattern = def.getUrlPattern();				
 				MvcDispatcherServlet dispatcher = new MvcDispatcherServlet(def.getControllers());
 				serve(pattern).with(dispatcher);				
+				logger.info("for path '" + pattern + "' has been registered follwing controllers: " + def.getControllers());
 			}
 						
 		} finally {
