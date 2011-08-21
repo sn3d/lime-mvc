@@ -1,0 +1,8 @@
+<suite name="suite-lime-unit" verbose="1" >
+
+  <test name="unit-tests" >
+    <classes>    
+    </classes>
+  </test>
+
+</suite>
