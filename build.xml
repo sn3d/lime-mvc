@@ -164,6 +164,13 @@
 
 	</target>
 
+
+	<target name="extensions" depends="dist">
+		<subant target="">
+			<fileset dir="extensions" includes="*/build.xml"/>
+		</subant>
+	</target>
+
 	<!--================ CLEANUP ================-->
 
 	<target name="clean" description="clean up the building files">
@@ -171,6 +178,9 @@
 		<delete dir="${javaapi.docs}" />
 		<delete file="${javalib.output}" />
 		<delete file="${javalib-withsrc.output}" />
+		<delete>
+			<fileset dir="."><include name="*.jar"/></fileset>
+		</delete>
 	</target>
 	
 </project>

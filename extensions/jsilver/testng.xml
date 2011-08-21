@@ -1,0 +1,9 @@
+<suite name="suite-lime-unit" verbose="1" >
+
+  <test name="unit-tests" >
+    <classes>    
+       <class name="org.zdevra.guice.mvc.jsilver.ModelTest" />
+    </classes>
+  </test>
+
+</suite>

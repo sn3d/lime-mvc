@@ -16,6 +16,10 @@
 		<dependency org="com.google.inject" name="guice-parent" rev="3.0" conf="java->default"/>
 		<dependency org="com.google.inject.extensions" name="guice-servlet" rev="3.0" conf="java->default"/>
 		<dependency org="com.google.inject.extensions" name="guice-multibindings" rev="3.0" conf="java->default"/>
+		
+		<!-- JAVA extensions -->
+		<dependency org="com.google.jsilver" name="jsilver" rev="[1.0.0,2.0]" conf="java->default"/>
+		<dependency org="org.freemarker" name="freemarker" rev="[2.3.18,2.4.0]" conf="java->default"/>
 
 		<!-- TEST -->    
 		<dependency org="org.testng" name="testng" rev="6.0.1" conf="test->default" />

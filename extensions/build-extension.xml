@@ -1,0 +1,90 @@
+<project name="extension">
+	
+	<!--============== PATHS & PROPERTIES ==============-->
+	
+	<property name="lime-root" value="./../.."/>	
+	<property file="${lime-root}/build.properties"/>
+	<property file="./extension.properties"/>	
+		
+	<property name="classes"      value="${lime-root}/target/classes/${extension}" />
+	<property name="classes.test" value="${lime-root}/target/classes/${extension}-test" />
+	<property name="classes.lime" value="${lime-root}/target/classes/java" />
+	<property name="test.out"     value="${lime-root}/target/${extension}-testout" />
+	
+	<property name="jar.output" value="${lime-root}/${name.project}-${extension}.jar" />
+	<property name="java.src"   value="./src/" />
+	<property name="java.test"  value="./test/" />
+	
+	<property name="lib" value="${lime-root}/lib" />
+	<property name="java.lib" value="${lib}/java" />
+	<property name="system.lib" value="${lib}/system" />
+	<property name="test.lib" value="${lib}/test" />
+	<property name="lime.lib" value="${lime-root}/classes/java" />
+	
+	<!--================ INITIALIZATION ================-->
+	
+	<target name="init">
+		<mkdir dir="${classes}"/>
+		<mkdir dir="${classes.test}"/>
+		
+		<taskdef name="testng" classname="org.testng.TestNGAntTask" >
+			<classpath>
+				<fileset dir="${test.lib}">
+				<include name="*.jar"/>
+				</fileset>
+			</classpath>			
+		</taskdef>
+	</target>
+		
+	<!--================ COMPILATION ================-->
+	
+	<target name="compile-java" depends="init">
+		<javac srcdir="${java.src}" destdir="${classes}" debug="${java.debug}" includeantruntime="false">
+			<classpath>
+				<pathelement location="${classes}" />
+				<pathelement location="${classes.lime}" />
+				<fileset dir="${java.lib}"><include name="*.jar"/></fileset>
+				<fileset dir="${system.lib}"><include name="*.jar"/></fileset>
+			</classpath>
+		</javac>
+	</target>
+	
+	<target name="compile-java-test" depends="compile-java" >
+		<javac srcdir="${java.test}" destdir="${classes.test}" debug="${java.debug}" includeantruntime="false">
+			<classpath>
+				<pathelement location="${classes}" />
+				<pathelement location="${classes.lime}" />
+				<pathelement location="${classes.test}" />
+				<fileset dir="${java.lib}"><include name="*.jar"/></fileset>
+				<fileset dir="${system.lib}"><include name="*.jar"/></fileset>
+				<fileset dir="${test.lib}"><include name="*.jar"/></fileset>
+			</classpath>			
+		</javac>
+	</target>
+	
+	
+	<!--================ TESTING ================-->
+
+	<target name="test" depends="compile-java-test" description="make a distribution and test it">
+		<mkdir dir="${test.out}" />
+		<testng outputdir="${test.out}" workingDir=".">
+			<classpath>
+				<pathelement location="${classes}" />
+				<pathelement location="${classes.lime}" />
+				<pathelement location="${classes.test}" />
+				<fileset dir="${java.lib}"><include name="*.jar"/></fileset>
+				<fileset dir="${system.lib}"><include name="*.jar"/></fileset>
+				<fileset dir="${test.lib}"><include name="*.jar"/></fileset>
+			</classpath>
+			<xmlfileset dir="." includes="testng.xml"/>	
+		</testng>
+	</target>
+	
+	<!--================ PACKAGING ================-->
+	
+	<target name="dist" depends="test" description="make a distribution">
+		<jar jarfile="${jar.output}" basedir="${classes}"/>
+	</target>
+
+	
+</project>
