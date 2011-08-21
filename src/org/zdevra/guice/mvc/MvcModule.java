@@ -22,6 +22,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.zdevra.guice.mvc.ConversionService.ConvertorFactory;
+import org.zdevra.guice.mvc.exceptions.MvcConfigurationException;
 import org.zdevra.guice.mvc.parameters.HttpPostParam;
 import org.zdevra.guice.mvc.parameters.HttpSessionParam;
 import org.zdevra.guice.mvc.parameters.InjectorParam;
@@ -102,7 +103,7 @@ public abstract class MvcModule extends ServletModule {
 	/**
 	 * Put into this method your controllers configuration
 	 */
-	protected abstract void configureControllers();
+	protected abstract void configureControllers() throws Exception;
 	
 	
 	/**
@@ -133,12 +134,8 @@ public abstract class MvcModule extends ServletModule {
 				.annotatedWith(Names.named(ExceptionResolver.DEFAULT_EXCEPTIONHANDLER_NAME))
 				.to(DefaultExceptionHandler.class);
 			
-			try {
-				bind(ConversionService.class)
-					.toInstance(conversionService);
-			} catch (Exception e) {
-				logger.warning("Conversion service warning:" + e.getMessage());
-			}
+			bind(ConversionService.class)
+				.toInstance(conversionService);
 			
 			bind(ParamProcessorsService.class);
 			registerParameterProc(HttpPostParam.Factory.class);			
@@ -168,7 +165,10 @@ public abstract class MvcModule extends ServletModule {
 				serve(pattern).with(dispatcher);				
 				logger.info("for path '" + pattern + "' has been registered follwing controllers: " + def.getControllers());
 			}
-						
+		
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "ERROR in Mvc initialization. Look what cause this error.", e);
+			throw new MvcConfigurationException(e);
 		} finally {
 			exceptionResolverBuilder = null;
 			controllerModuleBuilder = null;
@@ -275,7 +275,7 @@ public abstract class MvcModule extends ServletModule {
 	public static interface NamedViewBindingBuilder {
 		public void toView(Class<? extends View> viewCLass);
 		public void toViewInstance(View view);
-		public void toJsp(String pathToJsp);
+		public void toJsp(String pathToFile);
 	}
 		
 // ------------------------------------------------------------------------
