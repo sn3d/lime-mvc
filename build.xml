@@ -98,7 +98,7 @@
 
 	<target name="test" depends="compile-java-test" description="make a distribution and test it">
 		<mkdir dir="${testout.target}" />
-		<testng outputdir="./target/test-out" workingDir=".">
+		<testng outputdir="./target/test-out" workingDir="." haltonfailure="true" >
 			<classpath>
 				<pathelement location="${java.classes}" />
 				<pathelement location="${test.classes}" />
@@ -123,9 +123,6 @@
 		<!-- Make a library with source code -->
 		<mkdir dir="${javalib-withsrc.target}"/>
 		<copy todir="${javalib-withsrc.target}">
-			<fileset dir="${java.classes}" />			
-		</copy>
-		<copy todir="${javalib-withsrc.target}">
 			<fileset dir="${java.src}" />
 		</copy>
 		<jar jarfile="${javalib-withsrc.output}" basedir="${javalib-withsrc.target}"/>
@@ -133,7 +130,7 @@
 	</target>
 	
 	<target name="extensions" depends="dist" description="build Lime MVC extensions">
-		<subant target="">
+		<subant target="" failonerror="true">
 			<fileset dir="extensions" includes="*/build.xml"/>
 		</subant>
 	</target>

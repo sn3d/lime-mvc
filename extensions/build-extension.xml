@@ -70,7 +70,7 @@
 
 	<target name="test" depends="compile-java-test" description="make a distribution and test it">
 		<mkdir dir="${test.out}" />
-		<testng outputdir="${test.out}" workingDir=".">
+		<testng outputdir="${test.out}" workingDir="." haltonfailure="true" >
 			<classpath>
 				<pathelement location="${classes}" />
 				<pathelement location="${classes.lime}" />
