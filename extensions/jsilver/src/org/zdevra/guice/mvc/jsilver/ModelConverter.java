@@ -16,31 +16,21 @@
  *****************************************************************************/
 package org.zdevra.guice.mvc.jsilver;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import com.google.clearsilver.jsilver.data.Data;
 
 /**
- * This annotation is used in controller or in 
- * method aand  tells to Lime MVC we want to render 
- * produced data via JSilver's template.
- * <br>
- * <b>example:</b>
- * <pre class="prettyprint">
- * {@literal @}Controller
- * public class MyController {
- *    
- *    {@literal @}RequestMapping(path="/helloworld", nameOfResult="msg")
- *    {@literal @}ToJSilverView("view.jsilver")
- *    public String helloWorld() {
- *       ...
- *    }
- * }
-
+ * You will implement this interface for transformations any data
+ * to the JSilver data. 
+ *
+ * All objects are transformed to JSilver Data structure via
+ * Model Service. For your custom objects in the Lime Model use the 
+ * {@link ModelObjectConverter}.
+ * 
+ * @see ModelObjectConverter
+ * @see JSilverModule
  */
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.METHOD, ElementType.TYPE })
-public @interface ToJSilverView {
-	public String value();
+public interface ModelConverter {
+
+	public boolean convert(String name, Object obj, Data data, ModelService service);
+	
 }

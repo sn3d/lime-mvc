@@ -21,7 +21,7 @@
 	<property name="java.src"   value="./src/"/>
 	<property name="java.test"  value="./test/"/>
 
-	<property name="docs" value="./docs" />
+	<property name="docs" value="./docs" />	
 	<property name="javaapi.docs"  value="./docs/java-api" />
 
 	<property name="javalib.output" value="./${name.project}.jar"/>
@@ -131,51 +131,59 @@
 		<jar jarfile="${javalib-withsrc.output}" basedir="${javalib-withsrc.target}"/>
 
 	</target>
+	
+	<target name="extensions" depends="dist" description="build Lime MVC extensions">
+		<subant target="">
+			<fileset dir="extensions" includes="*/build.xml"/>
+		</subant>
+	</target>
 
 	<!--================ DOCS ================-->
-
-	<target name="docs" depends="dist" description="generate API documentation">
+	
+	<target name="docs" depends="extensions" description="generate API documentation">
 		<mkdir dir="${javaapi.docs}" />
       
-		<javadoc packagenames="orb.zdevra.*"
+		<javadoc packagenames="org.zdevra.*"
 		         destdir="${javaapi.docs}"
 		         docletpath="${system.lib}/doclava.jar"
 		         bootclasspath="${java.home}/lib/rt.jar"
 		         maxmemory="512M" >
 
-         <fileset dir="${java.src}" defaultexcludes="yes">
+        <fileset dir="${java.src}" defaultexcludes="yes">
             <include name="**/*.java"/>
-         </fileset>
+        </fileset>
+			
+	    <fileset dir="./extensions/jsilver/src/" defaultexcludes="yes">
+	       <include name="**/*.java"/>
+	    </fileset>
+			
+		<fileset dir="./extensions/freemarker/src/" defaultexcludes="yes">
+		   <include name="**/*.java"/>
+		</fileset>
 
-			<classpath>
-				<pathelement location="${java.classes}" />
-				<fileset dir="${java.lib}"><include name="*.jar"/></fileset>
-				<fileset dir="${system.lib}"><include name="*.jar"/></fileset>
-			</classpath>
+		<classpath>
+			<pathelement location="${java.classes}" />
+			<pathelement location="${classes}/jsilver" />
+			<pathelement location="${classes}/freemarker" />
+			<fileset dir="${java.lib}"><include name="*.jar"/></fileset>
+			<fileset dir="${system.lib}"><include name="*.jar"/></fileset>
+		</classpath>
 
-         <doclet name="com.google.doclava.Doclava">
+        <doclet name="com.google.doclava.Doclava">
             <param name="-hdf"/> <param name="project.name"/> <param name="Lime MVC"/>
-         </doclet>
+        </doclet>
       </javadoc>
 
-		<copy todir="${javaapi.docs}/reference">
+	  <copy todir="${javaapi.docs}/reference">
 			<fileset dir="${docs}/sources" />			
-		</copy>
+	  </copy>
 
-	</target>
-
-
-	<target name="extensions" depends="dist">
-		<subant target="">
-			<fileset dir="extensions" includes="*/build.xml"/>
-		</subant>
 	</target>
 
 	<!--================ CLEANUP ================-->
 
 	<target name="clean" description="clean up the building files">
 		<delete dir="${target}" />
-		<delete dir="${javaapi.docs}" />
 		<delete file="${javalib.output}" />
 		<delete file="${javalib-withsrc.output}" />
 		<delete>

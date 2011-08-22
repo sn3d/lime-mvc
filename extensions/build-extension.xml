@@ -10,8 +10,11 @@
 	<property name="classes.test" value="${lime-root}/target/classes/${extension}-test" />
 	<property name="classes.lime" value="${lime-root}/target/classes/java" />
 	<property name="test.out"     value="${lime-root}/target/${extension}-testout" />
+	<property name="doc.out"      value="${lime-root}/target/${extension}-doc" />
 	
-	<property name="jar.output" value="${lime-root}/${name.project}-${extension}.jar" />
+	<property name="jar.output"     value="${lime-root}/${name.project}-${extension}.jar" />
+	<property name="jar.output.src" value="${lime-root}/${name.project}-${extension}-src.jar" />
+	
 	<property name="java.src"   value="./src/" />
 	<property name="java.test"  value="./test/" />
 	
@@ -84,6 +87,7 @@
 	
 	<target name="dist" depends="test" description="make a distribution">
 		<jar jarfile="${jar.output}" basedir="${classes}"/>
+		<jar jarfile="${jar.output.src}" basedir="${java.src}"/>
 	</target>
 
 	

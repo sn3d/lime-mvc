@@ -16,31 +16,21 @@
  *****************************************************************************/
 package org.zdevra.guice.mvc.jsilver;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import com.google.clearsilver.jsilver.data.Data;
 
 /**
- * This annotation is used in controller or in 
- * method aand  tells to Lime MVC we want to render 
- * produced data via JSilver's template.
- * <br>
- * <b>example:</b>
- * <pre class="prettyprint">
- * {@literal @}Controller
- * public class MyController {
- *    
- *    {@literal @}RequestMapping(path="/helloworld", nameOfResult="msg")
- *    {@literal @}ToJSilverView("view.jsilver")
- *    public String helloWorld() {
- *       ...
- *    }
- * }
-
+ * This class just take the JSilver data and
+ * add put the data as symlink to parent.
  */
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.METHOD, ElementType.TYPE })
-public @interface ToJSilverView {
-	public String value();
+class ModelSilverConverter implements ModelConverter {
+	
+	@Override
+	public boolean convert(String name, Object obj, Data data, ModelService convertService) {
+		if (Data.class.isInstance(obj)) {
+			data.setSymlink(name, (Data)obj);
+			return true;
+		}
+		return false;		
+	}
+
 }

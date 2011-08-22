@@ -16,31 +16,32 @@
  *****************************************************************************/
 package org.zdevra.guice.mvc.jsilver;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.util.Map;
+
+import com.google.clearsilver.jsilver.data.Data;
+import com.google.inject.Singleton;
 
 /**
- * This annotation is used in controller or in 
- * method aand  tells to Lime MVC we want to render 
- * produced data via JSilver's template.
- * <br>
- * <b>example:</b>
- * <pre class="prettyprint">
- * {@literal @}Controller
- * public class MyController {
- *    
- *    {@literal @}RequestMapping(path="/helloworld", nameOfResult="msg")
- *    {@literal @}ToJSilverView("view.jsilver")
- *    public String helloWorld() {
- *       ...
- *    }
- * }
-
+ * The class provide transformation from Map to JSilver data
  */
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.METHOD, ElementType.TYPE })
-public @interface ToJSilverView {
-	public String value();
+@Singleton
+class ModelMapConverter implements ModelConverter {
+		
+	@Override
+	public boolean convert(String name, Object obj, Data data, ModelService convertService) {		
+		if (!Map.class.isInstance(obj)) {
+			return false;
+		}
+		
+		Data mapData = data.createChild(name);
+		Map<?, ?> map = (Map<?,?>)obj;
+		for (Map.Entry<?,?> e : map.entrySet()) {
+			String key = e.getKey().toString();
+			Object val = e.getValue();			
+			convertService.convert(key, val, mapData);			
+		}
+		
+		return true;
+	}
+
 }

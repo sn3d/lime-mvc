@@ -7,7 +7,7 @@ import java.util.Map;
 import org.testng.annotations.Test;
 import org.zdevra.guice.mvc.MvcModule;
 import org.zdevra.guice.mvc.jsilver.ModelService;
-import org.zdevra.guice.mvc.jsilver.ModelObjectConvertor;
+import org.zdevra.guice.mvc.jsilver.ModelObjectConverter;
 
 import com.google.clearsilver.jsilver.JSilver;
 import com.google.clearsilver.jsilver.data.Data;
@@ -25,19 +25,6 @@ class Book {
 
 @Test
 public class ModelTest {
-	
-	public static void main(String[] args) {
-		try {
-			ModelTest t = new ModelTest();
-			t.testCollectionConvert();
-			t.testMapConvert();
-			t.testComplexConvert();
-			t.testCustomConvert();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
 	
 	@Test
 	public void testCollectionConvert() {
@@ -141,7 +128,7 @@ public class ModelTest {
 
 		//convert
 		ModelService service = 
-			ModelService.createTestService(new ModelObjectConvertor<Book>(Book.class) {
+			ModelService.createTestService(new ModelObjectConverter<Book>(Book.class) {
 
 				@Override
 				public void convertObject(Book obj, Data data, ModelService convService) {
