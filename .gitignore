@@ -1,0 +1,4 @@
+lib/[^.]*
+target/[^.]*
+docs/java-api/[^.]*
+*.jar
