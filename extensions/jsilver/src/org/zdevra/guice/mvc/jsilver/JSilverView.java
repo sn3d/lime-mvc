@@ -51,7 +51,8 @@ public class JSilverView implements View {
 	/**
 	 * Constructor
 	 */
-	public JSilverView(String file, Injector injector) {
+	public JSilverView(String file, Injector injector) 
+	{
 		this(
 			file,
 			(JSilver)injector.getInstance(JSilver.class),
@@ -62,7 +63,8 @@ public class JSilverView implements View {
 	/**
 	 * Constructor used by {@link JSilverModule}
 	 */
-	JSilverView(String file) {
+	JSilverView(String file) 
+	{	
 		this.viewFile = file;
 	}
 		
@@ -74,7 +76,8 @@ public class JSilverView implements View {
 	 * @param viewFile
 	 * @param modelName
 	 */
-	JSilverView(String viewFile, JSilver jSilver, ModelService modelService) {
+	JSilverView(String viewFile, JSilver jSilver, ModelService modelService) 
+	{
 		this.jSilver = jSilver;
 		this.viewFile = viewFile;
 		this.modelService = modelService;

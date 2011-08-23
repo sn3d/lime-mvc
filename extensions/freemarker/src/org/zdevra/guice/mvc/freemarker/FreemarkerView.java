@@ -51,7 +51,9 @@ public class FreemarkerView implements View {
 	/**
 	 * The constructor 
 	 */
-	public FreemarkerView(Configuration freemakerConf, String templateFileName) throws IOException {
+	public FreemarkerView(Configuration freemakerConf, String templateFileName) 
+		throws IOException 
+	{
 		this.freemarkerConf = freemakerConf;
 		this.templateName = templateFileName;
 	}

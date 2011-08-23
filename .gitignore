@@ -1,3 +1,4 @@
+bin/[^.]*
 lib/[^.]*
 target/[^.]*
 docs/java-api/[^.]*

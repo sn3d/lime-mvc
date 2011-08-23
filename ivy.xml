@@ -20,6 +20,7 @@
 		<!-- JAVA extensions -->
 		<dependency org="com.google.jsilver" name="jsilver" rev="[1.0.0,2.0]" conf="java->default"/>
 		<dependency org="org.freemarker" name="freemarker" rev="[2.3.18,2.4.0]" conf="java->default"/>
+		<dependency org="org.apache.velocity" name="velocity" rev="1.7" conf="java->default"/>
 
 		<!-- TEST -->    
 		<dependency org="org.testng" name="testng" rev="6.0.1" conf="test->default" />
