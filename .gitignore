@@ -2,3 +2,6 @@ lib/[^.]*
 target/[^.]*
 docs/java-api/[^.]*
 *.jar
+.project
+.classpath
+.settings/[^.]*
