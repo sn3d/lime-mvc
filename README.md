@@ -30,7 +30,8 @@ For easy start You might use the Maven:
 Lime MVC is basically a Servlet Module in Guice. First you will prepare web project with
 Guice Servlet. After that you'll code your Controller and a MvcModule implementation.
 
-controller:
+controller example
+
 	@Controller
 	public class MyController 
 	{
@@ -44,7 +45,8 @@ controller:
 		}
 	}
 
-mvc module:
+mvc module example
+
 	public class MyModule extends MvcModule 
 	{
 		protected void configureControllers() 
