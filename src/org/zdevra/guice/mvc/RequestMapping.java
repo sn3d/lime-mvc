@@ -52,7 +52,7 @@ import java.lang.annotation.Target;
 @Deprecated
 public @interface RequestMapping {
 	public String path();
-	public HttpMethod requestType() default HttpMethod.ALL;
+	public HttpMethodType requestType() default HttpMethodType.ALL;
 	public String toView() default "";
 	public String nameOfResult() default "";
 }

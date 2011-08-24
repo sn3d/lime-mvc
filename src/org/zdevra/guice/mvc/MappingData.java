@@ -8,21 +8,21 @@ class MappingData {
 
 // ------------------------------------------------------------------------
 	
-	public HttpMethod requestType;
-	public String      path;
-	public String      resultName;
-	public Injector    injector;
-	public Class<?>    controllerClass;
-	public Method      method;
+	public HttpMethodType httpMethodType;
+	public String         path;
+	public String         resultName;
+	public Injector       injector;
+	public Class<?>       controllerClass;
+	public Method         method;
 	
 // ------------------------------------------------------------------------
 		
-	public MappingData(Class<?> controllerClass, Method method, HttpMethod requestType, String path, String resultName, Injector injector) {
+	public MappingData(Class<?> controllerClass, Method method, HttpMethodType httpMethodType, String path, String resultName, Injector injector) {
 		this.controllerClass = controllerClass;
 		this.method = method;
 		this.path = path;
 		this.resultName = resultName;
-		this.requestType = requestType;
+		this.httpMethodType = httpMethodType;
 		this.injector = injector;
 	}
 	

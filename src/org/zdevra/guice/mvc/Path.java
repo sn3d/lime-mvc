@@ -27,27 +27,29 @@ import java.lang.annotation.Target;
  * 
  * You may specify also HTTP method (GET, PUT, DELETE etc). Normally the method 
  * will accept all HTTP requests with any method. If you want to specify for
- * which HTTP method it should be invoked, use the httpMethod parameter
- * <p>
+ * which HTTP method it should be invoked, use the one of HttpMethod annotations.
  * <br>
  * 
  * example:
  * <pre class="prettyprint">
  * {@literal @}Controller
  * class MyController {
- *    {@literal @}Path(value="/department/(.*)", httpMethod=HttpMethod.PUT)
+ *    {@literal @}PUT {@literal @}Path("/department/(.*)")
  *    public void handleRequest(@UriParameter(1) String departmentId) {
  *    ...
  *    }
  * }
  * <pre>
  *
- * @see HttpMethod
+ * @see HttpMethodType
+ * @see GET
+ * @see POST
+ * @see PUT
+ * @see DELETE
  * @see Controller
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.METHOD })
 public @interface Path {
 	public String value();
-	public HttpMethod httpMethod() default HttpMethod.ALL;
 }

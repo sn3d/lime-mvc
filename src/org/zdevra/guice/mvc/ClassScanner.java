@@ -116,14 +116,29 @@ public class ClassScanner {
 		MappingData reqMapping = new MappingData(
 				null,
 				null,
-				path.httpMethod(),
+				HttpMethodType.ALL,
 				path.value(),
 				method.getName(),
-				null );
+				null );		
 		
 		ModelName resultName = method.getAnnotation(ModelName.class);
 		if (resultName != null) {
 			reqMapping.resultName = resultName.value();
+		}
+		
+		//resolve HTTP method
+		if (method.getAnnotation(GET.class) != null) {
+			reqMapping.httpMethodType = HttpMethodType.GET;
+		} else if (method.getAnnotation(POST.class) != null) {
+			reqMapping.httpMethodType = HttpMethodType.POST;
+		} else if (method.getAnnotation(PUT.class) != null) {
+			reqMapping.httpMethodType = HttpMethodType.PUT;
+		} else if (method.getAnnotation(DELETE.class) != null) {
+			reqMapping.httpMethodType = HttpMethodType.DELETE;
+		} else if (method.getAnnotation(HEAD.class) != null) {
+			reqMapping.httpMethodType = HttpMethodType.HEAD;
+		} else {
+			reqMapping.httpMethodType = HttpMethodType.ALL;
 		}
 		
 		return reqMapping;

@@ -30,7 +30,7 @@ class MethodInvokerFilter implements MethodInvoker {
 	
 	private final Pattern pathPattern;
 	private final MethodInvoker decoratedInvoker;
-	private final HttpMethod requestTypeFilter;
+	private final HttpMethodType requestTypeFilter;
 
 /*---------------------------- constructors ----------------------------*/
 
@@ -40,7 +40,7 @@ class MethodInvokerFilter implements MethodInvoker {
 	public MethodInvokerFilter(MappingData mapping, MethodInvoker decoratedInvoker) {
 		this.pathPattern = Pattern.compile("(?i)" + mapping.path);
 		this.decoratedInvoker = decoratedInvoker;
-		this.requestTypeFilter = mapping.requestType;
+		this.requestTypeFilter = mapping.httpMethodType;
 	}
 
 	@Override
@@ -67,8 +67,8 @@ class MethodInvokerFilter implements MethodInvoker {
 		return res;
 	}
 
-	private boolean agreedWithRequestType(HttpMethod reqType) {
-		return (this.requestTypeFilter == HttpMethod.ALL || this.requestTypeFilter == reqType);
+	private boolean agreedWithRequestType(HttpMethodType reqType) {
+		return (this.requestTypeFilter == HttpMethodType.ALL || this.requestTypeFilter == reqType);
 	}
 
 /*----------------------------------------------------------------------*/

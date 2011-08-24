@@ -35,13 +35,13 @@ public class InvokeData {
 	private final HttpServletRequest request;
 	private final HttpServletResponse response;
 	private final Model model;
-	private final HttpMethod reqType;
+	private final HttpMethodType reqType;
 	private final Injector injector;
 
 /*---------------------------- constructors ----------------------------*/
 
 	
-	public InvokeData(HttpServletRequest request, HttpServletResponse response, Model model, HttpMethod reqType, Injector injector) {
+	public InvokeData(HttpServletRequest request, HttpServletResponse response, Model model, HttpMethodType reqType, Injector injector) {
 		this.request = request;
 		this.response = response;
 		this.model = model;
@@ -87,7 +87,7 @@ public class InvokeData {
 		return model;
 	}
 
-	public HttpMethod getReqType() {
+	public HttpMethodType getReqType() {
 		return reqType;
 	}
 
