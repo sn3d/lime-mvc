@@ -1,6 +1,0 @@
-Dependencies:
-	- Guice v3.0
-	- Guice servlet extension v3.0
-
-Instructions how to compile the Lime:
-	- just run ant
