@@ -19,28 +19,51 @@ import org.zdevra.guice.mvc.View;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 
+/**
+ * The view provide rendering of output HTML via Velocity template
+ * engine
+ */
 public class VelocityView implements View {
+	
+// ------------------------------------------------------------------------
 	
 	private final String viewFile;
 	@Inject private VelocityEngine velocity;
-		
+	
+// ------------------------------------------------------------------------
+
+	/**
+	 * Only {@link VelocityModule} can use this constructor 
+	 */
 	VelocityView(String viewFile) {
 		this.viewFile = viewFile;
 	}
-		
+
+	/**
+	 * Constructor 
+	 * @param viewFile
+	 * @param injector
+	 */
 	public VelocityView(String viewFile, Injector injector) {
 		this.viewFile = viewFile;
 		this.velocity = injector.getInstance(VelocityEngine.class);  
 	}
 	
+	/**
+	 * Constructor
+	 * @param viewFile
+	 * @param velocity
+	 */
 	public VelocityView(String viewFile, VelocityEngine velocity) 
 	{
 		this.viewFile = viewFile;
 		this.velocity = velocity;
 	}
-	
+
+// ------------------------------------------------------------------------
 	
 	@Override
+	@SuppressWarnings("unchecked")
 	public void render(HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) 
 		throws Exception 
 	{
@@ -63,5 +86,7 @@ public class VelocityView implements View {
 			response.getWriter().write(bout.toString());
 		}
 	}
+	
+// ------------------------------------------------------------------------
 	
 }

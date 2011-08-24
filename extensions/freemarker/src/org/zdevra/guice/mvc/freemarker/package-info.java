@@ -25,7 +25,7 @@
  * 
  * <h3>Usage</h3>
  * Let's assume that we've got controller which selects view with name 'someview'.
- * For rendering of the HTML, we will use a JSilver template 'somehtml.ftl'. 
+ * For rendering of the HTML, we will use a Freemarker template 'somehtml.ftl'. 
  * <p>
  * 
  * <br><b>controller:</b></p>
@@ -47,7 +47,7 @@
  *    protected void configureControllers(Configuration freemakerConfiguration) throws Exception
  *    {
  *       control("/*").withController(MyController.class);
- *       bindViewNameToJSilver("someview", "somehtml.ftl");
+ *       bindViewNameToFreemarker("someview", "somehtml.ftl");
  *    }
  * }
  * </pre>

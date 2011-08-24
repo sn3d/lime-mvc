@@ -6,3 +6,4 @@ docs/java-api/[^.]*
 .project
 .classpath
 .settings/[^.]*
+build.properties

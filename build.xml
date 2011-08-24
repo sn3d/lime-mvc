@@ -1,4 +1,4 @@
-<project xmlns:ivy="antlib:org.apache.ivy.ant" basedir="." default="dist" >
+<project xmlns:ivy="antlib:org.apache.ivy.ant" basedir="." default="docs" >
 
 	<!--============== PATHS & PROPERTIES ==============-->
 	
@@ -155,6 +155,10 @@
 	    </fileset>
 			
 		<fileset dir="./extensions/freemarker/src/" defaultexcludes="yes">
+		   <include name="**/*.java"/>
+		</fileset>
+			
+		<fileset dir="./extensions/velocity/src/" defaultexcludes="yes">
 		   <include name="**/*.java"/>
 		</fileset>
 

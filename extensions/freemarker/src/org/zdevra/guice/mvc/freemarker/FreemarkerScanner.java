@@ -55,8 +55,7 @@ class FreemarkerScanner implements ViewScanner {
 		ToFreemarkerView anot = Utils.getAnnotation(ToFreemarkerView.class, anots);
 		if (anot == null) {
 			return View.NULL_VIEW;
-		}
-		
+		}		
 		return new FreemarkerView(freemarkerConf, anot.value());
 	}
 	

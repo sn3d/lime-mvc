@@ -2,7 +2,7 @@
 
   <test name="unit-tests" >
     <classes>    
-       <class name="org.zdevra.guice.mvc.jsilver.ModelTest" />
+       <class name="org.zdevra.guice.mvc.velocity.TestVelocity" />
     </classes>
   </test>
 

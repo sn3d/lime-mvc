@@ -23,7 +23,7 @@
 		<dependency org="org.apache.velocity" name="velocity" rev="1.7" conf="java->default"/>
 
 		<!-- TEST -->    
-		<dependency org="org.testng" name="testng" rev="6.0.1" conf="test->default" />
+		<dependency org="org.testng" name="testng" rev="6.1.1" conf="test->default" />
 		<dependency org="org.easymock" name="easymock" rev="3.0" conf="test->default"/>
 		<dependency org="httpunit" name="httpunit" rev="1.7" conf="test->default"/>
 
