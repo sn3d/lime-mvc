@@ -57,14 +57,16 @@ import com.google.inject.name.Named;
 @Singleton
 public class GuiceExceptionResolver implements ExceptionResolver {
 	
+// ------------------------------------------------------------------------
 	
 	@Inject
 	private Injector injector;
 	
 	private final ExceptionHandler defaultHandler; 
 	private final Collection<ExceptionBind> binds;
-			
 	
+// ------------------------------------------------------------------------
+				
 	@Inject 
 	public GuiceExceptionResolver(Set<ExceptionBind> exceptionBinds, @Named(ExceptionResolver.DEFAULT_EXCEPTIONHANDLER_NAME) ExceptionHandler defaultHandler) {		
 		List<ExceptionBind> bindsArray = new ArrayList<ExceptionBind>(exceptionBinds);
@@ -72,7 +74,8 @@ public class GuiceExceptionResolver implements ExceptionResolver {
 		this.binds = Collections.unmodifiableCollection(bindsArray);
 		this.defaultHandler = defaultHandler;
 	}
-
+	
+// ------------------------------------------------------------------------	
 	
 	@Override
 	public void handleException(Throwable t, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {
@@ -89,5 +92,6 @@ public class GuiceExceptionResolver implements ExceptionResolver {
 		
 		defaultHandler.handleException(t, servlet, req, resp);
 	}
-
+	
+// ------------------------------------------------------------------------
 }

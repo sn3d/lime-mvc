@@ -25,7 +25,7 @@ package org.zdevra.guice.mvc;
  * {@literal @}Controller
  * public class BookController  {
  *    
- *    {@literal @}RequestMapping(path="/home")
+ *    {@literal @}Path("/home")
  *    public ModelAndView allBooks() {
  *       Model m = ...;
  *       View  v = ...;

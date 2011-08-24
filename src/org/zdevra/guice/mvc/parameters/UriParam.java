@@ -26,8 +26,9 @@ import org.zdevra.guice.mvc.Utils;
 /**
  * The parameter's parameter processor for {@link org.zdevra.guice.mvc.UriParameter} annotation.
  * 
- * The Url in {@literal @}RequestMapping of the method can be a regular expression. 
- * {@link org.zdevra.guice.mvc.UriParameter} pick up the value of some regexp. group and put it into method's parameter.
+ * The Url in {@literal @}Path of the method can be a regular expression. 
+ * {@link org.zdevra.guice.mvc.UriParameter} pick up the value of some regexp. 
+ * group and put it into method's parameter.
  * <p>
  * 
  * Processor uses the same type conversion like RequestParam processor.

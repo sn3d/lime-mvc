@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * The class contains static utility methods.
  */
-public class Utils {
+public final class Utils {
 
 /*----------------------------------------------------------------------*/
 

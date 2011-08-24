@@ -28,7 +28,8 @@ public class Main {
 		try {
 			Case1Test t = new Case1Test();
 			t.prepare();			
-			t.testFromSessionModel();
+			t.testPathAnnotation();
+			t.testModelNameAnnotation();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

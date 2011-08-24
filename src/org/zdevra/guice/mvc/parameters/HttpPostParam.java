@@ -36,7 +36,7 @@ import org.zdevra.guice.mvc.Utils;
  * 
  * Example:
  * <pre class="prettyprint">
- * {@literal @}RequestMapping("/control");
+ * {@literal @}Path("/control")
  * public void controllerMethod({@literal @}RequestParameter("val1") String val1) {
  *    ...
  * }
@@ -50,7 +50,7 @@ import org.zdevra.guice.mvc.Utils;
  * param[0], param[1], param[2] which contains the integer values, we might use the following controlling method:
  * 
  * <pre class="prettyprint">
- * {@literal @}RequestMapping("/control");
+ * {@literal @}Path("/control")
  * public void controllerMethod({@literal @}RequestParameter("param") int[] values) {
  *    ...
  * }

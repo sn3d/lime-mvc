@@ -9,7 +9,7 @@ import org.zdevra.guice.mvc.InvokeData;
  * <p>
  * 
  * <pre class="prettyprint">
- *  {@literal @}RequestMapping(path="/somepath") 
+ *  {@literal @}Path("/somepath") 
  *  public void getInfoAboutLoggedUser(HttpSession session) {
  *    ...			
  *	}

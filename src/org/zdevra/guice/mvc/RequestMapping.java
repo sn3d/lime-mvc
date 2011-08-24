@@ -22,6 +22,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * This annotation is deprecated and has been replaced 
+ * by {@link Path} and {@link ModelName}.
+ * 
  * This annotation map a HTTP request to concrete method.
  * <p>
  * 
@@ -41,12 +44,15 @@ import java.lang.annotation.Target;
  * }
  * <pre>
  * 
+ * @see Path
+ * @see ModelName
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.METHOD })
+@Deprecated
 public @interface RequestMapping {
 	public String path();
-	public RequestType requestType() default RequestType.ALL;
+	public HttpMethod requestType() default HttpMethod.ALL;
 	public String toView() default "";
 	public String nameOfResult() default "";
 }

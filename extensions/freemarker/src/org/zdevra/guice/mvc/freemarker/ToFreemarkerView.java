@@ -31,7 +31,8 @@ import java.lang.annotation.Target;
  * {@literal @}Controller
  * public class MyController {
  *    
- *    {@literal @}RequestMapping(path="/helloworld", nameOfResult="msg")
+ *    {@literal @}Path("/helloworld")
+ *    {@literal @}ModelName("msg")
  *    {@literal @}ToFreemarkerView("view.ftl")
  *    public String helloWorld() {
  *       ...

@@ -43,7 +43,7 @@ import org.zdevra.guice.mvc.exceptions.IllegalConversionException;
  * {@literal @}Controller
  * public class MyController {
  * 
- *    {@literal @}RequestMapping(path="/method")
+ *    {@literal @}Path(path="/method")
  *    public void doSomething( {@literal @}RequestParameter("date-param") {@literal @}DateConv("YYYYMMDD") Date param) 
  *    {
  *    	...

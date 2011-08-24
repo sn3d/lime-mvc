@@ -28,8 +28,6 @@ import org.zdevra.guice.mvc.parameters.ParamMetadata;
 import org.zdevra.guice.mvc.parameters.ParamProcessor;
 import org.zdevra.guice.mvc.parameters.ParamProcessorsService;
 
-import com.google.inject.Injector;
-
 /**
  * Class prepare data for controller's method, call the method
  * and process the method's result.
@@ -51,21 +49,20 @@ class MethodInvokerImpl implements MethodInvoker {
 /*---------------------------- constructors ----------------------------*/
 	
 	
-	public static MethodInvoker createInvoker(Class<?> controllerClass, Method method, RequestMapping reqMapping, Injector injector) throws Exception {
+	public static MethodInvoker createInvoker(MappingData reqMapping) throws Exception {
 		
-		ParamProcessorsService paramService = injector.getInstance(ParamProcessorsService.class);
-		ConversionService convertService = injector.getInstance(ConversionService.class);
-		ViewScannerService viewScannerService = injector.getInstance(ViewScannerService.class);
+		ParamProcessorsService paramService = reqMapping.injector.getInstance(ParamProcessorsService.class);
+		ConversionService convertService = reqMapping.injector.getInstance(ConversionService.class);
+		ViewScannerService viewScannerService = reqMapping.injector.getInstance(ViewScannerService.class);
 				
-		View defaultView = viewScannerService.scan(method.getAnnotations());
+		View defaultView = viewScannerService.scan(reqMapping.method.getAnnotations());
 		if (defaultView == View.NULL_VIEW) {
-			defaultView = viewScannerService.scan(controllerClass.getAnnotations());
+			defaultView = viewScannerService.scan(reqMapping.controllerClass.getAnnotations());
 		}		
-				
-		List<ParamProcessor> processors = scanParams(method, paramService, convertService);
 		
-		String resultName = reqMapping.nameOfResult();				
-		MethodInvoker invoker = new MethodInvokerImpl(controllerClass, method, defaultView, resultName, processors);		
+		List<ParamProcessor> processors = scanParams(reqMapping.method, paramService, convertService);		
+		String resultName = reqMapping.resultName;				
+		MethodInvoker invoker = new MethodInvokerImpl(reqMapping.controllerClass, reqMapping.method, defaultView, resultName, processors);		
 		return invoker;  
 	}
 

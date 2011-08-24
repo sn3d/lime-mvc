@@ -34,7 +34,7 @@ import java.lang.annotation.RetentionPolicy;
  * {@literal @}Controller(sessionAttributes={"username", "country"})
  * class MyController() {
  *     ...
- *     {@literal @}RequestMapping(path="/home")
+ *     {@literal @}Path("/home")
  *     public Model doSomething() {
  *     	   ...
  *         Model m = new Model();

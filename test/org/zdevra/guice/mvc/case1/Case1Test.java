@@ -131,4 +131,40 @@ public class Case1Test extends AbstractTest {
 		System.out.println("out:" + out);
 		System.out.println("sessionout:" + sessionOut);
 	}
+	
+	
+	@Test
+	public void testPathAnnotation() throws Exception {
+		//prepare request
+		ServletUnitClient sc = sr.newClient();
+		WebRequest request   = new GetMethodWebRequest( "http://www.bookstore.com/test/do/pathtest" );
+		InvocationContext ic = sc.newInvocation( request );		
+		
+		//invoke request
+		Servlet ss = ic.getServlet();
+		ss.service(ic.getRequest(), ic.getResponse());			
+		WebResponse response = ic.getServletResponse();
+		
+		//process response
+		String out = response.getText();
+		Assert.assertTrue( out.contains("viewId=0 test message:default model name & path test done") );
+	}
+	
+	
+	@Test
+	public void testModelNameAnnotation() throws Exception {
+		//prepare request
+		ServletUnitClient sc = sr.newClient();
+		WebRequest request   = new GetMethodWebRequest( "http://www.bookstore.com/test/do/modelnametest" );
+		InvocationContext ic = sc.newInvocation( request );		
+		
+		//invoke request
+		Servlet ss = ic.getServlet();
+		ss.service(ic.getRequest(), ic.getResponse());			
+		WebResponse response = ic.getServletResponse();
+		
+		//process response
+		String out = response.getText();
+		Assert.assertTrue( out.contains("viewId=0 test message:defined model name & path test done") );
+	}
 }

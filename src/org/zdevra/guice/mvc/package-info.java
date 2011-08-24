@@ -47,9 +47,8 @@
  * <dt>{@link org.zdevra.guice.mvc.Controller}
  * <dd>The main annotation marks the class as a controller
  * 
- * <dt>{@link org.zdevra.guice.mvc.RequestMapping}
- * <dd>The main annotation for controller's method. This annotation define when is method invoked, 
- *     how is the result processed, which view is used.
+ * <dt>{@link org.zdevra.guice.mvc.Path}
+ * <dd>The main annotation for controller's method. This annotation define for what URL is method invoked.
  *     
  * <dt>{@link org.zdevra.guice.mvc.RequestParameter}
  * <dd>This is parameter's annotation. The value for parameter will be picked up from
@@ -146,12 +145,12 @@
  * <pre class="prettyprint">
  * {@literal @}Controller
  * public class MyController {
- *    {@literal @}RequestMapping(path="/users", toView="users_view")
+ *    {@literal @}Path("/users") {@literal @}ToView("users_view")
  *    public Model getUsers() {
  *    ...
  *    }
  *    
- *    {@literal @}RequestMapping(path="/books")
+ *    {@literal @}Path(path="/books")
  *    public ModelAndView getBooks() {
  *       ...
  *       return ModelAndView(model, NamedView.create("books_view");

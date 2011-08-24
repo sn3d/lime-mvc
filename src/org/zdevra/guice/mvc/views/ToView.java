@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
  * provide information that the {@link NamedView} should
  * be used for controller or method.
  * 
- * This annotation is extracted 'toView' parameter
+ * This annotation extracted 'toView' parameter
  * from {@link Controller} and {@link RequestMapping}.
  * 
  * The annotation is processed by {@link NamedViewScanner}

@@ -29,7 +29,7 @@ import java.lang.annotation.Target;
  * 
  * <p>example:
  * <pre class="prettyprint">
- * {@literal @}RequestMapping("/controller/([a..z]+)/([0..9]+)"
+ * {@literal @}Path("/controller/([a..z]+)/([0..9]+)")
  * public void controllerMethod({@literal @}UriParameter(1) String param1, {@literal @}UriParameter(2) param2) {
  *    //param1 == value in group [a..z]+;
  *    //param2 == value in group [0..9]+; 

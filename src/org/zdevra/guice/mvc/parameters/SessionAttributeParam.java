@@ -29,7 +29,7 @@ import org.zdevra.guice.mvc.Utils;
  * 
  * for example:
  * <pre class="prettyprint">
- *  {@literal @}RequestMapping(path="/loggeduserinfo") 
+ *  {@literal @}Path(path="/loggeduserinfo") 
  *  public void getInfoAboutLoggedUser({@literal @}SessionParameter("loggeduser") Customer customer) {
  *    ...			
  *	}

@@ -31,7 +31,7 @@ import java.lang.annotation.Target;
  * <pre class="prettyprint">
  * {@literal @}Controller
  * class MyController {
- *    {@literal @}RequestMapping("/department");
+ *    {@literal @}Path("/department");
  *    public String handleRequest( {@literal @}SessionParameter("user") String user ) {
  *    	return "user is:" + user;
  *    }

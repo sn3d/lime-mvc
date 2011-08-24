@@ -20,6 +20,8 @@ import javax.inject.Singleton;
 
 import org.zdevra.guice.mvc.Controller;
 import org.zdevra.guice.mvc.Model;
+import org.zdevra.guice.mvc.ModelName;
+import org.zdevra.guice.mvc.Path;
 import org.zdevra.guice.mvc.RequestMapping;
 import org.zdevra.guice.mvc.SessionParameter;
 
@@ -58,5 +60,16 @@ public class Case1Controller {
 		return out;
 	}
 	
+	
+	@Path("/do/pathtest")
+	public String testmsg() {
+		return "default model name & path test done";
+	}
+	
+	@Path("/do/modelnametest")
+	@ModelName("testmsg")
+	public String pathTest() {
+		return "defined model name & path test done";
+	}
 	
 }

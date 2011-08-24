@@ -32,7 +32,7 @@ import java.lang.annotation.Target;
  * {@literal @}Controller
  * public class MyController {
  * 
- *    {@literal @}RequestMapping(path="/method")
+ *    {@literal @}Path("/method")
  *    public void doSomething( {@literal @}RequestParameter("bool-param") {@literal @}BooleanConv(trueVal="Y", falseVal="N") boolean param) 
  *    {
  *    	

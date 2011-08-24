@@ -16,22 +16,13 @@
  *****************************************************************************/
 package org.zdevra.guice.mvc;
 
-import javax.inject.Singleton;
-
-@Controller()
-@Singleton
-public class SimpleController {
-
-	@RequestMapping(path="/someController/(.*)", requestType=HttpMethod.GET)
-	public void controllMethod1(@UriParameter(1) String param) {
-		System.out.println("invoked with controllMethod1 param=" + param);
-	}
-	
-	
-	@RequestMapping(path="/someController/controllMethod2/(.*)/(.*)")
-	public void controllMethod2(@UriParameter(1) String param1, @UriParameter(2) String param2) {
-		System.out.println("invoked with controllMethod2 param1=" + param1 + " param2=" + param2);
-	}
-	
-	
+/**
+ * Enumeration of the HTTP Methods
+ */
+public enum HttpMethod {
+	ALL,
+	GET,
+	POST,
+	PUT,
+	DELETE
 }

@@ -31,7 +31,7 @@
  * {@literal @}ToView("someview")
  * public class MyController {
  *    ...
- *    {@literal @}RequestMapping(path="/helloworld", nameOfResult="msg")
+ *    {@literal @}Path("/helloworld") {@literal @}ModelName("msg")
  *    public String showHelloWorld() {
  *       return "Hello World";
  *    }

@@ -114,7 +114,7 @@ class MvcDispatcherServlet extends HttpServlet {
 	protected final void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException 
 	{
-		processRequest(req, resp, RequestType.GET);
+		processRequest(req, resp, HttpMethod.GET);
 	}
 	
 
@@ -122,7 +122,7 @@ class MvcDispatcherServlet extends HttpServlet {
 	protected final void doDelete(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException 
 	{
-		processRequest(req, resp, RequestType.DELETE);
+		processRequest(req, resp, HttpMethod.DELETE);
 	}
 
 
@@ -130,7 +130,7 @@ class MvcDispatcherServlet extends HttpServlet {
 	protected final void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException 
 	{
-		processRequest(req, resp, RequestType.POST);
+		processRequest(req, resp, HttpMethod.POST);
 	}
 
 
@@ -138,7 +138,7 @@ class MvcDispatcherServlet extends HttpServlet {
 	protected final void doPut(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException 
 	{
-		processRequest(req, resp, RequestType.PUT);
+		processRequest(req, resp, HttpMethod.PUT);
 	}
 	
 
@@ -161,7 +161,7 @@ class MvcDispatcherServlet extends HttpServlet {
 	}
 
 	
-	private void processRequest(HttpServletRequest req, HttpServletResponse resp, RequestType reqType)
+	private void processRequest(HttpServletRequest req, HttpServletResponse resp, HttpMethod reqType)
 		throws ServletException, IOException
 	{
 		try {

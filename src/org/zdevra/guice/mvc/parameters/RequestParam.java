@@ -28,7 +28,7 @@ import org.zdevra.guice.mvc.InvokeData;
  * 
  * for example:
  * <pre class="prettyprint">
- * {@literal @}RequestMapping("/control");
+ * {@literal @}Path("/control")
  * public void controllerMethod(HttpServletRequest request) {
  *    request.getParameter("param");
  * }

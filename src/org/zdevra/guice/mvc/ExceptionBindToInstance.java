@@ -28,17 +28,24 @@ import com.google.inject.Injector;
  * @see GuiceExceptionResolver
  */
 public class ExceptionBindToInstance extends ExceptionBind {
+	
+// ------------------------------------------------------------------------
 
 	private final ExceptionHandler handler;
+	
+// ------------------------------------------------------------------------
 
 	public ExceptionBindToInstance(ExceptionHandler handler, Class<? extends Throwable> exceptionClass, int order) {
 		super(exceptionClass, order);
 		this.handler = handler;
 	}
+	
+// ------------------------------------------------------------------------
 
 	@Override
 	public ExceptionHandler getHandler(Injector injetor) {
 		return handler;
 	}
 
+// ------------------------------------------------------------------------
 }

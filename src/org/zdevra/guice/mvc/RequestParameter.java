@@ -35,7 +35,7 @@ import java.lang.annotation.Target;
  * {@literal @}Controller
  * class MyController {
  * 
- *    {@literal @}RequestMapping(path="/method")
+ *    {@literal @}Path("/method")
  *    public String method( {@literal @}RequestParameter("param1") String param1 ) {
  *       return "parameter is:" + param1;
  *    } 
@@ -56,7 +56,7 @@ import java.lang.annotation.Target;
  * {@literal @}Controller
  * class MyController {
  * 
- *    {@literal @}RequestMapping(path="/method")
+ *    {@literal @}Path("/method")
  *    public void method( {@literal @}RequestParameter("someval") int[] param1 ) {
  *       ...
  *    } 

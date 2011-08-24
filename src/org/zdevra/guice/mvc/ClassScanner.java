@@ -42,9 +42,12 @@ public class ClassScanner {
 	 * @return 
 	 * @throws Exception
 	 */
-	public ClassInvoker scan(Class<?> controllerClass, Injector injector) throws Exception {
+	public ClassInvoker scan(Class<?> controllerClass, Injector injector) 
+		throws Exception 
+	{
 		Controller controllerAnotation = controllerClass.getAnnotation(Controller.class);
-		if (controllerAnotation == null) {
+		if (controllerAnotation == null) 
+		{
 			throw new IllegalStateException("Class is not defined as a controller. Missing @Controller annotation.");
 		}
 
@@ -54,17 +57,75 @@ public class ClassScanner {
 		//scan methods
 		List<Method> methods = Arrays.asList(controllerClass.getMethods());
 		List<MethodInvoker> scannedInvokers = new LinkedList<MethodInvoker>();
-		for (Method method : methods) {
+		for (Method method : methods) 
+		{			
+			MappingData reqMappingData = mappingDataForNewAnot(method);
+			if (reqMappingData == null) {
+				reqMappingData = mappingDataForOldAnot(method);
+			}
 			
-			RequestMapping reqMapping = method.getAnnotation(RequestMapping.class);
-			if (reqMapping != null) {
-				MethodInvoker invoker = MethodInvokerImpl.createInvoker(controllerClass, method, reqMapping, injector);
-				MethodInvoker filteredInvoker = new MethodInvokerFilter(reqMapping, invoker);
+			if (reqMappingData != null) 
+			{
+				reqMappingData.injector = injector;
+				reqMappingData.controllerClass = controllerClass;
+				reqMappingData.method = method;
+				MethodInvoker invoker = MethodInvokerImpl.createInvoker(reqMappingData);
+				MethodInvoker filteredInvoker = new MethodInvokerFilter(reqMappingData, invoker);
 				scannedInvokers.add(filteredInvoker);							
-			}			
+			}
 		}
 		
 		return new ClassInvoker(controllerClass, scannedInvokers, sessionAttrList); 
 	}
 	
+	
+	/**
+	 * old version of parsing, it should be removed in next versions
+	 */
+	@Deprecated
+	private MappingData mappingDataForOldAnot(Method method) 
+	{
+		RequestMapping anotOld = method.getAnnotation(RequestMapping.class);
+		if (anotOld == null) 
+		{
+			return null;
+		}
+		
+		MappingData reqMapping = new MappingData(
+				null,
+				null,
+				anotOld.requestType(),
+				anotOld.path(),
+				anotOld.nameOfResult(),
+				null );
+		
+		return reqMapping;
+	}
+	
+	
+	/**
+	 * new version of mapping annotations
+	 */
+	private MappingData mappingDataForNewAnot(Method method) 
+	{
+		Path path =  method.getAnnotation(Path.class);
+		if (path == null) {
+			return null;
+		}
+		
+		MappingData reqMapping = new MappingData(
+				null,
+				null,
+				path.httpMethod(),
+				path.value(),
+				method.getName(),
+				null );
+		
+		ModelName resultName = method.getAnnotation(ModelName.class);
+		if (resultName != null) {
+			reqMapping.resultName = resultName.value();
+		}
+		
+		return reqMapping;
+	}
 }

@@ -33,7 +33,7 @@ import javax.servlet.http.HttpSession;
  * {@literal @}Controller
  * class BookController {
  * 
- *    {@literal @}RequestMapping(...)
+ *    {@literal @}Path(...)
  *    public Model doSomeAtion() {
  *       ...
  *       Model m = new Model();
