@@ -52,7 +52,7 @@ public class DefaultViewResolver implements ViewResolver {
 // ------------------------------------------------------------------------
 
 	@Override
-	public void resolve(View view, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) throws Exception {
+	public void resolve(View view, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {
 		if (view instanceof NamedView) {
 			String viewName = ((NamedView)view).getName();
 			try {
@@ -65,8 +65,7 @@ public class DefaultViewResolver implements ViewResolver {
 				throw new MvcException("Controler has invalid or non-defined view");
 			}
 		}
-		
-		
+				
 		view.render(servlet, req, resp);	
 	}
 	

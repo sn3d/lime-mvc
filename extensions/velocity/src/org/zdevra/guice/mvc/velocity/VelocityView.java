@@ -18,6 +18,7 @@ package org.zdevra.guice.mvc.velocity;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.Collections;
@@ -31,6 +32,7 @@ import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.zdevra.guice.mvc.View;
+import org.zdevra.guice.mvc.exceptions.VelocityViewException;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -80,26 +82,29 @@ public class VelocityView implements View {
 	
 	@Override
 	@SuppressWarnings("unchecked")
-	public void render(HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) 
-		throws Exception 
+	public void render(HttpServlet servlet, HttpServletRequest request, HttpServletResponse response)  
 	{
-		Template velocityTemplate = velocity.getTemplate(viewFile);
-	
-		if (velocityTemplate != null) {
-			//prepare data
-			VelocityContext context = new VelocityContext();
-			List<String> attrNames = Collections.list(request.getAttributeNames());
-			for (String attrName : attrNames) {
-				Object attr = request.getAttribute(attrName);
-				context.put(attrName, attr);
+		try {
+			Template velocityTemplate = velocity.getTemplate(viewFile);
+		
+			if (velocityTemplate != null) {
+				//prepare data
+				VelocityContext context = new VelocityContext();
+				List<String> attrNames = Collections.list(request.getAttributeNames());
+				for (String attrName : attrNames) {
+					Object attr = request.getAttribute(attrName);
+					context.put(attrName, attr);
+				}
+				
+				//render
+				ByteArrayOutputStream bout = new ByteArrayOutputStream(2048);		
+				Writer out = new OutputStreamWriter(new BufferedOutputStream(bout));	
+				velocityTemplate.merge(context, out);
+				out.flush();
+				response.getWriter().write(bout.toString());
 			}
-			
-			//render
-			ByteArrayOutputStream bout = new ByteArrayOutputStream(2048);		
-			Writer out = new OutputStreamWriter(new BufferedOutputStream(bout));	
-			velocityTemplate.merge(context, out);
-			out.flush();
-			response.getWriter().write(bout.toString());
+		} catch (IOException e) {
+			throw new VelocityViewException(viewFile, request, e);
 		}
 	}
 	

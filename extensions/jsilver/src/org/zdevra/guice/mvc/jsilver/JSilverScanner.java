@@ -52,8 +52,7 @@ class JSilverScanner implements ViewScanner {
 // ------------------------------------------------------------------------
 	
 	@Override
-	public View scan(Annotation[] controllerAnotations) 
-		throws Exception 
+	public View scan(Annotation[] controllerAnotations)  
 	{
 		ToJSilverView anot = Utils.getAnnotation(ToJSilverView.class, controllerAnotations);
 		if (anot == null) {

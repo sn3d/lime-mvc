@@ -45,12 +45,12 @@ public abstract class FreemarkerModule extends MvcModule {
 	 *  
 	 * @param freemakerConfiguration
 	 */
-	protected abstract void configureControllers(Configuration freemakerConfiguration) throws Exception;
+	protected abstract void configureControllers(Configuration freemakerConfiguration);
 	
 // ------------------------------------------------------------------------
 	
 	@Override
-	protected final void configureControllers() throws Exception {
+	protected final void configureControllers() {
 		try {
 			//create freemaker's configuration
 			conf = new Configuration();

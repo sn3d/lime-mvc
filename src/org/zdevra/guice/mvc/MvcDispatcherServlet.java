@@ -144,20 +144,15 @@ class MvcDispatcherServlet extends HttpServlet {
 
 	@Override
 	public final void init() throws ServletException {
-		try {
-			List<ClassInvoker> allInvokers = new LinkedList<ClassInvoker>();
-			ClassScanner scanner = new ClassScanner();
-			for (Class<?> controller : controllers) {
-				ClassInvoker classInvoker = scanner.scan(controller, injector);
-				allInvokers.add( classInvoker );
-			}
+		List<ClassInvoker> allInvokers = new LinkedList<ClassInvoker>();
+		ClassScanner scanner = new ClassScanner();
+		for (Class<?> controller : controllers) {
+			ClassInvoker classInvoker = scanner.scan(controller, injector);
+			allInvokers.add( classInvoker );
+		}
 			
-			this.classInvokers = Collections.unmodifiableCollection(allInvokers);			
-			super.init();
-		} catch (Exception e) {
-			logger.log(Level.SEVERE, "Error in the servlet's initialization:" + e.getMessage(), e);
-			throw new ServletException(e);
-		}		
+		this.classInvokers = Collections.unmodifiableCollection(allInvokers);			
+		super.init();
 	}
 
 	
@@ -165,11 +160,10 @@ class MvcDispatcherServlet extends HttpServlet {
 		throws ServletException, IOException
 	{
 		try {
-			
 			if (logger.isLoggable(Level.FINEST)) {
 				logger.finest("request '" + req.getRequestURL().toString() +  "' is handled by Lime MVC Servler ");
 			}
-											
+												
 			//prepare invoke data
 			InvokeData data = 
 				new InvokeData(
@@ -178,20 +172,19 @@ class MvcDispatcherServlet extends HttpServlet {
 					null,
 					reqType,
 					injector );
-			
+				
 			//invoke method in controller
 			ModelAndView mav = invoke(data);			
 			if (logger.isLoggable(Level.FINEST)) {
 				logger.finest("controller produce model " + mav.getModel().toString() );
 			}
-						
+							
 			//resolve view
-			viewResolver.resolve(mav.getView(), this, req, resp);
-			mav = null;
-
+			viewResolver.resolve(mav.getView(), this, req, resp);			
+			mav = null;		
 		} catch (Throwable e) {			
 			exceptionResolver.handleException(e, this, req, resp); 			
-		}		
+		}
 	}
 
 	

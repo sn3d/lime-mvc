@@ -16,6 +16,8 @@
  *****************************************************************************/
 package org.zdevra.guice.mvc.casePerformance;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,11 +27,15 @@ import org.zdevra.guice.mvc.View;
 public class ViewArticle implements View {
 
 	@Override
-	public void render(HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) throws Exception {		
-		String article = (String) request.getAttribute("article");
-		
-		response.getWriter().write("Article detail\n");
-		response.getWriter().write("Article:" + article + "\n");
+	public void render(HttpServlet servlet, HttpServletRequest request, HttpServletResponse response)
+	{		
+		try {
+			String article = (String) request.getAttribute("article");	
+			response.getWriter().write("Article detail\n");
+			response.getWriter().write("Article:" + article + "\n");
+		} catch (IOException e) {
+			//TODO: dopisat ViewException
+		}
 	}
 
 }

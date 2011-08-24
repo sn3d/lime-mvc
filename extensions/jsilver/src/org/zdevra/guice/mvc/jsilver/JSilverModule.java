@@ -85,12 +85,13 @@ public abstract class JSilverModule extends MvcModule {
 	 * @param jSilver
 	 * @throws Exception
 	 */
-	protected abstract void configureControllers(JSilver jSilver) throws Exception;
+	protected abstract void configureControllers(JSilver jSilver);
 
 // ------------------------------------------------------------------------
 
 	@Override
-	protected final void configureControllers() throws Exception {
+	protected final void configureControllers()
+	{
 		try {
 			JSilver jSilver = 
 				new JSilver( 

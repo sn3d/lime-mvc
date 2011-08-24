@@ -29,6 +29,6 @@ public interface View {
 	
 	public final static View NULL_VIEW = NamedView.create("NULL");
 	
-	public void render(HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public void render(HttpServlet servlet, HttpServletRequest request, HttpServletResponse response);
 	
 }

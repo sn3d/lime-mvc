@@ -1,5 +1,4 @@
-<project basedir="." default="dist" name="lime-freemarker" >
-	
-	<import file="../build-extension.xml" as="ext"/>	
-	<target name="dist" depends="ext.dist"/>
+<project basedir="." default="jar" name="lime-freemarker" >	
+	<import file="../build-extension.xml"/>	
+	<target name="jar" depends="dist"/>
 </project>

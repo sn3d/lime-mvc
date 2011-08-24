@@ -22,7 +22,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.zdevra.guice.mvc.ConversionService.ConvertorFactory;
-import org.zdevra.guice.mvc.exceptions.MvcConfigurationException;
 import org.zdevra.guice.mvc.parameters.HttpPostParam;
 import org.zdevra.guice.mvc.parameters.HttpSessionParam;
 import org.zdevra.guice.mvc.parameters.InjectorParam;
@@ -103,7 +102,7 @@ public abstract class MvcModule extends ServletModule {
 	/**
 	 * Put into this method your controllers configuration
 	 */
-	protected abstract void configureControllers() throws Exception;
+	protected abstract void configureControllers();
 	
 	
 	/**
@@ -164,11 +163,7 @@ public abstract class MvcModule extends ServletModule {
 				MvcDispatcherServlet dispatcher = new MvcDispatcherServlet(def.getControllers());
 				serve(pattern).with(dispatcher);				
 				logger.info("for path '" + pattern + "' has been registered follwing controllers: " + def.getControllers());
-			}
-		
-		} catch (Exception e) {
-			logger.log(Level.SEVERE, "ERROR in Mvc initialization. Look what cause this error.", e);
-			throw new MvcConfigurationException(e);
+			}		
 		} finally {
 			exceptionResolverBuilder = null;
 			controllerModuleBuilder = null;

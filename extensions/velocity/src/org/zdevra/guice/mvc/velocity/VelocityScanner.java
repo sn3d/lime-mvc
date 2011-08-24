@@ -50,7 +50,7 @@ public class VelocityScanner implements ViewScanner {
 // ------------------------------------------------------------------------
 	
 	@Override
-	public View scan(Annotation[] controllerAnotations) throws Exception {
+	public View scan(Annotation[] controllerAnotations) {
 		ToVelocityView anot = Utils.getAnnotation(ToVelocityView.class, controllerAnotations);
 		if (anot == null) {
 			return View.NULL_VIEW;

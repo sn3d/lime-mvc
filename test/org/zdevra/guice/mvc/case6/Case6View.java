@@ -16,6 +16,8 @@
  *****************************************************************************/
 package org.zdevra.guice.mvc.case6;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,12 +33,15 @@ public class Case6View implements View {
 	}
 
 	@Override
-	public void render(HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) 
-			throws Exception 
+	public void render(HttpServlet servlet, HttpServletRequest request, HttpServletResponse response)  
 	{
-		Object msg1 = request.getAttribute("msg1");
-		Object msg2 = request.getAttribute("msg2");
-		response.getWriter().write("case6 view id:" + id + " msg1:" + msg1 + " msg2:" + msg2);	
+		try {
+			Object msg1 = request.getAttribute("msg1");
+			Object msg2 = request.getAttribute("msg2");
+			response.getWriter().write("case6 view id:" + id + " msg1:" + msg1 + " msg2:" + msg2);
+		} catch (IOException e) {
+			//TODO:dopisat ViewException
+		} 
 	}
 
 }

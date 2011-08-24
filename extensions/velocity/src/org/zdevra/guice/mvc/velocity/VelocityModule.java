@@ -42,7 +42,7 @@ public abstract class VelocityModule extends MvcModule {
 // ------------------------------------------------------------------------
 
 	@Override
-	protected final void configureControllers() throws Exception 
+	protected final void configureControllers() 
 	{		
 		VelocityEngine velocity = new VelocityEngine();
 		velocity.addProperty("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.FileResourceLoader");

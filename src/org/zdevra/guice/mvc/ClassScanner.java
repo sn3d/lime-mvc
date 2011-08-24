@@ -21,6 +21,8 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.zdevra.guice.mvc.exceptions.ScannerException;
+
 import com.google.inject.Injector;
 
 /**
@@ -43,39 +45,42 @@ public class ClassScanner {
 	 * @throws Exception
 	 */
 	public ClassInvoker scan(Class<?> controllerClass, Injector injector) 
-		throws Exception 
 	{
-		Controller controllerAnotation = controllerClass.getAnnotation(Controller.class);
-		if (controllerAnotation == null) 
-		{
-			throw new IllegalStateException("Class is not defined as a controller. Missing @Controller annotation.");
-		}
-
-		//scan session attributes & default view
-		List<String> sessionAttrList = Arrays.asList(controllerAnotation.sessionAttributes());				
+		try {
+			Controller controllerAnotation = controllerClass.getAnnotation(Controller.class);
+			if (controllerAnotation == null) 
+			{
+				throw new IllegalStateException("Class is not defined as a controller. Missing @Controller annotation.");
+			}
+	
+			//scan session attributes & default view
+			List<String> sessionAttrList = Arrays.asList(controllerAnotation.sessionAttributes());				
+					
+			//scan methods
+			List<Method> methods = Arrays.asList(controllerClass.getMethods());
+			List<MethodInvoker> scannedInvokers = new LinkedList<MethodInvoker>();
+			for (Method method : methods) 
+			{			
+				MappingData reqMappingData = mappingDataForNewAnot(method);
+				if (reqMappingData == null) {
+					reqMappingData = mappingDataForOldAnot(method);
+				}
 				
-		//scan methods
-		List<Method> methods = Arrays.asList(controllerClass.getMethods());
-		List<MethodInvoker> scannedInvokers = new LinkedList<MethodInvoker>();
-		for (Method method : methods) 
-		{			
-			MappingData reqMappingData = mappingDataForNewAnot(method);
-			if (reqMappingData == null) {
-				reqMappingData = mappingDataForOldAnot(method);
+				if (reqMappingData != null) 
+				{
+					reqMappingData.injector = injector;
+					reqMappingData.controllerClass = controllerClass;
+					reqMappingData.method = method;
+					MethodInvoker invoker = MethodInvokerImpl.createInvoker(reqMappingData);
+					MethodInvoker filteredInvoker = new MethodInvokerFilter(reqMappingData, invoker);
+					scannedInvokers.add(filteredInvoker);							
+				}
 			}
 			
-			if (reqMappingData != null) 
-			{
-				reqMappingData.injector = injector;
-				reqMappingData.controllerClass = controllerClass;
-				reqMappingData.method = method;
-				MethodInvoker invoker = MethodInvokerImpl.createInvoker(reqMappingData);
-				MethodInvoker filteredInvoker = new MethodInvokerFilter(reqMappingData, invoker);
-				scannedInvokers.add(filteredInvoker);							
-			}
+			return new ClassInvoker(controllerClass, scannedInvokers, sessionAttrList);
+		} catch (Exception e) {
+			throw new ScannerException(controllerClass, e);
 		}
-		
-		return new ClassInvoker(controllerClass, scannedInvokers, sessionAttrList); 
 	}
 	
 	

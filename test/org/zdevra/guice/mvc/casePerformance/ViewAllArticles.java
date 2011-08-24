@@ -16,6 +16,7 @@
  *****************************************************************************/
 package org.zdevra.guice.mvc.casePerformance;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServlet;
@@ -27,13 +28,16 @@ import org.zdevra.guice.mvc.View;
 public class ViewAllArticles implements View {
 
 	@Override
-	public void render(HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) 
-		throws Exception 
+	public void render(HttpServlet servlet, HttpServletRequest request, HttpServletResponse response)  
 	{
-		List<String> articles = (List<String>) request.getAttribute("allarticles");
-		response.getWriter().write("Articles list\n");
-		for (String article : articles) {
-			response.getWriter().write("Article:" + article + "\n");
+		try {
+			List<String> articles = (List<String>) request.getAttribute("allarticles");
+			response.getWriter().write("Articles list\n");
+			for (String article : articles) {
+				response.getWriter().write("Article:" + article + "\n");
+			}
+		} catch (IOException e) {
+			//TODO:view exception
 		}
 	}
 

@@ -31,9 +31,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.zdevra.guice.mvc.View;
+import org.zdevra.guice.mvc.exceptions.FreemarkerViewException;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import freemarker.template.TemplateException;
 
 /**
  * The view provide rendering of outptu HTML via Freemarker template
@@ -52,7 +54,6 @@ public class FreemarkerView implements View {
 	 * The constructor 
 	 */
 	public FreemarkerView(Configuration freemakerConf, String templateFileName) 
-		throws IOException 
 	{
 		this.freemarkerConf = freemakerConf;
 		this.templateName = templateFileName;
@@ -64,24 +65,29 @@ public class FreemarkerView implements View {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void render(HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) 
-			throws Exception 
 	{
-		//prepare data
-		List<String> attrNames = Collections.list(request.getAttributeNames());
-		Map<String, Object> data = new HashMap<String, Object>();
-		for (String attrName : attrNames) {
-			Object attr = request.getAttribute(attrName);
-			data.put(attrName, attr);
+		try {
+			//prepare data
+			List<String> attrNames = Collections.list(request.getAttributeNames());
+			Map<String, Object> data = new HashMap<String, Object>();
+			for (String attrName : attrNames) {
+				Object attr = request.getAttribute(attrName);
+				data.put(attrName, attr);
+			}
+			
+			Template template = freemarkerConf.getTemplate(templateName);
+			
+			//render the output
+			ByteArrayOutputStream bout = new ByteArrayOutputStream(2048);		
+			Writer out = new OutputStreamWriter(new BufferedOutputStream(bout));
+			template.process(data, out);
+			out.flush();
+			response.getWriter().write(bout.toString());
+		} catch (TemplateException e) {
+			throw new FreemarkerViewException(templateName, request, e);
+		} catch (IOException e) {
+			throw new FreemarkerViewException(templateName, request, e);
 		}
-		
-		Template template = freemarkerConf.getTemplate(templateName);
-		
-		//render the output
-		ByteArrayOutputStream bout = new ByteArrayOutputStream(2048);		
-		Writer out = new OutputStreamWriter(new BufferedOutputStream(bout));
-		template.process(data, out);
-		out.flush();
-		response.getWriter().write(bout.toString());		
 	}
 	
 // ------------------------------------------------------------------------

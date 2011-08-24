@@ -38,5 +38,5 @@ public interface ViewScanner {
 	 * 
 	 * @throws Exception
 	 */
-	public View scan(Annotation[] controllerAnotations) throws Exception;
+	public View scan(Annotation[] controllerAnotations);
 }

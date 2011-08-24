@@ -51,7 +51,7 @@ class FreemarkerScanner implements ViewScanner {
 // ------------------------------------------------------------------------
 
 	@Override
-	public View scan(Annotation[] anots) throws Exception {
+	public View scan(Annotation[] anots) {
 		ToFreemarkerView anot = Utils.getAnnotation(ToFreemarkerView.class, anots);
 		if (anot == null) {
 			return View.NULL_VIEW;

@@ -49,21 +49,20 @@ class MethodInvokerImpl implements MethodInvoker {
 /*---------------------------- constructors ----------------------------*/
 	
 	
-	public static MethodInvoker createInvoker(MappingData reqMapping) throws Exception {
-		
+	public static MethodInvoker createInvoker(MappingData reqMapping) {
 		ParamProcessorsService paramService = reqMapping.injector.getInstance(ParamProcessorsService.class);
 		ConversionService convertService = reqMapping.injector.getInstance(ConversionService.class);
 		ViewScannerService viewScannerService = reqMapping.injector.getInstance(ViewScannerService.class);
-				
+					
 		View defaultView = viewScannerService.scan(reqMapping.method.getAnnotations());
 		if (defaultView == View.NULL_VIEW) {
 			defaultView = viewScannerService.scan(reqMapping.controllerClass.getAnnotations());
 		}		
-		
+			
 		List<ParamProcessor> processors = scanParams(reqMapping.method, paramService, convertService);		
 		String resultName = reqMapping.resultName;				
 		MethodInvoker invoker = new MethodInvokerImpl(reqMapping.controllerClass, reqMapping.method, defaultView, resultName, processors);		
-		return invoker;  
+		return invoker;
 	}
 
 	

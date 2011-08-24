@@ -16,6 +16,7 @@
  *****************************************************************************/
 package org.zdevra.guice.mvc.jsilver;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
@@ -24,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.zdevra.guice.mvc.View;
+import org.zdevra.guice.mvc.exceptions.JSilverViewException;
 
 import com.google.clearsilver.jsilver.JSilver;
 import com.google.clearsilver.jsilver.data.Data;
@@ -88,21 +90,24 @@ public class JSilverView implements View {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void render(HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) 
-		throws Exception 
 	{		
-		//prepare data
-		Data data = jSilver.createData();
-		List<String> attrNames = Collections.list(request.getAttributeNames());
-		for (String attrName : attrNames) {
-			Object attr = request.getAttribute(attrName);
-			modelService.convert(attrName, attr, data);
+		try {
+			//prepare data
+			Data data = jSilver.createData();
+			List<String> attrNames = Collections.list(request.getAttributeNames());
+			for (String attrName : attrNames) {
+				Object attr = request.getAttribute(attrName);
+				modelService.convert(attrName, attr, data);
+			}
+			
+			//render view
+			StringBuffer buf = new StringBuffer();
+			jSilver.render(viewFile, data, buf);
+			response.getOutputStream().write(buf.toString().getBytes());
+			response.getOutputStream().flush();
+		} catch (IOException e) {
+			throw new JSilverViewException(viewFile, request, e);
 		}
-		
-		//render view
-		StringBuffer buf = new StringBuffer();
-		jSilver.render(viewFile, data, buf);
-		response.getOutputStream().write(buf.toString().getBytes());
-		response.getOutputStream().flush();
 	}
 	
 // ------------------------------------------------------------------------
