@@ -46,10 +46,13 @@ public abstract class VelocityModule extends MvcModule {
 	{		
 		VelocityEngine velocity = new VelocityEngine();
 		velocity.addProperty("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.FileResourceLoader");
-	    velocity.addProperty("file.resource.loader.path", getServletContext().getRealPath("/"));	    
-	    configureControllers(velocity);	    
+	    velocity.addProperty("file.resource.loader.path", getServletContext().getRealPath("/"));
+	    
+	    configureControllers(velocity);	    	    
 	    velocity.init();	    
+	    
 	    bind(VelocityEngine.class).toInstance(velocity);
+	    registerViewScanner(VelocityScanner.class);
 	}
 	
 // ------------------------------------------------------------------------

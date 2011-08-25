@@ -20,7 +20,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.zdevra.guice.mvc.exceptions.MvcException;
+import org.zdevra.guice.mvc.exceptions.NoViewException;
+import org.zdevra.guice.mvc.exceptions.NoViewForNameException;
 import org.zdevra.guice.mvc.views.JspView;
 import org.zdevra.guice.mvc.views.NamedView;
 
@@ -52,20 +53,24 @@ public class DefaultViewResolver implements ViewResolver {
 // ------------------------------------------------------------------------
 
 	@Override
-	public void resolve(View view, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {
+	public void resolve(View view, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {		
+		if (view == null || view == View.NULL_VIEW) {
+			throw new NoViewException(req);
+		}
+
 		if (view instanceof NamedView) {
 			String viewName = ((NamedView)view).getName();
 			try {
 				view = injector.getInstance(Key.get(View.class, Names.named(viewName)));
 			} catch (ConfigurationException e) {
-				view = new JspView(viewName);
-			}
-		}  else {
-			if (view == null || view == View.NULL_VIEW) {
-				throw new MvcException("Controler has invalid or non-defined view");
-			}
+				if (view == null || view == View.NULL_VIEW) {
+					throw new NoViewForNameException(viewName);
+				} else {
+					view = new JspView(viewName);
+				}
+			}			
 		}
-				
+						
 		view.render(servlet, req, resp);	
 	}
 	
