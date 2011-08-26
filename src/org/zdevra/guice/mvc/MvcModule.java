@@ -117,7 +117,7 @@ public abstract class MvcModule extends ServletModule {
 		
 		conversionService = new ConversionService();
 		controllerModuleBuilder = new ControllerModuleBuilder();		
-		exceptionResolverBuilder = new ExceptionResolverBuilder(binder());
+		exceptionResolverBuilder = new ExceptionResolverBuilder(binder(), this);
 		namedViewBudiler = new NamedViewBuilder(binder());
 		paramProcessorBuilder = new ParamProcessorBuilder(binder());
 		viewScannerBuilder = new ViewScannerBuilder(binder());
@@ -144,8 +144,7 @@ public abstract class MvcModule extends ServletModule {
 			registerParameterProc(RequestParam.Factory.class);
 			registerParameterProc(ResponseParam.Factory.class);
 			registerParameterProc(HttpSessionParam.Factory.class);
-			registerParameterProc(InjectorParam.Factory.class);
-			
+			registerParameterProc(InjectorParam.Factory.class);						
 			
 			bind(ViewScannerService.class);
 			registerViewScanner(NamedViewScanner.class);
@@ -175,6 +174,14 @@ public abstract class MvcModule extends ServletModule {
 	}
 		
 // ------------------------------------------------------------------------
+	
+	/**
+	 * This method is used only for internal purpose
+	 * @param instance
+	 */
+	final void requestInjectionEx(Object instance) {
+		this.requestInjection(instance);
+	}
 	
 	/**
 	 * Method bind to view's name some view.
@@ -263,7 +270,9 @@ public abstract class MvcModule extends ServletModule {
 	
 	public static interface ExceptionResolverBindingBuilder {
 		public void toHandler(Class<? extends ExceptionHandler> handlerClass);
-		public void toHandlerInstance(ExceptionHandler handler);	
+		public void toHandlerInstance(ExceptionHandler handler);
+		public void toErrorView(String viewName);
+		public void toErrorView(View errorView);
 	}
 	
 	

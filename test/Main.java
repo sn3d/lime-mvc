@@ -14,13 +14,7 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-import org.zdevra.guice.mvc.GET;
-
-class T {
-	
-	@GET
-	public void m() {}
-}
+import org.zdevra.guice.mvc.case4.Case4Test;
 
 /**
  * This class exists for debugging and testing
@@ -31,13 +25,9 @@ public class Main {
 
 	public static void main(String[] args) {
 		try {
-			/*
-			Case1Test t = new Case1Test();
-			t.prepare();			
-			t.testPathAnnotation();
-			t.testModelNameAnnotation();
-			*/
-			
+			Case4Test t = new Case4Test();
+			t.prepare();
+			t.testErrorView();			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Implementation of default exception handler. All unhandled  
+ * Implementation show the exception's details on web output. All unhandled  
  * exceptions are routed from {@link ExceptionResolver} to this handler.
  * 
  * @see ExceptionResolver

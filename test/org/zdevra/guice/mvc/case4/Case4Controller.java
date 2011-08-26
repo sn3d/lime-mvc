@@ -17,6 +17,7 @@
 package org.zdevra.guice.mvc.case4;
 
 import org.zdevra.guice.mvc.Controller;
+import org.zdevra.guice.mvc.Path;
 import org.zdevra.guice.mvc.RequestMapping;
 
 @Controller(toView="default")
@@ -41,5 +42,11 @@ public class Case4Controller {
 	public void throwAdvHandledException() {
 		throw new AdvancedHandledException();
 	}
+	
+	@Path("/expetion/errorview")
+	public void throwErrorViewException() {
+		throw new ExceptionForErrorPage();
+	}
+
 
 }

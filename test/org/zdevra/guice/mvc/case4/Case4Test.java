@@ -71,6 +71,13 @@ public class Case4Test extends AbstractTest {
 		String out = resp.getText();
 		Assert.assertTrue(out.contains("AdvancedHandledException->CustomException"));		
 	}
+	
+	@Test
+	public void testErrorView() throws IOException, ServletException {
+		WebResponse resp = executeSimpleUrl("http://www.test.com/test/expetion/errorview");
+		String out = resp.getText();
+		Assert.assertTrue(out.contains("viewId=errorpage"));				
+	}
 
 
 }

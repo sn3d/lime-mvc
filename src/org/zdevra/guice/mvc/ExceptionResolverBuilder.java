@@ -17,6 +17,7 @@
 package org.zdevra.guice.mvc;
 
 import org.zdevra.guice.mvc.MvcModule.ExceptionResolverBindingBuilder;
+import org.zdevra.guice.mvc.views.NamedView;
 
 import com.google.inject.Binder;
 import com.google.inject.multibindings.Multibinder;
@@ -34,14 +35,16 @@ class ExceptionResolverBuilder {
 	
 // ------------------------------------------------------------------------
 	
-	private final Multibinder<ExceptionBind> exceptionBinder; 
+	private final Multibinder<ExceptionBind> exceptionBinder;
+	private final MvcModule module;
 	private int orderIndex;
 	
 // ------------------------------------------------------------------------
 		
-	public ExceptionResolverBuilder(Binder binder) {
-		exceptionBinder = Multibinder.newSetBinder(binder, ExceptionBind.class);
-		orderIndex = 0;
+	public ExceptionResolverBuilder(Binder binder, MvcModule module) {
+		this.exceptionBinder = Multibinder.newSetBinder(binder, ExceptionBind.class);
+		this.module = module;
+		this.orderIndex = 0;
 	}
 
 // ------------------------------------------------------------------------
@@ -69,9 +72,25 @@ class ExceptionResolverBuilder {
 
 		@Override
 		public void toHandlerInstance(ExceptionHandler handler) {
+			module.requestInjectionEx(handler);
 			exceptionBinder.addBinding().toInstance(
 					ExceptionBind.toInstance(handler, exceptionClass, orderIndex));
 			orderIndex++;			
+		}
+		
+		@Override
+		public void toErrorView(String viewName) {			
+			toErrorView( NamedView.create(viewName) );
+		}
+		
+		@Override
+		public void toErrorView(View errorView) {			
+			ExceptionHandler handler = new ViewExceptionHandler( errorView );
+			module.requestInjectionEx(errorView);
+			module.requestInjectionEx(handler);
+			ExceptionBind exceptionBind = ExceptionBind.toInstance(handler, exceptionClass, orderIndex);
+			exceptionBinder.addBinding().toInstance( exceptionBind );
+			orderIndex++;
 		};	
 	}
 	

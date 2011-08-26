@@ -2,6 +2,7 @@ bin/[^.]*
 lib/[^.]*
 target/[^.]*
 docs/java-api/[^.]*
+build.properties
 *.jar
 .project
 .classpath
