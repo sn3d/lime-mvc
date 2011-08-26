@@ -43,11 +43,14 @@
  * 
  * <br>the module and view setup will be:<p>
  * <pre class="prettyprint">
- * public class MyModule extends FreemarkerModule {
- *    protected void configureControllers(Configuration freemakerConfiguration) throws Exception
+ * public class MyModule extends MvcModule {
+ *    protected void configureControllers()
  *    {
  *       control("/*").withController(MyController.class);
- *       bindViewNameToFreemarker("someview", "somehtml.ftl");
+ *       
+ *       //setup views
+ *       install( new FreemarkerModule(getServletContext()) );
+ *       bindViewName("someview").toViewInstance( new FreemarkerView("somehtml.ftl") );
  *    }
  * }
  * </pre>
