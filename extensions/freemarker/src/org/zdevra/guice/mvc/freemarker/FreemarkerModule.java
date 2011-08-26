@@ -16,9 +16,10 @@
  *****************************************************************************/
 package org.zdevra.guice.mvc.freemarker;
 
-import java.io.IOException;
+import javax.servlet.ServletContext;
 
 import org.zdevra.guice.mvc.MvcModule;
+import org.zdevra.guice.mvc.ViewModule;
 
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
@@ -32,12 +33,30 @@ import freemarker.template.DefaultObjectWrapper;
  * 
  * @see MvcModule
  */
-public abstract class FreemarkerModule extends MvcModule {
+public class FreemarkerModule extends ViewModule {
 	
 // ------------------------------------------------------------------------
 	
-	private Configuration conf; 
+	private final ServletContext context;
+	private Configuration conf;
 	
+// ------------------------------------------------------------------------
+	
+	/**
+	 * Constructor ov Freemarker module which loads templates from classpath
+	 */
+	public FreemarkerModule() {
+		this(null);
+	}
+
+	/**
+	 * Constructor ov Freemarker module which loads template files
+	 * from WAR as JSPs.
+	 */
+	public FreemarkerModule(ServletContext context) {
+		this.context = context;
+	}
+		
 // ------------------------------------------------------------------------
 	
 	/**
@@ -45,31 +64,29 @@ public abstract class FreemarkerModule extends MvcModule {
 	 *  
 	 * @param freemakerConfiguration
 	 */
-	protected abstract void configureControllers(Configuration freemakerConfiguration);
+	protected void configureFreemarker(Configuration freemakerConfiguration) {
+		if (context != null) {
+			conf.setServletContextForTemplateLoading(context, "/");
+		} else {
+			conf.setClassForTemplateLoading(FreemarkerModule.class, "/");
+		}		
+		conf.setObjectWrapper(new DefaultObjectWrapper());
+	}
 	
 // ------------------------------------------------------------------------
 	
 	@Override
-	protected final void configureControllers() {
+	protected final void configureViews() {
 		try {
 			//create freemaker's configuration
 			conf = new Configuration();
-			conf.setServletContextForTemplateLoading(getServletContext(), "/");
-			conf.setObjectWrapper(new DefaultObjectWrapper());				
-			bind(Configuration.class).toInstance(conf);		
-			
-			registerViewScanner(FreemarkerScanner.class);			
-			configureControllers(conf);
+			configureFreemarker(conf);
+			bind(Configuration.class).toInstance(conf);					
+			registerViewScanner(FreemarkerScanner.class);						
 		} finally {
 			conf = null;
 		}
 	}
 		
-// ------------------------------------------------------------------------
-	
-	protected final void bindViewNameToFreemarker(String viewName, String freemarkerFile) throws IOException {
-		bindViewName(viewName).toViewInstance( new FreemarkerView(conf, freemarkerFile) );
-	}
-
 // ------------------------------------------------------------------------	
 }

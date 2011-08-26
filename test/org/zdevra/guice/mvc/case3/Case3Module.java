@@ -31,6 +31,7 @@ public class Case3Module extends MvcModule {
 
 	@Override
 	protected void configureControllers() {
+		install(new Case3ModuleView() );
 		bindViewName("default").toViewInstance(new TestView("0"));
 		bindViewName("one").toViewInstance( new TestView("1") );
 		bindViewName("two").toViewInstance( new TestView("2") );

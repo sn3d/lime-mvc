@@ -36,14 +36,14 @@ class ExceptionResolverBuilder {
 // ------------------------------------------------------------------------
 	
 	private final Multibinder<ExceptionBind> exceptionBinder;
-	private final MvcModule module;
+	private final Binder binder;
 	private int orderIndex;
 	
 // ------------------------------------------------------------------------
 		
-	public ExceptionResolverBuilder(Binder binder, MvcModule module) {
+	public ExceptionResolverBuilder(Binder binder) {
 		this.exceptionBinder = Multibinder.newSetBinder(binder, ExceptionBind.class);
-		this.module = module;
+		this.binder = binder;
 		this.orderIndex = 0;
 	}
 
@@ -72,9 +72,9 @@ class ExceptionResolverBuilder {
 
 		@Override
 		public void toHandlerInstance(ExceptionHandler handler) {
-			module.requestInjectionEx(handler);
-			exceptionBinder.addBinding().toInstance(
-					ExceptionBind.toInstance(handler, exceptionClass, orderIndex));
+			binder.requestInjection(handler);			
+			ExceptionBind binding = ExceptionBind.toInstance(handler, exceptionClass, orderIndex);
+			exceptionBinder.addBinding().toInstance(binding);
 			orderIndex++;			
 		}
 		
@@ -86,8 +86,8 @@ class ExceptionResolverBuilder {
 		@Override
 		public void toErrorView(View errorView) {			
 			ExceptionHandler handler = new ViewExceptionHandler( errorView );
-			module.requestInjectionEx(errorView);
-			module.requestInjectionEx(handler);
+			binder.requestInjection(errorView);
+			binder.requestInjection(handler);
 			ExceptionBind exceptionBind = ExceptionBind.toInstance(handler, exceptionClass, orderIndex);
 			exceptionBinder.addBinding().toInstance( exceptionBind );
 			orderIndex++;

@@ -65,7 +65,7 @@ public class JSilverView implements View {
 	/**
 	 * Constructor used by {@link JSilverModule}
 	 */
-	JSilverView(String file) 
+	public JSilverView(String file) 
 	{	
 		this.viewFile = file;
 	}

@@ -40,16 +40,19 @@
  * 
  * <br>the module and view setup will be:<p>
  * <pre class="prettyprint">
- * public class MyModule extends VelocityModule {
- *    protected void configureControllers(VelocityEngine velocity) throws Exception
+ * public class MyModule extends MvcModule {
+ *    protected void configureControllers(VelocityEngine velocity)
  *    {
  *       control("/*").withController(MyController.class);
- *       bindViewNameToVelocity("someview", "somehtml.velocity");
+ *       
+ *       // setup views       
+ *       install(new VelocityModule(getServletContext()));
+ *       bindViewName("someview").toViewInstance(new VelocityView("somehtml.velocity"));
  *    }
  * }
  * </pre>
  * 
- * There is also another way how to use Velocity view directly in the controller.
+ * There is also another way how to use Velocity view. Directly in the controller.
  * <p>
  * 
  * <br><b>example:</b><p>

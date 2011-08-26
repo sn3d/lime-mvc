@@ -22,6 +22,15 @@ import junit.framework.Assert;
 
 import org.apache.velocity.app.VelocityEngine;
 import org.testng.annotations.Test;
+import org.zdevra.guice.mvc.DefaultViewResolver;
+import org.zdevra.guice.mvc.ViewModule;
+import org.zdevra.guice.mvc.ViewResolver;
+import org.zdevra.guice.mvc.ViewScannerService;
+import org.zdevra.guice.mvc.views.NamedView;
+
+import com.google.inject.AbstractModule;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
  
 
 @Test
@@ -45,6 +54,47 @@ public class TestVelocity {
 		
 		TestResponse resp = new TestResponse();
 		view.render(null, req, resp);				
+		String output = resp.getOutputAsStr();
+		
+		//evaluate the result
+		Assert.assertEquals("Test template val1 and val2", output);
+		System.out.println(output);
+	}
+	
+	
+	@Test
+	public void testView2() throws Exception {
+		
+		//prepare guice
+		Injector g = Guice.createInjector(new AbstractModule() {
+			@Override
+			protected void configure() {
+					
+				bind(ViewScannerService.class);
+				bind(ViewResolver.class).to(DefaultViewResolver.class);
+				
+				install(new VelocityModule());							
+				install(new ViewModule() {
+					@Override
+					protected void configureViews() {
+						bindViewName("testview").toViewInstance(new VelocityView("test.velocity"));
+					}					
+				});
+			}			
+		});
+		
+		//prepare req & resp and render the view
+		HttpServletRequest req = 
+				TestRequest.builder()
+					.setAttribute("attr1", "val1")
+					.setAttribute("attr2", "val2")
+					.build();
+		
+		TestResponse resp = new TestResponse();
+
+		//execute view resolving&rendering
+		ViewResolver vr = g.getInstance(ViewResolver.class);
+		vr.resolve(NamedView.create("testview"), null, req, resp);
 		String output = resp.getOutputAsStr();
 		
 		//evaluate the result

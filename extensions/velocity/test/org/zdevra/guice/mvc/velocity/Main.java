@@ -9,7 +9,7 @@ public class Main {
 	public static void main(String[] args) {
 		try {
 			TestVelocity t = new TestVelocity();
-			t.testView();
+			t.testView2();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

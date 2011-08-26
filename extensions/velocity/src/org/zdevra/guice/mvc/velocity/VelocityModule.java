@@ -17,55 +17,69 @@
 
 package org.zdevra.guice.mvc.velocity;
 
+import javax.servlet.ServletContext;
+
 import org.apache.velocity.app.VelocityEngine;
-import org.zdevra.guice.mvc.MvcModule;
+import org.zdevra.guice.mvc.ViewModule;
 
 /**
- * Use this Lime MVC Module if you want to use Velocity
- * template engine for rendering views.
- * 
- * The module register and bind Velocity engine
- * instance into Guice.
+ * Install this module if you want to use the Velocity as a template engine. 
+ * The module register and bind Velocity engine instance into Guice.
  * 
  * @see VelocityView
  * @see ToVelocityView
  */
-public abstract class VelocityModule extends MvcModule {
+public class VelocityModule extends ViewModule {
+	
+// ------------------------------------------------------------------------
+	
+	private final ServletContext context;
 	
 // ------------------------------------------------------------------------
 	
 	/**
-	 * You will implement this method for your MVC configuration
+	 * Constructor where template files are loaded as resources 
+	 * from classpath.
 	 */
-	protected abstract void configureControllers(VelocityEngine velocity);
+	public VelocityModule() {
+		this.context = null;
+	}
+	
+	
+	/**
+	 * Constructor for MvcModule where template files are loaded
+	 * from WAR as regular JSP-s
+	 * 
+	 * @param context
+	 */
+	public VelocityModule(ServletContext context) {
+		this.context = context;
+	}
 	
 // ------------------------------------------------------------------------
-
+	
 	@Override
-	protected final void configureControllers() 
+	protected final void configureViews() 
 	{		
-		VelocityEngine velocity = new VelocityEngine();
-		velocity.addProperty("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.FileResourceLoader");
-	    velocity.addProperty("file.resource.loader.path", getServletContext().getRealPath("/"));
-	    
-	    configureControllers(velocity);	    	    
-	    velocity.init();	    
-	    
+		VelocityEngine velocity = new VelocityEngine();	    
+		configureVelocity(velocity);	    	    	    
+		velocity.init();	    	    
 	    bind(VelocityEngine.class).toInstance(velocity);
 	    registerViewScanner(VelocityScanner.class);
 	}
-	
-// ------------------------------------------------------------------------
-	
+		
 	/**
-	 * Method creates binding between view's name and concrete velocity template
-	 * 
-	 * @param viewName
-	 * @param velocityFile
+	 * You will implement this method your velocity configuration
 	 */
-	protected final void bindViewNameToVelocity(String viewName, String velocityFile) {
-		bindViewName(viewName).toViewInstance( new VelocityView(velocityFile) );
+	protected void configureVelocity(VelocityEngine velocity) {
+		if (context != null) {
+			velocity.addProperty("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.FileResourceLoader");
+			velocity.addProperty("file.resource.loader.path", context.getRealPath("/"));
+		} else {
+			velocity.addProperty("resource.loader", "class");
+			velocity.addProperty("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+		}		
 	}
-	
+		
 // ------------------------------------------------------------------------	
 }

@@ -92,10 +92,10 @@ public abstract class MvcModule extends ServletModule {
 	
 	private ConversionService conversionService;
 	private ExceptionResolverBuilder exceptionResolverBuilder;
-	private NamedViewBuilder namedViewBudiler;
 	private ControllerModuleBuilder controllerModuleBuilder;
 	private ParamProcessorBuilder paramProcessorBuilder;
 	private ViewScannerBuilder viewScannerBuilder;
+	private NamedViewBuilder namedViewBudiler;
 
 // ------------------------------------------------------------------------
 	
@@ -117,10 +117,10 @@ public abstract class MvcModule extends ServletModule {
 		
 		conversionService = new ConversionService();
 		controllerModuleBuilder = new ControllerModuleBuilder();		
-		exceptionResolverBuilder = new ExceptionResolverBuilder(binder(), this);
-		namedViewBudiler = new NamedViewBuilder(binder());
+		exceptionResolverBuilder = new ExceptionResolverBuilder(binder());		
 		paramProcessorBuilder = new ParamProcessorBuilder(binder());
 		viewScannerBuilder = new ViewScannerBuilder(binder());
+		namedViewBudiler = new NamedViewBuilder(binder());
 		
 		try {
 			//default registrations
@@ -174,14 +174,7 @@ public abstract class MvcModule extends ServletModule {
 	}
 		
 // ------------------------------------------------------------------------
-	
-	/**
-	 * This method is used only for internal purpose
-	 * @param instance
-	 */
-	final void requestInjectionEx(Object instance) {
-		this.requestInjection(instance);
-	}
+
 	
 	/**
 	 * Method bind to view's name some view.

@@ -51,9 +51,9 @@ public class VelocityView implements View {
 // ------------------------------------------------------------------------
 
 	/**
-	 * Only {@link VelocityModule} can use this constructor 
+	 * Constructor 
 	 */
-	VelocityView(String viewFile) {
+	public VelocityView(String viewFile) {
 		this.viewFile = viewFile;
 	}
 

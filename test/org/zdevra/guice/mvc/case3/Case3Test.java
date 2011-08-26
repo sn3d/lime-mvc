@@ -34,7 +34,8 @@ import com.meterware.servletunit.ServletUnitClient;
 
 
 /**
- * This test is testing view resolver functionality
+ * This test is testing views and view resolver 
+ * functionality
  */
 @Test
 public class Case3Test extends AbstractTest {
@@ -157,5 +158,24 @@ public class Case3Test extends AbstractTest {
 		String out = response.getText();
 		Assert.assertTrue( out.contains("viewId=4") );
 	}
+	
+	
+	@Test
+	public void testView5() throws IOException, ServletException {
+		//prepare request
+		ServletUnitClient sc = sr.newClient();
+		WebRequest request   = new GetMethodWebRequest( "http://www.test.com/test/view/5" );
+		InvocationContext ic = sc.newInvocation( request );		
+		
+		//invoke request
+		Servlet ss = ic.getServlet();
+		ss.service(ic.getRequest(), ic.getResponse());			
+		WebResponse response = ic.getServletResponse();
+		
+		//process response
+		String out = response.getText();
+		Assert.assertTrue( out.contains("viewId=5") );
+	}
+
 
 }

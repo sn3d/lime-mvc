@@ -17,10 +17,12 @@
 package org.zdevra.guice.mvc.case3;
 
 import org.zdevra.guice.mvc.Controller;
+import org.zdevra.guice.mvc.Path;
 import org.zdevra.guice.mvc.RequestMapping;
 import org.zdevra.guice.mvc.TestView;
 import org.zdevra.guice.mvc.View;
 import org.zdevra.guice.mvc.views.NamedView;
+import org.zdevra.guice.mvc.views.ToView;
 
 @Controller(toView="default")
 public class Case3Controller {
@@ -55,6 +57,10 @@ public class Case3Controller {
 	@RequestMapping(path="/view/4")
 	public View viewFour() {
 		return new TestView("4");
+	}
+	
+	@Path("/view/5") @ToView("five")
+	public void viewFive() {
 	}
 
 }

@@ -16,14 +16,38 @@
  *****************************************************************************/
 package org.zdevra.guice.mvc.jsilver;
 
-import org.zdevra.guice.mvc.MvcModule;
+import javax.servlet.ServletContext;
+
+import org.zdevra.guice.mvc.ViewModule;
 
 import com.google.clearsilver.jsilver.JSilver;
+import com.google.clearsilver.jsilver.resourceloader.ClassResourceLoader;
 import com.google.inject.multibindings.Multibinder;
 
 /**
  * The module adds the JSilver template engine support
- * into Lime MVC. 
+ * into Lime MVC.
+ * 
+ * <h3>Usage</h3>
+ * When you want to use JSilver template engine for
+ * view rendering, you will install this JSilverModule
+ * in your MvcModule. After that you may use {@ link ToJSilverView}
+ * and JSilverView.
+ * 
+ * <p><br>
+ * <b>example:</b>
+ * <pre class="prettyprint">
+ * public class MyModule extends MvcModule {
+ *   protected void configureControllers(VelocityEngine velocity) {
+ *      //setup controllers
+ *      control("/*")...
+ *      ...
+ *      //setup views
+ *      install(new JSilverModule(getServletContext());
+ *      bindViewName("viewName").toViewInstance(new JSilverView("output.jsilver")); 
+ *   }
+ * }
+ * </pre> 
  * 
  * <h3>Model conversion</h3>
  * The JSilver uses his own representation of data. For
@@ -71,32 +95,52 @@ import com.google.inject.multibindings.Multibinder;
  * }
  * </pre>
  */
-public abstract class JSilverModule extends MvcModule {
+public class JSilverModule extends ViewModule {
 
 // ------------------------------------------------------------------------
 		
+	private final ServletContext context;
 	private Multibinder<ModelConverter> modelConvertors;
 	
 // ------------------------------------------------------------------------
 	
 	/**
-	 * Put your MVC configuration into this method
+	 * Constructor for JSilver which loads files from WAR
+	 */
+	public JSilverModule(ServletContext context) {
+		this.context = context;
+	}
+	
+// ------------------------------------------------------------------------
+	
+	/**
+	 * You will put your MVC configuration and convertor's registration 
+	 * into this method.
 	 * 
 	 * @param jSilver
 	 * @throws Exception
 	 */
-	protected abstract void configureControllers(JSilver jSilver);
+	protected void configureJSilver(JSilver jSilver) {
+		
+	}
 
 // ------------------------------------------------------------------------
 
 	@Override
-	protected final void configureControllers()
+	protected final void configureViews()
 	{
 		try {
-			JSilver jSilver = 
-				new JSilver( 
-					new ServletContextResourceLoader(getServletContext()) 
+			JSilver jSilver = null;
+			
+			if (context != null) {
+				jSilver = new JSilver( 
+					new ServletContextResourceLoader(context) 
 				);
+			} else {				
+				jSilver = new JSilver( 
+					new	ClassResourceLoader(JSilverModule.class) 
+				);				
+			}
 			
 			bind(JSilver.class).toInstance(jSilver);
 			bind(ModelService.class);
@@ -107,8 +151,7 @@ public abstract class JSilverModule extends MvcModule {
 			registerModelConvertor(ModelCollectionConverter.class);
 			registerModelConvertor(ModelMapConverter.class);
 			
-			configureControllers(jSilver);
-		
+			configureJSilver(jSilver);		
 		} finally {
 			modelConvertors = null;
 		}
@@ -134,16 +177,6 @@ public abstract class JSilverModule extends MvcModule {
 	 */
 	protected final void registerModelConvertor(ModelConverter modelConv) {
 		modelConvertors.addBinding().toInstance(modelConv);
-	}
-	
-	
-	/**
-	 * Method bind to view's name a concrete JSilver template.
-	 * @param viewName
-	 * @param jsilverFile
-	 */
-	protected final void bindViewNameToJSilver(String viewName, String jsilverFile) {
-		bindViewName(viewName).toViewInstance( new JSilverView(jsilverFile) );
 	}
 		
 // ------------------------------------------------------------------------

@@ -29,6 +29,7 @@ class ViewScannerBuilder {
 	
 // ------------------------------------------------------------------------
 	
+	private final Binder binder;
 	private final Multibinder<ViewScanner> scannersBinder;
 	
 // ------------------------------------------------------------------------
@@ -37,14 +38,16 @@ class ViewScannerBuilder {
 	 * Constructor
 	 */
 	public ViewScannerBuilder(Binder binder) {
-		scannersBinder = Multibinder.newSetBinder(binder, ViewScanner.class);
+		this.scannersBinder = Multibinder.newSetBinder(binder, ViewScanner.class);
+		this.binder = binder;
 	}
 			
 	public void as(Class<? extends ViewScanner> scannerClass) {
 		scannersBinder.addBinding().to(scannerClass);
 	}
 	
-	public void asInstance(ViewScanner scanner) {
+	public void asInstance(ViewScanner scanner) {		
+		binder.requestInjection(scanner);
 		scannersBinder.addBinding().toInstance(scanner);
 	}
 	

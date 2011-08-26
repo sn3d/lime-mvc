@@ -44,11 +44,14 @@
  * 
  * <br>the module and view setup will be:<p>
  * <pre class="prettyprint">
- * public class MyModule extends JSilverModule {
+ * public class MyModule extends MvcModule {
  *    protected void configureControllers(JSilver jSilver) throws Exception
  *    {
  *       control("/*").withController(MyController.class);
- *       bindViewNameToFreemarker("someview", "somehtml.jsilver");
+ *       
+ *       //setup views
+ *       install(new JSilverModule(getSerlvetContext()));
+ *       bindViewName("someview").toViewInstance(new JSilverView("somehtml.jsilver"));
  *    }
  * }
  * </pre>
