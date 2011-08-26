@@ -7,3 +7,5 @@ build.properties
 .project
 .classpath
 .settings/[^.]*
+
+bin/.empty
