@@ -23,6 +23,8 @@ import junit.framework.Assert;
 import org.apache.velocity.app.VelocityEngine;
 import org.testng.annotations.Test;
 import org.zdevra.guice.mvc.DefaultViewResolver;
+import org.zdevra.guice.mvc.TestRequest;
+import org.zdevra.guice.mvc.TestResponse;
 import org.zdevra.guice.mvc.ViewModule;
 import org.zdevra.guice.mvc.ViewResolver;
 import org.zdevra.guice.mvc.ViewScannerService;

@@ -14,7 +14,7 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-package org.zdevra.guice.mvc.velocity;
+package org.zdevra.guice.mvc;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

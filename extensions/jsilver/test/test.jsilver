@@ -1,0 +1,1 @@
+Test template <?cs var:attr1 ?> and <?cs var:attr2 ?>

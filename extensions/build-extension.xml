@@ -6,11 +6,12 @@
 	<property file="${lime-root}/build.properties"/>
 	<property file="./extension.properties"/>	
 		
-	<property name="classes"      value="${lime-root}/target/classes/${extension}" />
-	<property name="classes.test" value="${lime-root}/target/classes/${extension}-test" />
-	<property name="classes.lime" value="${lime-root}/target/classes/java" />
-	<property name="test.out"     value="${lime-root}/target/${extension}-testout" />
-	<property name="doc.out"      value="${lime-root}/target/${extension}-doc" />
+	<property name="classes"           value="${lime-root}/target/classes/${extension}" />
+	<property name="classes.test"      value="${lime-root}/target/classes/${extension}-test" />
+	<property name="classes.lime"      value="${lime-root}/target/classes/java" />
+	<property name="classes.lime.test" value="${lime-root}/target/classes/test" />
+	<property name="test.out"          value="${lime-root}/target/${extension}-testout" />
+	<property name="doc.out"           value="${lime-root}/target/${extension}-doc" />
 	
 	<property name="jar.output"     value="${lime-root}/${name.project}-${extension}.jar" />
 	<property name="jar.output.src" value="${lime-root}/${name.project}-${extension}-src.jar" />
@@ -57,6 +58,7 @@
 			<classpath>
 				<pathelement location="${classes}" />
 				<pathelement location="${classes.lime}" />
+				<pathelement location="${classes.lime.test}" />
 				<pathelement location="${classes.test}" />
 				<fileset dir="${java.lib}"><include name="*.jar"/></fileset>
 				<fileset dir="${system.lib}"><include name="*.jar"/></fileset>
@@ -77,6 +79,7 @@
 			<classpath>
 				<pathelement location="${classes}" />
 				<pathelement location="${classes.lime}" />
+				<pathelement location="${classes.lime.test}" />
 				<pathelement location="${classes.test}" />
 				<fileset dir="${java.lib}"><include name="*.jar"/></fileset>
 				<fileset dir="${system.lib}"><include name="*.jar"/></fileset>

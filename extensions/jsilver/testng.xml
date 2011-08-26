@@ -3,6 +3,7 @@
   <test name="unit-tests" >
     <classes>    
        <class name="org.zdevra.guice.mvc.jsilver.ModelTest" />
+       <class name="org.zdevra.guice.mvc.jsilver.JSilverTest" />
     </classes>
   </test>
 

@@ -21,7 +21,7 @@ import javax.servlet.ServletContext;
 import org.zdevra.guice.mvc.ViewModule;
 
 import com.google.clearsilver.jsilver.JSilver;
-import com.google.clearsilver.jsilver.resourceloader.ClassResourceLoader;
+import com.google.clearsilver.jsilver.resourceloader.ClassLoaderResourceLoader;
 import com.google.inject.multibindings.Multibinder;
 
 /**
@@ -103,6 +103,13 @@ public class JSilverModule extends ViewModule {
 	private Multibinder<ModelConverter> modelConvertors;
 	
 // ------------------------------------------------------------------------
+
+	/**
+	 * Constructor for JSilver which loads files from classpath
+	 */
+	public JSilverModule() {
+		this(null);
+	}
 	
 	/**
 	 * Constructor for JSilver which loads files from WAR
@@ -138,7 +145,7 @@ public class JSilverModule extends ViewModule {
 				);
 			} else {				
 				jSilver = new JSilver( 
-					new	ClassResourceLoader(JSilverModule.class) 
+					new	ClassLoaderResourceLoader(JSilverModule.class.getClassLoader()) 
 				);				
 			}
 			

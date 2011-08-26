@@ -1,0 +1,1 @@
+Test template ${attr1} and ${attr2}

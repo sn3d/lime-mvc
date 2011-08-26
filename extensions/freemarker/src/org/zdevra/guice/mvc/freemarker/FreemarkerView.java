@@ -33,6 +33,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.zdevra.guice.mvc.View;
 import org.zdevra.guice.mvc.exceptions.FreemarkerViewException;
 
+import com.google.inject.Inject;
+
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -45,18 +47,26 @@ public class FreemarkerView implements View {
 
 // ------------------------------------------------------------------------
 	
-	private final Configuration freemarkerConf;
-	private final String templateName;
+	@Inject private Configuration freemarkerConf;
+	private final String templateFile;
 	
 // ------------------------------------------------------------------------
+		
+	/**
+	 * Constructor 
+	 */
+	public FreemarkerView(String templateFile) {
+		this.templateFile = templateFile;
+	}
+	
 	
 	/**
 	 * The constructor 
 	 */
-	public FreemarkerView(Configuration freemakerConf, String templateFileName) 
+	public FreemarkerView(Configuration freemakerConf, String templateFile) 
 	{
 		this.freemarkerConf = freemakerConf;
-		this.templateName = templateFileName;
+		this.templateFile = templateFile;
 	}
 
 			
@@ -75,7 +85,7 @@ public class FreemarkerView implements View {
 				data.put(attrName, attr);
 			}
 			
-			Template template = freemarkerConf.getTemplate(templateName);
+			Template template = freemarkerConf.getTemplate(templateFile);
 			
 			//render the output
 			ByteArrayOutputStream bout = new ByteArrayOutputStream(2048);		
@@ -84,9 +94,9 @@ public class FreemarkerView implements View {
 			out.flush();
 			response.getWriter().write(bout.toString());
 		} catch (TemplateException e) {
-			throw new FreemarkerViewException(templateName, request, e);
+			throw new FreemarkerViewException(templateFile, request, e);
 		} catch (IOException e) {
-			throw new FreemarkerViewException(templateName, request, e);
+			throw new FreemarkerViewException(templateFile, request, e);
 		}
 	}
 	
