@@ -18,26 +18,31 @@ package org.zdevra.guice.mvc;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
+
+import javax.servlet.http.HttpServlet;
+
+import com.google.inject.Binder;
 
 
 /**
- * Class is representing data-structure used internally by Lime and
- * compose the all necessary data for controller.
+ * The class represent definition of controller in controller building process
+ * and creates the MvcDispatcherServler as well.
  * 
  * This class is mainly used by {@link MvcDispatcherServlet}
  */
-class ControllerDefinition {
+class ControllerDefinition extends ServletDefinition {
 	
 // ------------------------------------------------------------------------
 	
+	private static final Logger logger = Logger.getLogger(ControllerDefinition.class.getName());
 	private List<Class<?>> controllers;
-	private String urlPattern;
 	
 // ------------------------------------------------------------------------
 
 	
 	public ControllerDefinition(String urlPattern) {
-		this.urlPattern = urlPattern;
+		super(urlPattern);
 		this.controllers = new ArrayList<Class<?>>(10);
 	}
 	
@@ -54,9 +59,11 @@ class ControllerDefinition {
 	}
 
 	
-	public String getUrlPattern() {
-		return urlPattern;
-	}	
+	@Override
+	public HttpServlet createServlet(Binder binder) {
+		logger.info("for path '" + getUrlPattern() + "' should be registered follwing controllers: " + this.controllers);
+		return new MvcDispatcherServlet(this.controllers);
+	}
 		
 // ------------------------------------------------------------------------
 }

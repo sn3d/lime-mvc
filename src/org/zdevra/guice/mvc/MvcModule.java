@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.servlet.http.HttpServlet;
+
 import org.zdevra.guice.mvc.ConversionService.ConvertorFactory;
 import org.zdevra.guice.mvc.parameters.HttpPostParam;
 import org.zdevra.guice.mvc.parameters.HttpSessionParam;
@@ -152,17 +154,18 @@ public abstract class MvcModule extends ServletModule {
 			configureControllers();
 			
 			//register MVC controllers
-			List<ControllerDefinition> defs = controllerModuleBuilder.getControllerDefinitions();
+			List<ServletDefinition> defs = controllerModuleBuilder.getControllerDefinitions();
 			if (defs.size() == 0) {
 				logger.log(Level.WARNING, "None controller has been defined in the MVC module");
 			}
 			
-			for (ControllerDefinition def : defs) {
+			for (ServletDefinition def : defs) {
 				String pattern = def.getUrlPattern();				
-				MvcDispatcherServlet dispatcher = new MvcDispatcherServlet(def.getControllers());
-				serve(pattern).with(dispatcher);				
-				logger.info("for path '" + pattern + "' has been registered follwing controllers: " + def.getControllers());
-			}		
+				HttpServlet servlet = def.createServlet(binder());
+				requestInjection(servlet);
+				serve(pattern).with(servlet);				
+			}			
+			
 		} finally {
 			exceptionResolverBuilder = null;
 			controllerModuleBuilder = null;
@@ -248,18 +251,24 @@ public abstract class MvcModule extends ServletModule {
 	 * @param urlPattern
 	 * @return
 	 */
-	protected final ControllerBindingBuilder control(String urlPattern) 
+	protected final ControllerAndViewBindingBuilder control(String urlPattern) 
 	{
 		return this.controllerModuleBuilder.control(urlPattern);
 	}
 	
 // ------------------------------------------------------------------------	
 	
-	public static interface ControllerBindingBuilder 
-	{
+	public static interface ControllerBindingBuilder {
 		public ControllerBindingBuilder withController(Class<?> controller);
 	}
-		
+	
+	
+	public static interface ControllerAndViewBindingBuilder {
+		public ControllerBindingBuilder withController(Class<?> controller);
+		public void withView(String name);
+		public void withView(View viewInstance);
+	}		
+	
 	
 	public static interface ExceptionResolverBindingBuilder {
 		public void toHandler(Class<? extends ExceptionHandler> handlerClass);

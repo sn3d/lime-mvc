@@ -19,7 +19,9 @@ package org.zdevra.guice.mvc;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.zdevra.guice.mvc.MvcModule.ControllerAndViewBindingBuilder;
 import org.zdevra.guice.mvc.MvcModule.ControllerBindingBuilder;
+import org.zdevra.guice.mvc.views.NamedView;
 
 
 
@@ -32,40 +34,60 @@ import org.zdevra.guice.mvc.MvcModule.ControllerBindingBuilder;
 class ControllerModuleBuilder  {
 	
 // ------------------------------------------------------------------------
-		
-	private ControllerDefinition actualDefinition = null;
-	private List<ControllerDefinition> controllerDefinitions = new LinkedList<ControllerDefinition>();
+	
+	private String actualUrlPattern;
+	private ControllerDefinition actualControllerDefinition = null;
+	private List<ServletDefinition> servletDefinitions = new LinkedList<ServletDefinition>();
 	
 // ------------------------------------------------------------------------
 	
-	private class ControllerBindingBuilderImpl implements ControllerBindingBuilder {
-		
-		
+	private class ControllerBindingBuilderImpl implements ControllerBindingBuilder {				
 		@Override
-		public final ControllerBindingBuilder withController(Class<?> controller) {
-			actualDefinition.addController(controller);
+		public final ControllerBindingBuilder withController(Class<?> controller) {			
+			actualControllerDefinition.addController(controller);
 			return this;
 		}					
 	}
 	
-	
-// ------------------------------------------------------------------------
-		
-	public final ControllerBindingBuilder control(String urlPattern) {
-		if (actualDefinition != null) {
-			controllerDefinitions.add(actualDefinition);
+	private class ControllerAndViewBindingBuilderImpl implements ControllerAndViewBindingBuilder {
+
+		@Override
+		public ControllerBindingBuilder withController(Class<?> controller) {
+			if (actualControllerDefinition != null) {
+				servletDefinitions.add(actualControllerDefinition);
+			}
+			actualControllerDefinition = new ControllerDefinition(actualUrlPattern);
+			return new ControllerBindingBuilderImpl();
+		}
+
+		@Override
+		public void withView(String name) {
+			ServletDefinition def = new DirectViewDefinition(actualUrlPattern, NamedView.create(name));
+			servletDefinitions.add(def);
+		}
+
+		@Override
+		public void withView(View viewInstance) {
+			ServletDefinition def = new DirectViewDefinition(actualUrlPattern, viewInstance);
+			servletDefinitions.add(def);			
 		}
 		
-		actualDefinition = new ControllerDefinition(urlPattern);
-		return new ControllerBindingBuilderImpl();
 	}
 	
 	
-	public List<ControllerDefinition> getControllerDefinitions() {
-		if (actualDefinition != null) {
-			controllerDefinitions.add(actualDefinition);
+// ------------------------------------------------------------------------
+		
+	public final ControllerAndViewBindingBuilder control(String urlPattern) {
+		actualUrlPattern = urlPattern;
+		return new ControllerAndViewBindingBuilderImpl();
+	}
+	
+	
+	public List<ServletDefinition> getControllerDefinitions() {
+		if (actualControllerDefinition != null) {
+			servletDefinitions.add(actualControllerDefinition);
 		}
-		return controllerDefinitions;
+		return servletDefinitions;
 	}
 	
 // ------------------------------------------------------------------------
