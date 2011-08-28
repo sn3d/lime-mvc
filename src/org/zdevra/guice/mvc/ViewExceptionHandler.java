@@ -1,5 +1,8 @@
 package org.zdevra.guice.mvc;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +16,7 @@ class ViewExceptionHandler implements ExceptionHandler {
 	
 // ------------------------------------------------------------------------
 	
+	private static final Logger logger = Logger.getLogger(ViewExceptionHandler.class.getName());
 	private final View errorView;
 	@Inject private ViewResolver viewResolver;
 	
@@ -27,6 +31,7 @@ class ViewExceptionHandler implements ExceptionHandler {
 	@Override
 	public void handleException(Throwable t, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) 
 	{
+		logger.log(Level.SEVERE, "Exception caught (" + t.getClass().getName() + ")" , t);
 		viewResolver.resolve(errorView, servlet, req, resp);
 	}
 
