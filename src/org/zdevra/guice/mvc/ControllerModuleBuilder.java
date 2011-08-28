@@ -57,6 +57,7 @@ class ControllerModuleBuilder  {
 				servletDefinitions.add(actualControllerDefinition);
 			}
 			actualControllerDefinition = new ControllerDefinition(actualUrlPattern);
+			actualControllerDefinition.addController(controller);
 			return new ControllerBindingBuilderImpl();
 		}
 
