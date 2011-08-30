@@ -14,7 +14,7 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-import org.zdevra.guice.mvc.case1.Case1Test;
+import org.zdevra.guice.mvc.case7.TestCase7;
 
 /**
  * This class exists for debugging and testing
@@ -24,12 +24,9 @@ import org.zdevra.guice.mvc.case1.Case1Test;
 public class Main {
 
 	public static void main(String[] args) {
-		try {
-			
-			Case1Test t = new Case1Test();
-			t.prepare();
-			t.testFromSession();
-			
+		try {			
+			TestCase7 t = new TestCase7();			
+			t.testBasic();			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

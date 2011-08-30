@@ -17,6 +17,7 @@
 package org.zdevra.guice.mvc;
 
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -98,6 +99,7 @@ public abstract class MvcModule extends ServletModule {
 	private ParamProcessorBuilder paramProcessorBuilder;
 	private ViewScannerBuilder viewScannerBuilder;
 	private NamedViewBuilder namedViewBudiler;
+	private List<HttpServlet> servlets;
 
 // ------------------------------------------------------------------------
 	
@@ -122,7 +124,8 @@ public abstract class MvcModule extends ServletModule {
 		exceptionResolverBuilder = new ExceptionResolverBuilder(binder());		
 		paramProcessorBuilder = new ParamProcessorBuilder(binder());
 		viewScannerBuilder = new ViewScannerBuilder(binder());
-		namedViewBudiler = new NamedViewBuilder(binder());
+		namedViewBudiler = new NamedViewBuilder(binder());		
+		servlets = new LinkedList<HttpServlet>();
 		
 		try {
 			//default registrations
@@ -163,7 +166,8 @@ public abstract class MvcModule extends ServletModule {
 				String pattern = def.getUrlPattern();				
 				HttpServlet servlet = def.createServlet(binder());
 				requestInjection(servlet);
-				serve(pattern).with(servlet);				
+				serve(pattern).with(servlet);
+				servlets.add(servlet);
 			}			
 			
 		} finally {
@@ -177,6 +181,13 @@ public abstract class MvcModule extends ServletModule {
 	}
 		
 // ------------------------------------------------------------------------
+	
+	/**
+	 * This method can be used only for testing purpose
+	 */
+	public final List<HttpServlet> getServlets() {
+		return this.servlets;
+	}
 
 	
 	/**

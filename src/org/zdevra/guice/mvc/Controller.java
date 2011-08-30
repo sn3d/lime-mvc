@@ -49,5 +49,5 @@ import java.lang.annotation.RetentionPolicy;
 public @interface Controller {
 	public String[] sessionAttributes() default {};
 	public String toView() default "";
-	
+	public String path() default "";	
 }
