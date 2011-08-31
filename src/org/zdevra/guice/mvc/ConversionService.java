@@ -17,19 +17,12 @@
 package org.zdevra.guice.mvc;
 
 import java.lang.annotation.Annotation;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Collection;
+import java.util.Set;
 
-import org.zdevra.guice.mvc.convertors.BooleanConvertor;
-import org.zdevra.guice.mvc.convertors.DateConvertor;
 import org.zdevra.guice.mvc.convertors.DefaultConvertor;
-import org.zdevra.guice.mvc.convertors.DoubleConvertor;
-import org.zdevra.guice.mvc.convertors.FloatConvertor;
-import org.zdevra.guice.mvc.convertors.IntegerConvertor;
-import org.zdevra.guice.mvc.convertors.LongConvertor;
-import org.zdevra.guice.mvc.convertors.StringConvertor;
 
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 /**
@@ -63,8 +56,8 @@ import com.google.inject.Singleton;
 public class ConversionService {
 /*---------------------------- m. variables ----------------------------*/
 
-	private Map<Class<?>, ConvertorFactory> regiConvertorFactories;
-	private ConvertorFactory defaultConvertor;
+	private final Collection<ConvertorFactory> factories;
+	private ConvertorFactory defaultConvertorFactory;
 	
 /*----------------------------------------------------------------------*/
 	
@@ -90,34 +83,14 @@ public class ConversionService {
 	/**
 	 * Constructor
 	 */
-	public ConversionService() {
-		this.regiConvertorFactories = new HashMap<Class<?>, ConversionService.ConvertorFactory>();
-		this.defaultConvertor = new DefaultConvertor.Factory();
-		
-		//registration of the basic convertors
-		registerConvertor(boolean.class, new BooleanConvertor.Factory());
-		registerConvertor(Boolean.class, new BooleanConvertor.Factory());		
-		registerConvertor(int.class, new IntegerConvertor.Factory());
-		registerConvertor(Integer.class, new IntegerConvertor.Factory());
-		registerConvertor(Long.class, new LongConvertor.Factory());
-		registerConvertor(long.class, new LongConvertor.Factory());
-		registerConvertor(Float.class, new FloatConvertor.Factory());
-		registerConvertor(float.class, new FloatConvertor.Factory());
-		registerConvertor(Double.class, new DoubleConvertor.Factory());
-		registerConvertor(double.class, new DoubleConvertor.Factory());
-		registerConvertor(String.class, new StringConvertor.Factory());
-		registerConvertor(Date.class, new DateConvertor.Factory());
+	@Inject
+	public ConversionService(Set<ConvertorFactory> factories) {
+		this.defaultConvertorFactory = new DefaultConvertor.Factory();
+		this.factories = factories;
 	}
 	
 /*------------------------------- methods ------------------------------*/
-		
-	/**
-	 * Method register a convertor
-	 */
-	public void registerConvertor(Class<?> type, ConvertorFactory factoryToRegister) {
-		regiConvertorFactories.put(type, factoryToRegister);
-	}
-	
+			
 	
 	/**
 	 * Method convert string value to object.
@@ -155,14 +128,14 @@ public class ConversionService {
 	 */
 	public Convertor getConvertor(Class<?> type, Annotation[] annotations) 
 	{
-		//get convertor
-		ConvertorFactory factory = regiConvertorFactories.get(type);
-		if (factory == null) {
-			factory = defaultConvertor;
+		for (ConvertorFactory factory : factories) {
+			Convertor convertor = factory.createConvertor(type, annotations);
+			if (convertor != null) {
+				return convertor;
+			}
 		}
 		
-		Convertor convertor = factory.createConvertor(type, annotations);
-		return convertor;
+		return defaultConvertorFactory.createConvertor(type, annotations);
 	}
 
 

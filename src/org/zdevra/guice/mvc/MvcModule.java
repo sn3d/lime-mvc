@@ -25,6 +25,12 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServlet;
 
 import org.zdevra.guice.mvc.ConversionService.ConvertorFactory;
+import org.zdevra.guice.mvc.convertors.BooleanConvertor;
+import org.zdevra.guice.mvc.convertors.DateConvertor;
+import org.zdevra.guice.mvc.convertors.DoubleConvertor;
+import org.zdevra.guice.mvc.convertors.FloatConvertor;
+import org.zdevra.guice.mvc.convertors.LongConvertor;
+import org.zdevra.guice.mvc.convertors.StringConvertor;
 import org.zdevra.guice.mvc.parameters.HttpPostParam;
 import org.zdevra.guice.mvc.parameters.HttpSessionParam;
 import org.zdevra.guice.mvc.parameters.InjectorParam;
@@ -93,7 +99,7 @@ public abstract class MvcModule extends ServletModule {
 		
 	private static final Logger logger = Logger.getLogger(MvcModule.class.getName());
 	
-	private ConversionService conversionService;
+	private ConversionServiceBuilder conversionServiceBuilder;
 	private ExceptionResolverBuilder exceptionResolverBuilder;
 	private ControllerModuleBuilder controllerModuleBuilder;
 	private ParamProcessorBuilder paramProcessorBuilder;
@@ -119,7 +125,7 @@ public abstract class MvcModule extends ServletModule {
 			throw new IllegalStateException("Re-entry is not allowed.");
 		}
 		
-		conversionService = new ConversionService();
+		conversionServiceBuilder = new ConversionServiceBuilder(binder());
 		controllerModuleBuilder = new ControllerModuleBuilder();		
 		exceptionResolverBuilder = new ExceptionResolverBuilder(binder());		
 		paramProcessorBuilder = new ParamProcessorBuilder(binder());
@@ -138,8 +144,16 @@ public abstract class MvcModule extends ServletModule {
 				.annotatedWith(Names.named(ExceptionResolver.DEFAULT_EXCEPTIONHANDLER_NAME))
 				.to(DefaultExceptionHandler.class);
 			
-			bind(ConversionService.class)
-				.toInstance(conversionService);
+			bind(ConversionService.class).asEagerSingleton();
+			registerConvertor(BooleanConvertor.Factory.class);
+			registerConvertor(DateConvertor.Factory.class);
+			registerConvertor(DoubleConvertor.Factory.class);
+			registerConvertor(LongConvertor.Factory.class);
+			registerConvertor(FloatConvertor.Factory.class);
+			registerConvertor(LongConvertor.Factory.class);
+			registerConvertor(StringConvertor.Factory.class);
+			
+			
 			
 			bind(ParamProcessorsService.class);
 			registerParameterProc(HttpPostParam.Factory.class);			
@@ -176,7 +190,7 @@ public abstract class MvcModule extends ServletModule {
 			viewScannerBuilder = null;
 			paramProcessorBuilder = null;
 			namedViewBudiler = null;
-			conversionService = null;			
+			conversionServiceBuilder = null;
 		}
 	}
 		
@@ -205,8 +219,20 @@ public abstract class MvcModule extends ServletModule {
 	 * 
 	 * The all predefined default convertors are placed in the 'convertors' sub-package.  
 	 */
-	protected final void registerConvertor(Class<?> type, ConvertorFactory convertorFactory) {
-		this.conversionService.registerConvertor(type, convertorFactory);
+	protected final void registerConvertor(ConvertorFactory convertorFactory) {
+		this.conversionServiceBuilder.registerConvertor(convertorFactory);
+	}
+	
+	
+	/**
+	 * The method registers a custom convertor which converts strings to the
+	 * concrete types. These convertors are used for conversions from a HTTP request 
+	 * to the method's parameters.
+	 * 
+	 * The all predefined default convertors are placed in the 'convertors' sub-package.  
+	 */
+	protected final void registerConvertor(Class<? extends ConvertorFactory> convertorFactoryClazz) {
+		this.conversionServiceBuilder.registerConvertor(convertorFactoryClazz);
 	}
 	
 		
