@@ -47,6 +47,10 @@ public final class BooleanConvertor extends ArrayConvertor<Boolean> implements C
 	public static class Factory implements ConvertorFactory {
 
 		public Convertor createConvertor(Class<?> type, Annotation[] annotations) {
+			if ((type != boolean.class) && (type != Boolean.class)) {
+				return null;
+			}
+			
 			BooleanConv ba = Utils.getAnnotation(BooleanConv.class, annotations); 
 			return new BooleanConvertor(ba, type);
 		}		

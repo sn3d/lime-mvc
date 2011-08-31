@@ -81,6 +81,10 @@ public class DateConvertor extends ArrayConvertor<Date> implements Convertor {
 	public static class Factory implements ConvertorFactory {
 		@Override
 		public Convertor createConvertor(Class<?> type, Annotation[] annotations) {
+			if (type != Date.class) {
+				return null;
+			}
+			
 			DateConv da = Utils.getAnnotation(DateConv.class, annotations);
 			DateFormat df = new SimpleDateFormat(da.value());
 			

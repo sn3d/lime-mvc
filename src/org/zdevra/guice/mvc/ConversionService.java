@@ -120,25 +120,6 @@ public class ConversionService {
 	
 	
 	/**
-	 * Method return right convertor for type
-	 * 
-	 * @param type
-	 * @return
-	 */
-	public Convertor getConvertor(Class<?> type, Annotation[] annotations) 
-	{
-		//get convertor
-		ConvertorFactory factory = regiConvertorFactories.get(type);
-		if (factory == null) {
-			factory = defaultConvertor;
-		}
-		
-		Convertor convertor = factory.createConvertor(type, annotations);
-		return convertor;
-	}
-	
-	
-	/**
 	 * Method convert string value to object.
 	 */
 	public Object convert(Class<?> type, Annotation[] annotations, String stringValue) 
@@ -163,6 +144,25 @@ public class ConversionService {
 		Object convertedVal = convertor.convert(stringValue);
 		
 		return convertedVal;		
+	}
+	
+	
+	/**
+	 * Method return right convertor for type
+	 * 
+	 * @param type
+	 * @return
+	 */
+	public Convertor getConvertor(Class<?> type, Annotation[] annotations) 
+	{
+		//get convertor
+		ConvertorFactory factory = regiConvertorFactories.get(type);
+		if (factory == null) {
+			factory = defaultConvertor;
+		}
+		
+		Convertor convertor = factory.createConvertor(type, annotations);
+		return convertor;
 	}
 
 

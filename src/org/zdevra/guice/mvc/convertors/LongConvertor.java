@@ -54,7 +54,7 @@ public class LongConvertor extends ArrayConvertor<Long> implements Convertor {
 			} else if (type == Long.class) {
 				return longObjConvertor;
 			} else {
-				throw new IllegalStateException("the type is not a long type");
+				return null;
 			}
 		}
 	

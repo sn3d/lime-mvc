@@ -53,7 +53,7 @@ public class FloatConvertor extends ArrayConvertor<Float> implements Convertor {
 			} else if (type == long.class) {
 				return floatConvertor;
 			} else {
-				throw new IllegalStateException("the type is not a float type");
+				return null;
 			}			
 		}
 	}

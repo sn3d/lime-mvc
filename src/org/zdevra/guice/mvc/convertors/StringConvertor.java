@@ -37,10 +37,13 @@ public class StringConvertor implements Convertor {
 
 		@Override
 		public Convertor createConvertor(Class<?> type, Annotation[] annotations) {
-			if (stringConvertor == null) {
-				stringConvertor = new StringConvertor();
-			}
-			return stringConvertor;
+			if (type != String.class) {
+				if (stringConvertor == null) {
+					stringConvertor = new StringConvertor();
+				}
+				return stringConvertor;
+			} 
+			return null;
 		}
 		
 	}

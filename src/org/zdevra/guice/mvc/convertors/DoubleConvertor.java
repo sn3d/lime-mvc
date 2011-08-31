@@ -53,7 +53,7 @@ public class DoubleConvertor extends ArrayConvertor<Double> implements Convertor
 			} else if (type == Double.class) {
 				return doubleObjConvertor;
 			} else {
-				throw new IllegalStateException("the type is not a double type");
+				return null;
 			}
 		}		
 	}

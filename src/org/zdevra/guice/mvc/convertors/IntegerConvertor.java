@@ -54,7 +54,7 @@ public class IntegerConvertor extends ArrayConvertor<Integer> implements Convert
 			} else if (type == int.class) {
 				return intConvertor;
 			} else {
-				throw new IllegalStateException("the type is not int or integer");
+				return null;
 			}
 						
 		}
