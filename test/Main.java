@@ -14,7 +14,7 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-import org.zdevra.guice.mvc.case7.TestCase7;
+import org.zdevra.guice.mvc.ConversionServiceTest;
 
 /**
  * This class exists for debugging and testing
@@ -25,8 +25,19 @@ public class Main {
 
 	public static void main(String[] args) {
 		try {			
-			TestCase7 t = new TestCase7();			
-			t.testBasic();			
+			ConversionServiceTest t = new ConversionServiceTest();
+			t.init();
+			t.testBoolean();	
+			t.testDate();
+			t.testDouble();
+			t.testFloat();
+			t.testInteger();
+			t.testIntArray();
+			t.testInteger();
+			t.testLong();
+			t.testObject();
+			t.testString();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.Set;
 
 import org.zdevra.guice.mvc.convertors.DefaultConvertor;
+import org.zdevra.guice.mvc.exceptions.NoConverterException;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -57,7 +58,6 @@ public class ConversionService {
 /*---------------------------- m. variables ----------------------------*/
 
 	private final Collection<ConvertorFactory> factories;
-	private ConvertorFactory defaultConvertorFactory;
 	
 /*----------------------------------------------------------------------*/
 	
@@ -85,7 +85,6 @@ public class ConversionService {
 	 */
 	@Inject
 	public ConversionService(Set<ConvertorFactory> factories) {
-		this.defaultConvertorFactory = new DefaultConvertor.Factory();
 		this.factories = factories;
 	}
 	
@@ -135,7 +134,7 @@ public class ConversionService {
 			}
 		}
 		
-		return defaultConvertorFactory.createConvertor(type, annotations);
+		throw new NoConverterException(type);
 	}
 
 

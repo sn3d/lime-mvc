@@ -21,13 +21,24 @@ import java.lang.reflect.Method;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import junit.framework.Assert;
 
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import org.zdevra.guice.mvc.ConversionService.ConvertorFactory;
 import org.zdevra.guice.mvc.convertors.BooleanConv;
+import org.zdevra.guice.mvc.convertors.BooleanConvertor;
 import org.zdevra.guice.mvc.convertors.DateConv;
+import org.zdevra.guice.mvc.convertors.DateConvertor;
+import org.zdevra.guice.mvc.convertors.DoubleConvertor;
+import org.zdevra.guice.mvc.convertors.FloatConvertor;
+import org.zdevra.guice.mvc.convertors.IntegerConvertor;
+import org.zdevra.guice.mvc.convertors.LongConvertor;
+import org.zdevra.guice.mvc.convertors.StringConvertor;
+import org.zdevra.guice.mvc.exceptions.NoConverterException;
 
 @Test
 public class ConversionServiceTest {
@@ -68,7 +79,15 @@ public class ConversionServiceTest {
 	
 	@BeforeTest
 	public void init() {	
-		conversion = new ConversionService();		
+		Set<ConvertorFactory> converters = new HashSet<ConvertorFactory>();
+		converters.add(new DateConvertor.Factory());
+		converters.add(new BooleanConvertor.Factory());
+		converters.add(new DoubleConvertor.Factory());
+		converters.add(new LongConvertor.Factory());
+		converters.add(new FloatConvertor.Factory());
+		converters.add(new IntegerConvertor.Factory());
+		converters.add(new StringConvertor.Factory());
+		conversion = new ConversionService(converters);		
 	}
 	
 	
@@ -101,11 +120,14 @@ public class ConversionServiceTest {
 	
 	@Test
 	public void testObject() {
-		Object val = conversion.convert(SomeObject.class, null, "value");
-		
-		Assert.assertTrue(val instanceof SomeObject);		
-		SomeObject obj = (SomeObject)val; 
-		Assert.assertTrue( "value".equalsIgnoreCase(obj.val) );
+		try {
+			Object val = conversion.convert(SomeObject.class, null, "value");
+			Assert.assertFalse("For unknown object the NoConverter exception have to be caught", true);
+		} catch (NoConverterException e) {
+			//OK
+		} catch (Exception e) {
+			Assert.assertFalse("For unknown object the NoConverter exception have to be caught", true);
+		}
 	}
 	
 	

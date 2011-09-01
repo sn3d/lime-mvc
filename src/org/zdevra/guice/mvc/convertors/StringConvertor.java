@@ -37,7 +37,7 @@ public class StringConvertor implements Convertor {
 
 		@Override
 		public Convertor createConvertor(Class<?> type, Annotation[] annotations) {
-			if (type != String.class) {
+			if (type == String.class) {
 				if (stringConvertor == null) {
 					stringConvertor = new StringConvertor();
 				}
