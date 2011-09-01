@@ -14,7 +14,7 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-package org.zdevra.guice.mvc.convertors;
+package org.zdevra.guice.mvc.converters;
 
 import java.lang.annotation.Annotation;
 import java.text.DateFormat;
@@ -22,9 +22,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.zdevra.guice.mvc.ConversionService.Converter;
+import org.zdevra.guice.mvc.ConversionService.ConverterFactory;
 import org.zdevra.guice.mvc.Utils;
-import org.zdevra.guice.mvc.ConversionService.Convertor;
-import org.zdevra.guice.mvc.ConversionService.ConvertorFactory;
 import org.zdevra.guice.mvc.exceptions.IllegalConversionException;
 
 /**
@@ -65,7 +65,7 @@ import org.zdevra.guice.mvc.exceptions.IllegalConversionException;
  * </pre>
  *
  */
-public class DateConvertor extends ArrayConvertor<Date> implements Convertor {
+public class DateConverter extends ArrayConverter<Date> implements Converter {
 	
 /*---------------------------- m. variables ----------------------------*/
 		
@@ -76,11 +76,11 @@ public class DateConvertor extends ArrayConvertor<Date> implements Convertor {
 	
 	
 	/**
-	 * Factory for {@link DateConvertor}
+	 * Factory for {@link DateConverter}
 	 */
-	public static class Factory implements ConvertorFactory {
+	public static class Factory implements ConverterFactory {
 		@Override
-		public Convertor createConvertor(Class<?> type, Annotation[] annotations) {
+		public Converter createConvertor(Class<?> type, Annotation[] annotations) {
 			if (type != Date.class) {
 				return null;
 			}
@@ -89,20 +89,20 @@ public class DateConvertor extends ArrayConvertor<Date> implements Convertor {
 			DateFormat df = new SimpleDateFormat(da.value());
 			
 			try {
-				return new DateConvertor(df, df.parse(da.defaultValue()));
+				return new DateConverter(df, df.parse(da.defaultValue()));
 			} catch (ParseException e) {
-				return new DateConvertor(df);
+				return new DateConverter(df);
 			}				
 		}				
 	}
 
 	
-	private DateConvertor(DateFormat dateFormater) {
+	private DateConverter(DateFormat dateFormater) {
 		this(dateFormater, null);
 	}
 
 	
-	private DateConvertor(DateFormat dateFormater, Date defaultDate) {
+	private DateConverter(DateFormat dateFormater, Date defaultDate) {
 		this.dateFormat = dateFormater;
 		this.defaultDate = defaultDate; 
 	}

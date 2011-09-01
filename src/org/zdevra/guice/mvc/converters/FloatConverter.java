@@ -14,18 +14,18 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-package org.zdevra.guice.mvc.convertors;
+package org.zdevra.guice.mvc.converters;
 
 import java.lang.annotation.Annotation;
 
-import org.zdevra.guice.mvc.ConversionService.Convertor;
-import org.zdevra.guice.mvc.ConversionService.ConvertorFactory;
+import org.zdevra.guice.mvc.ConversionService.Converter;
+import org.zdevra.guice.mvc.ConversionService.ConverterFactory;
 import org.zdevra.guice.mvc.exceptions.IllegalConversionException;
 
 /**
  * The class is converting a string value to the float number.
  */
-public class FloatConvertor extends ArrayConvertor<Float> implements Convertor {
+public class FloatConverter extends ArrayConverter<Float> implements Converter {
 	
 /*---------------------------- m. variables ----------------------------*/
 	
@@ -34,24 +34,24 @@ public class FloatConvertor extends ArrayConvertor<Float> implements Convertor {
 /*---------------------------- constructors ----------------------------*/
 	
 	/**
-	 * Factory for {@link FloatConvertor}
+	 * Factory for {@link FloatConverter}
 	 */
-	public static class Factory implements ConvertorFactory {
+	public static class Factory implements ConverterFactory {
 		
-		private final Convertor floatConvertor;
-		private final Convertor floatObjConvertor;
+		private final Converter floatConverter;
+		private final Converter floatObjConverter;
 		
 		public Factory() {
-			this.floatConvertor = new FloatConvertor(float.class);
-			this.floatObjConvertor = new FloatConvertor(Float.class);
+			this.floatConverter = new FloatConverter(float.class);
+			this.floatObjConverter = new FloatConverter(Float.class);
 		}
 
 		@Override
-		public Convertor createConvertor(Class<?> type, Annotation[] annotations) {
+		public Converter createConvertor(Class<?> type, Annotation[] annotations) {
 			if (type == Float.class) {
-				return floatObjConvertor;
+				return floatObjConverter;
 			} else if (type == long.class) {
-				return floatConvertor;
+				return floatConverter;
 			} else {
 				return null;
 			}			
@@ -62,7 +62,7 @@ public class FloatConvertor extends ArrayConvertor<Float> implements Convertor {
 	/**
 	 * private constructor
 	 */
-	private FloatConvertor(Class<?> type) {
+	private FloatConverter(Class<?> type) {
 		this.type = type;
 	}
 	

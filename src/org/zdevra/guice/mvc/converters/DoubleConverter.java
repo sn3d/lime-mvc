@@ -14,18 +14,18 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-package org.zdevra.guice.mvc.convertors;
+package org.zdevra.guice.mvc.converters;
 
 import java.lang.annotation.Annotation;
 
-import org.zdevra.guice.mvc.ConversionService.Convertor;
-import org.zdevra.guice.mvc.ConversionService.ConvertorFactory;
+import org.zdevra.guice.mvc.ConversionService.Converter;
+import org.zdevra.guice.mvc.ConversionService.ConverterFactory;
 import org.zdevra.guice.mvc.exceptions.IllegalConversionException;
 
 /**
  * The class converts a string value to the double number.
  */
-public class DoubleConvertor extends ArrayConvertor<Double> implements Convertor {
+public class DoubleConverter extends ArrayConverter<Double> implements Converter {
 	
 /*---------------------------- m. variables ----------------------------*/
 	
@@ -34,24 +34,24 @@ public class DoubleConvertor extends ArrayConvertor<Double> implements Convertor
 /*---------------------------- constructors ----------------------------*/
 	
 	/**
-	 * Factory class for {@link DoubleConvertor}
+	 * Factory class for {@link DoubleConverter}
 	 */
-	public static class Factory implements ConvertorFactory {
+	public static class Factory implements ConverterFactory {
 		
-		private final Convertor doubleConvertor;
-		private final Convertor doubleObjConvertor;
+		private final Converter doubleConverter;
+		private final Converter doubleObjConverter;
 		
 		public Factory() {
-			this.doubleConvertor = new DoubleConvertor(double.class);
-			this.doubleObjConvertor = new DoubleConvertor(Double.class);
+			this.doubleConverter = new DoubleConverter(double.class);
+			this.doubleObjConverter = new DoubleConverter(Double.class);
 		}
 
 		@Override
-		public Convertor createConvertor(Class<?> type, Annotation[] annotations) {
+		public Converter createConvertor(Class<?> type, Annotation[] annotations) {
 			if (type == double.class) {
-				return doubleConvertor;
+				return doubleConverter;
 			} else if (type == Double.class) {
-				return doubleObjConvertor;
+				return doubleObjConverter;
 			} else {
 				return null;
 			}
@@ -62,7 +62,7 @@ public class DoubleConvertor extends ArrayConvertor<Double> implements Convertor
 	/**
 	 * The hidden private constructor. The object is constructed throught the factory object 
 	 */
-	private DoubleConvertor(Class<?> type) {
+	private DoubleConverter(Class<?> type) {
 		this.type = type;
 	}
 

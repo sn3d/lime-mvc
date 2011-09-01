@@ -14,26 +14,23 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-package org.zdevra.guice.mvc.convertors;
+package org.zdevra.guice.mvc.converters;
 
-import java.lang.reflect.Array;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-import org.zdevra.guice.mvc.ConversionService.Convertor;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 
 /**
- * Class provide conversion to arrays.
+ * The annontation tells to the convertor how to convert a string value to the date.
+ * See the {@link DateConverter} class if you are insteresting how to use this annotation.
  * 
- * @param <T>
+ * @see DateConverter
  */
-public class ArrayConvertor<T> {
-	
-	protected Object convertArray(String[] stringArray, Convertor conv, Class<?> clazz) {
-		Object x = Array.newInstance(clazz, stringArray.length);		
-		for (int i = 0; i < stringArray.length; ++i) {
-			Object val = conv.convert(stringArray[i]);
-			Array.set(x, i, val);
-		}
-		return x;
-	}
-
+@Retention(RUNTIME)
+@Target({ ElementType.FIELD, ElementType.PARAMETER })
+public @interface DateConv {
+	public String value() default "YYYYMMDD";
+	public String defaultValue() default "";
 }

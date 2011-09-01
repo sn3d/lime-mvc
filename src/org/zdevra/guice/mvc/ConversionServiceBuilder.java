@@ -1,6 +1,6 @@
 package org.zdevra.guice.mvc;
 
-import org.zdevra.guice.mvc.ConversionService.ConvertorFactory;
+import org.zdevra.guice.mvc.ConversionService.ConverterFactory;
 
 import com.google.inject.Binder;
 import com.google.inject.multibindings.Multibinder;
@@ -8,7 +8,7 @@ import com.google.inject.multibindings.Multibinder;
 public class ConversionServiceBuilder {
 // ------------------------------------------------------------------------
 	
-	private final Multibinder<ConvertorFactory> convertorsBinder;
+	private final Multibinder<ConverterFactory> convertorsBinder;
 		
 // ------------------------------------------------------------------------
 	
@@ -16,16 +16,16 @@ public class ConversionServiceBuilder {
 	 * Constructor
 	 */
 	public ConversionServiceBuilder(Binder binder) {
-		this.convertorsBinder = Multibinder.newSetBinder(binder, ConvertorFactory.class);
+		this.convertorsBinder = Multibinder.newSetBinder(binder, ConverterFactory.class);
 	}
 	
 	
-	public void registerConvertor(Class<? extends ConvertorFactory> factoryClazz) {
+	public void registerConverter(Class<? extends ConverterFactory> factoryClazz) {
 		convertorsBinder.addBinding().to(factoryClazz).asEagerSingleton();
 	}
 	
 	
-	public void registerConvertor(ConvertorFactory factory) {
+	public void registerConverter(ConverterFactory factory) {
 		convertorsBinder.addBinding().toInstance(factory);
 	}
 	

@@ -14,7 +14,7 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-package org.zdevra.guice.mvc.convertors;
+package org.zdevra.guice.mvc.converters;
 
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
@@ -23,14 +23,29 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * The annontation tells to the convertor how to convert a string value to the date.
- * See the {@link DateConvertor} class if you are insteresting how to use this annotation.
+ * The annontation tell to converter how to convert a string to boolean.
  * 
- * @see DateConvertor
+ * Let's assume that we don't want convert regular 'true' 'false' strings, but
+ * we want convert Y like true a N like false:
+ * 
+ * <pre class="prettyprint">
+ * {@literal @}Controller
+ * public class MyController {
+ * 
+ *    {@literal @}Path("/method")
+ *    public void doSomething( {@literal @}RequestParameter("bool-param") {@literal @}BooleanConv(trueVal="Y", falseVal="N") boolean param) 
+ *    {
+ *    	
+ *    }
+ * }
+ * </pre>
+ *
+ * 
+ * @see BooleanConverter
  */
 @Retention(RUNTIME)
 @Target({ ElementType.FIELD, ElementType.PARAMETER })
-public @interface DateConv {
-	public String value() default "YYYYMMDD";
-	public String defaultValue() default "";
+public @interface BooleanConv {
+	public String trueVal() default "true";
+	public String falseVal() default "false";
 }

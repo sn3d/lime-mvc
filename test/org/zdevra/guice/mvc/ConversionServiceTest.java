@@ -28,16 +28,16 @@ import junit.framework.Assert;
 
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-import org.zdevra.guice.mvc.ConversionService.ConvertorFactory;
-import org.zdevra.guice.mvc.convertors.BooleanConv;
-import org.zdevra.guice.mvc.convertors.BooleanConvertor;
-import org.zdevra.guice.mvc.convertors.DateConv;
-import org.zdevra.guice.mvc.convertors.DateConvertor;
-import org.zdevra.guice.mvc.convertors.DoubleConvertor;
-import org.zdevra.guice.mvc.convertors.FloatConvertor;
-import org.zdevra.guice.mvc.convertors.IntegerConvertor;
-import org.zdevra.guice.mvc.convertors.LongConvertor;
-import org.zdevra.guice.mvc.convertors.StringConvertor;
+import org.zdevra.guice.mvc.ConversionService.ConverterFactory;
+import org.zdevra.guice.mvc.converters.BooleanConv;
+import org.zdevra.guice.mvc.converters.BooleanConverter;
+import org.zdevra.guice.mvc.converters.DateConv;
+import org.zdevra.guice.mvc.converters.DateConverter;
+import org.zdevra.guice.mvc.converters.DoubleConverter;
+import org.zdevra.guice.mvc.converters.FloatConverter;
+import org.zdevra.guice.mvc.converters.IntegerConverter;
+import org.zdevra.guice.mvc.converters.LongConverter;
+import org.zdevra.guice.mvc.converters.StringConverter;
 import org.zdevra.guice.mvc.exceptions.NoConverterException;
 
 @Test
@@ -79,14 +79,14 @@ public class ConversionServiceTest {
 	
 	@BeforeTest
 	public void init() {	
-		Set<ConvertorFactory> converters = new HashSet<ConvertorFactory>();
-		converters.add(new DateConvertor.Factory());
-		converters.add(new BooleanConvertor.Factory());
-		converters.add(new DoubleConvertor.Factory());
-		converters.add(new LongConvertor.Factory());
-		converters.add(new FloatConvertor.Factory());
-		converters.add(new IntegerConvertor.Factory());
-		converters.add(new StringConvertor.Factory());
+		Set<ConverterFactory> converters = new HashSet<ConverterFactory>();
+		converters.add(new DateConverter.Factory());
+		converters.add(new BooleanConverter.Factory());
+		converters.add(new DoubleConverter.Factory());
+		converters.add(new LongConverter.Factory());
+		converters.add(new FloatConverter.Factory());
+		converters.add(new IntegerConverter.Factory());
+		converters.add(new StringConverter.Factory());
 		conversion = new ConversionService(converters);		
 	}
 	
@@ -121,7 +121,7 @@ public class ConversionServiceTest {
 	@Test
 	public void testObject() {
 		try {
-			Object val = conversion.convert(SomeObject.class, null, "value");
+			conversion.convert(SomeObject.class, null, "value");
 			Assert.assertFalse("For unknown object the NoConverter exception have to be caught", true);
 		} catch (NoConverterException e) {
 			//OK

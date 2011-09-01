@@ -18,7 +18,7 @@ package org.zdevra.guice.mvc.parameters;
 
 import java.lang.annotation.Annotation;
 import org.zdevra.guice.mvc.ConversionService;
-import org.zdevra.guice.mvc.ConversionService.Convertor;
+import org.zdevra.guice.mvc.ConversionService.Converter;
 import org.zdevra.guice.mvc.InvokeData;
 import org.zdevra.guice.mvc.UriParameter;
 import org.zdevra.guice.mvc.Utils;
@@ -39,7 +39,7 @@ public final class UriParam implements ParamProcessor {
 /*---------------------------- m. variables ----------------------------*/
 
 	private final int group;
-	private final Convertor convertor;
+	private final Converter converter;
 	
 /*----------------------------------------------------------------------*/
 	
@@ -58,8 +58,8 @@ public final class UriParam implements ParamProcessor {
 				return null;
 			}
 			
-			Convertor typeConvertor = convrtService.getConvertor(paramType, paramAnnotations);						
-			return new UriParam(annotation.value(), typeConvertor);
+			Converter typeConverter = convrtService.getConverter(paramType, paramAnnotations);						
+			return new UriParam(annotation.value(), typeConverter);
 		}		
 	}
 
@@ -69,16 +69,16 @@ public final class UriParam implements ParamProcessor {
 	 * Hidden constructor. For the processor's constuction is used Factory 
 	 * class.  
 	 */
-	private UriParam(int group, Convertor convertor) {
+	private UriParam(int group, Converter converter) {
 		super();
 		this.group = group;
-		this.convertor = convertor;
+		this.converter = converter;
 	}		
 
 	
 	public Object getValue(InvokeData data) {
 		String stringValue = data.getUriMatcher().group(group);
-		Object convertedValue = convertor.convert(stringValue);
+		Object convertedValue = converter.convert(stringValue);
 		return convertedValue;
 	}
 

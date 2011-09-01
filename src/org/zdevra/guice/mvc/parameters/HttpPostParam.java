@@ -23,7 +23,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.zdevra.guice.mvc.ConversionService;
-import org.zdevra.guice.mvc.ConversionService.Convertor;
+import org.zdevra.guice.mvc.ConversionService.Converter;
 import org.zdevra.guice.mvc.InvokeData;
 import org.zdevra.guice.mvc.RequestParameter;
 import org.zdevra.guice.mvc.Utils;
@@ -62,7 +62,7 @@ public class HttpPostParam implements ParamProcessor {
 /*---------------------------- m. variables ----------------------------*/
 	
 	private final String requestName;
-	private final Convertor convertor;
+	private final Converter converter;
 	private final boolean isArray;	
 
 /*----------------------------------------------------------------------*/
@@ -83,25 +83,25 @@ public class HttpPostParam implements ParamProcessor {
 			}
 			
 			if (metadata.getType().isArray()) {
-				Convertor typeConvertor = 
-					convrtService.getConvertor(paramType.getComponentType(), paramAnnotations);
+				Converter typeConverter = 
+					convrtService.getConverter(paramType.getComponentType(), paramAnnotations);
 				
-				return new HttpPostParam(annotation.value(), typeConvertor, true);
+				return new HttpPostParam(annotation.value(), typeConverter, true);
 			} else {
-				Convertor typeConvertor 
-					= convrtService.getConvertor(paramType, paramAnnotations);
+				Converter typeConverter 
+					= convrtService.getConverter(paramType, paramAnnotations);
 				
-				return new HttpPostParam(annotation.value(), typeConvertor, false);
+				return new HttpPostParam(annotation.value(), typeConverter, false);
 			}						
 		}		
 	}
 
 /*----------------------------------------------------------------------*/
 
-	private HttpPostParam(String requestName, Convertor convertor, boolean isArray) {
+	private HttpPostParam(String requestName, Converter converter, boolean isArray) {
 		super();
 		this.requestName = requestName;
-		this.convertor = convertor;
+		this.converter = converter;
 		this.isArray = isArray;
 	}
 	
@@ -135,7 +135,7 @@ public class HttpPostParam implements ParamProcessor {
 		}
 
 		String[] values = valuesArray.toArray(new String[]{});
-		Object convertedArray = convertor.convert(values);
+		Object convertedArray = converter.convert(values);
 		return convertedArray;
 	}
 	
@@ -143,7 +143,7 @@ public class HttpPostParam implements ParamProcessor {
 	private Object getSimpleValue(HttpServletRequest request) 
 	{
 		String stringVal = request.getParameter(requestName);
-		Object convertedVal = convertor.convert(stringVal); 
+		Object convertedVal = converter.convert(stringVal); 
 		return convertedVal;			
 	}
 

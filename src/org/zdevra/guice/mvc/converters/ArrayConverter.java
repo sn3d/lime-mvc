@@ -14,23 +14,26 @@
  * limitations under the License.
  * 
  *****************************************************************************/
+package org.zdevra.guice.mvc.converters;
+
+import java.lang.reflect.Array;
+
+import org.zdevra.guice.mvc.ConversionService.Converter;
 
 /**
- * This package contains all classes and related annotations, which provide conversions 
- * from strings to concrete data types.
+ * Class provide conversion to arrays.
  * 
- * Numbers converts automatically. Special cases are Boolean and Date types. For
- * parameters of these types are used special annotations: 
- * 
- * <dl>
- * <dt>{@link org.zdevra.guice.mvc.convertors.BooleanConv}
- * <dd>The annotation define how the string will convert to boolean.
- * 
- * <dt>{@link org.zdevra.guice.mvc.convertors.DateConv}
- * <dd>The annotation define how the string will convert to Date.
- * </dl>
- * 
- *  
- *  
+ * @param <T>
  */
-package org.zdevra.guice.mvc.convertors;
+public class ArrayConverter<T> {
+	
+	protected Object convertArray(String[] stringArray, Converter conv, Class<?> clazz) {
+		Object x = Array.newInstance(clazz, stringArray.length);		
+		for (int i = 0; i < stringArray.length; ++i) {
+			Object val = conv.convert(stringArray[i]);
+			Array.set(x, i, val);
+		}
+		return x;
+	}
+
+}

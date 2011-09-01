@@ -20,7 +20,7 @@ import java.lang.annotation.Annotation;
 import java.util.Collection;
 import java.util.Set;
 
-import org.zdevra.guice.mvc.convertors.DefaultConvertor;
+import org.zdevra.guice.mvc.converters.DefaultConverter;
 import org.zdevra.guice.mvc.exceptions.NoConverterException;
 
 import com.google.inject.Inject;
@@ -28,54 +28,54 @@ import com.google.inject.Singleton;
 
 /**
  * The class provides conversions from incomming strings from HTTP requests 
- * to a various datatypes. If there is no convertor for that datatype, 
- * then is used {@link DefaultConvertor}. 
+ * to a various datatypes. If there is no converter for that datatype, 
+ * then is used {@link DefaultConverter}. 
  * 
  * The class is used internally by {@link MethodInvokerImpl}.
  * 
- * You may implement and register your own convertor. Just
- * implements the {@link ConvertorService.Convertor}, {@link ConvertorService.ConvertorFactory} 
- * interfaces and in your configureControllers() register the convertor:
+ * You may implement and register your own converter. Just
+ * implements the {@link ConversionService.Converter}, {@link ConversionService.ConverterFactory} 
+ * interfaces and in your configureControllers() register the converter:
  * 
  * <pre class="prettyprint">
  * class MyModule extends MvcModule {
  * 
  *    protected void configureControllers() {
  *       ...
- *       registerConvertor(MyType.class, new MyConvertorFactory());
+ *       registerConverter(MyConverterFactory.class);
  *       ...
  *    }
  * }
  * </pre>
  * 
- * All supported convertors in Lime are placed in package {@link org.zdevra.guice.mvc.convertors}.
+ * All supported converters in Lime are placed in package {@link org.zdevra.guice.mvc.converters}.
  * 
- * @see ConversionService.Convertor
- * @see ConversionService.ConvertorFactory
+ * @see ConversionService.Converter
+ * @see ConversionService.ConverterFactory
  */
 @Singleton
 public class ConversionService {
 /*---------------------------- m. variables ----------------------------*/
 
-	private final Collection<ConvertorFactory> factories;
+	private final Collection<ConverterFactory> factories;
 	
 /*----------------------------------------------------------------------*/
 	
 	/**
-	 * Interface for convertor
+	 * Interface for converter
 	 */
-	public interface Convertor {		
+	public interface Converter {		
 		public Object convert(String stringValue);
 		public Object convert(String[] stringArray);
 	}
 	
 	
 	/**
-	 * Interface for contertor factory which is constructing convertor impl.
+	 * Interface for contertor factory which is constructing converter impl.
 	 *
 	 */
-	public interface ConvertorFactory {
-		public Convertor createConvertor(Class<?> type, Annotation[] annotations); 
+	public interface ConverterFactory {
+		public Converter createConvertor(Class<?> type, Annotation[] annotations); 
 	}
 	
 /*---------------------------- constructors ----------------------------*/
@@ -84,7 +84,7 @@ public class ConversionService {
 	 * Constructor
 	 */
 	@Inject
-	public ConversionService(Set<ConvertorFactory> factories) {
+	public ConversionService(Set<ConverterFactory> factories) {
 		this.factories = factories;
 	}
 	
@@ -92,18 +92,18 @@ public class ConversionService {
 			
 	
 	/**
-	 * Method convert string value to object.
+	 * Method converts string value to object.
 	 */
 	public Object convert(Class<?> type, Annotation[] annotations, String stringValue) 
 	{	
-		Convertor convertor = getConvertor(type, annotations);
-		Object convertedVal = convertor.convert(stringValue);		
+		Converter converter = getConverter(type, annotations);
+		Object convertedVal = converter.convert(stringValue);		
 		return convertedVal;
 	}
 	
 	
 	/**
-	 * Method convert string array to object.
+	 * Method converts string array to object.
 	 */
 	public Object convert(Class<?> type, Annotation[] annotations, String[] stringValue) 
 	{	
@@ -112,23 +112,23 @@ public class ConversionService {
 		}
 
         Class<?> componentType = type.getComponentType();
-		Convertor convertor = getConvertor(componentType, annotations);
-		Object convertedVal = convertor.convert(stringValue);
+		Converter converter = getConverter(componentType, annotations);
+		Object convertedVal = converter.convert(stringValue);
 		
 		return convertedVal;		
 	}
 	
 	
 	/**
-	 * Method return right convertor for type
+	 * Method return right converter for type
 	 * 
 	 * @param type
 	 * @return
 	 */
-	public Convertor getConvertor(Class<?> type, Annotation[] annotations) 
+	public Converter getConverter(Class<?> type, Annotation[] annotations) 
 	{
-		for (ConvertorFactory factory : factories) {
-			Convertor convertor = factory.createConvertor(type, annotations);
+		for (ConverterFactory factory : factories) {
+			Converter convertor = factory.createConvertor(type, annotations);
 			if (convertor != null) {
 				return convertor;
 			}

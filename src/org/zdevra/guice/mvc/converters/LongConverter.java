@@ -14,19 +14,19 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-package org.zdevra.guice.mvc.convertors;
+package org.zdevra.guice.mvc.converters;
 
 import java.lang.annotation.Annotation;
 
-import org.zdevra.guice.mvc.ConversionService.Convertor;
-import org.zdevra.guice.mvc.ConversionService.ConvertorFactory;
+import org.zdevra.guice.mvc.ConversionService.Converter;
+import org.zdevra.guice.mvc.ConversionService.ConverterFactory;
 import org.zdevra.guice.mvc.exceptions.IllegalConversionException;
 
 /**
- * The convertor's implementation which is  responsible 
- * for converting a string values to an integers.
+ * The implemetation is converting string to long number
+ *
  */
-public class IntegerConvertor extends ArrayConvertor<Integer> implements Convertor {
+public class LongConverter extends ArrayConverter<Long> implements Converter {
 	
 /*---------------------------- m. variables ----------------------------*/
 	
@@ -35,48 +35,46 @@ public class IntegerConvertor extends ArrayConvertor<Integer> implements Convert
 /*---------------------------- constructors ----------------------------*/
 	
 	/**
-	 * The factory class for {@link IntegerConvertor}
+	 * Factory class for {@link LongConverter}
 	 */
-	public static class Factory implements ConvertorFactory {
+	public static class Factory implements ConverterFactory {
 		
-		private final Convertor integerConvertor;
-		private final Convertor intConvertor;
+		private final Converter longConverter;
+		private final Converter longObjConverter;
 		
 		public Factory() {
-			this.integerConvertor = new IntegerConvertor(Integer.class);
-			this.intConvertor = new IntegerConvertor(int.class);
+			longConverter = new LongConverter(long.class);
+			longObjConverter = new LongConverter(Long.class);
 		}
-				
+
 		@Override
-		public Convertor createConvertor(Class<?> type, Annotation[] annotations) {
-			if (type == Integer.class){
-				return integerConvertor;
-			} else if (type == int.class) {
-				return intConvertor;
+		public Converter createConvertor(Class<?> type, Annotation[] annotations) {
+			if (type == long.class) {
+				return longConverter;
+			} else if (type == Long.class) {
+				return longObjConverter;
 			} else {
 				return null;
 			}
-						
 		}
-	}
 	
+	}
 	
 	/**
-	 * Private constructor. This class is constructed via
-	 * inner Factory class
+	 * Private constructor. Object is created throught a Factory object.
 	 */
-	private IntegerConvertor(Class<?> type) {
+	private LongConverter(Class<?> type) {
 		this.type = type;
 	}
-
+	
 /*------------------------------- methods ------------------------------*/
-
+	
 	@Override
 	public Object convert(String stringValue) {
 		try {
-			return Integer.parseInt(stringValue);
+			return Long.parseLong(stringValue);
 		} catch (Exception e) {
-			throw new IllegalConversionException("A conversion from the '" + stringValue + "' to the integer failed");
+			throw new IllegalConversionException("A conversion from the '" + stringValue + "' to the long failed");
 		}
 	}
 
@@ -85,6 +83,6 @@ public class IntegerConvertor extends ArrayConvertor<Integer> implements Convert
 		return convertArray(stringArray, this, type);
 	}
 	
-/*----------------------------------------------------------------------*/
+/*----------------------------------------------------------------------*/	
 
 }

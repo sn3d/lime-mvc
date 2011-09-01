@@ -24,14 +24,14 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServlet;
 
-import org.zdevra.guice.mvc.ConversionService.ConvertorFactory;
-import org.zdevra.guice.mvc.convertors.BooleanConvertor;
-import org.zdevra.guice.mvc.convertors.DateConvertor;
-import org.zdevra.guice.mvc.convertors.DoubleConvertor;
-import org.zdevra.guice.mvc.convertors.FloatConvertor;
-import org.zdevra.guice.mvc.convertors.IntegerConvertor;
-import org.zdevra.guice.mvc.convertors.LongConvertor;
-import org.zdevra.guice.mvc.convertors.StringConvertor;
+import org.zdevra.guice.mvc.ConversionService.ConverterFactory;
+import org.zdevra.guice.mvc.converters.BooleanConverter;
+import org.zdevra.guice.mvc.converters.DateConverter;
+import org.zdevra.guice.mvc.converters.DoubleConverter;
+import org.zdevra.guice.mvc.converters.FloatConverter;
+import org.zdevra.guice.mvc.converters.IntegerConverter;
+import org.zdevra.guice.mvc.converters.LongConverter;
+import org.zdevra.guice.mvc.converters.StringConverter;
 import org.zdevra.guice.mvc.parameters.HttpPostParam;
 import org.zdevra.guice.mvc.parameters.HttpSessionParam;
 import org.zdevra.guice.mvc.parameters.InjectorParam;
@@ -146,14 +146,14 @@ public abstract class MvcModule extends ServletModule {
 				.to(DefaultExceptionHandler.class);
 			
 			bind(ConversionService.class).asEagerSingleton();
-			registerConvertor(BooleanConvertor.Factory.class);
-			registerConvertor(DateConvertor.Factory.class);
-			registerConvertor(DoubleConvertor.Factory.class);
-			registerConvertor(LongConvertor.Factory.class);
-			registerConvertor(FloatConvertor.Factory.class);
-			registerConvertor(LongConvertor.Factory.class);
-			registerConvertor(IntegerConvertor.Factory.class);
-			registerConvertor(StringConvertor.Factory.class);
+			registerConverter(BooleanConverter.Factory.class);
+			registerConverter(DateConverter.Factory.class);
+			registerConverter(DoubleConverter.Factory.class);
+			registerConverter(LongConverter.Factory.class);
+			registerConverter(FloatConverter.Factory.class);
+			registerConverter(LongConverter.Factory.class);
+			registerConverter(IntegerConverter.Factory.class);
+			registerConverter(StringConverter.Factory.class);
 						
 			bind(ParamProcessorsService.class);
 			registerParameterProc(HttpPostParam.Factory.class);			
@@ -213,26 +213,26 @@ public abstract class MvcModule extends ServletModule {
 		
 	
 	/**
-	 * The method registers a custom convertor which converts strings to the
-	 * concrete types. These convertors are used for conversions from a HTTP request 
+	 * The method registers a custom converter which converts strings to the
+	 * concrete types. These converters are used for conversions from a HTTP request 
 	 * to the method's parameters.
 	 * 
-	 * The all predefined default convertors are placed in the 'convertors' sub-package.  
+	 * The all predefined default converters are placed in the 'converters' sub-package.  
 	 */
-	protected final void registerConvertor(ConvertorFactory convertorFactory) {
-		this.conversionServiceBuilder.registerConvertor(convertorFactory);
+	protected final void registerConverter(ConverterFactory converterFactory) {
+		this.conversionServiceBuilder.registerConverter(converterFactory);
 	}
 	
 	
 	/**
-	 * The method registers a custom convertor which converts strings to the
-	 * concrete types. These convertors are used for conversions from a HTTP request 
+	 * The method registers a custom converter which converts strings to the
+	 * concrete types. These converters are used for conversions from a HTTP request 
 	 * to the method's parameters.
 	 * 
-	 * The all predefined default convertors are placed in the 'convertors' sub-package.  
+	 * The all predefined default convertors are placed in the 'converters' sub-package.  
 	 */
-	protected final void registerConvertor(Class<? extends ConvertorFactory> convertorFactoryClazz) {
-		this.conversionServiceBuilder.registerConvertor(convertorFactoryClazz);
+	protected final void registerConverter(Class<? extends ConverterFactory> convertorFactoryClazz) {
+		this.conversionServiceBuilder.registerConverter(convertorFactoryClazz);
 	}
 	
 		
