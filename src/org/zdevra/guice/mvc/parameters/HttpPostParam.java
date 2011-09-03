@@ -17,10 +17,7 @@
 package org.zdevra.guice.mvc.parameters;
 
 import java.lang.annotation.Annotation;
-import java.util.LinkedList;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 import org.zdevra.guice.mvc.ConversionService;
 import org.zdevra.guice.mvc.ConversionService.Converter;
@@ -63,7 +60,6 @@ public class HttpPostParam implements ParamProcessor {
 	
 	private final String requestName;
 	private final Converter converter;
-	private final boolean isArray;	
 
 /*----------------------------------------------------------------------*/
 	
@@ -82,70 +78,29 @@ public class HttpPostParam implements ParamProcessor {
 				return null;
 			}
 			
-			if (metadata.getType().isArray()) {
-				Converter typeConverter = 
-					convrtService.getConverter(paramType.getComponentType(), paramAnnotations);
+			Converter typeConverter 
+				= convrtService.getConverter(paramType, paramAnnotations);
 				
-				return new HttpPostParam(annotation.value(), typeConverter, true);
-			} else {
-				Converter typeConverter 
-					= convrtService.getConverter(paramType, paramAnnotations);
-				
-				return new HttpPostParam(annotation.value(), typeConverter, false);
-			}						
+			return new HttpPostParam(annotation.value(), typeConverter);						
 		}		
 	}
 
 /*----------------------------------------------------------------------*/
 
-	private HttpPostParam(String requestName, Converter converter, boolean isArray) {
+	private HttpPostParam(String requestName, Converter converter) {
 		super();
 		this.requestName = requestName;
 		this.converter = converter;
-		this.isArray = isArray;
 	}
 	
 	
 	@Override
+	@SuppressWarnings("unchecked")
 	public Object getValue(InvokeData data) {
-		if (isArray) {				
-			return getArrayValue(data.getRequest());
-		} else {
-			return getSimpleValue(data.getRequest());
-		}
-	}
-	
-	
-	private Object getArrayValue(HttpServletRequest request) 
-	{
-		int index = 0;
-		List<String> valuesArray = new LinkedList<String>();
-		
-		while (true) {
-			String value = "";
-			String reqNameWithIndex = requestName + "[" + index + "]";
-			value = request.getParameter(reqNameWithIndex);
-							
-			if (value == null) {
-				break;
-			}
-			
-			valuesArray.add(value);				
-			index++;
-		}
-
-		String[] values = valuesArray.toArray(new String[]{});
-		Object convertedArray = converter.convert(values);
+		Map<String, String[]> params = data.getRequest().getParameterMap();
+		Object convertedArray = converter.convert(requestName, params);
 		return convertedArray;
 	}
 	
-	
-	private Object getSimpleValue(HttpServletRequest request) 
-	{
-		String stringVal = request.getParameter(requestName);
-		Object convertedVal = converter.convert(stringVal); 
-		return convertedVal;			
-	}
-
 /*----------------------------------------------------------------------*/
 }

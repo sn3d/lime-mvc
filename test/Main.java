@@ -1,3 +1,5 @@
+import org.zdevra.guice.mvc.casePerformance.PerfTest;
+
 /*****************************************************************************
  * Copyright 2011 Zdenko Vrabel
  *
@@ -14,7 +16,6 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-import org.zdevra.guice.mvc.ConversionServiceTest;
 
 /**
  * This class exists for debugging and testing
@@ -25,19 +26,22 @@ public class Main {
 
 	public static void main(String[] args) {
 		try {			
+			/*
 			ConversionServiceTest t = new ConversionServiceTest();
 			t.init();
 			t.testBoolean();	
-			t.testDate();
 			t.testDouble();
+			t.testLong();
 			t.testFloat();
 			t.testInteger();
-			t.testIntArray();
-			t.testInteger();
-			t.testLong();
 			t.testObject();
 			t.testString();
-			
+			t.testDate();
+			*/
+			PerfTest t = new PerfTest();
+			t.prepare();
+			//t.testArticleDetailNamed();
+			t.testArticleDetailDirect();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

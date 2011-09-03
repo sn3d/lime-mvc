@@ -24,7 +24,7 @@ import org.zdevra.guice.mvc.ConversionService.ConverterFactory;
 /**
  * Class provide no-conversion if in your controller's method is string. 
  */
-public class StringConverter implements Converter {
+public class StringConverter extends TypeConverter<String> {
 
 /*----------------------------------------------------------------------*/
 	
@@ -53,19 +53,15 @@ public class StringConverter implements Converter {
 	/**
 	 * Constructor
 	 */
-	private StringConverter() {		
+	private StringConverter() {
+		super(String.class);
 	}
 	
 /*------------------------------- methods ------------------------------*/
 	
 	@Override
-	public Object convert(String stringValue) {
+	protected String convertType(String stringValue) {		
 		return stringValue;
-	}
-
-	@Override
-	public Object convert(String[] stringArray) {
-		return stringArray;
 	}
 
 /*----------------------------------------------------------------------*/

@@ -65,7 +65,7 @@ import org.zdevra.guice.mvc.exceptions.IllegalConversionException;
  * </pre>
  *
  */
-public class DateConverter extends ArrayConverter<Date> implements Converter {
+public class DateConverter extends TypeConverter<Date> {
 	
 /*---------------------------- m. variables ----------------------------*/
 		
@@ -103,14 +103,16 @@ public class DateConverter extends ArrayConverter<Date> implements Converter {
 
 	
 	private DateConverter(DateFormat dateFormater, Date defaultDate) {
+		super(Date.class);
 		this.dateFormat = dateFormater;
 		this.defaultDate = defaultDate; 
 	}
+
 	
 /*------------------------------- methods ------------------------------*/
 	
 	@Override
-	public Object convert(String stringValue) {		
+	protected Date convertType(String stringValue) {
 		try {
 			return this.dateFormat.parse(stringValue);
 		} catch (Exception e) {
@@ -120,13 +122,7 @@ public class DateConverter extends ArrayConverter<Date> implements Converter {
 			throw new IllegalConversionException("A conversion from the '" + stringValue + "' to the date '" + this.dateFormat.toString() + "' failed");
 		}		
 	}
-
-
-	@Override
-	public Object convert(String[] stringArray) {
-		return convertArray(stringArray, this, Date.class);
-	}
-	
+		
 /*----------------------------------------------------------------------*/
 	
 }

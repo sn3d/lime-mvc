@@ -26,11 +26,7 @@ import org.zdevra.guice.mvc.exceptions.IllegalConversionException;
  * The implemetation is converting string to long number
  *
  */
-public class LongConverter extends ArrayConverter<Long> implements Converter {
-	
-/*---------------------------- m. variables ----------------------------*/
-	
-	private final Class<?> type;
+public class LongConverter extends TypeConverter<Long> {
 	
 /*---------------------------- constructors ----------------------------*/
 	
@@ -40,47 +36,37 @@ public class LongConverter extends ArrayConverter<Long> implements Converter {
 	public static class Factory implements ConverterFactory {
 		
 		private final Converter longConverter;
-		private final Converter longObjConverter;
 		
 		public Factory() {
-			longConverter = new LongConverter(long.class);
-			longObjConverter = new LongConverter(Long.class);
+			longConverter = new LongConverter();
 		}
 
 		@Override
 		public Converter createConvertor(Class<?> type, Annotation[] annotations) {
-			if (type == long.class) {
+			if ((type == long.class) || (type == Long.class)) {
 				return longConverter;
-			} else if (type == Long.class) {
-				return longObjConverter;
 			} else {
 				return null;
 			}
-		}
-	
+		}	
 	}
 	
 	/**
 	 * Private constructor. Object is created throught a Factory object.
 	 */
-	private LongConverter(Class<?> type) {
-		this.type = type;
+	private LongConverter() {
+		super(Long.class);
 	}
 	
 /*------------------------------- methods ------------------------------*/
-	
+
 	@Override
-	public Object convert(String stringValue) {
+	protected Long convertType(String stringValue) {
 		try {
 			return Long.parseLong(stringValue);
 		} catch (Exception e) {
 			throw new IllegalConversionException("A conversion from the '" + stringValue + "' to the long failed");
 		}
-	}
-
-	@Override
-	public Object convert(String[] stringArray) {
-		return convertArray(stringArray, this, type);
 	}
 	
 /*----------------------------------------------------------------------*/	

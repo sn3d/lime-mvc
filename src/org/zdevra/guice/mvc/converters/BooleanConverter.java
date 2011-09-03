@@ -32,12 +32,11 @@ import org.zdevra.guice.mvc.Utils;
  * @see BooleanConv 
  *
  */
-public final class BooleanConverter extends ArrayConverter<Boolean> implements Converter {
+public final class BooleanConverter extends TypeConverter<Boolean> {
 	
 /*---------------------------- m. variables ----------------------------*/
 	
 	private final BooleanConv boolAnnotation;
-	private final Class<?> type;
 	
 /*---------------------------- constructors ----------------------------*/
 	
@@ -52,21 +51,25 @@ public final class BooleanConverter extends ArrayConverter<Boolean> implements C
 			}
 			
 			BooleanConv ba = Utils.getAnnotation(BooleanConv.class, annotations); 
-			return new BooleanConverter(ba, type);
+			return new BooleanConverter(ba);
 		}		
 	}
-		
-	private BooleanConverter(BooleanConv boolAnnotation, Class<?> type) {
-		this.boolAnnotation = boolAnnotation;
-		this.type = type;
-	}	
-		
-/*------------------------------- methods ------------------------------*/
+
+// ------------------------------------------------------------------------
 	
-	public Object convert(String stringValue)
-	{
+	/**
+	 * Constructor
+	 */
+	private BooleanConverter(BooleanConv boolAnnotation) {
+		super(Boolean.class);
+		this.boolAnnotation = boolAnnotation;
+	}
+	
+// ------------------------------------------------------------------------
+	
+	@Override
+	protected Boolean convertType(String stringValue) {
 		if (boolAnnotation != null) {
-			
 			if ( boolAnnotation.trueVal().equalsIgnoreCase(stringValue) ) {
 				return true;
 			} else if ( boolAnnotation.falseVal().equalsIgnoreCase(stringValue) ) {
@@ -74,13 +77,10 @@ public final class BooleanConverter extends ArrayConverter<Boolean> implements C
 			} else {
 				return false;
 			}
-		} 
+		}
 		return Boolean.parseBoolean(stringValue);
 	}
-
-    
-	public Object convert(String[] stringArray) {
-		return convertArray(stringArray, this, type);
-	}
+		
+// ------------------------------------------------------------------------
 		
 }

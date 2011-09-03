@@ -17,6 +17,9 @@
 package org.zdevra.guice.mvc.parameters;
 
 import java.lang.annotation.Annotation;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.zdevra.guice.mvc.ConversionService;
 import org.zdevra.guice.mvc.ConversionService.Converter;
 import org.zdevra.guice.mvc.InvokeData;
@@ -76,9 +79,14 @@ public final class UriParam implements ParamProcessor {
 	}		
 
 	
-	public Object getValue(InvokeData data) {
-		String stringValue = data.getUriMatcher().group(group);
-		Object convertedValue = converter.convert(stringValue);
+	public Object getValue(InvokeData data) {		
+		Map<String, String[]> parameters = new HashMap<String, String[]>();
+		int groupCount = data.getUriMatcher().groupCount();
+		for (int i = 0; i <= groupCount; ++i) {
+			parameters.put(Integer.toString(i), new String[] { data.getUriMatcher().group(i) });
+		}
+				
+		Object convertedValue = converter.convert(Integer.toString(group), parameters );
 		return convertedValue;
 	}
 

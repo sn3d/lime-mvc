@@ -25,11 +25,7 @@ import org.zdevra.guice.mvc.exceptions.IllegalConversionException;
 /**
  * The class is converting a string value to the float number.
  */
-public class FloatConverter extends ArrayConverter<Float> implements Converter {
-	
-/*---------------------------- m. variables ----------------------------*/
-	
-	private final Class<?> type;
+public class FloatConverter extends TypeConverter<Float> {
 	
 /*---------------------------- constructors ----------------------------*/
 	
@@ -39,18 +35,14 @@ public class FloatConverter extends ArrayConverter<Float> implements Converter {
 	public static class Factory implements ConverterFactory {
 		
 		private final Converter floatConverter;
-		private final Converter floatObjConverter;
 		
 		public Factory() {
-			this.floatConverter = new FloatConverter(float.class);
-			this.floatObjConverter = new FloatConverter(Float.class);
+			this.floatConverter = new FloatConverter();
 		}
 
 		@Override
 		public Converter createConvertor(Class<?> type, Annotation[] annotations) {
-			if (type == Float.class) {
-				return floatObjConverter;
-			} else if (type == long.class) {
+			if ((type == Float.class) || (type == float.class)) {
 				return floatConverter;
 			} else {
 				return null;
@@ -62,14 +54,16 @@ public class FloatConverter extends ArrayConverter<Float> implements Converter {
 	/**
 	 * private constructor
 	 */
-	private FloatConverter(Class<?> type) {
-		this.type = type;
+	private FloatConverter() {
+		super(Float.class);
 	}
+
 	
 /*------------------------------- methods ------------------------------*/
 	
 	@Override
-	public Object convert(String stringValue) {
+	protected Float convertType(String stringValue) 
+	{
 		try {
 			return Float.parseFloat(stringValue);
 		} catch (Exception e) {
@@ -77,10 +71,6 @@ public class FloatConverter extends ArrayConverter<Float> implements Converter {
 		}
 	}
 	
-	@Override
-	public Object convert(String[] stringArray) {
-		return convertArray(stringArray, this, type);
-	}
 	
 /*----------------------------------------------------------------------*/
 }

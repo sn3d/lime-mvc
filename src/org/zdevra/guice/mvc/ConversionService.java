@@ -18,9 +18,9 @@ package org.zdevra.guice.mvc;
 
 import java.lang.annotation.Annotation;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Set;
 
-import org.zdevra.guice.mvc.converters.DefaultConverter;
 import org.zdevra.guice.mvc.exceptions.NoConverterException;
 
 import com.google.inject.Inject;
@@ -65,8 +65,8 @@ public class ConversionService {
 	 * Interface for converter
 	 */
 	public interface Converter {		
-		public Object convert(String stringValue);
-		public Object convert(String[] stringArray);
+		public Object convert(String name, Map<String, String[]> data);
+		public Object convertArray(String name, Map<String, String[]> data);
 	}
 	
 	
@@ -94,29 +94,14 @@ public class ConversionService {
 	/**
 	 * Method converts string value to object.
 	 */
-	public Object convert(Class<?> type, Annotation[] annotations, String stringValue) 
+	/*
+	public Object convert(Class<?> type, Annotation[] annotations, String name, Map<String, String[]> data) 
 	{	
 		Converter converter = getConverter(type, annotations);
-		Object convertedVal = converter.convert(stringValue);		
+		Object convertedVal = converter.convert(name, data);		
 		return convertedVal;
 	}
-	
-	
-	/**
-	 * Method converts string array to object.
-	 */
-	public Object convert(Class<?> type, Annotation[] annotations, String[] stringValue) 
-	{	
-		if (!type.isArray()) {
-			return null;
-		}
-
-        Class<?> componentType = type.getComponentType();
-		Converter converter = getConverter(componentType, annotations);
-		Object convertedVal = converter.convert(stringValue);
-		
-		return convertedVal;		
-	}
+	*/
 	
 	
 	/**

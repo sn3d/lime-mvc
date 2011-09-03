@@ -26,11 +26,7 @@ import org.zdevra.guice.mvc.exceptions.IllegalConversionException;
  * The convertor's implementation which is  responsible 
  * for converting a string values to an integers.
  */
-public class IntegerConverter extends ArrayConverter<Integer> implements Converter {
-	
-/*---------------------------- m. variables ----------------------------*/
-	
-	private final Class<?> type;
+public class IntegerConverter extends TypeConverter<Integer> {
 	
 /*---------------------------- constructors ----------------------------*/
 	
@@ -40,23 +36,18 @@ public class IntegerConverter extends ArrayConverter<Integer> implements Convert
 	public static class Factory implements ConverterFactory {
 		
 		private final Converter integerConverter;
-		private final Converter intConverter;
 		
 		public Factory() {
-			this.integerConverter = new IntegerConverter(Integer.class);
-			this.intConverter = new IntegerConverter(int.class);
+			this.integerConverter = new IntegerConverter();
 		}
 				
 		@Override
 		public Converter createConvertor(Class<?> type, Annotation[] annotations) {
-			if (type == Integer.class){
+			if ((type == Integer.class) || (type == int.class)) {
 				return integerConverter;
-			} else if (type == int.class) {
-				return intConverter;
 			} else {
 				return null;
-			}
-						
+			}					
 		}
 	}
 	
@@ -65,25 +56,21 @@ public class IntegerConverter extends ArrayConverter<Integer> implements Convert
 	 * Private constructor. This class is constructed via
 	 * inner Factory class
 	 */
-	private IntegerConverter(Class<?> type) {
-		this.type = type;
+	private IntegerConverter() {
+		super(Integer.class);
 	}
+
 
 /*------------------------------- methods ------------------------------*/
 
 	@Override
-	public Object convert(String stringValue) {
+	protected Integer convertType(String stringValue) {
 		try {
 			return Integer.parseInt(stringValue);
 		} catch (Exception e) {
-			throw new IllegalConversionException("A conversion from the '" + stringValue + "' to the integer failed");
+			throw new IllegalConversionException("A conversion from the '" + stringValue + "' to the int failed");
 		}
-	}
-
-	@Override
-	public Object convert(String[] stringArray) {
-		return convertArray(stringArray, this, type);
-	}
+	}	
 	
 /*----------------------------------------------------------------------*/
 

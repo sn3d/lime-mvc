@@ -25,11 +25,7 @@ import org.zdevra.guice.mvc.exceptions.IllegalConversionException;
 /**
  * The class converts a string value to the double number.
  */
-public class DoubleConverter extends ArrayConverter<Double> implements Converter {
-	
-/*---------------------------- m. variables ----------------------------*/
-	
-	private final Class<?> type;
+public class DoubleConverter extends TypeConverter<Double> {
 	
 /*---------------------------- constructors ----------------------------*/
 	
@@ -39,19 +35,15 @@ public class DoubleConverter extends ArrayConverter<Double> implements Converter
 	public static class Factory implements ConverterFactory {
 		
 		private final Converter doubleConverter;
-		private final Converter doubleObjConverter;
 		
 		public Factory() {
-			this.doubleConverter = new DoubleConverter(double.class);
-			this.doubleObjConverter = new DoubleConverter(Double.class);
+			this.doubleConverter = new DoubleConverter();
 		}
 
 		@Override
 		public Converter createConvertor(Class<?> type, Annotation[] annotations) {
-			if (type == double.class) {
+			if ((type == double.class) || (type == Double.class)) {
 				return doubleConverter;
-			} else if (type == Double.class) {
-				return doubleObjConverter;
 			} else {
 				return null;
 			}
@@ -62,15 +54,15 @@ public class DoubleConverter extends ArrayConverter<Double> implements Converter
 	/**
 	 * The hidden private constructor. The object is constructed throught the factory object 
 	 */
-	private DoubleConverter(Class<?> type) {
-		this.type = type;
+	private DoubleConverter() {
+		super(Double.class);
 	}
 
 	
 /*------------------------------- methods ------------------------------*/
-	
+
 	@Override
-	public Object convert(String stringValue) {
+	protected Double convertType(String stringValue) {
 		try {
 			return Double.parseDouble(stringValue);
 		} catch (Exception e) {
@@ -78,11 +70,6 @@ public class DoubleConverter extends ArrayConverter<Double> implements Converter
 		}
 	}
 
-
-	@Override
-	public Object convert(String[] stringArray) {
-		return convertArray(stringArray, this, type);
-	}
 	
 /*----------------------------------------------------------------------*/
 
