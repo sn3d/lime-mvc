@@ -42,6 +42,9 @@ public class TestView implements View {
 	public void render(HttpServlet servlet, HttpServletRequest request, HttpServletResponse response)  {
 		try {
 			Object msg = request.getAttribute("testmsg");
+			if (msg == null) {
+				msg = request.getAttribute("msg");
+			}
 			response.getWriter().write("viewId=" + id + " test message:" + msg);
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Error in TestView", e);

@@ -44,8 +44,9 @@ public final class BooleanConverter extends TypeConverter<Boolean> {
 	 * Factory for {@link BooleanConverter}
 	 */
 	public static class Factory implements ConverterFactory {
-
-		public Converter createConvertor(Class<?> type, Annotation[] annotations) {
+		
+		@Override
+		public Converter<?> createConvertor(Class<?> type, Annotation[] annotations) {
 			if ((type != boolean.class) && (type != Boolean.class)) {
 				return null;
 			}
@@ -61,7 +62,6 @@ public final class BooleanConverter extends TypeConverter<Boolean> {
 	 * Constructor
 	 */
 	private BooleanConverter(BooleanConv boolAnnotation) {
-		super(Boolean.class);
 		this.boolAnnotation = boolAnnotation;
 	}
 	

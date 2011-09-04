@@ -35,14 +35,14 @@ public class LongConverter extends TypeConverter<Long> {
 	 */
 	public static class Factory implements ConverterFactory {
 		
-		private final Converter longConverter;
+		private final Converter<?> longConverter;
 		
 		public Factory() {
 			longConverter = new LongConverter();
 		}
 
 		@Override
-		public Converter createConvertor(Class<?> type, Annotation[] annotations) {
+		public Converter<?> createConvertor(Class<?> type, Annotation[] annotations) {
 			if ((type == long.class) || (type == Long.class)) {
 				return longConverter;
 			} else {
@@ -55,7 +55,7 @@ public class LongConverter extends TypeConverter<Long> {
 	 * Private constructor. Object is created throught a Factory object.
 	 */
 	private LongConverter() {
-		super(Long.class);
+		super();
 	}
 	
 /*------------------------------- methods ------------------------------*/

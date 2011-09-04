@@ -8,6 +8,6 @@ package org.zdevra.guice.mvc.exceptions;
  */
 public class NoConverterException extends MvcException {
 	public NoConverterException(Class<?> type) {
-		super("No converter String -> " + type.getCanonicalName() + " is defined.");
+		super("No converter for String -> " + type.getCanonicalName() + " is defined.");
 	}
 }

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite hostname="sndpc.local" name="org.zdevra.guice.mvc.case8.TestCase8" tests="2" failures="0" timestamp="4 Sep 2011 13:22:46 GMT" time="0.741" errors="0">
+  <testcase name="testInt" time="0.614" classname="org.zdevra.guice.mvc.case8.TestCase8"/>
+  <testcase name="testNoInt" time="0.016" classname="org.zdevra.guice.mvc.case8.TestCase8"/>
+</testsuite>

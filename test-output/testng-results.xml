@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" total="2" passed="2">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="741" started-at="2011-09-04T15:22:45Z" finished-at="2011-09-04T15:22:46Z">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="741" started-at="2011-09-04T15:22:45Z" finished-at="2011-09-04T15:22:46Z">
+      <class name="org.zdevra.guice.mvc.case8.TestCase8">
+        <test-method status="PASS" signature="prepare()" name="prepare" is-config="true" duration-ms="83" started-at="2011-09-04T15:22:45Z" finished-at="2011-09-04T15:22:46Z">
+        </test-method>
+        <test-method status="PASS" signature="testInt()" name="testInt" duration-ms="614" started-at="2011-09-04T15:22:46Z" finished-at="2011-09-04T15:22:46Z">
+        </test-method>
+        <test-method status="PASS" signature="testNoInt()" name="testNoInt" duration-ms="16" started-at="2011-09-04T15:22:46Z" finished-at="2011-09-04T15:22:46Z">
+        </test-method>
+      </class>
+    </test>
+  </suite>
+</testng-results>

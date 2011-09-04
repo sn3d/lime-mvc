@@ -64,9 +64,8 @@ public class ConversionService {
 	/**
 	 * Interface for converter
 	 */
-	public interface Converter {		
-		public Object convert(String name, Map<String, String[]> data);
-		public Object convertArray(String name, Map<String, String[]> data);
+	public interface Converter<T> {		
+		public T convert(String name, Map<String, String[]> data);
 	}
 	
 	
@@ -75,7 +74,7 @@ public class ConversionService {
 	 *
 	 */
 	public interface ConverterFactory {
-		public Converter createConvertor(Class<?> type, Annotation[] annotations); 
+		public Converter<?> createConvertor(Class<?> type, Annotation[] annotations); 
 	}
 	
 /*---------------------------- constructors ----------------------------*/
@@ -110,10 +109,10 @@ public class ConversionService {
 	 * @param type
 	 * @return
 	 */
-	public Converter getConverter(Class<?> type, Annotation[] annotations) 
+	public Converter<?> getConverter(Class<?> type, Annotation[] annotations) 
 	{
 		for (ConverterFactory factory : factories) {
-			Converter convertor = factory.createConvertor(type, annotations);
+			Converter<?> convertor = factory.createConvertor(type, annotations);
 			if (convertor != null) {
 				return convertor;
 			}

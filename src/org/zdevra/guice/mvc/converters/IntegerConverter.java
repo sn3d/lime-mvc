@@ -35,15 +35,15 @@ public class IntegerConverter extends TypeConverter<Integer> {
 	 */
 	public static class Factory implements ConverterFactory {
 		
-		private final Converter integerConverter;
+		private final Converter<?> integerConverter;
 		
 		public Factory() {
 			this.integerConverter = new IntegerConverter();
 		}
 				
 		@Override
-		public Converter createConvertor(Class<?> type, Annotation[] annotations) {
-			if ((type == Integer.class) || (type == int.class)) {
+		public Converter<?> createConvertor(Class<?> type, Annotation[] annotations) {
+			if ((type == Integer.class) || (type == int.class) || (type == Integer[].class)) {
 				return integerConverter;
 			} else {
 				return null;
@@ -57,7 +57,7 @@ public class IntegerConverter extends TypeConverter<Integer> {
 	 * inner Factory class
 	 */
 	private IntegerConverter() {
-		super(Integer.class);
+		super();
 	}
 
 

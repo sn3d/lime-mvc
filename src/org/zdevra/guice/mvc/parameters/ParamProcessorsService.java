@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
 
+import org.zdevra.guice.mvc.exceptions.InvalidMethodParameterException;
+
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -35,7 +37,6 @@ import com.google.inject.Singleton;
 public class ParamProcessorsService {
 /*---------------------------- m. variables ----------------------------*/
 	
-	private final ParamProcessorFactory defaultFactory;	
 	private final Collection<ParamProcessorFactory> factories;
 
 /*---------------------------- constructors ----------------------------*/
@@ -43,12 +44,10 @@ public class ParamProcessorsService {
 	@Inject
 	public ParamProcessorsService(Set<ParamProcessorFactory> factories) {
 		this.factories = new ArrayList<ParamProcessorFactory>(factories);
-		this.defaultFactory = new DefaultParamFactory();
 	}
 		
 /*------------------------------- methods ------------------------------*/
-	
-	
+		
 	public ParamProcessor createProcessor(ParamMetadata metadata) {
 		for (ParamProcessorFactory factory : factories) {
 			ParamProcessor processor = factory.buildParamProcessor(metadata);
@@ -57,7 +56,7 @@ public class ParamProcessorsService {
 			}
 		}
 		
-		return defaultFactory.buildParamProcessor(metadata);
+		throw new InvalidMethodParameterException(metadata);
 	}
 
 /*----------------------------------------------------------------------*/

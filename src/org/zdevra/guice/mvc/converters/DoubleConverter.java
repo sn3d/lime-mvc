@@ -34,14 +34,14 @@ public class DoubleConverter extends TypeConverter<Double> {
 	 */
 	public static class Factory implements ConverterFactory {
 		
-		private final Converter doubleConverter;
+		private final Converter<?> doubleConverter;
 		
 		public Factory() {
 			this.doubleConverter = new DoubleConverter();
 		}
 
 		@Override
-		public Converter createConvertor(Class<?> type, Annotation[] annotations) {
+		public Converter<?> createConvertor(Class<?> type, Annotation[] annotations) {
 			if ((type == double.class) || (type == Double.class)) {
 				return doubleConverter;
 			} else {
@@ -55,7 +55,7 @@ public class DoubleConverter extends TypeConverter<Double> {
 	 * The hidden private constructor. The object is constructed throught the factory object 
 	 */
 	private DoubleConverter() {
-		super(Double.class);
+		super();
 	}
 
 	
@@ -69,7 +69,6 @@ public class DoubleConverter extends TypeConverter<Double> {
 			throw new IllegalConversionException("A conversion from the '" + stringValue + "' to the double failed");
 		}
 	}
-
 	
 /*----------------------------------------------------------------------*/
 

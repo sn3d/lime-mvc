@@ -30,6 +30,7 @@ import org.zdevra.guice.mvc.converters.DateConverter;
 import org.zdevra.guice.mvc.converters.DoubleConverter;
 import org.zdevra.guice.mvc.converters.FloatConverter;
 import org.zdevra.guice.mvc.converters.IntegerConverter;
+import org.zdevra.guice.mvc.converters.IntegerConverterFactory;
 import org.zdevra.guice.mvc.converters.LongConverter;
 import org.zdevra.guice.mvc.converters.StringConverter;
 import org.zdevra.guice.mvc.parameters.HttpPostParam;
@@ -152,8 +153,10 @@ public abstract class MvcModule extends ServletModule {
 			registerConverter(LongConverter.Factory.class);
 			registerConverter(FloatConverter.Factory.class);
 			registerConverter(LongConverter.Factory.class);
-			registerConverter(IntegerConverter.Factory.class);
+			//registerConverter(IntegerConverter.Factory.class);
+			registerConverter(IntegerConverterFactory.class);			
 			registerConverter(StringConverter.Factory.class);
+			
 						
 			bind(ParamProcessorsService.class);
 			registerParameterProc(HttpPostParam.Factory.class);			
@@ -163,7 +166,8 @@ public abstract class MvcModule extends ServletModule {
 			registerParameterProc(RequestParam.Factory.class);
 			registerParameterProc(ResponseParam.Factory.class);
 			registerParameterProc(HttpSessionParam.Factory.class);
-			registerParameterProc(InjectorParam.Factory.class);						
+			registerParameterProc(InjectorParam.Factory.class);
+			
 			
 			bind(ViewScannerService.class);
 			registerViewScanner(NamedViewScanner.class);

@@ -1,4 +1,3 @@
-import org.zdevra.guice.mvc.casePerformance.PerfTest;
 
 /*****************************************************************************
  * Copyright 2011 Zdenko Vrabel
@@ -17,6 +16,28 @@ import org.zdevra.guice.mvc.casePerformance.PerfTest;
  * 
  *****************************************************************************/
 
+class Trest<T> {
+	public T getTrest() {
+		return null;
+	}
+}
+
+
+class TrestInt extends Trest<Integer> {
+	@Override
+	public Integer getTrest() {
+		return 1;
+	}	
+}
+
+class TrestString extends Trest<String> {
+	@Override
+	public String getTrest() {
+		return "asd";
+	}	
+}
+
+
 /**
  * This class exists for debugging and testing
  * purpose.
@@ -26,22 +47,10 @@ public class Main {
 
 	public static void main(String[] args) {
 		try {			
-			/*
-			ConversionServiceTest t = new ConversionServiceTest();
-			t.init();
-			t.testBoolean();	
-			t.testDouble();
-			t.testLong();
-			t.testFloat();
-			t.testInteger();
-			t.testObject();
-			t.testString();
-			t.testDate();
-			*/
-			PerfTest t = new PerfTest();
-			t.prepare();
-			//t.testArticleDetailNamed();
-			t.testArticleDetailDirect();
+			Trest<?> x = new TrestInt();
+			x.getTrest();
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -80,7 +80,7 @@ public class DateConverter extends TypeConverter<Date> {
 	 */
 	public static class Factory implements ConverterFactory {
 		@Override
-		public Converter createConvertor(Class<?> type, Annotation[] annotations) {
+		public Converter<?> createConvertor(Class<?> type, Annotation[] annotations) {
 			if (type != Date.class) {
 				return null;
 			}
@@ -103,7 +103,6 @@ public class DateConverter extends TypeConverter<Date> {
 
 	
 	private DateConverter(DateFormat dateFormater, Date defaultDate) {
-		super(Date.class);
 		this.dateFormat = dateFormater;
 		this.defaultDate = defaultDate; 
 	}

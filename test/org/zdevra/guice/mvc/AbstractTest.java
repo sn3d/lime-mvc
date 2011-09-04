@@ -17,6 +17,8 @@
 package org.zdevra.guice.mvc;
 
 import java.io.IOException;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
@@ -68,9 +70,27 @@ public class AbstractTest {
 		//prepare request
 		ServletUnitClient sc = sr.newClient();
 		WebRequest request   = new GetMethodWebRequest( url );
-		InvocationContext ic = sc.newInvocation( request );		
-		
+						
 		//invoke request
+		InvocationContext ic = sc.newInvocation( request );
+		Servlet ss = ic.getServlet();
+		ss.service(ic.getRequest(), ic.getResponse());			
+		WebResponse response = ic.getServletResponse();
+				
+		return response;
+	}
+	
+	
+	public WebResponse executeFormularUrl(String url, Map<String, String[]> data) throws ServletException, IOException {
+		//prepare request
+		ServletUnitClient sc = sr.newClient();
+		WebRequest request   = new GetMethodWebRequest( url );		
+		for (Entry<String, String[]> entry : data.entrySet()) {
+			request.setParameter(entry.getKey(), entry.getValue());
+		}		
+						
+		//invoke request
+		InvocationContext ic = sc.newInvocation( request );
 		Servlet ss = ic.getServlet();
 		ss.service(ic.getRequest(), ic.getResponse());			
 		WebResponse response = ic.getServletResponse();

@@ -33,10 +33,10 @@ public class StringConverter extends TypeConverter<String> {
 	 */
 	public static class Factory implements ConverterFactory {
 		
-		private Converter stringConverter;
+		private Converter<?> stringConverter;
 
 		@Override
-		public Converter createConvertor(Class<?> type, Annotation[] annotations) {
+		public Converter<?> createConvertor(Class<?> type, Annotation[] annotations) {
 			if (type == String.class) {
 				if (stringConverter == null) {
 					stringConverter = new StringConverter();
@@ -54,7 +54,7 @@ public class StringConverter extends TypeConverter<String> {
 	 * Constructor
 	 */
 	private StringConverter() {
-		super(String.class);
+		super();
 	}
 	
 /*------------------------------- methods ------------------------------*/

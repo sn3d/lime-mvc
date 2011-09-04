@@ -13,7 +13,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 /**
- * This is test for automatic configuration module
+ * This is a test for automatic configuration module
  */
 @Test
 public class TestCase7 {

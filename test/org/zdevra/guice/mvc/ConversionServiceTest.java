@@ -99,7 +99,7 @@ public class ConversionServiceTest {
 		Method m = MyController.class.getMethods()[0];
 		Annotation[][] annotations = m.getParameterAnnotations();
 		
-		Converter converter = conversion.getConverter(Boolean.class, annotations[0]);		
+		Converter<?> converter = conversion.getConverter(Boolean.class, annotations[0]);		
 		Map<String, String[]> data = new HashMap<String, String[]>();
 		
 		//test with defined annotation
@@ -131,7 +131,7 @@ public class ConversionServiceTest {
 				
 		//test as array
 		data.put("val5", new String[] {"true", "false","false", "true"});
-		val = converter.convertArray("val5", data);
+		val = converter.convert("val5", data);
 		Assert.assertTrue(val instanceof Boolean[]);
 		Boolean[] array = (Boolean[])val;
 		Assert.assertTrue(array.length == 4);
@@ -145,7 +145,7 @@ public class ConversionServiceTest {
 	@Test
 	public void testObject() {
 		try {
-			Converter converter = conversion.getConverter(SomeObject.class, null);			
+			Converter<?> converter = conversion.getConverter(SomeObject.class, null);			
 			Assert.assertFalse("For unknown object the NoConverter exception have to be caught", true);
 		} catch (NoConverterException e) {
 			//OK
@@ -157,7 +157,7 @@ public class ConversionServiceTest {
 
 	@Test
 	public void testString() {
-		Converter converter = conversion.getConverter(String.class, null);
+		Converter<?> converter = conversion.getConverter(String.class, null);
 		Map<String, String[]> data = new HashMap<String, String[]>();
 		
 		data.put("val1", new String[] { "aaa" } );
@@ -169,7 +169,7 @@ public class ConversionServiceTest {
 		Assert.assertTrue("aaa".equals(val));
 		
 		//convert a array of strings
-		val = converter.convertArray("val2", data);
+		val = converter.convert("val2", data);
 		Assert.assertTrue(val instanceof String[]);
 		String[] arr = (String[])val;
 		Assert.assertTrue("bbb".equals(arr[0]));
@@ -188,7 +188,7 @@ public class ConversionServiceTest {
 
 		//test of conversion
 		data.put("val1", new String[] { "2011"} );
-		Converter converter = conversion.getConverter(Date.class, annotations[0]);
+		Converter<?> converter = conversion.getConverter(Date.class, annotations[0]);
 		Object val = converter.convert("val1", data);
 		
 		Assert.assertTrue(val instanceof Date);
@@ -217,7 +217,7 @@ public class ConversionServiceTest {
 		
 	@Test
 	public void testDouble() {
-		Converter converter = conversion.getConverter(Double.class, null);
+		Converter<?> converter = conversion.getConverter(Double.class, null);
 		
 		Map<String, String[]> data = new HashMap<String, String[]>();
 		data.put("val1", new String[] {"1.1"});
@@ -229,7 +229,7 @@ public class ConversionServiceTest {
 		Assert.assertTrue( new Double(1.1).equals(val) );
 		
 		//convert a array
-		val = converter.convertArray("val2", data);
+		val = converter.convert("val2", data);
 		Assert.assertTrue(val instanceof Double[]);
 		Double[] arr = (Double[])val;
 		Assert.assertTrue( new Double(2.2).equals(arr[0]));
@@ -240,7 +240,7 @@ public class ConversionServiceTest {
 	
 	@Test
 	public void testLong() {
-		Converter converter = conversion.getConverter(Long.class, null);
+		Converter<?> converter = conversion.getConverter(Long.class, null);
 		
 		Map<String, String[]> data = new HashMap<String, String[]>();
 		data.put("val1", new String[] {"1"});
@@ -252,7 +252,7 @@ public class ConversionServiceTest {
 		Assert.assertTrue( new Long(1).equals(val) );
 		
 		//convert a array
-		val = converter.convertArray("val2", data);
+		val = converter.convert("val2", data);
 		Assert.assertTrue(val instanceof Long[]);
 		Long[] arr = (Long[])val;
 		Assert.assertTrue( new Long(2).equals(arr[0]));
@@ -263,7 +263,7 @@ public class ConversionServiceTest {
 
 	@Test
 	public void testFloat() {
-		Converter converter = conversion.getConverter(Float.class, null);
+		Converter<?> converter = conversion.getConverter(Float.class, null);
 		
 		Map<String, String[]> data = new HashMap<String, String[]>();
 		data.put("val1", new String[] {"1.1f"});
@@ -275,7 +275,7 @@ public class ConversionServiceTest {
 		Assert.assertTrue( new Float(1.1f).equals(val) );
 		
 		//convert a array
-		val = converter.convertArray("val2", data);
+		val = converter.convert("val2", data);
 		Assert.assertTrue(val instanceof Float[]);
 		Float[] arr = (Float[])val;
 		Assert.assertTrue( new Float(2.2f).equals(arr[0]));
@@ -286,7 +286,7 @@ public class ConversionServiceTest {
 	
 	@Test
 	public void testInteger() {
-		Converter converter = conversion.getConverter(Integer.class, null);
+		Converter<?> converter = conversion.getConverter(Integer.class, null);
 		
 		Map<String, String[]> data = new HashMap<String, String[]>();
 		data.put("val1", new String[] {"1"});
@@ -298,7 +298,7 @@ public class ConversionServiceTest {
 		Assert.assertTrue( new Integer(1).equals(val) );
 		
 		//convert a array
-		val = converter.convertArray("val2", data);
+		val = converter.convert("val2", data);
 		Assert.assertTrue(val instanceof Integer[]);
 		Integer[] arr = (Integer[])val;
 		Assert.assertTrue( new Integer(2).equals(arr[0]));

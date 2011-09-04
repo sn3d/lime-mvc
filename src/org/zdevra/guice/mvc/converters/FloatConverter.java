@@ -34,14 +34,14 @@ public class FloatConverter extends TypeConverter<Float> {
 	 */
 	public static class Factory implements ConverterFactory {
 		
-		private final Converter floatConverter;
+		private final Converter<?> floatConverter;
 		
 		public Factory() {
 			this.floatConverter = new FloatConverter();
 		}
 
 		@Override
-		public Converter createConvertor(Class<?> type, Annotation[] annotations) {
+		public Converter<?> createConvertor(Class<?> type, Annotation[] annotations) {
 			if ((type == Float.class) || (type == float.class)) {
 				return floatConverter;
 			} else {
@@ -55,7 +55,7 @@ public class FloatConverter extends TypeConverter<Float> {
 	 * private constructor
 	 */
 	private FloatConverter() {
-		super(Float.class);
+		super();
 	}
 
 	
