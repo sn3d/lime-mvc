@@ -1,6 +1,7 @@
 bin/[^.]*
 lib/[^.]*
 target/[^.]*
+test-output/[^.]*
 docs/java-api/[^.]*
 build.properties
 *.jar
