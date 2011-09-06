@@ -17,9 +17,9 @@ public class BooleanConverterFactory implements ConverterFactory {
 		if ((type == boolean.class) || (type == Boolean.class)) {
 			return new BooleanConverter(Utils.getAnnotation(BooleanConv.class, annotations));
 		} else if (type == boolean[].class) {
-			return new BooleanObjArrayConverter(Utils.getAnnotation(BooleanConv.class, annotations));
-		} else if (type == Boolean[].class) {
 			return new BooleanArrayConverter(Utils.getAnnotation(BooleanConv.class, annotations));
+		} else if (type == Boolean[].class) {
+			return new BooleanObjArrayConverter(Utils.getAnnotation(BooleanConv.class, annotations));
 		}
 		 
 		return null;
@@ -119,5 +119,7 @@ public class BooleanConverterFactory implements ConverterFactory {
 		}
 		return Boolean.parseBoolean(stringValue);		
 	}
+
+// ------------------------------------------------------------------------
 
 }

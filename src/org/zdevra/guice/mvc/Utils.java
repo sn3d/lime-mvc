@@ -38,8 +38,7 @@ public final class Utils {
 	/**
 	 * Method searchs annotation in annotations array and return
 	 * it. If annotation is not occured, then method return null.
-	 *  
-	 * @param lookingForAnnotation
+	 *
 	 * @param annotations
 	 * @return 
 	 * 

@@ -3,10 +3,14 @@ lib/[^.]*
 target/[^.]*
 test-output/[^.]*
 docs/java-api/[^.]*
+out/[^.]*
 build.properties
 *.jar
+*.iml
+*.iws
+*.ipr
 .project
 .classpath
 .settings/[^.]*
-
+[^.]*.iml
 bin/.empty

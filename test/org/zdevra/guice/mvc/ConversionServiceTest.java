@@ -32,15 +32,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.zdevra.guice.mvc.ConversionService.Converter;
 import org.zdevra.guice.mvc.ConversionService.ConverterFactory;
-import org.zdevra.guice.mvc.converters.BooleanConv;
-import org.zdevra.guice.mvc.converters.BooleanConverter;
-import org.zdevra.guice.mvc.converters.DateConv;
-import org.zdevra.guice.mvc.converters.DateConverter;
-import org.zdevra.guice.mvc.converters.DoubleConverter;
-import org.zdevra.guice.mvc.converters.FloatConverter;
-import org.zdevra.guice.mvc.converters.IntegerConverter;
-import org.zdevra.guice.mvc.converters.LongConverter;
-import org.zdevra.guice.mvc.converters.StringConverter;
+import org.zdevra.guice.mvc.converters.*;
 import org.zdevra.guice.mvc.exceptions.NoConverterException;
 
 @Test
@@ -83,14 +75,14 @@ public class ConversionServiceTest {
 	@BeforeTest
 	public void init() {	
 		Set<ConverterFactory> converters = new HashSet<ConverterFactory>();
-		converters.add(new DateConverter.Factory());
-		converters.add(new BooleanConverter.Factory());
-		converters.add(new DoubleConverter.Factory());
-		converters.add(new LongConverter.Factory());
-		converters.add(new FloatConverter.Factory());
-		converters.add(new IntegerConverter.Factory());
-		converters.add(new StringConverter.Factory());
-		conversion = new ConversionService(converters);		
+        converters.add(new DateConverterFactory());
+        converters.add(new BooleanConverterFactory());
+        converters.add(new DoubleConverterFactory());
+        converters.add(new FloatConverterFactory());
+        converters.add(new IntegerConverterFactory());
+        converters.add(new LongConverterFactory());
+        converters.add(new StringConverterFactory());
+		conversion = new ConversionService(converters);
 	}
 	
 	
@@ -130,6 +122,7 @@ public class ConversionServiceTest {
 		Assert.assertTrue(Boolean.FALSE == val);
 				
 		//test as array
+        converter = conversion.getConverter(Boolean[].class, null);
 		data.put("val5", new String[] {"true", "false","false", "true"});
 		val = converter.convert("val5", data);
 		Assert.assertTrue(val instanceof Boolean[]);
@@ -169,6 +162,7 @@ public class ConversionServiceTest {
 		Assert.assertTrue("aaa".equals(val));
 		
 		//convert a array of strings
+        converter = conversion.getConverter(String[].class, null);
 		val = converter.convert("val2", data);
 		Assert.assertTrue(val instanceof String[]);
 		String[] arr = (String[])val;
@@ -229,6 +223,7 @@ public class ConversionServiceTest {
 		Assert.assertTrue( new Double(1.1).equals(val) );
 		
 		//convert a array
+        converter = conversion.getConverter(Double[].class, null);
 		val = converter.convert("val2", data);
 		Assert.assertTrue(val instanceof Double[]);
 		Double[] arr = (Double[])val;
@@ -252,12 +247,24 @@ public class ConversionServiceTest {
 		Assert.assertTrue( new Long(1).equals(val) );
 		
 		//convert a array
+        converter = conversion.getConverter(Long[].class, null);
 		val = converter.convert("val2", data);
 		Assert.assertTrue(val instanceof Long[]);
 		Long[] arr = (Long[])val;
 		Assert.assertTrue( new Long(2).equals(arr[0]));
 		Assert.assertTrue( new Long(3).equals(arr[1]));
 		Assert.assertTrue( new Long(4).equals(arr[2]));
+
+
+		//convert a array
+        converter = conversion.getConverter(long[].class, null);
+		val = converter.convert("val2", data);
+		Assert.assertTrue(val instanceof long[]);
+		long[] arr2 = (long[])val;
+		Assert.assertTrue( new Long(2).equals(arr2[0]));
+		Assert.assertTrue( new Long(3).equals(arr2[1]));
+		Assert.assertTrue( new Long(4).equals(arr2[2]));
+
 	}
 
 
@@ -275,6 +282,7 @@ public class ConversionServiceTest {
 		Assert.assertTrue( new Float(1.1f).equals(val) );
 		
 		//convert a array
+        converter = conversion.getConverter(Float[].class, null);
 		val = converter.convert("val2", data);
 		Assert.assertTrue(val instanceof Float[]);
 		Float[] arr = (Float[])val;
@@ -298,6 +306,7 @@ public class ConversionServiceTest {
 		Assert.assertTrue( new Integer(1).equals(val) );
 		
 		//convert a array
+        converter = conversion.getConverter(Integer[].class, null);
 		val = converter.convert("val2", data);
 		Assert.assertTrue(val instanceof Integer[]);
 		Integer[] arr = (Integer[])val;
