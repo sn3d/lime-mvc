@@ -23,10 +23,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * The annontation tells to the convertor how to convert a string value to the date.
- * See the {@link DateConverter} class if you are insteresting how to use this annotation.
+ * The anontation tells to the converter how to convert a string value to the date.
+ * See the {@link DateConverterFactory} class if you are interesting how to use this annotation.
  * 
- * @see DateConverter
+ * @see DateConverterFactory
  */
 @Retention(RUNTIME)
 @Target({ ElementType.FIELD, ElementType.PARAMETER })

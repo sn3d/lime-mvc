@@ -54,7 +54,7 @@
 	</target>
 
 	<target name="retrieve-libs" depends="preinit, proxy" description="retrieve libs">
-		<ivy:retrieve pattern="${lib}/[conf]/[artifact](-[classifier]).[ext]"/>
+		<ivy:retrieve pattern="${lib}/[conf]/[artifact](-[classifier]).[ext]"/> 
 	</target>
 
 	<target name="init" depends="preinit, init-dirs, retrieve-libs">

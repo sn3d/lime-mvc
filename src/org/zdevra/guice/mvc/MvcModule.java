@@ -25,14 +25,7 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServlet;
 
 import org.zdevra.guice.mvc.ConversionService.ConverterFactory;
-import org.zdevra.guice.mvc.converters.BooleanConverter;
-import org.zdevra.guice.mvc.converters.DateConverter;
-import org.zdevra.guice.mvc.converters.DoubleConverter;
-import org.zdevra.guice.mvc.converters.FloatConverter;
-import org.zdevra.guice.mvc.converters.IntegerConverter;
-import org.zdevra.guice.mvc.converters.IntegerConverterFactory;
-import org.zdevra.guice.mvc.converters.LongConverter;
-import org.zdevra.guice.mvc.converters.StringConverter;
+import org.zdevra.guice.mvc.converters.*;
 import org.zdevra.guice.mvc.parameters.HttpPostParam;
 import org.zdevra.guice.mvc.parameters.HttpSessionParam;
 import org.zdevra.guice.mvc.parameters.InjectorParam;
@@ -147,16 +140,13 @@ public abstract class MvcModule extends ServletModule {
 				.to(DefaultExceptionHandler.class);
 			
 			bind(ConversionService.class).asEagerSingleton();
-			registerConverter(BooleanConverter.Factory.class);
-			registerConverter(DateConverter.Factory.class);
-			registerConverter(DoubleConverter.Factory.class);
-			registerConverter(LongConverter.Factory.class);
-			registerConverter(FloatConverter.Factory.class);
-			registerConverter(LongConverter.Factory.class);
-			//registerConverter(IntegerConverter.Factory.class);
-			registerConverter(IntegerConverterFactory.class);			
-			registerConverter(StringConverter.Factory.class);
-			
+			registerConverter(new BooleanConverterFactory());
+			registerConverter(new DateConverterFactory());
+			registerConverter(new DoubleConverterFactory());
+			registerConverter(new LongConverterFactory());
+			registerConverter(new FloatConverterFactory());
+			registerConverter(new IntegerConverterFactory());
+			registerConverter(new StringConverterFactory());
 						
 			bind(ParamProcessorsService.class);
 			registerParameterProc(HttpPostParam.Factory.class);			

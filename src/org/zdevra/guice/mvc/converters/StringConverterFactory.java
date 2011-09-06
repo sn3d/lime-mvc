@@ -34,14 +34,15 @@ public class StringConverterFactory implements ConversionService.ConverterFactor
     }
 
 
-    private static class StringArrayConverter implements ConversionService.Converter<String[]> {
+    private static class StringArrayConverter extends ArrayConverter<String> {
+
+        private StringArrayConverter() {
+            super(new String[]{});
+        }
+
         @Override
-        public String[] convert(String name, Map<String, String[]> data) {
-            String[] values = data.get(name);
-            if (values == null) {
-                return new String[] {};
-            }
-            return values;
+        protected String convertItem(String value) {
+            return value;
         }
     }
 

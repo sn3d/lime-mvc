@@ -49,7 +49,6 @@ public class DateConverterFactory implements ConversionService.ConverterFactory 
             this.defaultDate = defaultDate;
         }
 
-
         @Override
         protected Date convertType(String stringValue) {
             try {
