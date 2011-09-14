@@ -7,6 +7,11 @@ import java.util.Map;
 
 import org.zdevra.guice.mvc.ConversionService.Converter;
 
+/**
+ * Converter provide conversion from request to the array of simple types as integer,
+ * long, enumerations. This converter is not suitable for complex objects with multiple
+ * values.
+ */
 public abstract class ArrayConverter<T> implements Converter<T[]> {
 	
 // ------------------------------------------------------------------------
