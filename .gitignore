@@ -14,3 +14,10 @@ build.properties
 .settings/[^.]*
 [^.]*.iml
 bin/.empty
+*.DS_Store
+*~
+examples/velocity/target/[^.]*
+examples/jsilver/target/[^.]*
+examples/freemarker/target/[^.]*
+examples/converters/target/[^.]*
+

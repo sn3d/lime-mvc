@@ -1,0 +1,14 @@
+<HTML>
+<BODY>
+
+	<?cs each:name = names ?>
+		<DIV> Name: <?cs var:name ?> </DIV>
+	<?cs /each ?>	
+		
+	<FORM action="add" method="post">
+		<b>Add name</b><br>
+		Name: <input type="text" name="name" /> <input type="submit" value="Submit" />
+	</FORM>
+		
+</BODY>
+</HTML>

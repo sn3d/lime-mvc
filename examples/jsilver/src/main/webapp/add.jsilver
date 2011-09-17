@@ -1,0 +1,10 @@
+<HTML>
+<BODY>
+	<?cs if:addName == "true" ?>
+		<DIV> Name has been added </DIV>
+	<?cs else ?>
+		<DIV> Limit of names has been exhausted </DIV>
+	<?cs /if ?>	
+	<a href="names">back</a>
+</BODY>
+</HTML>
