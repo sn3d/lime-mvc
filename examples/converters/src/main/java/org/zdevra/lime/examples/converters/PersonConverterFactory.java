@@ -2,6 +2,7 @@ package org.zdevra.lime.examples.converters;
 
 
 import org.zdevra.guice.mvc.ConversionService;
+import org.zdevra.guice.mvc.converters.AbstractConverter;
 import org.zdevra.guice.mvc.converters.ArrayConverter;
 import org.zdevra.guice.mvc.converters.TypeConverter;
 
@@ -45,6 +46,18 @@ public class PersonConverterFactory implements ConversionService.ConverterFactor
                 return "";
             }
             return values[0];
+        }
+    }
+
+    private static class Test extends AbstractConverter<Person> {
+
+        public Person convert(String nameInForm, Map<String, String[]> data) {
+            String personName    = getValue(nameInForm + "-name", data);
+            String personSurname = getValue(nameInForm + "-surname", data);
+            String personEmail   = getValue(nameInForm + "-email", data);
+            int    personAge     = getValueInt(nameInForm + "-age", data);
+            return new Person(personName, personSurname, personEmail, personAge);
+
         }
     }
 
