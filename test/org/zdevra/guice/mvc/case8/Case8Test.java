@@ -15,10 +15,10 @@ import com.meterware.httpunit.WebResponse;
 /**
  * A test tests the parameter conversions and custom param conversion as well.
  */
-public class TestCase8 extends AbstractTest {
+public class Case8Test extends AbstractTest {
 
 	
-	public TestCase8() {
+	public Case8Test() {
 		super(Case8Servlet.class);
 	}
 	

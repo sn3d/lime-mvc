@@ -18,11 +18,11 @@ import org.zdevra.guice.mvc.ConversionService;
  * This is a test for automatic configuration module
  */
 @Test
-public class TestCase7 {
+public class Case7Test {
 
     @Test
 	public void testBasic() {
-		AutoConfMvcModule module = new AutoConfMvcModule(TestCase7.class, "org.zdevra.guice.mvc.case7");
+		AutoConfMvcModule module = new AutoConfMvcModule(Case7Test.class, "org.zdevra.guice.mvc.case7");
 
 		Injector injector = Guice.createInjector(module);		
 		List<HttpServlet> servlets = module.getServlets();
@@ -37,7 +37,7 @@ public class TestCase7 {
         //autoconf for converters
         ConversionService conversionService = injector.getInstance(ConversionService.class);
         Assert.assertNotNull(conversionService);
-        ConversionService.Converter<?> converter = conversionService.getConverter(TestCase7.class, new Annotation[]{});
+        ConversionService.Converter<?> converter = conversionService.getConverter(Case7Test.class, new Annotation[]{});
         Assert.assertNotNull(converter);
 		
 		System.out.println("END");
