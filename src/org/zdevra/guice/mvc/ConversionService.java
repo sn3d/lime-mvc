@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
+import org.zdevra.guice.mvc.converters.NoConverterFactory;
 import org.zdevra.guice.mvc.exceptions.NoConverterException;
 
 import com.google.inject.Inject;
@@ -28,8 +29,7 @@ import com.google.inject.Singleton;
 
 /**
  * The class provides conversions from incomming strings from HTTP requests 
- * to a various datatypes. If there is no converter for that datatype, 
- * then is used {@link DefaultConverter}. 
+ * to a various datatypes.
  * 
  * The class is used internally by {@link MethodInvokerImpl}.
  * 
@@ -88,21 +88,7 @@ public class ConversionService {
 	}
 	
 /*------------------------------- methods ------------------------------*/
-			
-	
-	/**
-	 * Method converts string value to object.
-	 */
-	/*
-	public Object convert(Class<?> type, Annotation[] annotations, String name, Map<String, String[]> data) 
-	{	
-		Converter converter = getConverter(type, annotations);
-		Object convertedVal = converter.convert(name, data);		
-		return convertedVal;
-	}
-	*/
-	
-	
+
 	/**
 	 * Method return right converter for type
 	 * 
@@ -112,14 +98,36 @@ public class ConversionService {
 	public Converter<?> getConverter(Class<?> type, Annotation[] annotations) 
 	{
 		for (ConverterFactory factory : factories) {
-			Converter<?> convertor = factory.createConvertor(type, annotations);
-			if (convertor != null) {
-				return convertor;
+			Converter<?> converter = factory.createConvertor(type, annotations);
+			if (converter != null) {
+				return converter;
 			}
 		}
 		
 		throw new NoConverterException(type);
 	}
+
+
+    /**
+     * Method return converter from given factory class. If factory class is {@link NoConverterFactory}, then
+     * is called origin method of getConverter()
+     */
+    public Converter<?> getConverter(Class<? extends ConverterFactory> converterFactoryClass, Class<?> type, Annotation[] annotations)
+    {
+        if (converterFactoryClass == NoConverterFactory.class) {
+            return  getConverter(type, annotations);
+        }
+
+        for (ConverterFactory factory : factories) {
+            if (factory.getClass() == converterFactoryClass) {
+                Converter<?> converter = factory.createConvertor(type, annotations);
+                if (converter != null) {
+                    return converter;
+                }
+            }
+        }
+        throw new NoConverterException(converterFactoryClass, type);
+    }
 
 
 /*----------------------------------------------------------------------*/

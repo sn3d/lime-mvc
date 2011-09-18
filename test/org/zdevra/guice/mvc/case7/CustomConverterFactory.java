@@ -10,7 +10,7 @@ public class CustomConverterFactory implements ConversionService.ConverterFactor
 {
     @Override
     public ConversionService.Converter<?> createConvertor(Class<?> type, Annotation[] annotations) {
-        if (type == TestCase7.class) {
+        if (type == Case7Test.class) {
             return new CustomConverter();
         }
         return null;

@@ -24,6 +24,7 @@ import org.zdevra.guice.mvc.ConversionService.Converter;
 import org.zdevra.guice.mvc.InvokeData;
 import org.zdevra.guice.mvc.RequestParameter;
 import org.zdevra.guice.mvc.Utils;
+import org.zdevra.guice.mvc.converters.NoConverterFactory;
 
 /**
  * The parameter's processor is executed when method's parameter is annotated by
@@ -52,6 +53,16 @@ import org.zdevra.guice.mvc.Utils;
  *    ...
  * }
  * </pre>
+ *
+ *
+ * You may explicitly define converter for value. Example below show how to explicitly choose concrete
+ * converter (via his factory)
+ * <pre class="prettyprint">
+ * {@literal @}Path("/control")
+ * public void controllerMethod({@literal @}RequestParameter(value="param", converterFactory=CustomConverterFactory.class) int[] values) {
+ *    ...
+ * }
+ * </pre>
  *   
  * @see org.zdevra.guice.mvc.RequestParameter
  */
@@ -77,10 +88,10 @@ public class HttpPostParam implements ParamProcessor {
 			if (annotation == null) {
 				return null;
 			}
-			
-			Converter typeConverter 
-				= convrtService.getConverter(paramType, paramAnnotations);
-				
+
+            //choose converter (explicit defined in annotation or implicit if annotation contains NoConverterFactory value)
+            Converter typeConverter = typeConverter = convrtService.getConverter(annotation.converterFactory(), paramType, paramAnnotations);
+
 			return new HttpPostParam(annotation.value(), typeConverter);						
 		}		
 	}

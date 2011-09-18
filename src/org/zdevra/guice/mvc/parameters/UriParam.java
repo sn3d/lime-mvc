@@ -60,8 +60,10 @@ public final class UriParam implements ParamProcessor {
 			if (annotation == null) {
 				return null;
 			}
-			
-			Converter typeConverter = convrtService.getConverter(paramType, paramAnnotations);						
+
+			//choose converter (explicit defined in annotation or implicit if annotation contains NoConverterFactory value)
+			Converter typeConverter = convrtService.getConverter(annotation.converterFactory(), paramType, paramAnnotations);
+
 			return new UriParam(annotation.value(), typeConverter);
 		}		
 	}

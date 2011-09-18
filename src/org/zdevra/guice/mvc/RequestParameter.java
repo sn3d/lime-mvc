@@ -16,6 +16,8 @@
  *****************************************************************************/
 package org.zdevra.guice.mvc;
 
+import org.zdevra.guice.mvc.converters.NoConverterFactory;
+
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import java.lang.annotation.ElementType;
@@ -68,4 +70,5 @@ import java.lang.annotation.Target;
 @Target({ ElementType.FIELD, ElementType.PARAMETER })
 public @interface RequestParameter {
 	String value();
+    Class<? extends ConversionService.ConverterFactory> converterFactory() default NoConverterFactory.class;
 }
