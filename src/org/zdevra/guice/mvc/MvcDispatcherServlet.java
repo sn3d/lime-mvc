@@ -51,8 +51,8 @@ class MvcDispatcherServlet extends HttpServlet {
 	@Inject private ViewResolver viewResolver;
 	@Inject private ExceptionResolver exceptionResolver;
 
-	private final Collection<Class<?>> controllers;
-	private Collection<ClassInvoker> classInvokers;	
+	protected final Collection<Class<?>> controllers;
+	protected Collection<ClassInvoker> classInvokers;
 	
 // ------------------------------------------------------------------------
 	
@@ -71,7 +71,7 @@ class MvcDispatcherServlet extends HttpServlet {
 
 	/**
 	 * Constructor for testing purpose
-	 * @param controllerClass
+	 * @param controllers
 	 * @param injector
 	 */
 	public MvcDispatcherServlet(Class<?>[] controllers, Injector injector) {
@@ -93,7 +93,7 @@ class MvcDispatcherServlet extends HttpServlet {
 	
 	/**
 	 * Constructor used by MvcModule
-	 * @param controllerClass
+	 * @param controllers
 	 */
 	public MvcDispatcherServlet(Class<?>[] controllers) {
 		this( Arrays.asList( controllers ) );
@@ -190,7 +190,7 @@ class MvcDispatcherServlet extends HttpServlet {
 	
 // ------------------------------------------------------------------------
 			
-	private ModelAndView invoke(InvokeData data) {
+	protected ModelAndView invoke(InvokeData data) {
 		ModelAndView mav = new ModelAndView();
 				
 		int invokedcount = 0;		
