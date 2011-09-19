@@ -37,7 +37,7 @@ public class Case8Test extends AbstractTest {
 		Map<String, String[]> data = new HashMap<String, String[]>();
 		data.put("number", new String[] { "1" });
 		data.put("array",  new String[] { "1", "2" });
-		
+
 		WebResponse resp = executeFormularUrl("http://www.test.com/test/int/single", data);
 		String out = resp.getText();
 		System.out.println(out);
@@ -57,8 +57,30 @@ public class Case8Test extends AbstractTest {
 		out = resp.getText();
 		System.out.println(out);
 		Assert.assertTrue(out.contains("viewId=0 test message:ok"));
-		
+
 	}
+
+    @Test
+    public void testExplicitConverter() throws IOException, ServletException {
+        Map<String, String[]> data = new HashMap<String, String[]>();
+        data.put("person-name",     new String[] { "Peter" });
+        data.put("person-surname",  new String[] { "Jacobs" });
+
+        WebResponse resp = executeFormularUrl("http://www.test.com/test/person/one",     data);
+        String out = resp.getText();
+        System.out.println(out);
+        Assert.assertTrue(out.contains("one: Person{name='1 Peter', surname='1 Jacobs'}"));
+
+        resp = executeFormularUrl("http://www.test.com/test/person/two",     data);
+        out = resp.getText();
+        System.out.println(out);
+        Assert.assertTrue(out.contains("two: Person{name='2 Peter', surname='2 Jacobs'}"));
+
+        resp = executeFormularUrl("http://www.test.com/test/person/default", data);
+        out = resp.getText();
+        System.out.println(out);
+        Assert.assertTrue(out.contains("default: Person{name='1 Peter', surname='1 Jacobs'}"));
+    }
 
 	
 	

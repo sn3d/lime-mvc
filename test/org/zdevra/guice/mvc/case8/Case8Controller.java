@@ -49,4 +49,26 @@ public class Case8Controller {
 		return "ok";
 	}
 
+
+    @Path("/person/default") @ModelName("msg")
+    public String convertPersonDefault( @RequestParameter("person") Person p )
+    {
+        return "default: " + p.toString();
+    }
+
+
+    @Path("/person/one") @ModelName("msg")
+    public String convertPersonOne( @RequestParameter(value="person", converterFactory=FirstPersonConverterFactory.class) Person p )
+    {
+        return "one: " +  p.toString();
+    }
+
+
+    @Path("/person/two") @ModelName("msg")
+    public String convertPersonTwo( @RequestParameter(value="person", converterFactory=SecondPersonConverterFactory.class) Person p )
+    {
+        return "two: " +  p.toString();
+    }
+
+
 }
