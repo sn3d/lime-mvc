@@ -286,19 +286,31 @@ public abstract class MvcModule extends ServletModule {
 	{
 		return this.controllerModuleBuilder.control(urlPattern);
 	}
+
+
+    /**
+     * Method bind controller class to the concrete url and methods are executed asynchronnous.
+     * @param urlPattern
+     * @return
+     */
+    protected final ControllerAndViewBindingBuilder controlAsync(String urlPattern)
+    {
+        return this.controllerModuleBuilder.control(urlPattern);
+    }
+
 	
 // ------------------------------------------------------------------------	
-	
+
 	public static interface ControllerBindingBuilder {
 		public ControllerBindingBuilder withController(Class<?> controller);
 	}
 	
-	
+
 	public static interface ControllerAndViewBindingBuilder {
 		public ControllerBindingBuilder withController(Class<?> controller);
 		public void withView(String name);
 		public void withView(View viewInstance);
-	}		
+	}
 	
 	
 	public static interface ExceptionResolverBindingBuilder {

@@ -20,7 +20,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 
-public class TestServlet extends MvcDispatcherServlet {
+public class TestServlet extends MvcAsyncDispatcherServlet {
 	
 	public TestServlet(Class<?>[] controllers, MvcModule module) {
 		super(controllers, Guice.createInjector(module) );

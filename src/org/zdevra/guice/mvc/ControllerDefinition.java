@@ -26,7 +26,7 @@ import com.google.inject.Binder;
 
 
 /**
- * The class represent definition of controller in controller building process
+ * The class represent definition of controllers in controller building process
  * and creates the MvcDispatcherServler as well.
  * 
  * This class is mainly used by {@link MvcDispatcherServlet}
@@ -34,17 +34,32 @@ import com.google.inject.Binder;
 class ControllerDefinition extends ServletDefinition {
 	
 // ------------------------------------------------------------------------
-	
+
 	private static final Logger logger = Logger.getLogger(ControllerDefinition.class.getName());
-	private List<Class<?>> controllers;
+    public static final Factory FACTORY = new Factory();
+	protected List<Class<?>> controllers;
 	
 // ------------------------------------------------------------------------
 
-	
-	public ControllerDefinition(String urlPattern) {
+
+    /**
+     * Hidden constructor. The class is instantiated via ServletDefinition.Factory
+     * interface.
+     */
+	protected ControllerDefinition(String urlPattern) {
 		super(urlPattern);
 		this.controllers = new ArrayList<Class<?>>(10);
 	}
+
+
+    /**
+     * Factory's implementation creates the instance of ControllerDefinition
+     */
+    public static class Factory {
+        public ControllerDefinition create(String urlPattern) {
+            return new ControllerDefinition(urlPattern);
+        }
+    }
 	
 	
 // ------------------------------------------------------------------------

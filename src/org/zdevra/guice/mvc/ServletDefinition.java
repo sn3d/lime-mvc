@@ -9,7 +9,9 @@ import com.google.inject.Binder;
  * compose the all necessary data for servlet.
  */
 abstract class ServletDefinition {
-	
+
+// ------------------------------------------------------------------------
+
 // ------------------------------------------------------------------------
 	
 	private final String urlPattern;

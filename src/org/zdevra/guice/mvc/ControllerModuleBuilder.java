@@ -36,7 +36,7 @@ class ControllerModuleBuilder  {
 // ------------------------------------------------------------------------
 	
 	private String actualUrlPattern;
-	private ControllerDefinition actualControllerDefinition = null;
+	private ControllerDefinition actualControllersDefinition = null;
 	private List<ServletDefinition> servletDefinitions = new LinkedList<ServletDefinition>();
 	
 // ------------------------------------------------------------------------
@@ -44,24 +44,35 @@ class ControllerModuleBuilder  {
 	private class ControllerBindingBuilderImpl implements ControllerBindingBuilder {				
 		@Override
 		public final ControllerBindingBuilder withController(Class<?> controller) {			
-			actualControllerDefinition.addController(controller);
+			actualControllersDefinition.addController(controller);
 			return this;
 		}					
 	}
 	
 	private class ControllerAndViewBindingBuilderImpl implements ControllerAndViewBindingBuilder {
 
+        private ControllerDefinition.Factory definitionFactory;
+
+        public ControllerAndViewBindingBuilderImpl(ControllerDefinition.Factory definitionFactory) {
+            this.definitionFactory = definitionFactory;
+        }
+
 		@Override
-		public ControllerBindingBuilder withController(Class<?> controller) {
-			if (actualControllerDefinition != null) {
-				servletDefinitions.add(actualControllerDefinition);
+		public ControllerBindingBuilder withController(Class<?> controller)
+        {
+            //store prev. controller definition
+			if (actualControllersDefinition != null) {
+				servletDefinitions.add(actualControllersDefinition);
 			}
-			actualControllerDefinition = new ControllerDefinition(actualUrlPattern);
-			actualControllerDefinition.addController(controller);
+
+            //create new actual definition.
+            actualControllersDefinition = definitionFactory.create(actualUrlPattern);
+			actualControllersDefinition.addController(controller);
+
 			return new ControllerBindingBuilderImpl();
 		}
 
-		@Override
+        @Override
 		public void withView(String name) {
 			ServletDefinition def = new DirectViewDefinition(actualUrlPattern, NamedView.create(name));
 			servletDefinitions.add(def);
@@ -80,13 +91,19 @@ class ControllerModuleBuilder  {
 		
 	public final ControllerAndViewBindingBuilder control(String urlPattern) {
 		actualUrlPattern = urlPattern;
-		return new ControllerAndViewBindingBuilderImpl();
+		return new ControllerAndViewBindingBuilderImpl(ControllerDefinition.FACTORY);
 	}
-	
-	
+
+
+    public final ControllerAndViewBindingBuilder controlAsync(String urlPattern) {
+        actualUrlPattern = urlPattern;
+        return new ControllerAndViewBindingBuilderImpl(AsyncControllerDefinition.FACTORY);
+    }
+
+
 	public List<ServletDefinition> getControllerDefinitions() {
-		if (actualControllerDefinition != null) {
-			servletDefinitions.add(actualControllerDefinition);
+		if (actualControllersDefinition != null) {
+			servletDefinitions.add(actualControllersDefinition);
 		}
 		return servletDefinitions;
 	}

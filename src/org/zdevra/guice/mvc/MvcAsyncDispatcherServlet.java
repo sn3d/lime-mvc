@@ -140,7 +140,7 @@ public class MvcAsyncDispatcherServlet extends MvcDispatcherServlet {
             }
             mavResult.getModel().moveObjectsToRequestAttrs(data.getRequest());
 
-            return super.invoke(data);
+            return mavResult;
         } catch (InterruptedException e) {
             throw new NoMethodInvoked(data.getRequest());
         }
