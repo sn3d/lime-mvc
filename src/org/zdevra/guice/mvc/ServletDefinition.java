@@ -11,8 +11,6 @@ import com.google.inject.Binder;
 abstract class ServletDefinition {
 
 // ------------------------------------------------------------------------
-
-// ------------------------------------------------------------------------
 	
 	private final String urlPattern;
 	
