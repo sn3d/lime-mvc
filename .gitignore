@@ -20,4 +20,5 @@ examples/velocity/target/[^.]*
 examples/jsilver/target/[^.]*
 examples/freemarker/target/[^.]*
 examples/converters/target/[^.]*
+examples/async/target/[^.]*
 
