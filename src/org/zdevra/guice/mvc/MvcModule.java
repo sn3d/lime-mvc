@@ -295,7 +295,7 @@ public abstract class MvcModule extends ServletModule {
      */
     protected final ControllerAndViewBindingBuilder controlAsync(String urlPattern)
     {
-        return this.controllerModuleBuilder.control(urlPattern);
+        return this.controllerModuleBuilder.controlAsync(urlPattern);
     }
 
 	

@@ -31,7 +31,18 @@ public class AsyncControllerDefinition extends ControllerDefinition {
 // ------------------------------------------------------------------------
 
     private static final Logger  logger  = Logger.getLogger(AsyncControllerDefinition.class.getName());
-    public  static final Factory FACTORY = new Factory();
+    public  static final Factory ASYNCFACTORY = new AsyncFactory();
+
+// ------------------------------------------------------------------------
+
+    /**
+     * Factory's implementation creates the instance of ControllerDefinition
+     */
+    public static class AsyncFactory extends Factory {
+        public ControllerDefinition create(String urlPattern) {
+            return new AsyncControllerDefinition(urlPattern);
+        }
+    }
 
 // ------------------------------------------------------------------------
 
@@ -47,6 +58,6 @@ public class AsyncControllerDefinition extends ControllerDefinition {
     @Override
     public HttpServlet createServlet(Binder binder) {
         logger.info("for path '" + getUrlPattern() + "' should be registered follwing async controllers: " + this.controllers);
-        return new MvcDispatcherServlet(this.controllers);
+        return new MvcAsyncDispatcherServlet(this.controllers);
     }
 }
