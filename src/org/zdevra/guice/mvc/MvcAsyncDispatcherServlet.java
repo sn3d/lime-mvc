@@ -60,9 +60,9 @@ public class MvcAsyncDispatcherServlet extends MvcDispatcherServlet {
      * @param controllerClass
      * @param injector
      */
-    public MvcAsyncDispatcherServlet(Class<?> controllerClass, Injector injector) {
-        super(controllerClass, injector);
-    }
+	public MvcAsyncDispatcherServlet(Class<?> controllerClass, Injector injector) {
+		super(controllerClass, injector);
+	}
 
 
     /**

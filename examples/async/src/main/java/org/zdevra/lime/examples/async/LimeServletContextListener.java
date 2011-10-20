@@ -18,8 +18,13 @@ public class LimeServletContextListener extends GuiceServletContextListener {
             @Override
             protected void configureControllers() {
                 //setup controller
-                //control("/normal/*").withController(AppController.class);
-                controlAsync("/concurrent/*").withController(AppController.class);
+                control("/normal/*")
+		                .withController(CustomersController.class)
+		                .withController(BooksController.class);
+
+	            controlAsync("/concurrent/*")
+		                .withController(CustomersController.class)
+		                .withController(BooksController.class);
 
                 //setup views
                 install(new FreemarkerModule(getServletContext()));

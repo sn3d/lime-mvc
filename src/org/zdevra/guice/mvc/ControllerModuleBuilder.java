@@ -97,7 +97,7 @@ class ControllerModuleBuilder  {
 
     public final ControllerAndViewBindingBuilder controlAsync(String urlPattern) {
         actualUrlPattern = urlPattern;
-        return new ControllerAndViewBindingBuilderImpl(AsyncControllerDefinition.FACTORY);
+        return new ControllerAndViewBindingBuilderImpl(AsyncControllerDefinition.ASYNCFACTORY);
     }
 
 
