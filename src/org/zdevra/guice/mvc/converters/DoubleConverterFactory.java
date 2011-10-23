@@ -36,7 +36,7 @@ public class DoubleConverterFactory implements ConverterFactory {
 // ------------------------------------------------------------------------
 
 	@Override
-	public Converter<?> createConvertor(Class<?> type, Annotation[] annotations) 
+	public Converter<?> createConverter(Class<?> type, Annotation[] annotations)
 	{
 		if ((type == Double.class) || (type == double.class)) {
 			return typeConverter;

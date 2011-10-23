@@ -74,7 +74,7 @@ public class ConversionService {
 	 *
 	 */
 	public interface ConverterFactory {
-		public Converter<?> createConvertor(Class<?> type, Annotation[] annotations); 
+		public Converter<?> createConverter(Class<?> type, Annotation[] annotations);
 	}
 	
 /*---------------------------- constructors ----------------------------*/
@@ -98,7 +98,7 @@ public class ConversionService {
 	public Converter<?> getConverter(Class<?> type, Annotation[] annotations) 
 	{
 		for (ConverterFactory factory : factories) {
-			Converter<?> converter = factory.createConvertor(type, annotations);
+			Converter<?> converter = factory.createConverter(type, annotations);
 			if (converter != null) {
 				return converter;
 			}
@@ -120,7 +120,7 @@ public class ConversionService {
 
         for (ConverterFactory factory : factories) {
             if (factory.getClass() == converterFactoryClass) {
-                Converter<?> converter = factory.createConvertor(type, annotations);
+                Converter<?> converter = factory.createConverter(type, annotations);
                 if (converter != null) {
                     return converter;
                 }

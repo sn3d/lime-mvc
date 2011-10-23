@@ -31,7 +31,7 @@ public class StringConverterFactory implements ConversionService.ConverterFactor
 // ------------------------------------------------------------------------
 
     @Override
-    public ConversionService.Converter<?> createConvertor(Class<?> type, Annotation[] annotations) {
+    public ConversionService.Converter<?> createConverter(Class<?> type, Annotation[] annotations) {
         if (type == String.class) {
             return stringConverter;
         } else if (type == String[].class) {

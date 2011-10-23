@@ -35,7 +35,7 @@ public class IntegerConverterFactory implements ConverterFactory {
 // ------------------------------------------------------------------------
 			
 	@Override
-	public Converter<?> createConvertor(Class<?> type, Annotation[] annotations) 
+	public Converter<?> createConverter(Class<?> type, Annotation[] annotations)
 	{
 		if ((type == Integer.class) || (type == int.class)) {
 			return integerConverter;

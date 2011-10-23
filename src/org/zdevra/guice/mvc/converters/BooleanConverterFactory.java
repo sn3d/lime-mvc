@@ -31,7 +31,7 @@ public class BooleanConverterFactory implements ConverterFactory {
 // ------------------------------------------------------------------------
 	
 	@Override
-	public Converter<?> createConvertor(Class<?> type, Annotation[] annotations) 
+	public Converter<?> createConverter(Class<?> type, Annotation[] annotations)
 	{		
 		if ((type == boolean.class) || (type == Boolean.class)) {
 			return new BooleanConverter(Utils.getAnnotation(BooleanConv.class, annotations));

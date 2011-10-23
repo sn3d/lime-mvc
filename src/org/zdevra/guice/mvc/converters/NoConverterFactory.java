@@ -13,7 +13,7 @@ import java.lang.annotation.Annotation;
 public class NoConverterFactory implements ConversionService.ConverterFactory {
 
     @Override
-    public ConversionService.Converter<?> createConvertor(Class<?> type, Annotation[] annotations) {
+    public ConversionService.Converter<?> createConverter(Class<?> type, Annotation[] annotations) {
         return null;
     }
 

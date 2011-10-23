@@ -9,7 +9,7 @@ import java.util.Map;
 public class CustomConverterFactory implements ConversionService.ConverterFactory
 {
     @Override
-    public ConversionService.Converter<?> createConvertor(Class<?> type, Annotation[] annotations) {
+    public ConversionService.Converter<?> createConverter(Class<?> type, Annotation[] annotations) {
         if (type == Case7Test.class) {
             return new CustomConverter();
         }

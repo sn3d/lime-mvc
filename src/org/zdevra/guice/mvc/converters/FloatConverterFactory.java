@@ -36,7 +36,7 @@ public class FloatConverterFactory implements ConverterFactory {
 // ------------------------------------------------------------------------
 
 	@Override
-	public Converter<?> createConvertor(Class<?> type, Annotation[] annotations) {
+	public Converter<?> createConverter(Class<?> type, Annotation[] annotations) {
 		if ((type == Float.class) || (type == float.class)) {
 			return floatConverter;
 		} else if (type == Float[].class) {

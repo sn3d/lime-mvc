@@ -34,7 +34,7 @@ public class DateConverterFactory implements ConversionService.ConverterFactory 
 // ------------------------------------------------------------------------
 
     @Override
-    public ConversionService.Converter<?> createConvertor(Class<?> type, Annotation[] annotations) {
+    public ConversionService.Converter<?> createConverter(Class<?> type, Annotation[] annotations) {
         if (type != Date.class) {
             return null;
         }
