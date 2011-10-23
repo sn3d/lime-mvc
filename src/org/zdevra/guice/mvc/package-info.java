@@ -185,6 +185,11 @@
  *   }
  * } 
  * </pre>
+ *
+ * <p>
+ * <h3>Multiple controllers for same URL</h3>
+ *
+ *
  */
 package org.zdevra.guice.mvc;
 

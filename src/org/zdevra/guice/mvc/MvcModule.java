@@ -46,15 +46,14 @@ import com.google.inject.servlet.ServletModule;
  * <i>MVC module</i> for GUICE. 
  * <p>
  * 
- * If you are fammiliar with the GUICE servlets, then using of the Lime MVC is pretty straight forward.
+ * If you are fammiliar with the GUICE servlets, then usage of the Lime MVC is pretty straight forward.
  * MvcModule is basically extended version of Guice's ServletModule and you can use all ServletModule's
  * methods in configureControllers() method implementation (like serve() etc..).
  * <p>
  * 
  * In your web application, put new MvcModule with implemented configureControllers() method 
  * into GuiceServletContextListener implementation.
- * 
- * 
+ *
  * <p>example:
  * <pre class="prettyprint">
  * public class WebAppConfiguration extends GuiceServletContextListener {
@@ -75,9 +74,89 @@ import com.google.inject.servlet.ServletModule;
  * }
  * </pre>
  * Example shows the basic usage and registers the simple controller class. 
- * All requests which stars with '/someController/' will be processed by the SomeController. 
- * 
+ * All requests starting with '/someController/' will be processed by the SomeController.
+ *
  * <p>
+ * It is possible to have more controllers for one URL registration and then all controllers
+ * will be invoked. This is good when you have diplayed several independent informations in the view.
+ *
+ * <p>example:
+ * <pre class="prettyprint">
+ * public class WebAppConfiguration extends GuiceServletContextListener {
+ * ...
+ *   protected Injector getInjector() {
+ *     Injector injector =  Guice.createInjector(
+ *        new MvcModule() {
+ *           protected void configureControllers() {
+ *
+ *             control("/someControllers/*")
+ *                .withController(SomeController.class)
+ *                .withController(AnotherController.class);
+ *              ...
+ *           }
+ *        }
+ *     );
+ *     return injector;
+ *   }
+ * }
+ * </pre>
+ *
+ *
+ * Be careful when 2 methods are invoked, for the view resolving could make a problem. Let's assume 2 controllers:
+ * <p>
+ * <pre class="prettyprint">
+ * {@literal @}Controller
+ * {@literal @}ToView("some_view")
+ * public class FirstController {
+ *    ...
+ *    {@literal @}Path("/get") {@literal}ModelName("user")
+ *    public User getUser() {
+ *        ...
+ *    }
+ * }
+ *
+ * {@literal @}Controller
+ * {@literal @}ToView("some_view")
+ * public class SecondController {
+ *    ...
+ *    {@literal @}Path("/get") {@literal}ModelName("goods")
+ *    public List<Product> getGoods() {
+ *        ...
+ *    }
+ * }
+ * </pre>
+ * <p>
+ *
+ * In case above, both controllers will invoke both methods getUser and getGoods. Notice, the Controllers use this same
+ * view. In case of different views, Lime MVC choose the first one as the right view and the second one will be ignored.
+ * Because there is no ability to set up priority yet, it's recommended to use same view in both controllers.
+ *
+ * <p>
+ * For performance boosting, you may use asynchronnous processing of the controllers. This can be used only if your
+ * controllers are stateless and don't share the same resources or share thread-safe resources.
+ *
+ * <p>example:
+ * <pre class="prettyprint">
+ * public class WebAppConfiguration extends GuiceServletContextListener {
+ * ...
+ *   protected Injector getInjector() {
+ *     Injector injector =  Guice.createInjector(
+ *        new MvcModule() {
+ *           protected void configureControllers() {
+ *
+ *             controlAsync("/someControllers/*")
+ *                .withController(SomeController.class)
+ *                .withController(AnotherController.class);
+ *              ...
+ *           }
+ *        }
+ *     );
+ *     return injector;
+ *   }
+ * }
+ * </pre>
+ * <p>
+ *
  *
  * @see Controller 
  * @see Model

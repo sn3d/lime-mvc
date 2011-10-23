@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * This interface is used for resolving exceptions which are throwed 
+ * This interface is used for resolving exceptions which are thrown
  * from controllers. 
  * 
  * The default implementation of resolving in Lime MVC is used {@link GuiceExceptionResolver}.
