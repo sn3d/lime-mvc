@@ -57,7 +57,7 @@
 		<ivy:retrieve pattern="${lib}/[conf]/[artifact](-[classifier]).[ext]"/> 
 	</target>
 
-	<target name="init" depends="preinit, init-dirs, retrieve-libs">
+	<target name="init" depends="preinit, init-dirs">
 		<taskdef name="testng" classname="org.testng.TestNGAntTask" >
 			<classpath>
 				<fileset dir="${test.lib}">
@@ -109,6 +109,40 @@
 			<xmlfileset dir="." includes="testng.xml"/>	
 		</testng>
 	</target>
+	
+	<!--================ MANIFEST ================-->
+	<target name="manifest">
+				
+		<taskdef resource="aQute/bnd/ant/taskdef.properties">
+			<classpath>
+				<fileset dir="${system.lib}">
+				<include name="*.jar"/>
+				</fileset>
+			</classpath>
+		</taskdef>
+		
+		<mkdir dir="${target}/osgi"/>		
+		<property name="imports" value=""/>
+		
+		<property name="Bundle-Name" value="org.zdevra.lime"/>
+	    <property name="Bundle-SymbolicName" value="lime"/>
+	    <property name="Bundle-Version" value="0.2.1"/>
+
+	    <property name="Bundle-Description" value="Implementation of the MVC pattern for Google Guice"/>
+	    <property name="Bundle-DocURL" value="http://docs.zdenkovrabel.org"/>
+	    <property name="Bundle-Copyright" value="Copyright (C) 2011 Zdenko Vrabel"/>
+	    <property name="Bundle-License" value="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
+	    <property name="Bundle-RequiredExecutionEnvironment" value="J2SE-1.5,JavaSE-1.6"/>
+	    <property name="Bundle-Vendor" value="Zdenko Vrabel"/>
+
+	    <property name="Export-Package" value="org.zdevra.guice.mvc.*;version=0.2.1"/>	    
+		<property name="Import-Package" value="!org.zdevra.guice.mvc.*,*" />
+	    		
+		<property name="-nouses" value="true"/>
+		<property name="-removeheaders" value="Bnd-LastModified,Ignore-Package,Include-Resource,Private-Package,Tool"/>
+	    	
+		<bndwrap jars="${java.classes}" output="${target}/osgi" />
+	</target>	
 	
 	<!--================ PACKAGING ================-->
 

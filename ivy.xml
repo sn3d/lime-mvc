@@ -11,6 +11,7 @@
 		<!-- SYSTEM -->
 		<dependency org="javax.servlet" name="servlet-api" rev="2.5" conf="system->default"/>
 		<dependency org="com.google.doclava" name="doclava" rev="1.0.3" conf="system->default"/>
+		<!-- TODO: add reference to bnd -->
 
 		<!-- JAVA -->
 		<dependency org="com.google.inject" name="guice-parent" rev="3.0" conf="java->default"/>
