@@ -55,7 +55,7 @@ import com.google.inject.name.Named;
  *
  */
 @Singleton
-public class GuiceExceptionResolver implements ExceptionResolver {
+class GuiceExceptionResolver implements ExceptionResolver {
 	
 // ------------------------------------------------------------------------
 	

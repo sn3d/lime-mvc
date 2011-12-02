@@ -32,7 +32,7 @@ import com.google.inject.multibindings.Multibinder;
  * @see ParamProcessorsService
  */
 
-public class ParamProcessorBuilder {
+class ParamProcessorBuilder {
 	
 // ------------------------------------------------------------------------
 	
