@@ -8,11 +8,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.*;
 
-public class MvcAsyncDispatcherServlet extends MvcDispatcherServlet {
+class MvcAsyncDispatcherServlet extends MvcDispatcherServlet {
 
 // ------------------------------------------------------------------------
 
-    private final ThreadPoolExecutor tpe = new ThreadPoolExecutor(4, 10, 20, TimeUnit.SECONDS, new ArrayBlockingQueue(200));
+    private final ThreadPoolExecutor tpe = new ThreadPoolExecutor(4, 10, 20, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(200));
     private final Task.ITask<AsyncMessage> task = new InvokeTask();
 
 // ------------------------------------------------------------------------

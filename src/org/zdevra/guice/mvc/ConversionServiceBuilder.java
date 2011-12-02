@@ -5,7 +5,7 @@ import org.zdevra.guice.mvc.ConversionService.ConverterFactory;
 import com.google.inject.Binder;
 import com.google.inject.multibindings.Multibinder;
 
-public class ConversionServiceBuilder {
+class ConversionServiceBuilder {
 // ------------------------------------------------------------------------
 	
 	private final Multibinder<ConverterFactory> convertorsBinder;

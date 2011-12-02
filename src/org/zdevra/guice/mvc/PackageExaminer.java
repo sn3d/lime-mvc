@@ -14,7 +14,7 @@ import java.util.jar.JarInputStream;
  * and his subpackages and for each class calls the {@link ClassExamineFunctor}'s
  * clazz() method.
  */
-public class PackageExaminer 
+class PackageExaminer 
 {	
 // ------------------------------------------------------------------------
 	

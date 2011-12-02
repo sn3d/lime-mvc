@@ -32,7 +32,7 @@ import com.google.inject.Injector;
  *
  * @see ClassInvoker
  */
-public class ClassScanner {
+class ClassScanner {
 
 	/**
 	 * Method do scanning of controller's class and produce

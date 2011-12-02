@@ -26,7 +26,7 @@ import java.util.logging.Logger;
  *
  * The definition is used when user uses the MvcModule.controlAsync() method.
  */
-public class AsyncControllerDefinition extends ControllerDefinition {
+class AsyncControllerDefinition extends ControllerDefinition {
 
 // ------------------------------------------------------------------------
 
@@ -38,7 +38,7 @@ public class AsyncControllerDefinition extends ControllerDefinition {
     /**
      * Factory's implementation creates the instance of ControllerDefinition
      */
-    public static class AsyncFactory extends Factory {
+    static class AsyncFactory extends Factory {
         public ControllerDefinition create(String urlPattern) {
             return new AsyncControllerDefinition(urlPattern);
         }

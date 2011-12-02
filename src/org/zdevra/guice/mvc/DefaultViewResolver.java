@@ -43,7 +43,7 @@ import com.google.inject.name.Names;
  *   
  */
 @Singleton
-public class DefaultViewResolver implements ViewResolver {
+class DefaultViewResolver implements ViewResolver {
 	
 // ------------------------------------------------------------------------
 	

@@ -1,5 +1,5 @@
 package org.zdevra.guice.mvc;
 
-public interface ClassExamineFunctor {	
+interface ClassExamineFunctor {	
 	public void clazz(Class<?> clazz);
 }

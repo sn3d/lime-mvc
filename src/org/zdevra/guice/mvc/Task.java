@@ -2,7 +2,7 @@ package org.zdevra.guice.mvc;
 
 import java.util.concurrent.CountDownLatch;
 
-public class Task<M> implements Runnable {
+class Task<M> implements Runnable {
 
     private final M message;
     private final CountDownLatch cdl;

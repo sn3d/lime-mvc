@@ -22,15 +22,13 @@ import junit.framework.Assert;
 
 import org.apache.velocity.app.VelocityEngine;
 import org.testng.annotations.Test;
-import org.zdevra.guice.mvc.DefaultViewResolver;
+import org.zdevra.guice.mvc.TestModule;
 import org.zdevra.guice.mvc.TestRequest;
 import org.zdevra.guice.mvc.TestResponse;
 import org.zdevra.guice.mvc.ViewModule;
 import org.zdevra.guice.mvc.ViewResolver;
-import org.zdevra.guice.mvc.ViewScannerService;
 import org.zdevra.guice.mvc.views.NamedView;
 
-import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
  
@@ -68,12 +66,10 @@ public class TestVelocity {
 	public void testView2() throws Exception {
 		
 		//prepare guice
-		Injector g = Guice.createInjector(new AbstractModule() {
+		Injector g = Guice.createInjector(new TestModule() {
 			@Override
 			protected void configure() {
-					
-				bind(ViewScannerService.class);
-				bind(ViewResolver.class).to(DefaultViewResolver.class);
+				super.configure();
 				
 				install(new VelocityModule());							
 				install(new ViewModule() {

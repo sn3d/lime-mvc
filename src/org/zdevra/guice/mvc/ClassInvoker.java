@@ -26,7 +26,7 @@ import javax.servlet.http.HttpSession;
  * The class representing data structure which provide
  * and separate invocation of the class's methods. 
  */
-public class ClassInvoker {
+class ClassInvoker {
 	
 // ------------------------------------------------------------------------
 	

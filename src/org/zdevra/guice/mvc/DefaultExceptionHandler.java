@@ -31,7 +31,7 @@ import javax.servlet.http.HttpServletResponse;
  * @see ExceptionResolver
  * @see GuiceExceptionResolver 
  */
-public class DefaultExceptionHandler implements ExceptionHandler {
+class DefaultExceptionHandler implements ExceptionHandler {
 	
 	private static final Logger logger = Logger.getLogger(DefaultExceptionHandler.class.getName());
 

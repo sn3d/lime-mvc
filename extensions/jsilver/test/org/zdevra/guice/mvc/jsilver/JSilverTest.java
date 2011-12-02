@@ -5,24 +5,21 @@ import javax.servlet.http.HttpServletRequest;
 import junit.framework.Assert;
 
 import org.testng.annotations.Test;
-import org.zdevra.guice.mvc.DefaultViewResolver;
+import org.zdevra.guice.mvc.TestModule;
 import org.zdevra.guice.mvc.TestRequest;
 import org.zdevra.guice.mvc.TestResponse;
 import org.zdevra.guice.mvc.ViewModule;
 import org.zdevra.guice.mvc.ViewResolver;
-import org.zdevra.guice.mvc.ViewScannerService;
 import org.zdevra.guice.mvc.views.NamedView;
 
-import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
-class JSilverTestModule extends AbstractModule {
+class JSilverTestModule extends TestModule {
 
 	@Override
 	protected void configure() {
-		bind(ViewScannerService.class);
-		bind(ViewResolver.class).to(DefaultViewResolver.class);
+		super.configure();
 		
 		install(new JSilverModule());							
 		install(new ViewModule() {

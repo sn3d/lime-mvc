@@ -48,7 +48,7 @@ import com.google.inject.Singleton;
  * 
  */
 @Singleton
-public class ViewScannerService {
+class ViewScannerService {
 	
 	private Collection<ViewScanner> scanners;
 	
