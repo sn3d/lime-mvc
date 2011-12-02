@@ -125,17 +125,17 @@
 		<property name="imports" value=""/>
 		
 		<property name="Bundle-Name" value="org.zdevra.lime"/>
-	    <property name="Bundle-SymbolicName" value="lime"/>
-	    <property name="Bundle-Version" value="0.2.1"/>
+	   <property name="Bundle-SymbolicName" value="org.zdevra.lime"/>
+	   <property name="Bundle-Version" value="0.2.1"/>
 
-	    <property name="Bundle-Description" value="Implementation of the MVC pattern for Google Guice"/>
-	    <property name="Bundle-DocURL" value="http://docs.zdenkovrabel.org"/>
-	    <property name="Bundle-Copyright" value="Copyright (C) 2011 Zdenko Vrabel"/>
-	    <property name="Bundle-License" value="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
-	    <property name="Bundle-RequiredExecutionEnvironment" value="J2SE-1.5,JavaSE-1.6"/>
-	    <property name="Bundle-Vendor" value="Zdenko Vrabel"/>
+	   <property name="Bundle-Description" value="Implementation of the MVC pattern for Google Guice"/>
+	   <property name="Bundle-DocURL" value="http://docs.zdenkovrabel.org"/>
+	   <property name="Bundle-Copyright" value="Copyright (C) 2011 Zdenko Vrabel"/>
+	   <property name="Bundle-License" value="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
+	   <property name="Bundle-RequiredExecutionEnvironment" value="J2SE-1.5,JavaSE-1.6"/>
+	   <property name="Bundle-Vendor" value="Zdenko Vrabel"/>
 
-	    <property name="Export-Package" value="org.zdevra.guice.mvc.*;version=0.2.1"/>	    
+	   <property name="Export-Package" value="org.zdevra.guice.mvc.*;version=0.2.1"/>	    
 		<property name="Import-Package" value="!org.zdevra.guice.mvc.*,*" />
 	    		
 		<property name="-nouses" value="true"/>

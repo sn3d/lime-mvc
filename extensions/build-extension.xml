@@ -91,10 +91,47 @@
 	
 	<!--================ PACKAGING ================-->
 	
-	<target name="dist" depends="test" description="make a distribution">
+	<target name="dist" depends="test, osgi-bundle" description="make a distribution">
 		<jar jarfile="${jar.output}" basedir="${classes}"/>
 		<jar jarfile="${jar.output.src}" basedir="${java.src}"/>
 	</target>
 
-	
+	<target name="osgi-bundle">
+		<taskdef resource="aQute/bnd/ant/taskdef.properties">
+			<classpath>
+				<fileset dir="${system.lib}">
+				<include name="*.jar"/>
+			</fileset>
+			</classpath>
+		</taskdef>
+
+		<mkdir dir="osgi"/>
+		<copy todir="osgi">
+ 			<fileset dir="${classes}" />
+ 		</copy>
+
+		<property name="imports" value=""/>
+		<property name="Bundle-Name" value="org.zdevra.lime.${extension}"/>
+	   <property name="Bundle-SymbolicName" value="org.zdevra.lime.${extension}"/>
+	   <property name="Bundle-Version" value="${version.project}"/>
+
+	   <property name="Bundle-Description" value="Extension for Lime MVC"/>
+	   <property name="Bundle-DocURL" value="http://docs.zdenkovrabel.org"/>
+	   <property name="Bundle-Copyright" value="Copyright (C) 2011 Zdenko Vrabel"/>
+	   <property name="Bundle-License" value="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
+	   <property name="Bundle-RequiredExecutionEnvironment" value="J2SE-1.5,JavaSE-1.6"/>
+	   <property name="Bundle-Vendor" value="Zdenko Vrabel"/>
+
+	   <property name="Export-Package" value="org.zdevra.guice.mvc.*;version=0.2.1"/>
+		<property name="Import-Package" value="!org.zdevra.guice.mvc.*,*" />
+		<property name="Fragment-Host"  value="org.zdevra.lime" />
+	    		
+		<property name="-nouses" value="true"/>
+		<property name="-removeheaders" value="Bnd-LastModified,Ignore-Package,Include-Resource,Private-Package,Tool"/>
+	    	
+		<bndwrap jars="./osgi/" output="./../../${name.project}-${extension}-osgi.jar" />
+		
+		<delete dir="./osgi" />
+	</target>
+
 </project>
