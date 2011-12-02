@@ -111,7 +111,7 @@
 	</target>
 	
 	<!--================ MANIFEST ================-->
-	<target name="manifest">
+	<target name="osgi-bundle">
 				
 		<taskdef resource="aQute/bnd/ant/taskdef.properties">
 			<classpath>
@@ -126,7 +126,7 @@
 		
 		<property name="Bundle-Name" value="org.zdevra.lime"/>
 	   <property name="Bundle-SymbolicName" value="org.zdevra.lime"/>
-	   <property name="Bundle-Version" value="0.2.1"/>
+	   <property name="Bundle-Version" value="${version.project}"/>
 
 	   <property name="Bundle-Description" value="Implementation of the MVC pattern for Google Guice"/>
 	   <property name="Bundle-DocURL" value="http://docs.zdenkovrabel.org"/>
@@ -141,18 +141,20 @@
 		<property name="-nouses" value="true"/>
 		<property name="-removeheaders" value="Bnd-LastModified,Ignore-Package,Include-Resource,Private-Package,Tool"/>
 	    	
-		<bndwrap jars="${java.classes}" output="${target}/osgi" />
+		<bndwrap jars="${java.classes}" output="${name.project}.jar" />
 	</target>	
 	
 	<!--================ PACKAGING ================-->
 
-	<target name="dist" depends="test" description="make a distribution">
+	<target name="dist" depends="test, osgi-bundle" description="make a distribution">
 		<!-- Make a plain binary library -->
+		<!--
 		<mkdir dir="${javalib.target}"/>
 		<copy todir="${javalib.target}">
 			<fileset dir="${java.classes}" />			
 		</copy>
 		<jar jarfile="${javalib.output}" basedir="${javalib.target}"/>
+		-->
 
 		<!-- Make a library with source code -->
 		<mkdir dir="${javalib-withsrc.target}"/>

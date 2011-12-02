@@ -92,7 +92,7 @@
 	<!--================ PACKAGING ================-->
 	
 	<target name="dist" depends="test, osgi-bundle" description="make a distribution">
-		<jar jarfile="${jar.output}" basedir="${classes}"/>
+		<!--<jar jarfile="${jar.output}" basedir="${classes}"/>-->
 		<jar jarfile="${jar.output.src}" basedir="${java.src}"/>
 	</target>
 
@@ -129,7 +129,7 @@
 		<property name="-nouses" value="true"/>
 		<property name="-removeheaders" value="Bnd-LastModified,Ignore-Package,Include-Resource,Private-Package,Tool"/>
 	    	
-		<bndwrap jars="./osgi/" output="./../../${name.project}-${extension}-osgi.jar" />
+		<bndwrap jars="./osgi/" output="./../../${name.project}-${extension}.jar" />
 		
 		<delete dir="./osgi" />
 	</target>
