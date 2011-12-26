@@ -69,6 +69,8 @@
 				</fileset>
 			</classpath>			
 		</taskdef>
+
+		<taskdef resource="aQute/bnd/ant/taskdef.properties" classpath="${lib.dir}/bnd/*.jar"/>
 	</target>
 
 	
