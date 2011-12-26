@@ -3,16 +3,16 @@ package org.zdevra.lime.examples.velocity;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.zdevra.guice.mvc.Controller;
-import org.zdevra.guice.mvc.Path;
-import org.zdevra.guice.mvc.RequestParameter;
-import org.zdevra.guice.mvc.velocity.ToVelocityView;
+import org.zdevra.guice.mvc.annotations.Controller;
+import org.zdevra.guice.mvc.annotations.Path;
+import org.zdevra.guice.mvc.annotations.RequestParameter;
+import org.zdevra.guice.mvc.velocity.annotations.VelocityView;
 
 import com.google.inject.servlet.SessionScoped;
 
 @Controller
 @SessionScoped
-@ToVelocityView("main.v")
+@VelocityView("main.v")
 public class VelocityExampleController {
 	
 	public List<String> names;
@@ -42,7 +42,7 @@ public class VelocityExampleController {
 	 * @return
 	 */
 	@Path("/add")
-	@ToVelocityView("add.v")
+	@VelocityView("add.v")
 	public boolean addName(@RequestParameter("name") String name) {
 		if (this.names.size() < 5) {
 			this.names.add(name);

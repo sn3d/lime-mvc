@@ -3,16 +3,16 @@ package org.zdevra.lime.examples.jsilver;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.zdevra.guice.mvc.Controller;
-import org.zdevra.guice.mvc.Path;
-import org.zdevra.guice.mvc.RequestParameter;
-import org.zdevra.guice.mvc.jsilver.ToJSilverView;
+import org.zdevra.guice.mvc.annotations.Controller;
+import org.zdevra.guice.mvc.annotations.Path;
+import org.zdevra.guice.mvc.annotations.RequestParameter;
+import org.zdevra.guice.mvc.jsilver.annotations.JSilverView;
 
 import com.google.inject.servlet.SessionScoped;
 
 @Controller
 @SessionScoped
-@ToJSilverView("main.jsilver")
+@JSilverView("main.jsilver")
 public class JSilverExampleController {
 	
 	public List<String> names;
@@ -39,7 +39,7 @@ public class JSilverExampleController {
 	 * @return
 	 */
 	@Path("/add")
-	@ToJSilverView("add.jsilver")
+	@JSilverView("add.jsilver")
 	public boolean addName(@RequestParameter("name") String name) {
 		if (this.names.size() < 5) {
 			this.names.add(name);

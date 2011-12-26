@@ -3,16 +3,16 @@ package org.zdevra.lime.examples.freemarker;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.zdevra.guice.mvc.Controller;
-import org.zdevra.guice.mvc.Path;
-import org.zdevra.guice.mvc.RequestParameter;
-import org.zdevra.guice.mvc.freemarker.ToFreemarkerView;
+import org.zdevra.guice.mvc.annotations.Controller;
+import org.zdevra.guice.mvc.annotations.Path;
+import org.zdevra.guice.mvc.annotations.RequestParameter;
+import org.zdevra.guice.mvc.freemarker.annotations.FreemarkerView;
 
 import com.google.inject.servlet.SessionScoped;
 
 @Controller
 @SessionScoped
-@ToFreemarkerView("main.ftl")
+@FreemarkerView("main.ftl")
 public class FreemarkerExampleController {
 
 	public List<String> names;
@@ -39,7 +39,7 @@ public class FreemarkerExampleController {
 	 * @return
 	 */
 	@Path("/add")
-	@ToFreemarkerView("add.ftl")
+	@FreemarkerView("add.ftl")
 	public String addName(@RequestParameter("name") String name) {
 		if (this.names.size() < 5) {
 			this.names.add(name);

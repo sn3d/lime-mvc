@@ -1,9 +1,9 @@
 package org.zdevra.lime.examples.async;
 
-import org.zdevra.guice.mvc.Controller;
+import org.zdevra.guice.mvc.annotations.Controller;
 import org.zdevra.guice.mvc.annotations.Model;
-import org.zdevra.guice.mvc.Path;
-import org.zdevra.guice.mvc.views.ToView;
+import org.zdevra.guice.mvc.annotations.Path;
+import org.zdevra.guice.mvc.annotations.View;
 
 import java.util.LinkedList;
 import java.util.List;

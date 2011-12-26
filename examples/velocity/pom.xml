@@ -6,7 +6,7 @@
   <artifactId>velocity-example</artifactId>
   
   <packaging>war</packaging>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.2.1-SNAPSHOT</version>
   <name>VelocityExample</name>
   <url>http://code.google.com/p/lime-mvc/</url>
   
@@ -30,7 +30,7 @@
     <dependency>
   	  <groupId>org.zdevra</groupId>
       <artifactId>lime-velocity</artifactId>
-      <version>0.2.0.rc2</version>
+      <version>0.2.1-SNAPSHOT</version>
     </dependency>
   </dependencies>
   
