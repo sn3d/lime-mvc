@@ -16,9 +16,9 @@
  *****************************************************************************/
 package org.zdevra.guice.mvc.case4;
 
-import org.zdevra.guice.mvc.Controller;
-import org.zdevra.guice.mvc.Path;
-import org.zdevra.guice.mvc.RequestMapping;
+import org.zdevra.guice.mvc.annotations.Controller;
+import org.zdevra.guice.mvc.annotations.Path;
+import org.zdevra.guice.mvc.annotations.RequestMapping;
 
 @Controller(toView="default")
 public class Case4Controller {

@@ -18,12 +18,12 @@ package org.zdevra.guice.mvc.case1;
 
 import javax.inject.Singleton;
 
-import org.zdevra.guice.mvc.Controller;
 import org.zdevra.guice.mvc.Model;
-import org.zdevra.guice.mvc.ModelName;
-import org.zdevra.guice.mvc.Path;
-import org.zdevra.guice.mvc.RequestMapping;
-import org.zdevra.guice.mvc.SessionParameter;
+import org.zdevra.guice.mvc.annotations.Controller;
+import org.zdevra.guice.mvc.annotations.ModelName;
+import org.zdevra.guice.mvc.annotations.Path;
+import org.zdevra.guice.mvc.annotations.RequestMapping;
+import org.zdevra.guice.mvc.annotations.SessionParameter;
 
 @Controller(sessionAttributes= { "book" }, toView="default")
 @Singleton

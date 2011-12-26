@@ -18,6 +18,8 @@ package org.zdevra.guice.mvc;
 
 import javax.servlet.http.HttpSession;
 
+import org.zdevra.guice.mvc.annotations.Controller;
+
 @Controller
 public class HttpSessinonController {
 	

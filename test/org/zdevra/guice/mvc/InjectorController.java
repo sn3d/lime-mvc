@@ -19,6 +19,9 @@ package org.zdevra.guice.mvc;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import org.zdevra.guice.mvc.annotations.Controller;
+import org.zdevra.guice.mvc.annotations.RequestMapping;
+
 class BillingService {
 	
 	private String bill;

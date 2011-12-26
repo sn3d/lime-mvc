@@ -1,10 +1,10 @@
 package org.zdevra.guice.mvc.case8;
 
-import org.zdevra.guice.mvc.Controller;
-import org.zdevra.guice.mvc.ModelName;
-import org.zdevra.guice.mvc.Path;
-import org.zdevra.guice.mvc.RequestParameter;
-import org.zdevra.guice.mvc.views.ToView;
+import org.zdevra.guice.mvc.annotations.Controller;
+import org.zdevra.guice.mvc.annotations.ModelName;
+import org.zdevra.guice.mvc.annotations.Path;
+import org.zdevra.guice.mvc.annotations.RequestParameter;
+import org.zdevra.guice.mvc.annotations.ToView;
 
 @Controller
 @ToView("default")

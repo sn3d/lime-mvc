@@ -19,8 +19,8 @@ package org.zdevra.guice.mvc.parameters;
 import javax.servlet.http.HttpSession;
 
 import org.zdevra.guice.mvc.InvokeData;
-import org.zdevra.guice.mvc.SessionParameter;
 import org.zdevra.guice.mvc.Utils;
+import org.zdevra.guice.mvc.annotations.SessionParameter;
 
 /**
  * The parameter's processor is associated with {@link SessionParameter} annotation

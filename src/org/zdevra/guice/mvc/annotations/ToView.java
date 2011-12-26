@@ -14,12 +14,15 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-package org.zdevra.guice.mvc.views;
+package org.zdevra.guice.mvc.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import org.zdevra.guice.mvc.views.NamedView;
+import org.zdevra.guice.mvc.views.NamedViewScanner;
 
 /**
  * Annotation for controller and controller's methods

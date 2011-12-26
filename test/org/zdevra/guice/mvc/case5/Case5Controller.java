@@ -16,9 +16,9 @@
  *****************************************************************************/
 package org.zdevra.guice.mvc.case5;
 
-import org.zdevra.guice.mvc.Controller;
-import org.zdevra.guice.mvc.RequestMapping;
-import org.zdevra.guice.mvc.views.ToView;
+import org.zdevra.guice.mvc.annotations.Controller;
+import org.zdevra.guice.mvc.annotations.RequestMapping;
+import org.zdevra.guice.mvc.annotations.ToView;
 
 @Controller @ToView("one.jsp")
 public class Case5Controller {

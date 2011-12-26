@@ -14,18 +14,38 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-package org.zdevra.guice.mvc;
+package org.zdevra.guice.mvc.annotations;
+
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Indicates that the annotated method will 
- * be invoked only for HTTP GET requests.   
+ * The annontation tell to converter how to convert a string to boolean.
+ * 
+ * Let's assume that we don't want convert regular 'true' 'false' strings, but
+ * we want convert Y like true a N like false:
+ * 
+ * <pre class="prettyprint">
+ * {@literal @}Controller
+ * public class MyController {
+ * 
+ *    {@literal @}Path("/method")
+ *    public void doSomething( {@literal @}RequestParameter("bool-param") {@literal @}BooleanConv(trueVal="Y", falseVal="N") boolean param) 
+ *    {
+ *    	
+ *    }
+ * }
+ * </pre>
+ *
+ * 
+ * @see BooleanConverter
  */
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.METHOD })
-public @interface GET {
+@Retention(RUNTIME)
+@Target({ ElementType.FIELD, ElementType.PARAMETER })
+public @interface BooleanConv {
+	public String trueVal() default "true";
+	public String falseVal() default "false";
 }

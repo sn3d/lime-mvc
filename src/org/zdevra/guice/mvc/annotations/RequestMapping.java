@@ -14,34 +14,47 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-package org.zdevra.guice.mvc;
-
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+package org.zdevra.guice.mvc.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import org.zdevra.guice.mvc.HttpMethodType;
+
 /**
- * This method's parameter annotation pick up the value from
- * session.
+ * This annotation is deprecated and has been replaced 
+ * by {@link Path} and {@link ModelName}.
+ * 
+ * This annotation map a HTTP request to concrete method.
  * <p>
  * 
- * example of picking up of the value for the 'user' session param:
+ * In mapping, there are allowed regular expressions. You may use
+ * a regexp groups and {@link UriParameter} for extraction of data 
+ * from URL.
+ * <p>
+ * 
+ * example:
  * <pre class="prettyprint">
  * {@literal @}Controller
  * class MyController {
- *    {@literal @}Path("/department");
- *    public String handleRequest( {@literal @}SessionParameter("user") String user ) {
- *    	return "user is:" + user;
+ *    {@literal @}RequestMapping(path="/department/(.*)");
+ *    public void handleRequest(@UriParameter(1) String departmentId) {
+ *    ...
  *    }
  * }
- * </pre>
+ * <pre>
  * 
- * @see org.zdevra.guice.mvc.parameters.SessionAttributeParam
+ * @see Path
+ * @see ModelName
  */
-@Retention(RUNTIME)
-@Target({ ElementType.FIELD, ElementType.PARAMETER })
-public @interface SessionParameter {
-	String value();
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ ElementType.METHOD })
+@Deprecated
+public @interface RequestMapping {
+	public String path();
+	public HttpMethodType requestType() default HttpMethodType.ALL;
+	public String toView() default "";
+	public String nameOfResult() default "";
 }

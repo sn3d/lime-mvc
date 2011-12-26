@@ -18,6 +18,7 @@ package org.zdevra.guice.mvc.converters;
 
 import org.zdevra.guice.mvc.ConversionService;
 import org.zdevra.guice.mvc.Utils;
+import org.zdevra.guice.mvc.annotations.DateConv;
 import org.zdevra.guice.mvc.exceptions.IllegalConversionException;
 
 import java.lang.annotation.Annotation;

@@ -20,7 +20,7 @@ import java.util.List;
 
 import org.zdevra.guice.mvc.Model;
 import org.zdevra.guice.mvc.ModelAndView;
-import org.zdevra.guice.mvc.UriParameter;
+import org.zdevra.guice.mvc.annotations.UriParameter;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;

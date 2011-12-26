@@ -21,6 +21,15 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.zdevra.guice.mvc.annotations.Controller;
+import org.zdevra.guice.mvc.annotations.DELETE;
+import org.zdevra.guice.mvc.annotations.GET;
+import org.zdevra.guice.mvc.annotations.HEAD;
+import org.zdevra.guice.mvc.annotations.ModelName;
+import org.zdevra.guice.mvc.annotations.POST;
+import org.zdevra.guice.mvc.annotations.PUT;
+import org.zdevra.guice.mvc.annotations.Path;
+import org.zdevra.guice.mvc.annotations.RequestMapping;
 import org.zdevra.guice.mvc.exceptions.ScannerException;
 
 import com.google.inject.Injector;

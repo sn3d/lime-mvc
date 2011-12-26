@@ -18,11 +18,12 @@ package org.zdevra.guice.mvc.views;
 
 import java.lang.annotation.Annotation;
 
-import org.zdevra.guice.mvc.Controller;
-import org.zdevra.guice.mvc.RequestMapping;
 import org.zdevra.guice.mvc.Utils;
 import org.zdevra.guice.mvc.View;
 import org.zdevra.guice.mvc.ViewScanner;
+import org.zdevra.guice.mvc.annotations.Controller;
+import org.zdevra.guice.mvc.annotations.RequestMapping;
+import org.zdevra.guice.mvc.annotations.ToView;
 
 import com.google.inject.Singleton;
 

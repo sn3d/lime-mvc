@@ -14,7 +14,7 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-package org.zdevra.guice.mvc;
+package org.zdevra.guice.mvc.annotations;
 
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 

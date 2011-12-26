@@ -14,15 +14,16 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-package org.zdevra.guice.mvc;
-
-import org.zdevra.guice.mvc.converters.NoConverterFactory;
+package org.zdevra.guice.mvc.annotations;
 
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
+
+import org.zdevra.guice.mvc.ConversionService;
+import org.zdevra.guice.mvc.converters.NoConverterFactory;
 
 /**
  * This parameter annotation tell to the LIME that method's parameter 

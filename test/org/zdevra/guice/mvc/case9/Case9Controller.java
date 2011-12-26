@@ -2,11 +2,11 @@ package org.zdevra.guice.mvc.case9;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.zdevra.guice.mvc.Controller;
-import org.zdevra.guice.mvc.GET;
-import org.zdevra.guice.mvc.POST;
-import org.zdevra.guice.mvc.Path;
-import org.zdevra.guice.mvc.views.ToView;
+import org.zdevra.guice.mvc.annotations.Controller;
+import org.zdevra.guice.mvc.annotations.GET;
+import org.zdevra.guice.mvc.annotations.POST;
+import org.zdevra.guice.mvc.annotations.Path;
+import org.zdevra.guice.mvc.annotations.ToView;
 
 import com.google.inject.Module;
 

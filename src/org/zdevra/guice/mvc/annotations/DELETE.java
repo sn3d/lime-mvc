@@ -14,7 +14,7 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-package org.zdevra.guice.mvc;
+package org.zdevra.guice.mvc.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -23,10 +23,10 @@ import java.lang.annotation.Target;
 
 /**
  * Indicates that the annotated method will 
- * be invoked only for HTTP POST requests.   
+ * be invoked only for HTTP DELETE requests.   
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.METHOD })
-public @interface POST {
+public @interface DELETE {
 
 }

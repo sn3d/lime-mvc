@@ -47,18 +47,18 @@
  * <dt>{@link org.zdevra.guice.mvc.Controller}
  * <dd>The main annotation marks the class as a controller
  * 
- * <dt>{@link org.zdevra.guice.mvc.Path}
+ * <dt>{@link org.zdevra.guice.mvc.annotations.Path}
  * <dd>The main annotation for controller's method. This annotation define for what URL is method invoked.
  *     
- * <dt>{@link org.zdevra.guice.mvc.RequestParameter}
+ * <dt>{@link org.zdevra.guice.mvc.annotations.RequestParameter}
  * <dd>This is parameter's annotation. The value for parameter will be picked up from
  *     POSTed data from FORMs tags.
  *     
- * <dt>{@link org.zdevra.guice.mvc.UriParameter}
+ * <dt>{@link org.zdevra.guice.mvc.annotations.UriParameter}
  * <dd>This is parameter's annotation. The value for parameter will be picked up from
  *     request's URL.
  *
- * <dt>{@link org.zdevra.guice.mvc.SessionParameter}
+ * <dt>{@link org.zdevra.guice.mvc.annotations.SessionParameter}
  * <dd>This is parameter's annotation. The value for parameter will be picked up from
  *     session.
  *     
@@ -187,7 +187,19 @@
  * </pre>
  *
  * <p>
- * <h3>Multiple controllers for same URL</h3>
+ * <h3>Async. execution</h3>
+ * Let's take a situation where we've got on the one page several different and 
+ * independent informations. Usually, the model with these data is filled in 
+ * one thread even the data are independent. 
+ * 
+ * <p><img src="concept-idependent-data.png" /><p>
+ * 
+ * For this case should be good to have the async. execution of several methods 
+ * which prepare model data.
+ * 
+ * <p><img src="concept-async-execution.png" /><p>
+ * 
+ * 
  *
  *
  */

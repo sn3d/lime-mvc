@@ -16,10 +16,9 @@
  *****************************************************************************/
 package org.zdevra.guice.mvc.converters;
 
-import org.zdevra.guice.mvc.ConversionService;
-
 import java.lang.annotation.Annotation;
-import java.util.Map;
+
+import org.zdevra.guice.mvc.ConversionService;
 
 public class StringConverterFactory implements ConversionService.ConverterFactory {
 

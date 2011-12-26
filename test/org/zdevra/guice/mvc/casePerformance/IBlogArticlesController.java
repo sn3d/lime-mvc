@@ -18,11 +18,11 @@ package org.zdevra.guice.mvc.casePerformance;
 
 import java.util.List;
 
-import org.zdevra.guice.mvc.Controller;
 import org.zdevra.guice.mvc.ModelAndView;
-import org.zdevra.guice.mvc.RequestMapping;
-import org.zdevra.guice.mvc.UriParameter;
-import org.zdevra.guice.mvc.views.ToView;
+import org.zdevra.guice.mvc.annotations.Controller;
+import org.zdevra.guice.mvc.annotations.RequestMapping;
+import org.zdevra.guice.mvc.annotations.ToView;
+import org.zdevra.guice.mvc.annotations.UriParameter;
 
 @Controller
 public interface IBlogArticlesController {

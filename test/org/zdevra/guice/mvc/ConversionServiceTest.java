@@ -32,6 +32,9 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.zdevra.guice.mvc.ConversionService.Converter;
 import org.zdevra.guice.mvc.ConversionService.ConverterFactory;
+import org.zdevra.guice.mvc.annotations.BooleanConv;
+import org.zdevra.guice.mvc.annotations.DateConv;
+import org.zdevra.guice.mvc.annotations.FactoryMethod;
 import org.zdevra.guice.mvc.converters.*;
 import org.zdevra.guice.mvc.exceptions.NoConverterException;
 

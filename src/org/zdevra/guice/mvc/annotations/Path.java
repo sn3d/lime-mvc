@@ -14,49 +14,60 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-package org.zdevra.guice.mvc;
+package org.zdevra.guice.mvc.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import org.zdevra.guice.mvc.HttpMethodType;
+
 /**
- * This annotation define name of the method's
- * result in model. 
+ * This annotation map a HTTP request to concrete method.
  * <p>
- * <br>
- * <b>example of named result:</b>
- * <pre class="prettyprint">
- * {@literal @}Controller
- * class MyController {
- *    {@literal @}Path("/department/(.*)") {@literal @}ModelName("msg")
- *    public String helloWorld() {
- *      return "Hello World";
- *    }
- * }
- * </pre>
  * 
- * In example above, the message 'Hello World' will be placed into model with
- * name 'msg'. If there is no name defined, the lime-mvc choose the method's 
- * name as a name of result in model.
- * <p>
- * <br>
- * <b>example of unnamed result:</b>
+ * In mapping, there are allowed regular expressions. You may use
+ * a regexp groups and {@link UriParameter} for extraction of data 
+ * from URL.
+ * <p><br>
+ * 
+ * example:
  * <pre class="prettyprint">
  * {@literal @}Controller
  * class MyController {
  *    {@literal @}Path("/department/(.*)")
- *    public String helloWorld() {
- *      return "Hello World";
+ *    public void handleRequest(@UriParameter(1) String departmentId) {
+ *    ...
  *    }
  * }
- * </pre>
- * In example above, the message will be placed into model with method's name 'helloWorld'.
+ * <pre>
  * 
+ * You may specify also HTTP method (GET, PUT, DELETE etc). Normally the method 
+ * will accept all HTTP requests with any method. If you want to specify for
+ * which HTTP method it should be invoked, use the one of HttpMethod annotations.
+ * <br>
+ * 
+ * example:
+ * <pre class="prettyprint">
+ * {@literal @}Controller
+ * class MyController {
+ *    {@literal @}PUT {@literal @}Path("/department/(.*)")
+ *    public void handleRequest(@UriParameter(1) String departmentId) {
+ *    ...
+ *    }
+ * }
+ * <pre>
+ *
+ * @see HttpMethodType
+ * @see GET
+ * @see POST
+ * @see PUT
+ * @see DELETE
+ * @see Controller
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.METHOD })
-public @interface ModelName {
+public @interface Path {
 	public String value();
 }

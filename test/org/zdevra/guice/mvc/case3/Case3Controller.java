@@ -16,13 +16,13 @@
  *****************************************************************************/
 package org.zdevra.guice.mvc.case3;
 
-import org.zdevra.guice.mvc.Controller;
-import org.zdevra.guice.mvc.Path;
-import org.zdevra.guice.mvc.RequestMapping;
 import org.zdevra.guice.mvc.TestView;
 import org.zdevra.guice.mvc.View;
+import org.zdevra.guice.mvc.annotations.Controller;
+import org.zdevra.guice.mvc.annotations.Path;
+import org.zdevra.guice.mvc.annotations.RequestMapping;
+import org.zdevra.guice.mvc.annotations.ToView;
 import org.zdevra.guice.mvc.views.NamedView;
-import org.zdevra.guice.mvc.views.ToView;
 
 @Controller(toView="default")
 public class Case3Controller {

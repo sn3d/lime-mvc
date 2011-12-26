@@ -14,7 +14,7 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-package org.zdevra.guice.mvc;
+package org.zdevra.guice.mvc.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -22,37 +22,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This annotation is deprecated and has been replaced 
- * by {@link Path} and {@link ModelName}.
- * 
- * This annotation map a HTTP request to concrete method.
- * <p>
- * 
- * In mapping, there are allowed regular expressions. You may use
- * a regexp groups and {@link UriParameter} for extraction of data 
- * from URL.
- * <p>
- * 
- * example:
- * <pre class="prettyprint">
- * {@literal @}Controller
- * class MyController {
- *    {@literal @}RequestMapping(path="/department/(.*)");
- *    public void handleRequest(@UriParameter(1) String departmentId) {
- *    ...
- *    }
- * }
- * <pre>
- * 
- * @see Path
- * @see ModelName
+ * Indicates that the annotated method will 
+ * be invoked only for HTTP PUS requests.   
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.METHOD })
-@Deprecated
-public @interface RequestMapping {
-	public String path();
-	public HttpMethodType requestType() default HttpMethodType.ALL;
-	public String toView() default "";
-	public String nameOfResult() default "";
+public @interface PUT {
+
 }

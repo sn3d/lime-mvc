@@ -22,15 +22,15 @@ import java.util.Map;
 
 import org.zdevra.guice.mvc.ConversionService;
 import org.zdevra.guice.mvc.ConversionService.Converter;
+import org.zdevra.guice.mvc.annotations.UriParameter;
 import org.zdevra.guice.mvc.InvokeData;
-import org.zdevra.guice.mvc.UriParameter;
 import org.zdevra.guice.mvc.Utils;
 
 /**
- * The parameter's parameter processor for {@link org.zdevra.guice.mvc.UriParameter} annotation.
+ * The parameter's parameter processor for {@link org.zdevra.guice.mvc.annotations.UriParameter} annotation.
  * 
  * The Url in {@literal @}Path of the method can be a regular expression. 
- * {@link org.zdevra.guice.mvc.UriParameter} pick up the value of some regexp. 
+ * {@link org.zdevra.guice.mvc.annotations.UriParameter} pick up the value of some regexp. 
  * group and put it into method's parameter.
  * <p>
  * 
@@ -42,7 +42,7 @@ public final class UriParam implements ParamProcessor {
 /*---------------------------- m. variables ----------------------------*/
 
 	private final int group;
-	private final Converter converter;
+	private final Converter<?> converter;
 	
 /*----------------------------------------------------------------------*/
 	
@@ -62,7 +62,7 @@ public final class UriParam implements ParamProcessor {
 			}
 
 			//choose converter (explicit defined in annotation or implicit if annotation contains NoConverterFactory value)
-			Converter typeConverter = convrtService.getConverter(annotation.converterFactory(), paramType, paramAnnotations);
+			Converter<?> typeConverter = convrtService.getConverter(annotation.converterFactory(), paramType, paramAnnotations);
 
 			return new UriParam(annotation.value(), typeConverter);
 		}		
@@ -74,7 +74,7 @@ public final class UriParam implements ParamProcessor {
 	 * Hidden constructor. For the processor's constuction is used Factory 
 	 * class.  
 	 */
-	private UriParam(int group, Converter converter) {
+	private UriParam(int group, Converter<?> converter) {
 		super();
 		this.group = group;
 		this.converter = converter;

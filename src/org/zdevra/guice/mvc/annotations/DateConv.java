@@ -14,19 +14,25 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-package org.zdevra.guice.mvc;
+package org.zdevra.guice.mvc.annotations;
+
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-/**
- * Indicates that the annotated method will 
- * be invoked only for HTTP DELETE requests.   
- */
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.METHOD })
-public @interface DELETE {
+import org.zdevra.guice.mvc.converters.DateConverterFactory;
 
+/**
+ * The anontation tells to the converter how to convert a string value to the date.
+ * See the {@link DateConverterFactory} class if you are interesting how to use this annotation.
+ * 
+ * @see DateConverterFactory
+ */
+@Retention(RUNTIME)
+@Target({ ElementType.FIELD, ElementType.PARAMETER })
+public @interface DateConv {
+	public String value() default "YYYYMMDD";
+	public String defaultValue() default "";
 }

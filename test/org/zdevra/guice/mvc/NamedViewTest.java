@@ -18,6 +18,7 @@ package org.zdevra.guice.mvc;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.zdevra.guice.mvc.annotations.Controller;
 import org.zdevra.guice.mvc.views.NamedView;
 
 @Test

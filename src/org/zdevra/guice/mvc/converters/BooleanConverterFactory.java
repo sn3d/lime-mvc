@@ -21,6 +21,7 @@ import java.util.Map;
 
 import org.zdevra.guice.mvc.ConversionService.Converter;
 import org.zdevra.guice.mvc.ConversionService.ConverterFactory;
+import org.zdevra.guice.mvc.annotations.BooleanConv;
 import org.zdevra.guice.mvc.Utils;
 
 /**

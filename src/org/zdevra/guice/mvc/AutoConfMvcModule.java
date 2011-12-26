@@ -21,6 +21,8 @@ import java.lang.reflect.InvocationTargetException;
 
 import com.google.inject.ImplementedBy;
 import com.google.inject.Module;
+
+import org.zdevra.guice.mvc.annotations.Controller;
 import org.zdevra.guice.mvc.exceptions.AutoConfException;
 
 /**
@@ -126,7 +128,8 @@ public class AutoConfMvcModule extends MvcModule {
 	}
 
 
-    private boolean examineConverter(Class<?> clazz)
+    @SuppressWarnings("unchecked")
+	private boolean examineConverter(Class<?> clazz)
         throws NoSuchMethodException
     {
         if (ConversionService.ConverterFactory.class.isAssignableFrom(clazz)) {

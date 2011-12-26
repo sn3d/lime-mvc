@@ -25,6 +25,7 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServlet;
 
 import org.zdevra.guice.mvc.ConversionService.ConverterFactory;
+import org.zdevra.guice.mvc.annotations.Controller;
 import org.zdevra.guice.mvc.converters.*;
 import org.zdevra.guice.mvc.parameters.HttpPostParam;
 import org.zdevra.guice.mvc.parameters.HttpSessionParam;

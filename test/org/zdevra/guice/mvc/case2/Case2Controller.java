@@ -16,9 +16,9 @@
  *****************************************************************************/
 package org.zdevra.guice.mvc.case2;
 
-import org.zdevra.guice.mvc.Controller;
-import org.zdevra.guice.mvc.RequestMapping;
-import org.zdevra.guice.mvc.UriParameter;
+import org.zdevra.guice.mvc.annotations.Controller;
+import org.zdevra.guice.mvc.annotations.RequestMapping;
+import org.zdevra.guice.mvc.annotations.UriParameter;
 
 @Controller(toView="default")
 public interface Case2Controller {

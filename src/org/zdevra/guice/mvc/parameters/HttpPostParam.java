@@ -22,9 +22,8 @@ import java.util.Map;
 import org.zdevra.guice.mvc.ConversionService;
 import org.zdevra.guice.mvc.ConversionService.Converter;
 import org.zdevra.guice.mvc.InvokeData;
-import org.zdevra.guice.mvc.RequestParameter;
 import org.zdevra.guice.mvc.Utils;
-import org.zdevra.guice.mvc.converters.NoConverterFactory;
+import org.zdevra.guice.mvc.annotations.RequestParameter;
 
 /**
  * The parameter's processor is executed when method's parameter is annotated by
@@ -64,13 +63,13 @@ import org.zdevra.guice.mvc.converters.NoConverterFactory;
  * }
  * </pre>
  *   
- * @see org.zdevra.guice.mvc.RequestParameter
+ * @see org.zdevra.guice.mvc.annotations.RequestParameter
  */
 public class HttpPostParam implements ParamProcessor {
 /*---------------------------- m. variables ----------------------------*/
 	
 	private final String requestName;
-	private final Converter converter;
+	private final Converter<?> converter;
 
 /*----------------------------------------------------------------------*/
 	
@@ -90,15 +89,15 @@ public class HttpPostParam implements ParamProcessor {
 			}
 
             //choose converter (explicit defined in annotation or implicit if annotation contains NoConverterFactory value)
-            Converter typeConverter = typeConverter = convrtService.getConverter(annotation.converterFactory(), paramType, paramAnnotations);
-
+            Converter<?> typeConverter = convrtService.getConverter(annotation.converterFactory(), paramType, paramAnnotations);
+            
 			return new HttpPostParam(annotation.value(), typeConverter);						
 		}		
 	}
 
 /*----------------------------------------------------------------------*/
 
-	private HttpPostParam(String requestName, Converter converter) {
+	private HttpPostParam(String requestName, Converter<?> converter) {
 		super();
 		this.requestName = requestName;
 		this.converter = converter;

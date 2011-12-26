@@ -14,7 +14,7 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-package org.zdevra.guice.mvc.converters;
+package org.zdevra.guice.mvc.annotations;
 
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
@@ -23,29 +23,25 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * The annontation tell to converter how to convert a string to boolean.
+ * This method's parameter annotation pick up the value from
+ * session.
+ * <p>
  * 
- * Let's assume that we don't want convert regular 'true' 'false' strings, but
- * we want convert Y like true a N like false:
- * 
+ * example of picking up of the value for the 'user' session param:
  * <pre class="prettyprint">
  * {@literal @}Controller
- * public class MyController {
- * 
- *    {@literal @}Path("/method")
- *    public void doSomething( {@literal @}RequestParameter("bool-param") {@literal @}BooleanConv(trueVal="Y", falseVal="N") boolean param) 
- *    {
- *    	
+ * class MyController {
+ *    {@literal @}Path("/department");
+ *    public String handleRequest( {@literal @}SessionParameter("user") String user ) {
+ *    	return "user is:" + user;
  *    }
  * }
  * </pre>
- *
  * 
- * @see BooleanConverter
+ * @see org.zdevra.guice.mvc.parameters.SessionAttributeParam
  */
 @Retention(RUNTIME)
 @Target({ ElementType.FIELD, ElementType.PARAMETER })
-public @interface BooleanConv {
-	public String trueVal() default "true";
-	public String falseVal() default "false";
+public @interface SessionParameter {
+	String value();
 }
