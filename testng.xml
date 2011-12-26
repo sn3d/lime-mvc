@@ -15,6 +15,7 @@
        <class name="org.zdevra.guice.mvc.case6.Case6Test" />
        <class name="org.zdevra.guice.mvc.case7.Case7Test" />
        <class name="org.zdevra.guice.mvc.case8.Case8Test" />
+       <class name="org.zdevra.guice.mvc.case9.Case9Test" />
               
        <class name="org.zdevra.guice.mvc.casePerformance.PerfTest" />
     </classes>
