@@ -21,42 +21,25 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import org.zdevra.guice.mvc.views.NamedView;
+import org.zdevra.guice.mvc.views.NamedViewScanner;
+
 /**
- * This annotation define name of the method's
- * result in model. 
- * <p>
- * <br>
- * <b>example of named result:</b>
- * <pre class="prettyprint">
- * {@literal @}Controller
- * class MyController {
- *    {@literal @}Path("/department/(.*)") {@literal @}ModelName("msg")
- *    public String helloWorld() {
- *      return "Hello World";
- *    }
- * }
- * </pre>
+ * Annotation for controller and controller's methods
+ * provide information that the {@link NamedView} should
+ * be used for controller or method.
  * 
- * In example above, the message 'Hello World' will be placed into model with
- * name 'msg'. If there is no name defined, the lime-mvc choose the method's 
- * name as a name of result in model.
- * <p>
- * <br>
- * <b>example of unnamed result:</b>
- * <pre class="prettyprint">
- * {@literal @}Controller
- * class MyController {
- *    {@literal @}Path("/department/(.*)")
- *    public String helloWorld() {
- *      return "Hello World";
- *    }
- * }
- * </pre>
- * In example above, the message will be placed into model with method's name 'helloWorld'.
+ * This annotation extracted 'view' parameter
+ * from {@link Controller} and {@link RequestMapping}.
  * 
+ * The annotation is processed by {@link NamedViewScanner}
+ *
+ * @see NamedView
+ * @see NamedViewScanner
+ * @see ViewScannerService
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.METHOD })
-public @interface ModelName {
+@Target({ ElementType.METHOD, ElementType.TYPE })
+public @interface View {
 	public String value();
 }

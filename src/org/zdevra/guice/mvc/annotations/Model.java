@@ -14,7 +14,7 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-package org.zdevra.guice.mvc.velocity;
+package org.zdevra.guice.mvc.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -22,26 +22,41 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This annotation is used in controller and is
- * telling to Lime MVC that we want to render a 
- * produced data via Velocity's template.
+ * This annotation define name of the method's
+ * result in model. 
+ * <p>
  * <br>
- * <b>example:</b>
+ * <b>example of named result:</b>
  * <pre class="prettyprint">
  * {@literal @}Controller
- * public class MyController {
- *    
- *    {@literal @}Path("/helloworld")
- *    {@literal @}ToVelocityView("view.velocity")
+ * class MyController {
+ *    {@literal @}Path("/department/(.*)") {@literal @}Model("msg")
  *    public String helloWorld() {
- *       ...
+ *      return "Hello World";
  *    }
  * }
  * </pre>
+ * 
+ * In example above, the message 'Hello World' will be placed into model with
+ * name 'msg'. If there is no name defined, the lime-mvc choose the method's 
+ * name as a name of result in model.
+ * <p>
+ * <br>
+ * <b>example of unnamed result:</b>
+ * <pre class="prettyprint">
+ * {@literal @}Controller
+ * class MyController {
+ *    {@literal @}Path("/department/(.*)")
+ *    public String helloWorld() {
+ *      return "Hello World";
+ *    }
+ * }
+ * </pre>
+ * In example above, the message will be placed into model with method's name 'helloWorld'.
+ * 
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.METHOD, ElementType.TYPE })
-public @interface ToVelocityView {
+@Target({ ElementType.METHOD })
+public @interface Model {
 	public String value();
 }
-

@@ -18,14 +18,13 @@ package org.zdevra.guice.mvc.case1;
 
 import javax.inject.Singleton;
 
-import org.zdevra.guice.mvc.Model;
 import org.zdevra.guice.mvc.annotations.Controller;
-import org.zdevra.guice.mvc.annotations.ModelName;
+import org.zdevra.guice.mvc.annotations.Model;
 import org.zdevra.guice.mvc.annotations.Path;
 import org.zdevra.guice.mvc.annotations.RequestMapping;
 import org.zdevra.guice.mvc.annotations.SessionParameter;
 
-@Controller(sessionAttributes= { "book" }, toView="default")
+@Controller(sessionAttributes= { "book" }, view="default")
 @Singleton
 public class Case1Controller {
 	
@@ -43,18 +42,18 @@ public class Case1Controller {
 	
 	
 	@RequestMapping(path="/do/session")
-	public Model getDataFromSession(
+	public org.zdevra.guice.mvc.Model getDataFromSession(
 			@SessionParameter(value = "author") String author, 
 			@SessionParameter("year") Integer year ) 
 	{
-		Model m = new Model();
+		org.zdevra.guice.mvc.Model m = new org.zdevra.guice.mvc.Model();
 		m.addObject("testmsg", author + " " + year);
 		m.addObject("book", "Hamlet");
 		return m;
 	}
 		
 	@RequestMapping(path="/do/sessionmodel", nameOfResult="testmsg")
-	public String getDataFromSessionAsModel(Model m) {
+	public String getDataFromSessionAsModel(org.zdevra.guice.mvc.Model m) {
 		String out = "in session is book:" + m.getObject("book");
 		m.addObject("book", "Romeo&Juliette");
 		return out;
@@ -67,7 +66,7 @@ public class Case1Controller {
 	}
 	
 	@Path("/do/modelnametest")
-	@ModelName("testmsg")
+	@Model("testmsg")
 	public String pathTest() {
 		return "defined model name & path test done";
 	}

@@ -19,11 +19,10 @@ package org.zdevra.guice.mvc.views;
 import java.lang.annotation.Annotation;
 
 import org.zdevra.guice.mvc.Utils;
-import org.zdevra.guice.mvc.View;
 import org.zdevra.guice.mvc.ViewScanner;
 import org.zdevra.guice.mvc.annotations.Controller;
 import org.zdevra.guice.mvc.annotations.RequestMapping;
-import org.zdevra.guice.mvc.annotations.ToView;
+import org.zdevra.guice.mvc.annotations.View;
 
 import com.google.inject.Singleton;
 
@@ -35,7 +34,7 @@ import com.google.inject.Singleton;
  * This scanner goes though method's and controller's 
  * annotations, looking for {@literal @}Controller and 
  * {@literal @}RequestMapping annotations and from
- * 'toView' parameter extracts a name of view.
+ * 'View' parameter extracts a name of view.
  *
  */
 @Singleton
@@ -44,11 +43,11 @@ public class NamedViewScanner implements ViewScanner {
 // ------------------------------------------------------------------------
 	
 	@Override
-	public View scan(Annotation[] annotations) {
-		View view = lookForToView(annotations);
-		if (view == View.NULL_VIEW) {
+	public org.zdevra.guice.mvc.View scan(Annotation[] annotations) {
+		org.zdevra.guice.mvc.View view = lookForView(annotations);
+		if (view == org.zdevra.guice.mvc.View.NULL_VIEW) {
 			view = lookForRequestMapping(annotations);
-			if(view == View.NULL_VIEW) {
+			if(view == org.zdevra.guice.mvc.View.NULL_VIEW) {
 				view = lookForController(annotations);
 			}
 		}
@@ -58,52 +57,52 @@ public class NamedViewScanner implements ViewScanner {
 // ------------------------------------------------------------------------
 	
 	/**
-	 * This method looks for {@link ToView} annotation
+	 * This method looks for {@link View} annotation
 	 * and create {@link NamedView}
 	 * 
 	 * @param annotations
 	 * @return Named view if annotation is presented, otherwise View.NULL_VIEW.
 	 */
-	private View lookForToView(Annotation[] annotations) {
-		ToView anot = Utils.getAnnotation(ToView.class, annotations);
+	private org.zdevra.guice.mvc.View lookForView(Annotation[] annotations) {
+		View anot = Utils.getAnnotation(View.class, annotations);
 		if (anot != null) {
 			return NamedView.create(anot.value());
 		}
-		return View.NULL_VIEW;
+		return org.zdevra.guice.mvc.View.NULL_VIEW;
 	}
 	
 	
 	/**
-	 * This method looks for {@literal @}Controller's toView
+	 * This method looks for {@literal @}Controller's view
 	 * 
 	 * @param annotations
 	 * @return
 	 * 
 	 * @see Controller
 	 */
-	private View lookForController(Annotation[] annotations) {
+	private org.zdevra.guice.mvc.View lookForController(Annotation[] annotations) {
 		Controller ant = Utils.getAnnotation(Controller.class, annotations);
 		if (ant != null) {
-			return NamedView.create(ant.toView());
+			return NamedView.create(ant.view());
 		}
-		return View.NULL_VIEW;
+		return org.zdevra.guice.mvc.View.NULL_VIEW;
 	}
 	
 	
 	/**
-	 * This method looks for {@literal @}RequestMapping's toView
+	 * This method looks for {@literal @}RequestMapping's View
 	 * 
 	 * @param annotations
 	 * @return
 	 * 
 	 * @see RequestMapping
 	 */	
-	private View lookForRequestMapping(Annotation[] annotations) {
+	private org.zdevra.guice.mvc.View lookForRequestMapping(Annotation[] annotations) {
 		RequestMapping ant = Utils.getAnnotation(RequestMapping.class, annotations);
 		if (ant != null) {
 			return NamedView.create(ant.toView());
 		}
-		return View.NULL_VIEW;		
+		return org.zdevra.guice.mvc.View.NULL_VIEW;		
 	}
 
 }

@@ -27,7 +27,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 /**
- * The view scanner is looking for {@literal @}ToJSilverView annotation
+ * The view scanner is looking for {@literal @}JSilverView annotation
  * in controller or in controller's method and creates the 
  * {@link JSilverView} instance
  * 
@@ -54,7 +54,9 @@ class JSilverScanner implements ViewScanner {
 	@Override
 	public View scan(Annotation[] controllerAnotations)  
 	{
-		ToJSilverView anot = Utils.getAnnotation(ToJSilverView.class, controllerAnotations);
+		org.zdevra.guice.mvc.jsilver.annotations.JSilverView anot = 
+				Utils.getAnnotation(org.zdevra.guice.mvc.jsilver.annotations.JSilverView.class, controllerAnotations);
+		
 		if (anot == null) {
 			return View.NULL_VIEW;
 		}

@@ -21,13 +21,14 @@ import javax.servlet.ServletContext;
 
 import org.apache.velocity.app.VelocityEngine;
 import org.zdevra.guice.mvc.ViewModule;
+import org.zdevra.guice.mvc.velocity.annotations.VelocityView;
 
 /**
  * Install this module if you want to use the Velocity as a template engine. 
  * The module register and bind Velocity engine instance into Guice.
  * 
  * @see VelocityView
- * @see ToVelocityView
+ * @see VelocityView
  */
 public class VelocityModule extends ViewModule {
 	

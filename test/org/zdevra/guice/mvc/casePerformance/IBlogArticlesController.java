@@ -21,14 +21,14 @@ import java.util.List;
 import org.zdevra.guice.mvc.ModelAndView;
 import org.zdevra.guice.mvc.annotations.Controller;
 import org.zdevra.guice.mvc.annotations.RequestMapping;
-import org.zdevra.guice.mvc.annotations.ToView;
+import org.zdevra.guice.mvc.annotations.View;
 import org.zdevra.guice.mvc.annotations.UriParameter;
 
 @Controller
 public interface IBlogArticlesController {
 	
 	@RequestMapping(path="/blog/allarticles/namedview", nameOfResult="allarticles")
-	@ToView("allarticles.jsp")
+	@View("allarticles.jsp")
 	public List<String> showAllArticles();
 
 	
@@ -37,7 +37,7 @@ public interface IBlogArticlesController {
 
 	
 	@RequestMapping(path="/blog/article/(\\d+)/namedview", nameOfResult="article")
-	@ToView("article.jsp")
+	@View("article.jsp")
 	public String showArticle(@UriParameter(1) int id);
 
 

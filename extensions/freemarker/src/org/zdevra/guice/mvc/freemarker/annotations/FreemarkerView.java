@@ -14,7 +14,7 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-package org.zdevra.guice.mvc.freemarker;
+package org.zdevra.guice.mvc.freemarker.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -32,8 +32,8 @@ import java.lang.annotation.Target;
  * public class MyController {
  *    
  *    {@literal @}Path("/helloworld")
- *    {@literal @}ModelName("msg")
- *    {@literal @}ToFreemarkerView("view.ftl")
+ *    {@literal @}Model("msg")
+ *    {@literal @}FreemarkerView("view.ftl")
  *    public String helloWorld() {
  *       ...
  *    }
@@ -42,6 +42,6 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.METHOD, ElementType.TYPE })
-public @interface ToFreemarkerView {
+public @interface FreemarkerView {
 	public String value();
 }

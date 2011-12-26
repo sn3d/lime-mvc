@@ -107,20 +107,20 @@ import com.google.inject.servlet.ServletModule;
  * <p>
  * <pre class="prettyprint">
  * {@literal @}Controller
- * {@literal @}ToView("some_view")
+ * {@literal @}View("some_view")
  * public class FirstController {
  *    ...
- *    {@literal @}Path("/get") {@literal}ModelName("user")
+ *    {@literal @}Path("/get") {@literal}Model("user")
  *    public User getUser() {
  *        ...
  *    }
  * }
  *
  * {@literal @}Controller
- * {@literal @}ToView("some_view")
+ * {@literal @}View("some_view")
  * public class SecondController {
  *    ...
- *    {@literal @}Path("/get") {@literal}ModelName("goods")
+ *    {@literal @}Path("/get") {@literal}Model("goods")
  *    public List<Product> getGoods() {
  *        ...
  *    }

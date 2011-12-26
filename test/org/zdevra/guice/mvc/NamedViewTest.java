@@ -24,11 +24,11 @@ import org.zdevra.guice.mvc.views.NamedView;
 @Test
 public class NamedViewTest {
 	
-	@Controller(toView="test")
+	@Controller(view="test")
 	public static class TestController {		
 	}
 	
-	@Controller(toView="")
+	@Controller(view="")
 	public static class TestControllerNull{		
 	}
 	

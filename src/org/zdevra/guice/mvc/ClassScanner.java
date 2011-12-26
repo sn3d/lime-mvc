@@ -25,7 +25,7 @@ import org.zdevra.guice.mvc.annotations.Controller;
 import org.zdevra.guice.mvc.annotations.DELETE;
 import org.zdevra.guice.mvc.annotations.GET;
 import org.zdevra.guice.mvc.annotations.HEAD;
-import org.zdevra.guice.mvc.annotations.ModelName;
+import org.zdevra.guice.mvc.annotations.Model;
 import org.zdevra.guice.mvc.annotations.POST;
 import org.zdevra.guice.mvc.annotations.PUT;
 import org.zdevra.guice.mvc.annotations.Path;
@@ -135,7 +135,7 @@ class ClassScanner {
 				method.getName(),
 				null );		
 		
-		ModelName resultName = method.getAnnotation(ModelName.class);
+		Model resultName = method.getAnnotation(Model.class);
 		if (resultName != null) {
 			reqMapping.resultName = resultName.value();
 		}

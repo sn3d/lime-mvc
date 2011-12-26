@@ -17,14 +17,13 @@
 package org.zdevra.guice.mvc.case3;
 
 import org.zdevra.guice.mvc.TestView;
-import org.zdevra.guice.mvc.View;
 import org.zdevra.guice.mvc.annotations.Controller;
 import org.zdevra.guice.mvc.annotations.Path;
 import org.zdevra.guice.mvc.annotations.RequestMapping;
-import org.zdevra.guice.mvc.annotations.ToView;
+import org.zdevra.guice.mvc.annotations.View;
 import org.zdevra.guice.mvc.views.NamedView;
 
-@Controller(toView="default")
+@Controller(view="default")
 public class Case3Controller {
 	
 	@RequestMapping(path="/view/default")
@@ -49,17 +48,17 @@ public class Case3Controller {
 	
 	
 	@RequestMapping(path="/view/3")
-	public View viewThree() {
+	public org.zdevra.guice.mvc.View viewThree() {
 		return NamedView.create("three");
 	}
 	
 
 	@RequestMapping(path="/view/4")
-	public View viewFour() {
+	public org.zdevra.guice.mvc.View viewFour() {
 		return new TestView("4");
 	}
 	
-	@Path("/view/5") @ToView("five")
+	@Path("/view/5") @View("five")
 	public void viewFive() {
 	}
 

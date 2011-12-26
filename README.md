@@ -37,8 +37,8 @@ controller example
 	{
 
 		@Path("/helloworld/(.*)") 
-		@ModelName("msg") 
-		@ToView("main.jsp")
+		@Model("msg") 
+		@View("main.jsp")
 		public String doAction(@UriParam(1) String name) 
 		{
 			return "Hello World " + name + "!";

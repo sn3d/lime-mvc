@@ -1,21 +1,21 @@
 package org.zdevra.lime.examples.converters;
 
-import org.zdevra.guice.mvc.Controller;
-import org.zdevra.guice.mvc.ModelName;
-import org.zdevra.guice.mvc.Path;
-import org.zdevra.guice.mvc.RequestParameter;
-import org.zdevra.guice.mvc.views.ToView;
+import org.zdevra.guice.mvc.annotations.Controller;
+import org.zdevra.guice.mvc.annotations.Model;
+import org.zdevra.guice.mvc.annotations.Path;
+import org.zdevra.guice.mvc.annotations.RequestParameter;
+import org.zdevra.guice.mvc.annotations.View;
 
 @Controller
-@ToView("main")
+@View("main")
 public class AppController {
 
-    @Path("/") @ModelName("msg")
+    @Path("/") @Model("msg")
     public String main() {
         return "none";
     }
 
-    @Path("/person/add") @ModelName("msg")
+    @Path("/person/add") @Model("msg")
     public String addPerson( @RequestParameter("person") Person p) {
         return p.toString();
     }

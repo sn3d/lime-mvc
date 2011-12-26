@@ -28,7 +28,7 @@ import com.google.inject.Singleton;
 import freemarker.template.Configuration;
 
 /**
- * The view scanner is looking for {@literal @}ToFreemarkerView annotation
+ * The view scanner is looking for {@literal @}FreemarkerView annotation
  * in controller or in controller's method and creates the 
  * {@link FreemarkerView}r instance
  * 
@@ -52,10 +52,13 @@ class FreemarkerScanner implements ViewScanner {
 
 	@Override
 	public View scan(Annotation[] anots) {
-		ToFreemarkerView anot = Utils.getAnnotation(ToFreemarkerView.class, anots);
+		org.zdevra.guice.mvc.freemarker.annotations.FreemarkerView anot = 
+				Utils.getAnnotation(org.zdevra.guice.mvc.freemarker.annotations.FreemarkerView.class, anots);
+		
 		if (anot == null) {
 			return View.NULL_VIEW;
-		}		
+		}
+		
 		return new FreemarkerView(freemarkerConf, anot.value());
 	}
 	

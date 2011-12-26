@@ -27,7 +27,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 /**
- * The view scanner is looking for {@literal @}ToVelocityView annotation
+ * The view scanner is looking for {@literal @}VelocityView annotation
  * in controller or in controller's method and creates the 
  * {@link VelocityView}'s instance
  * 
@@ -51,7 +51,9 @@ public class VelocityScanner implements ViewScanner {
 	
 	@Override
 	public View scan(Annotation[] controllerAnotations) {
-		ToVelocityView anot = Utils.getAnnotation(ToVelocityView.class, controllerAnotations);
+		org.zdevra.guice.mvc.velocity.annotations.VelocityView anot = 
+				Utils.getAnnotation(org.zdevra.guice.mvc.velocity.annotations.VelocityView.class, controllerAnotations);
+		
 		if (anot == null) {
 			return View.NULL_VIEW;
 		}		

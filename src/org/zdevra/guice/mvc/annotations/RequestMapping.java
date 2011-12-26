@@ -25,7 +25,7 @@ import org.zdevra.guice.mvc.HttpMethodType;
 
 /**
  * This annotation is deprecated and has been replaced 
- * by {@link Path} and {@link ModelName}.
+ * by {@link Path} and {@link Model}.
  * 
  * This annotation map a HTTP request to concrete method.
  * <p>
@@ -47,7 +47,7 @@ import org.zdevra.guice.mvc.HttpMethodType;
  * <pre>
  * 
  * @see Path
- * @see ModelName
+ * @see Model
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.METHOD })

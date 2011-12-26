@@ -1,11 +1,11 @@
 package org.zdevra.lime.examples.async;
 
 import org.zdevra.lime.examples.async.Book;
-import org.zdevra.guice.mvc.Controller;
-import org.zdevra.guice.mvc.ModelName;
-import org.zdevra.guice.mvc.Path;
-import org.zdevra.guice.mvc.RequestParameter;
-import org.zdevra.guice.mvc.views.ToView;
+import org.zdevra.guice.mvc.annotations.Controller;
+import org.zdevra.guice.mvc.annotations.Model;;
+import org.zdevra.guice.mvc.annotations.Path;
+import org.zdevra.guice.mvc.annotations.RequestParameter;
+import org.zdevra.guice.mvc.annotations.View;;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -14,14 +14,14 @@ import java.util.List;
  * Main application controller with actions
  */
 @Controller
-@ToView("main")
+@View("main")
 public class CustomersController {
 
     /**
      * Method is simulating the long term operation with some delay and returns customers
      * @return
      */
-    @Path("/get") @ModelName("customers")
+    @Path("/get") @Model("customers")
     public List<Customer> getCustomers()
     {
         try {

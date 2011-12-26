@@ -18,9 +18,9 @@ package org.zdevra.guice.mvc.case5;
 
 import org.zdevra.guice.mvc.annotations.Controller;
 import org.zdevra.guice.mvc.annotations.RequestMapping;
-import org.zdevra.guice.mvc.annotations.ToView;
+import org.zdevra.guice.mvc.annotations.View;
 
-@Controller @ToView("one.jsp")
+@Controller @View("one.jsp")
 public class Case5Controller {
 
 	@RequestMapping(path = "/action/one", nameOfResult="testmsg")
@@ -35,7 +35,7 @@ public class Case5Controller {
 	}
 	
 	
-	@RequestMapping(path = "/action/three", nameOfResult="testmsg") @ToView("three.jsp")
+	@RequestMapping(path = "/action/three", nameOfResult="testmsg") @View("three.jsp")
 	public String actionThree() {
 		return "threedata";
 	}

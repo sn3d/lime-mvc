@@ -28,10 +28,10 @@
  * <br><b>controller:</b></p>
  * <pre class="prettyprint">
  * {@literal @}Controller
- * {@literal @}ToView("someview")
+ * {@literal @}View("someview")
  * public class MyController {
  *    ...
- *    {@literal @}Path("/helloworld") {@literal @}ModelName("msg")
+ *    {@literal @}Path("/helloworld") {@literal @}Model("msg")
  *    public String showHelloWorld() {
  *       return "Hello World";
  *    }
@@ -58,7 +58,7 @@
  * <br><b>example:</b><p>
  * <pre class="prettyprint">
  * {@literal @}Controller
- * {@literal @}ToVelocityView("somehtml.velocity")
+ * {@literal @}VelocityView("somehtml.velocity")
  * public class MyController {
  *    ...
  * }

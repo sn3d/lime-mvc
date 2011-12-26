@@ -14,7 +14,7 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-package org.zdevra.guice.mvc.jsilver;
+package org.zdevra.guice.mvc.jsilver.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -32,8 +32,8 @@ import java.lang.annotation.Target;
  * public class MyController {
  *    
  *    {@literal @}Path("/helloworld")
- *    {@literal @}ModelName("msg")
- *    {@literal @}ToJSilverView("view.jsilver")
+ *    {@literal @}Model("msg")
+ *    {@literal @}JSilverView("view.jsilver")
  *    public String helloWorld() {
  *       ...
  *    }
@@ -42,6 +42,6 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.METHOD, ElementType.TYPE })
-public @interface ToJSilverView {
+public @interface JSilverView {
 	public String value();
 }

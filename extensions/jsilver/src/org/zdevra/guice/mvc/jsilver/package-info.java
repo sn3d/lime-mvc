@@ -32,10 +32,10 @@
  * <br><b>controller:</b></p>
  * <pre class="prettyprint">
  * {@literal @}Controller
- * {@literal @}ToView("someview")
+ * {@literal @}View("someview")
  * public class MyController {
  *    ...
- *    {@literal @}Path("/helloworld") {@literal @}ModelName("msg")
+ *    {@literal @}Path("/helloworld") {@literal @}Model("msg")
  *    public String showHelloWorld() {
  *       return "Hello World";
  *    }
@@ -62,13 +62,13 @@
  * <br><b>example:</b><p>
  * <pre class="prettyprint">
  * {@literal @}Controller
- * {@literal @}ToJSilverView("somehtml.jsilver")
+ * {@literal @}JSilverView("somehtml.jsilver")
  * public class MyController {
  *    ...
  * }
  * </pre>
  * 
  * @see org.zdevra.guice.mvc.jsilver.JSilverModule
- * @see org.zdevra.guice.mvc.jsilver.ToJSilverView
+ * @see org.zdevra.guice.mvc.jsilver.annotations.JSilverView
  */
 package org.zdevra.guice.mvc.jsilver;

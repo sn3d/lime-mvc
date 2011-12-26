@@ -18,10 +18,10 @@ package org.zdevra.guice.mvc.case6;
 
 import org.zdevra.guice.mvc.annotations.Controller;
 import org.zdevra.guice.mvc.annotations.RequestMapping;
-import org.zdevra.guice.mvc.annotations.ToView;
+import org.zdevra.guice.mvc.annotations.View;
 
 @Controller
-@ToView("cars.jsp")
+@View("cars.jsp")
 public class Case6ControllerCars {
 
 	@RequestMapping(path="/common", nameOfResult="msg2")

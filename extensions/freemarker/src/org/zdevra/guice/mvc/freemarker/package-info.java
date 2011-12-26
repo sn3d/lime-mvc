@@ -31,7 +31,7 @@
  * <br><b>controller:</b></p>
  * <pre class="prettyprint">
  * {@literal @}Controller
- * {@literal @}ToView("someview")
+ * {@literal @}View("someview")
  * public class MyController {
  *    ...
  *    {@literal @}RequestMapping(path="/helloworld", nameOfResult="msg")
@@ -61,7 +61,7 @@
  * <br><b>example:</b><p>
  * <pre class="prettyprint">
  * {@literal @}Controller
- * {@literal @}ToFreemarkerView("somehtml.ftl")
+ * {@literal @}FreemarkerView("somehtml.ftl")
  * public class MyController {
  *    ...
  * }

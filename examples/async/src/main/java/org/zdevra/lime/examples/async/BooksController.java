@@ -1,7 +1,7 @@
 package org.zdevra.lime.examples.async;
 
 import org.zdevra.guice.mvc.Controller;
-import org.zdevra.guice.mvc.ModelName;
+import org.zdevra.guice.mvc.annotations.Model;
 import org.zdevra.guice.mvc.Path;
 import org.zdevra.guice.mvc.views.ToView;
 
@@ -9,14 +9,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Controller
-@ToView("main")
+@View("main")
 public class BooksController {
 
 	/**
 	 * Method is simulating the long term operation with some delay and returns books
 	 * @return
 	 */
-	@Path("/get") @ModelName("books")
+	@Path("/get") @Model("books")
 	public List<Book> getBooks()
 	{
 		try {

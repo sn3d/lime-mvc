@@ -145,7 +145,7 @@
  * <pre class="prettyprint">
  * {@literal @}Controller
  * public class MyController {
- *    {@literal @}Path("/users") {@literal @}ToView("users_view")
+ *    {@literal @}Path("/users") {@literal @}View("users_view")
  *    public Model getUsers() {
  *    ...
  *    }

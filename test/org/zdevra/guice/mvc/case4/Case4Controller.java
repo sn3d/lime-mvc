@@ -20,7 +20,7 @@ import org.zdevra.guice.mvc.annotations.Controller;
 import org.zdevra.guice.mvc.annotations.Path;
 import org.zdevra.guice.mvc.annotations.RequestMapping;
 
-@Controller(toView="default")
+@Controller(view="default")
 public class Case4Controller {
 
 	@RequestMapping(path="/expetion/npe")
