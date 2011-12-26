@@ -38,7 +38,7 @@ class MethodInvokerFilter implements MethodInvoker {
 	 * Constructor
 	 */
 	public MethodInvokerFilter(MappingData mapping, MethodInvoker decoratedInvoker) {
-		this.pathPattern = Pattern.compile("(?i)" + mapping.path);
+		this.pathPattern = Pattern.compile("(?i)" + mapping.path + "$");
 		this.decoratedInvoker = decoratedInvoker;
 		this.requestTypeFilter = mapping.httpMethodType;
 	}
