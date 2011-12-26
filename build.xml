@@ -47,6 +47,10 @@
 	<target name="init-dirs">
 		<mkdir dir="${target}"/>	
 		<mkdir dir="${classes}"/>
+		<mkdir dir="${lib}"/>
+		<mkdir dir="${java.lib}"/>
+		<mkdir dir="${system.lib}"/>
+		<mkdir dir="${test.lib}"/>
 	</target>
 
 	<target name="proxy" if="isProxy">
