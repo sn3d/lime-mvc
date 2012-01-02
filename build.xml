@@ -2,7 +2,8 @@
 
 	<!--============== PATHS & PROPERTIES ==============-->
 	
-	<property file="build.properties"/>   
+	<property file="build.properties"/>
+	<property environment="env"/>
 
 	<property name="lib" value="./lib"/>
 	<property name="java.lib" value="./lib/java"/>
@@ -56,12 +57,21 @@
 	<target name="proxy" if="isProxy">
 		<setproxy proxyhost="${proxy.host}" proxyport="${proxy.port}"/>
 	</target>
+	
+	<target name="version-env" if="env.LIME_VERSION">
+		<property name="lime.version" value="${env.LIME_VERSION}"/>
+	</target>
+
+	<target name="version-file" unless="env.LIME_VERSION">
+		<property name="lime.version" value="${version.project}"/>
+	</target>
+
 
 	<target name="retrieve-libs" depends="preinit, proxy" description="retrieve libs">
 		<ivy:retrieve pattern="${lib}/[conf]/[artifact](-[classifier]).[ext]"/> 
 	</target>
 
-	<target name="init" depends="preinit, init-dirs">
+	<target name="init" depends="preinit, init-dirs, version-env, version-file">
 		<taskdef name="testng" classname="org.testng.TestNGAntTask" >
 			<classpath>
 				<fileset dir="${test.lib}">
@@ -132,7 +142,7 @@
 		
 		<property name="Bundle-Name" value="org.zdevra.lime"/>
 	   <property name="Bundle-SymbolicName" value="org.zdevra.lime"/>
-	   <property name="Bundle-Version" value="${version.project}"/>
+	   <property name="Bundle-Version" value="${lime.version}"/>
 
 	   <property name="Bundle-Description" value="Implementation of the MVC pattern for Google Guice"/>
 	   <property name="Bundle-DocURL" value="http://docs.zdenkovrabel.org"/>
@@ -141,7 +151,7 @@
 	   <property name="Bundle-RequiredExecutionEnvironment" value="J2SE-1.5,JavaSE-1.6"/>
 	   <property name="Bundle-Vendor" value="Zdenko Vrabel"/>
 
-	   <property name="Export-Package" value="org.zdevra.guice.mvc.*;version=0.2.1"/>	    
+	   <property name="Export-Package" value="org.zdevra.guice.mvc.*;version=${lime.version}"/>	    
 		<property name="Import-Package" value="!org.zdevra.guice.mvc.*,*" />
 	    		
 		<property name="-nouses" value="true"/>
