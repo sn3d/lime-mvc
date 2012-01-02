@@ -179,7 +179,7 @@
  * <pre class="prettyprint">
  * public class MyWebAppModule extends MvcModule {
  *   protected void configureControllers() {
- *     ...
+ *     ... 
  *     bind(ViewResolver.class).to(CustomViewResolver.class);
  *     ...
  *   }
@@ -187,22 +187,61 @@
  * </pre>
  *
  * <p>
- * <h3>Async. execution</h3>
- * Let's take a situation where we've got on the one page several different and 
+ * <h3>Parallel execution</h3>
+ * Let's assume a situation where we've got on the one page several different and 
  * independent informations. Usually, the model with these data is filled in 
  * one thread even the data are independent. 
  * 
- * <p><img src="concept-idependent-data.png" /><p>
+ * <p><img src="independent-data.png" /><p>
  * 
- * For this case should be good to have the async. execution of several methods 
- * which prepare model data.
+ * For this case should be good to have the execution of several methods for one URL,  
+ * which are producing the data. You could specify 2 controllers for one URL. One controller
+ * for books, second for customer data:
  * 
- * <p><img src="concept-async-execution.png" /><p>
+ * <br><p>
+ * <pre class="prettyprint">
+ * {@literal @}Controller
+ * public class BooksController {
+ *    {@literal @}Path("/get") {@literal @}Model("books")
+ *    pubic List<Book> getBooks() {
+ *       ...
+ *    }
+ *    
+ * }
  * 
+ * ...
  * 
- *
+ * {@literal @}Controller
+ * public class CustomersController {
+ *    {@literal @}Path("/get") {@literal @}Model("customer")
+ *    pubic Customer getCustomer() {
+ *       ...
+ *    }    
+ * }
+ * 
+ * ...
+ * 
+ * protected void configureControllers() {
+ *    control("/page/*")
+ *       .withController(CustomersController.class)
+ *       .withController(BooksController.class);
+ * } 
+ * </pre>
+ * 
+ * When you'll request the '/page/get', the request will invoke getBooks() and getCustomer() 
+ * methods and model results will be merged into one result then. In this specific case, you can invoke methods
+ * assynchonnous in 2 separated threads. You will modify the code as following:
+ * 
+ * <br><p>
+ * <pre class="prettyprint">
+ * protected void configureControllers() {
+ *    controlAsync("/page/*")
+ *       .withController(CustomersController.class)
+ *       .withController(BooksController.class);
+ * } 
+ * </pre>
+ * 
+ * For detailed informations how to use it, see the 'Async' example.
  *
  */
 package org.zdevra.guice.mvc;
-
-
