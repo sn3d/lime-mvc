@@ -65,13 +65,21 @@
 	<target name="version-file" unless="env.LIME_VERSION">
 		<property name="lime.version" value="${version.project}"/>
 	</target>
+	
+	<target name="debug-env" if="env.LIME_DEBUG">
+		<property name="lime.debug" value="${env.LIME_DEBUG}"/>
+	</target>
+	
+	<target name="debug-file" unless="env.LIME_DEBUG">
+		<property name="lime.debug" value="${java.debug}"/>
+	</target>
 
 
 	<target name="retrieve-libs" depends="preinit, proxy" description="retrieve libs">
 		<ivy:retrieve pattern="${lib}/[conf]/[artifact](-[classifier]).[ext]"/> 
 	</target>
 
-	<target name="init" depends="preinit, init-dirs, version-env, version-file">
+	<target name="init" depends="preinit, init-dirs, version-env, version-file, debug-env, debug-file">
 		<taskdef name="testng" classname="org.testng.TestNGAntTask" >
 			<classpath>
 				<fileset dir="${test.lib}">
@@ -88,7 +96,7 @@
 
 	<target name="compile-java" depends="init">
 		<mkdir dir="${java.classes}" />
-		<javac srcdir="${java.src}" destdir="${java.classes}" debug="${java.debug}" includeantruntime="false">
+		<javac srcdir="${java.src}" destdir="${java.classes}" debug="${lime.debug}" includeantruntime="false">
 			<classpath>
 				<pathelement location="${java.classes}" />
 				<fileset dir="${java.lib}"><include name="*.jar"/></fileset>
@@ -99,7 +107,7 @@
 
 	<target name="compile-java-test" depends="compile-java">
 		<mkdir dir="${test.classes}" />
-		<javac srcdir="${java.test}" destdir="${test.classes}" debug="${java.debug}" includeantruntime="false">
+		<javac srcdir="${java.test}" destdir="${test.classes}" debug="${lime.debug}" includeantruntime="false">
 			<classpath>
 				<pathelement location="${java.classes}" />
 				<pathelement location="${test.classes}" />

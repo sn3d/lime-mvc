@@ -37,7 +37,16 @@
 		<property name="lime.version" value="${version.project}" />
 	</target>
 	
-	<target name="init" depends="version-env, version-file">
+	<target name="debug-env" if="env.LIME_DEBUG">
+		<property name="lime.debug" value="${env.LIME_DBEUG}"/>
+	</target>
+	
+	<target name="debug-file" unless="env.LIME_DEBUG">
+		<property name="lime.debug" value="${java.debug}"/>
+	</target>
+	
+	
+	<target name="init" depends="version-env, version-file, debug-env, debug-file">
 		<mkdir dir="${classes}"/>
 		<mkdir dir="${classes.test}"/>
 		
@@ -53,7 +62,7 @@
 	<!--================ COMPILATION ================-->
 	
 	<target name="compile-java" depends="init">
-		<javac srcdir="${java.src}" destdir="${classes}" debug="${java.debug}" includeantruntime="false">
+		<javac srcdir="${java.src}" destdir="${classes}" debug="${lime.debug}" includeantruntime="false">
 			<classpath>
 				<pathelement location="${classes}" />
 				<pathelement location="${classes.lime}" />
@@ -64,7 +73,7 @@
 	</target>
 	
 	<target name="compile-java-test" depends="compile-java" >
-		<javac srcdir="${java.test}" destdir="${classes.test}" debug="${java.debug}" includeantruntime="false">
+		<javac srcdir="${java.test}" destdir="${classes.test}" debug="${lime.debug}" includeantruntime="false">
 			<classpath>
 				<pathelement location="${classes}" />
 				<pathelement location="${classes.lime}" />
