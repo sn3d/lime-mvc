@@ -20,13 +20,13 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
- * Class represents a data model produced by the controllers.
+ * Class represents a data model as a Map which is produced by the controllers.
  * 
  * <p>example:
  * <pre class="prettyprint">
@@ -34,18 +34,18 @@ import javax.servlet.http.HttpSession;
  * class BookController {
  * 
  *    {@literal @}Path(...)
- *    public Model doSomeAtion() {
+ *    public ModelMap doSomeAtion() {
  *       ...
- *       Model m = new Model();
- *       m.addObject("user", user);
- *       m.addObject("books", books);
+ *       ModelMap m = new ModelMap();
+ *       m.put("user", user);
+ *       m.put("books", books);
  *       return m;
  *    } 
  * }
  * 
  * </pre>
  */
-public class Model {
+public class ModelMap implements Map<String, Object> {
 	
 // ------------------------------------------------------------------------
 	
@@ -56,7 +56,7 @@ public class Model {
 	/**
 	 * Constructor
 	 */
-	public Model() {
+	public ModelMap() {
 		this.modelObjects = new HashMap<String, Object>();
 	}
 	
@@ -65,7 +65,7 @@ public class Model {
 	 * @param name
 	 * @param value
 	 */
-	public Model(String name, Object value) {
+	public ModelMap(String name, Object value) {
 		this();
 		addObject(name, value);
 	}
@@ -76,7 +76,7 @@ public class Model {
 	 * Method merge two models. Basically method 
 	 * add to the model all data from another model.  
 	 */
-	public void addModel(Model m) {
+	public void addModel(ModelMap m) {
 		this.modelObjects.putAll(m.modelObjects);
 	}
 	
@@ -99,13 +99,6 @@ public class Model {
 	 */
 	public Object getObject(String name) {
 		return this.modelObjects.get(name);
-	}
-
-// ------------------------------------------------------------------------
-	
-	@Override
-	public String toString() {
-		return "Model [modelObjects=" + modelObjects + "]";
 	}
 
 
@@ -141,7 +134,75 @@ public class Model {
 			request.setAttribute(entry.getKey(), entry.getValue());
 		}
 	}
+
 	
+// ------------------------------------------------------------------------
+	
+	@Override
+	public String toString() {
+		return "Model [modelObjects=" + modelObjects + "]";
+	}
+
+
+	@Override
+	public int size() {
+		return modelObjects.size();
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return modelObjects.isEmpty();
+	}
+
+	@Override
+	public boolean containsKey(Object key) {
+		return modelObjects.containsKey(key);
+	}
+
+	@Override
+	public boolean containsValue(Object value) {
+		return modelObjects.containsValue(value);
+	}
+
+	@Override
+	public Object get(Object key) {
+		return modelObjects.get(key);
+	}
+
+	@Override
+	public Object put(String key, Object value) {
+		return modelObjects.put(key, value);
+	}
+
+	@Override
+	public Object remove(Object key) {
+		return modelObjects.remove(key);
+	}
+
+	@Override
+	public void putAll(Map<? extends String, ? extends Object> m) {		
+		modelObjects.putAll(m);
+	}
+
+	@Override
+	public void clear() {
+		modelObjects.clear();
+	}
+
+	@Override
+	public Set<String> keySet() {
+		return modelObjects.keySet();
+	}
+
+	@Override
+	public Collection<Object> values() {
+		return modelObjects.values();
+	}
+
+	@Override
+	public Set<java.util.Map.Entry<String, Object>> entrySet() {
+		return modelObjects.entrySet();
+	}
 	
 // ------------------------------------------------------------------------
 }

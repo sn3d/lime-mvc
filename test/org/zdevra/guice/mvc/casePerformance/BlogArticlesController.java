@@ -18,7 +18,7 @@ package org.zdevra.guice.mvc.casePerformance;
 
 import java.util.List;
 
-import org.zdevra.guice.mvc.Model;
+import org.zdevra.guice.mvc.ModelMap;
 import org.zdevra.guice.mvc.ModelAndView;
 import org.zdevra.guice.mvc.annotations.UriParameter;
 
@@ -43,7 +43,7 @@ public class BlogArticlesController implements IBlogArticlesController {
 	
 	
 	public ModelAndView showAllArticlesDirect() {
-		Model m = new Model("allarticles", dao.getAllArticles());
+		ModelMap m = new ModelMap("allarticles", dao.getAllArticles());
 		return new ModelAndView(m, new ViewAllArticles());
 	}
 	
@@ -54,7 +54,7 @@ public class BlogArticlesController implements IBlogArticlesController {
 	
 
 	public ModelAndView showArticleDirect(@UriParameter(1) int id) {
-		Model m = new Model("article", dao.getArticle(id));
+		ModelMap m = new ModelMap("article", dao.getArticle(id));
 		return new ModelAndView(m, new ViewArticle());
 	}
 }

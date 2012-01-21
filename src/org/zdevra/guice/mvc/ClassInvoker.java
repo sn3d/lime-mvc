@@ -84,7 +84,7 @@ class ClassInvoker {
 	 * @param m
 	 * @param session
 	 */
-	public void moveDataToSession(Model m, HttpSession session) {
+	public void moveDataToSession(ModelMap m, HttpSession session) {
 		m.moveObjectsToSession(sessionAttrs, session);
 	}
 

@@ -42,18 +42,18 @@ public class Case1Controller {
 	
 	
 	@RequestMapping(path="/do/session")
-	public org.zdevra.guice.mvc.Model getDataFromSession(
+	public org.zdevra.guice.mvc.ModelMap getDataFromSession(
 			@SessionParameter(value = "author") String author, 
 			@SessionParameter("year") Integer year ) 
 	{
-		org.zdevra.guice.mvc.Model m = new org.zdevra.guice.mvc.Model();
+		org.zdevra.guice.mvc.ModelMap m = new org.zdevra.guice.mvc.ModelMap();
 		m.addObject("testmsg", author + " " + year);
 		m.addObject("book", "Hamlet");
 		return m;
 	}
 		
 	@RequestMapping(path="/do/sessionmodel", nameOfResult="testmsg")
-	public String getDataFromSessionAsModel(org.zdevra.guice.mvc.Model m) {
+	public String getDataFromSessionAsModel(org.zdevra.guice.mvc.ModelMap m) {
 		String out = "in session is book:" + m.getObject("book");
 		m.addObject("book", "Romeo&Juliette");
 		return out;

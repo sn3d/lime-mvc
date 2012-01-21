@@ -140,8 +140,8 @@ class MethodInvokerImpl implements MethodInvoker {
 
 		if (result == null) {
 			return out;
-		} else if (result instanceof Model) {
-			Model resultModel = (Model) result;
+		} else if (result instanceof ModelMap) {
+			ModelMap resultModel = (ModelMap) result;
 			out.addModel(resultModel);			
 		} else if (result instanceof ModelAndView) {
 			return (ModelAndView) result;

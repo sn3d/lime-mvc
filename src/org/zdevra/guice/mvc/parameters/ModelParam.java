@@ -17,10 +17,10 @@
 package org.zdevra.guice.mvc.parameters;
 
 import org.zdevra.guice.mvc.InvokeData;
-import org.zdevra.guice.mvc.Model;
+import org.zdevra.guice.mvc.ModelMap;
 
 /**
- * The parameter's processor take care of the {@link org.zdevra.guice.mvc.Model} parameter in the method.
+ * The parameter's processor take care of the {@link org.zdevra.guice.mvc.ModelMap} parameter in the method.
  * 
  * for example:
  * <pre class="prettyprint">
@@ -46,7 +46,7 @@ public class ModelParam implements ParamProcessor {
 
 		@Override
 		public ParamProcessor buildParamProcessor(ParamMetadata metadata) {
-			if (metadata.getType() != Model.class) {
+			if (metadata.getType() != ModelMap.class) {
 				return null;
 			}
 			return processor;

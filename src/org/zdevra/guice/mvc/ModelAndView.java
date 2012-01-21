@@ -39,7 +39,7 @@ public class ModelAndView {
 
 /*---------------------------- m. variables ----------------------------*/
 	
-	private Model model;
+	private ModelMap model;
 	private ViewPoint view;
 	
 /*---------------------------- constructors ----------------------------*/
@@ -49,7 +49,7 @@ public class ModelAndView {
 	 * undefined view View.NULL_VIEW.
 	 */
 	public ModelAndView() {
-		this(new Model(), ViewPoint.NULL_VIEW);
+		this(new ModelMap(), ViewPoint.NULL_VIEW);
 	}
 
 	/**
@@ -58,7 +58,7 @@ public class ModelAndView {
 	 * @param view
 	 */
 	public ModelAndView(ViewPoint view) {
-		this(new Model(), view);
+		this(new ModelMap(), view);
 	}
 	
 	/**
@@ -67,14 +67,14 @@ public class ModelAndView {
 	 * @param model
 	 * @param view
 	 */
-	public ModelAndView(Model model, ViewPoint view) {
+	public ModelAndView(ModelMap model, ViewPoint view) {
 		this.model = model;
 		this.view = view;
 	}
 		
 /*------------------------------- methods ------------------------------*/
 
-	public Model getModel() {
+	public ModelMap getModel() {
 		return model;
 	}
 
@@ -83,7 +83,7 @@ public class ModelAndView {
 		return view;
 	}
 	
-	public void addModel(Model m) {
+	public void addModel(ModelMap m) {
 		this.model.addModel(m);
 	}
 	

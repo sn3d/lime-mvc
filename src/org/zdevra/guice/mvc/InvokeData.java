@@ -34,14 +34,14 @@ public class InvokeData {
 	private final Matcher uriMatcher;
 	private final HttpServletRequest request;
 	private final HttpServletResponse response;
-	private final Model model;
+	private final ModelMap model;
 	private final HttpMethodType reqType;
 	private final Injector injector;
 
 /*---------------------------- constructors ----------------------------*/
 
 	
-	public InvokeData(HttpServletRequest request, HttpServletResponse response, Model model, HttpMethodType reqType, Injector injector) {
+	public InvokeData(HttpServletRequest request, HttpServletResponse response, ModelMap model, HttpMethodType reqType, Injector injector) {
 		this.request = request;
 		this.response = response;
 		this.model = model;
@@ -60,7 +60,7 @@ public class InvokeData {
 		this.injector = copy.injector;
 	}
 	
-	public InvokeData(Model m, InvokeData copy) {
+	public InvokeData(ModelMap m, InvokeData copy) {
 		this.model = m;
 		this.uriMatcher = copy.uriMatcher;
 		this.request = copy.request;
@@ -83,7 +83,7 @@ public class InvokeData {
 		return response;
 	}
 
-	public Model getModel() {
+	public ModelMap getModel() {
 		return model;
 	}
 

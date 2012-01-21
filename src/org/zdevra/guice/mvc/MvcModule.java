@@ -160,7 +160,7 @@ import com.google.inject.servlet.ServletModule;
  *
  *
  * @see Controller 
- * @see Model
+ * @see ModelMap
  * @see ModelAndView
  * @see View
  * @see ViewResolver
