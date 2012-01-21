@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.zdevra.guice.mvc.View;
+import org.zdevra.guice.mvc.ViewPoint;
 import org.zdevra.guice.mvc.exceptions.FreemarkerViewException;
 
 import com.google.inject.Inject;
@@ -43,7 +43,7 @@ import freemarker.template.TemplateException;
  * The view provide rendering of outptu HTML via Freemarker template
  * engine
  */
-public class FreemarkerView implements View {
+public class FreemarkerViewPoint implements ViewPoint {
 
 // ------------------------------------------------------------------------
 	
@@ -55,7 +55,7 @@ public class FreemarkerView implements View {
 	/**
 	 * Constructor 
 	 */
-	public FreemarkerView(String templateFile) {
+	public FreemarkerViewPoint(String templateFile) {
 		this.templateFile = templateFile;
 	}
 	
@@ -63,7 +63,7 @@ public class FreemarkerView implements View {
 	/**
 	 * The constructor 
 	 */
-	public FreemarkerView(Configuration freemakerConf, String templateFile) 
+	public FreemarkerViewPoint(Configuration freemakerConf, String templateFile) 
 	{
 		this.freemarkerConf = freemakerConf;
 		this.templateFile = templateFile;

@@ -17,13 +17,13 @@ class ViewServlet extends HttpServlet {
 	
 // ------------------------------------------------------------------------
 	
-	private final View view;
+	private final ViewPoint view;
 	private ViewResolver viewResolver;
 	private ExceptionResolver exceptionResolver;
 	
 // ------------------------------------------------------------------------
 	
-	public ViewServlet(View view) {
+	public ViewServlet(ViewPoint view) {
 		this.view = view;
 	}
 	

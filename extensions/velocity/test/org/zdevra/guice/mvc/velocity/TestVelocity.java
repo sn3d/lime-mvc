@@ -43,7 +43,7 @@ public class TestVelocity {
 		velocity.addProperty("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");	    	    
 	    velocity.init();
 
-		VelocityView view = new VelocityView("test.velocity", velocity);
+		VelocityViewPoint view = new VelocityViewPoint("test.velocity", velocity);
 		
 		//prepare req & resp and render the view
 		HttpServletRequest req = 
@@ -75,7 +75,7 @@ public class TestVelocity {
 				install(new ViewModule() {
 					@Override
 					protected void configureViews() {
-						bindViewName("testview").toViewInstance(new VelocityView("test.velocity"));
+						bindViewName("testview").toViewInstance(new VelocityViewPoint("test.velocity"));
 					}					
 				});
 			}			

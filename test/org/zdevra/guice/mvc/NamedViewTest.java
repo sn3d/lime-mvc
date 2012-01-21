@@ -34,15 +34,15 @@ public class NamedViewTest {
 	
 	@Test
 	public void testControllerToView() {
-		View view = NamedView.create(TestController.class);
+		ViewPoint view = NamedView.create(TestController.class);
 		Assert.assertNotNull(view);
 		Assert.assertEquals(view.toString(), "NamedView [name=test]");
 	}
 	
 	@Test
 	public void testControllerToViewNull() {
-		View view = NamedView.create(TestControllerNull.class);
-		View viewnull = View.NULL_VIEW;
+		ViewPoint view = NamedView.create(TestControllerNull.class);
+		ViewPoint viewnull = ViewPoint.NULL_VIEW;
 		Assert.assertTrue( view == viewnull );
 	}
 

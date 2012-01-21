@@ -20,7 +20,7 @@ import java.lang.annotation.Annotation;
 
 import org.apache.velocity.app.VelocityEngine;
 import org.zdevra.guice.mvc.Utils;
-import org.zdevra.guice.mvc.View;
+import org.zdevra.guice.mvc.ViewPoint;
 import org.zdevra.guice.mvc.ViewScanner;
 
 import com.google.inject.Inject;
@@ -29,7 +29,7 @@ import com.google.inject.Singleton;
 /**
  * The view scanner is looking for {@literal @}VelocityView annotation
  * in controller or in controller's method and creates the 
- * {@link VelocityView}'s instance
+ * {@link VelocityViewPoint}'s instance
  * 
  * This is internal class which is invisible for normal usage.
  */
@@ -50,14 +50,14 @@ public class VelocityScanner implements ViewScanner {
 // ------------------------------------------------------------------------
 	
 	@Override
-	public View scan(Annotation[] controllerAnotations) {
+	public ViewPoint scan(Annotation[] controllerAnotations) {
 		org.zdevra.guice.mvc.velocity.annotations.VelocityView anot = 
 				Utils.getAnnotation(org.zdevra.guice.mvc.velocity.annotations.VelocityView.class, controllerAnotations);
 		
 		if (anot == null) {
-			return View.NULL_VIEW;
+			return ViewPoint.NULL_VIEW;
 		}		
-		return new VelocityView(anot.value(), velocity);
+		return new VelocityViewPoint(anot.value(), velocity);
 	}
 	
 // ------------------------------------------------------------------------

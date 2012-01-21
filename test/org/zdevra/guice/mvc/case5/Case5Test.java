@@ -49,13 +49,6 @@ public class Case5Test extends AbstractTest {
 		String out = resp.getText();
 		Assert.assertTrue(out.contains("viewId=1 test message:onedata"));		
 	}
-
-	@Test
-	public void testToViewParam() throws IOException, ServletException {
-		WebResponse resp = executeSimpleUrl("http://www.test.com/test/action/two");
-		String out = resp.getText();
-		Assert.assertTrue(out.contains("viewId=2 test message:twodata"));		
-	}
 	
 	@Test
 	public void testToViewAnnotation() throws IOException, ServletException {

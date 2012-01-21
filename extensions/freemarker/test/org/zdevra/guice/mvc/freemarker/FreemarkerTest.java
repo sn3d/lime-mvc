@@ -25,7 +25,7 @@ class FreemarkerTestModule extends TestModule {
 		install(new ViewModule() {
 			@Override
 			protected void configureViews() {
-				bindViewName("testview").toViewInstance(new FreemarkerView("test.ftl"));
+				bindViewName("testview").toViewInstance(new FreemarkerViewPoint("test.ftl"));
 			}					
 		});
 	}	

@@ -16,46 +16,15 @@
  *****************************************************************************/
 package org.zdevra.guice.mvc.case3;
 
-import org.zdevra.guice.mvc.TestView;
 import org.zdevra.guice.mvc.annotations.Controller;
 import org.zdevra.guice.mvc.annotations.Path;
-import org.zdevra.guice.mvc.annotations.RequestMapping;
 import org.zdevra.guice.mvc.annotations.View;
-import org.zdevra.guice.mvc.views.NamedView;
 
 @Controller(view="default")
 public class Case3Controller {
-	
-	@RequestMapping(path="/view/default")
+
+	@Path("/view/default")
 	public void defaultView() {		
-	}
-	
-	
-	@RequestMapping(path="/view/unknown", toView="unknown")
-	public void viewUnknown() {		
-	}
-
-	
-	@RequestMapping(path="/view/1", toView="one")
-	public void viewOne() {		
-	}
-	
-	
-	@RequestMapping(path="/view/2", toView="two")
-	public void viewTwo() {
-		
-	}
-	
-	
-	@RequestMapping(path="/view/3")
-	public org.zdevra.guice.mvc.View viewThree() {
-		return NamedView.create("three");
-	}
-	
-
-	@RequestMapping(path="/view/4")
-	public org.zdevra.guice.mvc.View viewFour() {
-		return new TestView("4");
 	}
 	
 	@Path("/view/5") @View("five")

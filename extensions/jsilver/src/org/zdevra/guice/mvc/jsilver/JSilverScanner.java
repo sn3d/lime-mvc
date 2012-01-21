@@ -19,7 +19,7 @@ package org.zdevra.guice.mvc.jsilver;
 import java.lang.annotation.Annotation;
 
 import org.zdevra.guice.mvc.Utils;
-import org.zdevra.guice.mvc.View;
+import org.zdevra.guice.mvc.ViewPoint;
 import org.zdevra.guice.mvc.ViewScanner;
 
 import com.google.clearsilver.jsilver.JSilver;
@@ -29,7 +29,7 @@ import com.google.inject.Singleton;
 /**
  * The view scanner is looking for {@literal @}JSilverView annotation
  * in controller or in controller's method and creates the 
- * {@link JSilverView} instance
+ * {@link JSilverViewPoint} instance
  * 
  * This is internal class which is invisible for normal usage.
  */
@@ -52,15 +52,15 @@ class JSilverScanner implements ViewScanner {
 // ------------------------------------------------------------------------
 	
 	@Override
-	public View scan(Annotation[] controllerAnotations)  
+	public ViewPoint scan(Annotation[] controllerAnotations)  
 	{
 		org.zdevra.guice.mvc.jsilver.annotations.JSilverView anot = 
 				Utils.getAnnotation(org.zdevra.guice.mvc.jsilver.annotations.JSilverView.class, controllerAnotations);
 		
 		if (anot == null) {
-			return View.NULL_VIEW;
+			return ViewPoint.NULL_VIEW;
 		}
-		return new JSilverView(anot.value(), jSilver, modelService);
+		return new JSilverViewPoint(anot.value(), jSilver, modelService);
 	}
 	
 // ------------------------------------------------------------------------

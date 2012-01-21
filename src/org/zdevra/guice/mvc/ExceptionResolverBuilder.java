@@ -84,7 +84,7 @@ class ExceptionResolverBuilder {
 		}
 		
 		@Override
-		public void toErrorView(View errorView) {			
+		public void toErrorView(ViewPoint errorView) {			
 			ExceptionHandler handler = new ViewExceptionHandler( errorView );
 			binder.requestInjection(errorView);
 			binder.requestInjection(handler);

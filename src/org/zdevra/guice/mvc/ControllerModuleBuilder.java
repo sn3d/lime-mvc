@@ -79,7 +79,7 @@ class ControllerModuleBuilder  {
 		}
 
 		@Override
-		public void withView(View viewInstance) {
+		public void withView(ViewPoint viewInstance) {
 			ServletDefinition def = new DirectViewDefinition(actualUrlPattern, viewInstance);
 			servletDefinitions.add(def);			
 		}

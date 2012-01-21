@@ -53,17 +53,17 @@ class DefaultViewResolver implements ViewResolver {
 // ------------------------------------------------------------------------
 
 	@Override
-	public void resolve(View view, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {		
-		if (view == null || view == View.NULL_VIEW) {
+	public void resolve(ViewPoint view, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {		
+		if (view == null || view == ViewPoint.NULL_VIEW) {
 			throw new NoViewException(req);
 		}
 
 		if (view instanceof NamedView) {
 			String viewName = ((NamedView)view).getName();
 			try {
-				view = injector.getInstance(Key.get(View.class, Names.named(viewName)));
+				view = injector.getInstance(Key.get(ViewPoint.class, Names.named(viewName)));
 			} catch (ConfigurationException e) {
-				if (view == null || view == View.NULL_VIEW) {
+				if (view == null || view == ViewPoint.NULL_VIEW) {
 					throw new NoViewForNameException(viewName);
 				} else {
 					view = new JspView(viewName);

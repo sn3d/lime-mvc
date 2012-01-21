@@ -41,7 +41,7 @@ class MethodInvokerImpl implements MethodInvoker {
 /*---------------------------- m. variables ----------------------------*/
 	
 	private final Class<?> controllerClass;
-	private final View defaultView;
+	private final ViewPoint defaultView;
 	private final String resultName;
 	private final Method method;
 	private final List<ParamProcessor> paramProcs;
@@ -54,8 +54,8 @@ class MethodInvokerImpl implements MethodInvoker {
 		ConversionService convertService = reqMapping.injector.getInstance(ConversionService.class);
 		ViewScannerService viewScannerService = reqMapping.injector.getInstance(ViewScannerService.class);
 					
-		View defaultView = viewScannerService.scan(reqMapping.method.getAnnotations());
-		if (defaultView == View.NULL_VIEW) {
+		ViewPoint defaultView = viewScannerService.scan(reqMapping.method.getAnnotations());
+		if (defaultView == ViewPoint.NULL_VIEW) {
 			defaultView = viewScannerService.scan(reqMapping.controllerClass.getAnnotations());
 		}		
 			
@@ -73,7 +73,7 @@ class MethodInvokerImpl implements MethodInvoker {
 	 * @param method
 	 * @param paramProcs
 	 */
-	private MethodInvokerImpl(Class<?> controllerClass, Method method, View defaultView, String resultName, List<ParamProcessor> paramProcs) {
+	private MethodInvokerImpl(Class<?> controllerClass, Method method, ViewPoint defaultView, String resultName, List<ParamProcessor> paramProcs) {
 		this.controllerClass = controllerClass;
 		this.defaultView = defaultView;
 		this.resultName = resultName;
@@ -145,8 +145,8 @@ class MethodInvokerImpl implements MethodInvoker {
 			out.addModel(resultModel);			
 		} else if (result instanceof ModelAndView) {
 			return (ModelAndView) result;
-		} else if (result instanceof View) {
-			View resultView = (View)result;
+		} else if (result instanceof ViewPoint) {
+			ViewPoint resultView = (ViewPoint)result;
 			out.addView(resultView);
 		} else {			
 			String name = getResultModelName();

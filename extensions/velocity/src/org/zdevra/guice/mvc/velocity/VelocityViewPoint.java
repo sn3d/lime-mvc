@@ -31,7 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
-import org.zdevra.guice.mvc.View;
+import org.zdevra.guice.mvc.ViewPoint;
 import org.zdevra.guice.mvc.exceptions.VelocityViewException;
 
 import com.google.inject.Inject;
@@ -41,7 +41,7 @@ import com.google.inject.Injector;
  * The view provide rendering of output HTML via Velocity template
  * engine
  */
-public class VelocityView implements View {
+public class VelocityViewPoint implements ViewPoint {
 	
 // ------------------------------------------------------------------------
 	
@@ -53,7 +53,7 @@ public class VelocityView implements View {
 	/**
 	 * Constructor 
 	 */
-	public VelocityView(String viewFile) {
+	public VelocityViewPoint(String viewFile) {
 		this.viewFile = viewFile;
 	}
 
@@ -62,7 +62,7 @@ public class VelocityView implements View {
 	 * @param viewFile
 	 * @param injector
 	 */
-	public VelocityView(String viewFile, Injector injector) {
+	public VelocityViewPoint(String viewFile, Injector injector) {
 		this.viewFile = viewFile;
 		this.velocity = injector.getInstance(VelocityEngine.class);  
 	}
@@ -72,7 +72,7 @@ public class VelocityView implements View {
 	 * @param viewFile
 	 * @param velocity
 	 */
-	public VelocityView(String viewFile, VelocityEngine velocity) 
+	public VelocityViewPoint(String viewFile, VelocityEngine velocity) 
 	{
 		this.viewFile = viewFile;
 		this.velocity = velocity;

@@ -19,7 +19,7 @@ package org.zdevra.guice.mvc.freemarker;
 import java.lang.annotation.Annotation;
 
 import org.zdevra.guice.mvc.Utils;
-import org.zdevra.guice.mvc.View;
+import org.zdevra.guice.mvc.ViewPoint;
 import org.zdevra.guice.mvc.ViewScanner;
 
 import com.google.inject.Inject;
@@ -30,7 +30,7 @@ import freemarker.template.Configuration;
 /**
  * The view scanner is looking for {@literal @}FreemarkerView annotation
  * in controller or in controller's method and creates the 
- * {@link FreemarkerView}r instance
+ * {@link FreemarkerViewPoint}r instance
  * 
  * This is internal class which is invisible for normal usage.
  */
@@ -51,15 +51,15 @@ class FreemarkerScanner implements ViewScanner {
 // ------------------------------------------------------------------------
 
 	@Override
-	public View scan(Annotation[] anots) {
+	public ViewPoint scan(Annotation[] anots) {
 		org.zdevra.guice.mvc.freemarker.annotations.FreemarkerView anot = 
 				Utils.getAnnotation(org.zdevra.guice.mvc.freemarker.annotations.FreemarkerView.class, anots);
 		
 		if (anot == null) {
-			return View.NULL_VIEW;
+			return ViewPoint.NULL_VIEW;
 		}
 		
-		return new FreemarkerView(freemarkerConf, anot.value());
+		return new FreemarkerViewPoint(freemarkerConf, anot.value());
 	}
 	
 // ------------------------------------------------------------------------

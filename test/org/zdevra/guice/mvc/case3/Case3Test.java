@@ -84,81 +84,9 @@ public class Case3Test extends AbstractTest {
 		
 		//process response
 		String out = response.getText();
-		Assert.assertTrue( out.contains("Error on HTTP request: 404") );
+		Assert.assertTrue( out.contains("no method has been invoked for the") );
 	}
-	
-	
-	@Test
-	public void testView1() throws IOException, ServletException {
-		//prepare request
-		ServletUnitClient sc = sr.newClient();
-		WebRequest request   = new GetMethodWebRequest( "http://www.test.com/test/view/1" );
-		InvocationContext ic = sc.newInvocation( request );		
 		
-		//invoke request
-		Servlet ss = ic.getServlet();
-		ss.service(ic.getRequest(), ic.getResponse());			
-		WebResponse response = ic.getServletResponse();
-		
-		//process response
-		String out = response.getText();
-		Assert.assertTrue( out.contains("viewId=1") );
-	}
-	
-	
-	@Test
-	public void testView2() throws IOException, ServletException {
-		//prepare request
-		ServletUnitClient sc = sr.newClient();
-		WebRequest request   = new GetMethodWebRequest( "http://www.test.com/test/view/2" );
-		InvocationContext ic = sc.newInvocation( request );		
-		
-		//invoke request
-		Servlet ss = ic.getServlet();
-		ss.service(ic.getRequest(), ic.getResponse());			
-		WebResponse response = ic.getServletResponse();
-		
-		//process response
-		String out = response.getText();
-		Assert.assertTrue( out.contains("viewId=2") );
-	}
-	
-	
-	@Test
-	public void testView3() throws IOException, ServletException {
-		//prepare request
-		ServletUnitClient sc = sr.newClient();
-		WebRequest request   = new GetMethodWebRequest( "http://www.test.com/test/view/3" );
-		InvocationContext ic = sc.newInvocation( request );		
-		
-		//invoke request
-		Servlet ss = ic.getServlet();
-		ss.service(ic.getRequest(), ic.getResponse());			
-		WebResponse response = ic.getServletResponse();
-		
-		//process response
-		String out = response.getText();
-		Assert.assertTrue( out.contains("viewId=3") );
-	}
-	
-	
-	@Test
-	public void testView4() throws IOException, ServletException {
-		//prepare request
-		ServletUnitClient sc = sr.newClient();
-		WebRequest request   = new GetMethodWebRequest( "http://www.test.com/test/view/4" );
-		InvocationContext ic = sc.newInvocation( request );		
-		
-		//invoke request
-		Servlet ss = ic.getServlet();
-		ss.service(ic.getRequest(), ic.getResponse());			
-		WebResponse response = ic.getServletResponse();
-		
-		//process response
-		String out = response.getText();
-		Assert.assertTrue( out.contains("viewId=4") );
-	}
-	
 	
 	@Test
 	public void testView5() throws IOException, ServletException {

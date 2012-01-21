@@ -17,12 +17,12 @@ class ViewExceptionHandler implements ExceptionHandler {
 // ------------------------------------------------------------------------
 	
 	private static final Logger logger = Logger.getLogger(ViewExceptionHandler.class.getName());
-	private final View errorView;
+	private final ViewPoint errorView;
 	@Inject private ViewResolver viewResolver;
 	
 // ------------------------------------------------------------------------
 		
-	public ViewExceptionHandler(View errorView) {
+	public ViewExceptionHandler(ViewPoint errorView) {
 		this.errorView = errorView;
 	}
 	

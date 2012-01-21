@@ -18,14 +18,14 @@ class DirectViewDefinition extends ServletDefinition {
 // ------------------------------------------------------------------------
 	
 	private static final Logger logger = Logger.getLogger(DirectViewDefinition.class.getName());
-	private final View view;
+	private final ViewPoint view;
 	
 // ------------------------------------------------------------------------
 	
 	/**
 	 * Constructor
 	 */
-	public DirectViewDefinition(String urlPattern, View view) {
+	public DirectViewDefinition(String urlPattern, ViewPoint view) {
 		super(urlPattern);
 		this.view = view;
 	}

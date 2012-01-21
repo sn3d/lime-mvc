@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class TestView implements View {
+public class TestView implements ViewPoint {
 // ------------------------------------------------------------------------
 	
 	private static final Logger logger = Logger.getLogger(TestView.class.getName());

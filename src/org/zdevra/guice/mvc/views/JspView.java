@@ -26,13 +26,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.zdevra.guice.mvc.View;
+import org.zdevra.guice.mvc.ViewPoint;
 import org.zdevra.guice.mvc.exceptions.InvalidJspViewException;
 
 /**
  * The JSP view redirecting request to concrete JSP or HTML page  
  */
-public class JspView implements View {
+public class JspView implements ViewPoint {
 	
 // ------------------------------------------------------------------------	
 

@@ -58,14 +58,14 @@ class ViewScannerService {
 	}
 	
 	
-	public View scan(Annotation[] controllerAnnotations) {
+	public ViewPoint scan(Annotation[] controllerAnnotations) {
 		for (ViewScanner scanner : scanners) {
-			View view = scanner.scan(controllerAnnotations);
-			if (view != null && view != View.NULL_VIEW) {
+			ViewPoint view = scanner.scan(controllerAnnotations);
+			if (view != null && view != ViewPoint.NULL_VIEW) {
 				return view;
 			}
 		}
-		return View.NULL_VIEW;
+		return ViewPoint.NULL_VIEW;
 	}
 		
 }

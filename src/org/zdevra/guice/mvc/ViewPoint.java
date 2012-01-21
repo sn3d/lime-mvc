@@ -25,9 +25,9 @@ import org.zdevra.guice.mvc.views.NamedView;
 /**
  * You will implement this interface if you want your own view rendering.
  */
-public interface View {
+public interface ViewPoint {
 	
-	public final static View NULL_VIEW = NamedView.create("NULL");
+	public final static ViewPoint NULL_VIEW = NamedView.create("NULL");
 	
 	public void render(HttpServlet servlet, HttpServletRequest request, HttpServletResponse response);
 	

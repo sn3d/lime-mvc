@@ -25,7 +25,7 @@ class JSilverTestModule extends TestModule {
 		install(new ViewModule() {
 			@Override
 			protected void configureViews() {
-				bindViewName("testview").toViewInstance(new JSilverView("test.jsilver"));
+				bindViewName("testview").toViewInstance(new JSilverViewPoint("test.jsilver"));
 			}					
 		});
 	}

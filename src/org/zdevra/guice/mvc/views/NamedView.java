@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.zdevra.guice.mvc.View;
+import org.zdevra.guice.mvc.ViewPoint;
 
 /**
  * This view does nothing His purpose is to identify. All named views are handled by view resolver
@@ -36,7 +36,7 @@ import org.zdevra.guice.mvc.View;
  * @see org.zdevra.guice.mvc.ViewResolver
  * @see org.zdevra.guice.mvc.MvcModule
  */
-public final class NamedView implements View {
+public final class NamedView implements ViewPoint {
 	
 // ------------------------------------------------------------------------
 	
@@ -47,7 +47,7 @@ public final class NamedView implements View {
 	/**
 	 * Deprecated and it's here only for test purpose
 	 */
-	public static View create(Class<?> clazz) {
+	public static ViewPoint create(Class<?> clazz) {
 		NamedViewScanner scanner = new NamedViewScanner();
 		return scanner.scan(clazz.getAnnotations());
 	}
@@ -60,9 +60,9 @@ public final class NamedView implements View {
 	 * @param name
 	 * @return
 	 */
-	public static View create(String name) {
+	public static ViewPoint create(String name) {
 		if (name == null || name.length() == 0) {
-			return View.NULL_VIEW;
+			return ViewPoint.NULL_VIEW;
 		}
 		return new NamedView(name);
 	}

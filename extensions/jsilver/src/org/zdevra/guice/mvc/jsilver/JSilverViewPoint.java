@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.zdevra.guice.mvc.View;
+import org.zdevra.guice.mvc.ViewPoint;
 import org.zdevra.guice.mvc.exceptions.JSilverViewException;
 
 import com.google.clearsilver.jsilver.JSilver;
@@ -40,7 +40,7 @@ import com.google.inject.Injector;
  * ensure that your MVC model is derived from {@link JSilverModel}
  *
  */
-public class JSilverView implements View {
+public class JSilverViewPoint implements ViewPoint {
 
 // ------------------------------------------------------------------------
 	
@@ -53,7 +53,7 @@ public class JSilverView implements View {
 	/**
 	 * Constructor
 	 */
-	public JSilverView(String file, Injector injector) 
+	public JSilverViewPoint(String file, Injector injector) 
 	{
 		this(
 			file,
@@ -65,7 +65,7 @@ public class JSilverView implements View {
 	/**
 	 * Constructor used by {@link JSilverModule}
 	 */
-	public JSilverView(String file) 
+	public JSilverViewPoint(String file) 
 	{	
 		this.viewFile = file;
 	}
@@ -78,7 +78,7 @@ public class JSilverView implements View {
 	 * @param viewFile
 	 * @param modelName
 	 */
-	JSilverView(String viewFile, JSilver jSilver, ModelService modelService) 
+	JSilverViewPoint(String viewFile, JSilver jSilver, ModelService modelService) 
 	{
 		this.jSilver = jSilver;
 		this.viewFile = viewFile;

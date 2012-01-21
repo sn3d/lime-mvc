@@ -22,9 +22,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.zdevra.guice.mvc.View;
+import org.zdevra.guice.mvc.ViewPoint;
 
-public class Case6View implements View {
+public class Case6View implements ViewPoint {
 	
 	private final String id;
 	

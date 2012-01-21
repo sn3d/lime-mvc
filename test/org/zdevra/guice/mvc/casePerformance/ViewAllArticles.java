@@ -23,9 +23,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.zdevra.guice.mvc.View;
+import org.zdevra.guice.mvc.ViewPoint;
 
-public class ViewAllArticles implements View {
+public class ViewAllArticles implements ViewPoint {
 
 	@Override
 	public void render(HttpServlet servlet, HttpServletRequest request, HttpServletResponse response)  

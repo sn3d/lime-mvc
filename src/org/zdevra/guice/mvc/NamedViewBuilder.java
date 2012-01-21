@@ -51,22 +51,22 @@ class NamedViewBuilder {
 		}
 
 		@Override
-		public void toView(Class<? extends View> viewClass) {			
-			binder.bind(View.class)
+		public void toView(Class<? extends ViewPoint> viewClass) {			
+			binder.bind(ViewPoint.class)
 				.annotatedWith(Names.named(viewName))
 				.to(viewClass);
 		}
 
 		@Override
-		public void toViewInstance(View view) {
-			binder.bind(View.class)
+		public void toViewInstance(ViewPoint view) {
+			binder.bind(ViewPoint.class)
 			.annotatedWith(Names.named(viewName))
 			.toInstance(view);			
 		}
 
 		@Override
 		public void toJsp(String pathToJsp) {
-			binder.bind(View.class)
+			binder.bind(ViewPoint.class)
 			.annotatedWith(Names.named(viewName))
 			.toInstance(new JspView(pathToJsp));						
 		}

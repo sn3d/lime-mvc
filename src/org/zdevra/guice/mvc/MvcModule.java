@@ -389,7 +389,7 @@ public abstract class MvcModule extends ServletModule {
 	public static interface ControllerAndViewBindingBuilder {
 		public ControllerBindingBuilder withController(Class<?> controller);
 		public void withView(String name);
-		public void withView(View viewInstance);
+		public void withView(ViewPoint viewInstance);
 	}
 	
 	
@@ -397,13 +397,13 @@ public abstract class MvcModule extends ServletModule {
 		public void toHandler(Class<? extends ExceptionHandler> handlerClass);
 		public void toHandlerInstance(ExceptionHandler handler);
 		public void toErrorView(String viewName);
-		public void toErrorView(View errorView);
+		public void toErrorView(ViewPoint errorView);
 	}
 	
 	
 	public static interface NamedViewBindingBuilder {
-		public void toView(Class<? extends View> viewCLass);
-		public void toViewInstance(View view);
+		public void toView(Class<? extends ViewPoint> viewCLass);
+		public void toViewInstance(ViewPoint view);
 		public void toJsp(String pathToFile);
 	}
 		
