@@ -17,13 +17,15 @@
 package org.zdevra.guice.mvc.case2;
 
 import org.zdevra.guice.mvc.annotations.Controller;
-import org.zdevra.guice.mvc.annotations.RequestMapping;
+import org.zdevra.guice.mvc.annotations.Model;
+import org.zdevra.guice.mvc.annotations.Path;
 import org.zdevra.guice.mvc.annotations.UriParameter;
 
 @Controller(view="default")
 public interface Case2Controller {
 
-	@RequestMapping(path="/getcar/(.*)", nameOfResult="testmsg")
+	@Path("/getcar/(.*)") 
+	@Model("testmsg")
 	public String getCar( @UriParameter(1) String value);
 	
 }

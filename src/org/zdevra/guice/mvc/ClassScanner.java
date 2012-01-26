@@ -29,7 +29,6 @@ import org.zdevra.guice.mvc.annotations.Model;
 import org.zdevra.guice.mvc.annotations.POST;
 import org.zdevra.guice.mvc.annotations.PUT;
 import org.zdevra.guice.mvc.annotations.Path;
-import org.zdevra.guice.mvc.annotations.RequestMapping;
 import org.zdevra.guice.mvc.exceptions.ScannerException;
 
 import com.google.inject.Injector;
@@ -72,7 +71,7 @@ class ClassScanner {
 			{			
 				MappingData reqMappingData = mappingDataForNewAnot(method);
 				if (reqMappingData == null) {
-					reqMappingData = mappingDataForOldAnot(method);
+					reqMappingData = mappingDataForNewAnot(method);
 				}
 				
 				if (reqMappingData != null) 
@@ -92,29 +91,6 @@ class ClassScanner {
 		}
 	}
 	
-	
-	/**
-	 * old version of parsing, it should be removed in next versions
-	 */
-	@Deprecated
-	private MappingData mappingDataForOldAnot(Method method) 
-	{
-		RequestMapping anotOld = method.getAnnotation(RequestMapping.class);
-		if (anotOld == null) 
-		{
-			return null;
-		}
-		
-		MappingData reqMapping = new MappingData(
-				null,
-				null,
-				anotOld.requestType(),
-				anotOld.path(),
-				anotOld.nameOfResult(),
-				null );
-		
-		return reqMapping;
-	}
 	
 	
 	/**

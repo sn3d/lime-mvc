@@ -21,7 +21,6 @@ import javax.inject.Singleton;
 import org.zdevra.guice.mvc.annotations.Controller;
 import org.zdevra.guice.mvc.annotations.Model;
 import org.zdevra.guice.mvc.annotations.Path;
-import org.zdevra.guice.mvc.annotations.RequestMapping;
 import org.zdevra.guice.mvc.annotations.SessionParameter;
 
 @Controller(sessionAttributes= { "book" }, view="default")
@@ -29,19 +28,19 @@ import org.zdevra.guice.mvc.annotations.SessionParameter;
 public class Case1Controller {
 	
 	
-	@RequestMapping(path="/do/simplecall", nameOfResult="testmsg")
+	@Path("/do/simplecall") @Model("testmsg")
 	public String simpleCall() {
 		return "simple call";
 	}
 	
 	
-	@RequestMapping(path="/do/exception")
+	@Path("/do/exception")
 	public void throwException() {
 		throw new NullPointerException("Test exception");
 	}
 	
 	
-	@RequestMapping(path="/do/session")
+	@Path("/do/session")
 	public org.zdevra.guice.mvc.ModelMap getDataFromSession(
 			@SessionParameter(value = "author") String author, 
 			@SessionParameter("year") Integer year ) 
@@ -52,7 +51,7 @@ public class Case1Controller {
 		return m;
 	}
 		
-	@RequestMapping(path="/do/sessionmodel", nameOfResult="testmsg")
+	@Path("/do/sessionmodel") @Model("testmsg")
 	public String getDataFromSessionAsModel(org.zdevra.guice.mvc.ModelMap m) {
 		String out = "in session is book:" + m.getObject("book");
 		m.addObject("book", "Romeo&Juliette");

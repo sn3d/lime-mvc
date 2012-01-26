@@ -17,19 +17,20 @@
 package org.zdevra.guice.mvc.case6;
 
 import org.zdevra.guice.mvc.annotations.Controller;
-import org.zdevra.guice.mvc.annotations.RequestMapping;
+import org.zdevra.guice.mvc.annotations.Model;
+import org.zdevra.guice.mvc.annotations.Path;
 import org.zdevra.guice.mvc.annotations.View;
 
 @Controller
 @View("people.jsp")
 public class Case6ControllerPeople {
 	
-	@RequestMapping(path="/common", nameOfResult="msg1")
+	@Path("/common") @Model("msg1")
 	public String commonMethod() {
 		return "people common";
 	}
 	
-	@RequestMapping(path="/people", nameOfResult="msg1")
+	@Path("/people") @Model("msg1")
 	public String peopleMethod() {
 		return "people method";
 	}

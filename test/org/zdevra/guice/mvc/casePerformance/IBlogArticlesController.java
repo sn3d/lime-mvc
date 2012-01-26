@@ -20,27 +20,28 @@ import java.util.List;
 
 import org.zdevra.guice.mvc.ModelAndView;
 import org.zdevra.guice.mvc.annotations.Controller;
-import org.zdevra.guice.mvc.annotations.RequestMapping;
-import org.zdevra.guice.mvc.annotations.View;
+import org.zdevra.guice.mvc.annotations.Model;
+import org.zdevra.guice.mvc.annotations.Path;
 import org.zdevra.guice.mvc.annotations.UriParameter;
+import org.zdevra.guice.mvc.annotations.View;
 
 @Controller
 public interface IBlogArticlesController {
 	
-	@RequestMapping(path="/blog/allarticles/namedview", nameOfResult="allarticles")
+	@Path("/blog/allarticles/namedview") @Model("allarticles")
 	@View("allarticles.jsp")
 	public List<String> showAllArticles();
 
 	
-	@RequestMapping(path="/blog/allarticles/directview")
+	@Path("/blog/allarticles/directview")
 	public ModelAndView showAllArticlesDirect();
 
 	
-	@RequestMapping(path="/blog/article/(\\d+)/namedview", nameOfResult="article")
+	@Path("/blog/article/(\\d+)/namedview") @Model("article")
 	@View("article.jsp")
 	public String showArticle(@UriParameter(1) int id);
 
 
-	@RequestMapping(path="/blog/article/(\\d+)/directview")
+	@Path("/blog/article/(\\d+)/directview")
 	public ModelAndView showArticleDirect(@UriParameter(1) int id);
 }

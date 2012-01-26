@@ -17,31 +17,32 @@
 package org.zdevra.guice.mvc.case5;
 
 import org.zdevra.guice.mvc.annotations.Controller;
-import org.zdevra.guice.mvc.annotations.RequestMapping;
+import org.zdevra.guice.mvc.annotations.Model;
+import org.zdevra.guice.mvc.annotations.Path;
 import org.zdevra.guice.mvc.annotations.View;
 
 @Controller @View("one.jsp")
 public class Case5Controller {
 
-	@RequestMapping(path = "/action/one", nameOfResult="testmsg")
+	@Path("/action/one") @Model("testmsg")
 	public String actionOne() {
 		return "onedata";
 	}
 
 	
-	@RequestMapping(path = "/action/two", toView="two.jsp", nameOfResult="testmsg")
+	@Path("/action/two") @View("two.jsp") @Model("testmsg")
 	public String actionTwo() {
 		return "twodata";
 	}
 	
 	
-	@RequestMapping(path = "/action/three", nameOfResult="testmsg") @View("three.jsp")
+	@Path("/action/three") @Model("testmsg") @View("three.jsp")
 	public String actionThree() {
 		return "threedata";
 	}
 	
 	
-	@RequestMapping(path = "/action/custom", nameOfResult="testmsg") @ToTestView
+	@Path("/action/custom") @Model("testmsg") @ToTestView
 	public String actionCustom() {
 		return "customdata";
 	}

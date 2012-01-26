@@ -18,27 +18,26 @@ package org.zdevra.guice.mvc.case4;
 
 import org.zdevra.guice.mvc.annotations.Controller;
 import org.zdevra.guice.mvc.annotations.Path;
-import org.zdevra.guice.mvc.annotations.RequestMapping;
 
 @Controller(view="default")
 public class Case4Controller {
 
-	@RequestMapping(path="/expetion/npe")
+	@Path("/expetion/npe")
 	public void throwNpe() {
 		throw new NullPointerException("");
 	}
 	
-	@RequestMapping(path="/expetion/custom")
+	@Path("/expetion/custom")
 	public void throwCustom() {
 		throw new CustomException();
 	}
 	
-	@RequestMapping(path="/expetion/advancedcustom")
+	@Path("/expetion/advancedcustom")
 	public void throwAdvCustom() {
 		throw new AdvancedCustomException();
 	}
 		
-	@RequestMapping(path="/expetion/advancedhandledexception")
+	@Path("/expetion/advancedhandledexception")
 	public void throwAdvHandledException() {
 		throw new AdvancedHandledException();
 	}

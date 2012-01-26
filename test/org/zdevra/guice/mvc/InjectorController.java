@@ -20,7 +20,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import org.zdevra.guice.mvc.annotations.Controller;
-import org.zdevra.guice.mvc.annotations.RequestMapping;
+import org.zdevra.guice.mvc.annotations.Path;
 
 class BillingService {
 	
@@ -58,7 +58,7 @@ class Printer {
 public class InjectorController {
 	
 	@Inject
-	@RequestMapping(path="/inject1")
+	@Path("/inject1")
 	public String inject1(@javax.inject.Named("ImplA") BillingService billingService, Printer printer) {
 		printer.print();
 		return "inject1 " + billingService.getBill();
@@ -66,7 +66,7 @@ public class InjectorController {
 
 	
 	@Inject
-	@RequestMapping(path="/inject2")
+	@Path("/inject2")
 	public String inject2(@com.google.inject.name.Named("ImplA") BillingService billingService, Printer printer) {
 		printer.print();
 		return "inject2 " + billingService.getBill();
@@ -74,7 +74,7 @@ public class InjectorController {
 
 	
 	@Inject
-	@RequestMapping(path="/inject3")
+	@Path("/inject3")
 	public String inject3(@javax.inject.Named("ImplB") BillingService billingService, Printer printer) {
 		printer.print();
 		return "inject3 " + billingService.getBill();
@@ -82,7 +82,7 @@ public class InjectorController {
 
 	
 	@Inject
-	@RequestMapping(path="/inject4")
+	@Path("/inject4")
 	public String inject4(@com.google.inject.name.Named("ImplB") BillingService billingService, Printer printer) {
 		printer.print();
 		return "inject4 " + billingService.getBill();
