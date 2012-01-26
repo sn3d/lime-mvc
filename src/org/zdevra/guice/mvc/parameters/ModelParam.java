@@ -25,7 +25,7 @@ import org.zdevra.guice.mvc.ModelMap;
  * for example:
  * <pre class="prettyprint">
  * {@literal @}Path("/control")
- * public void controllerMethod(Model model) {
+ * public void controllerMethod(ModelMap model) {
  *   ...
  * }
  * </pre>
