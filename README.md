@@ -24,7 +24,7 @@ For easy start You might use the Maven:
 	<dependency>
 		<groupId>org.zdevra</groupId>
 		<artifactId>lime</artifactId>
-		<version>0.3.0</version>
+		<version>0.3.1</version>
 	</dependency>
 
 Lime MVC is basically a Servlet Module in Guice. First you will prepare web project with
