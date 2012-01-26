@@ -162,7 +162,7 @@ import com.google.inject.servlet.ServletModule;
  * @see Controller 
  * @see ModelMap
  * @see ModelAndView
- * @see View
+ * @see ViewPoint
  * @see ViewResolver
  * @see ExceptionResolver
  * @see ViewScannerService

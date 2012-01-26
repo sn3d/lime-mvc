@@ -27,7 +27,7 @@ package org.zdevra.guice.mvc;
  *    
  *    {@literal @}Path("/home")
  *    public ModelAndView allBooks() {
- *       Model m = ...;
+ *       ModelMap m = ...;
  *       View  v = ...;
  *       ...
  *       return new ModelAndView(m, v);

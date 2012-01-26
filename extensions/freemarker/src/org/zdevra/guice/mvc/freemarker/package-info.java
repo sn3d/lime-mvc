@@ -50,7 +50,7 @@
  *       
  *       //setup views
  *       install( new FreemarkerModule(getServletContext()) );
- *       bindViewName("someview").toViewInstance( new FreemarkerView("somehtml.ftl") );
+ *       bindViewName("someview").toViewInstance( new FreemarkerViewPoint("somehtml.ftl") );
  *    }
  * }
  * </pre>

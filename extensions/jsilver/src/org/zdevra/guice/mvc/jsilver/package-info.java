@@ -51,7 +51,7 @@
  *       
  *       //setup views
  *       install(new JSilverModule(getSerlvetContext()));
- *       bindViewName("someview").toViewInstance(new JSilverView("somehtml.jsilver"));
+ *       bindViewName("someview").toViewInstance(new JSilverViewPoint("somehtml.jsilver"));
  *    }
  * }
  * </pre>

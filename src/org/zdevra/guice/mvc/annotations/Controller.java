@@ -35,9 +35,9 @@ import java.lang.annotation.RetentionPolicy;
  * class MyController() {
  *     ...
  *     {@literal @}Path("/home")
- *     public Model doSomething() {
+ *     public ModelMap doSomething() {
  *     	   ...
- *         Model m = new Model();
+ *         ModelMap m = new ModelMap();
  *         m.addObject("username", username);
  *         m.addObject("country",  country);
  *         return m;

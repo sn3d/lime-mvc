@@ -26,10 +26,10 @@
  * <dd>The core abstraction class you will implement for configuration how your MVC will use 
  *     the controllers, handle exceptions, use views.
  * 
- * <dt>{@link org.zdevra.guice.mvc.View}
+ * <dt>{@link org.zdevra.guice.mvc.ViewPoint}
  * <dd>The interface you will implement for custom views.
  * 
- * <dt>{@link org.zdevra.guice.mvc.Model}
+ * <dt>{@link org.zdevra.guice.mvc.ModelMap}
  * <dd>The class representing model which is produced by the controller.
  * 
  * <dt>{@link org.zdevra.guice.mvc.ModelAndView}
@@ -44,7 +44,7 @@
  * <p><b>Annotations for controller classes and his methods:</b>  
  * <dl>
  * 
- * <dt>{@link org.zdevra.guice.mvc.Controller}
+ * <dt>{@link org.zdevra.guice.mvc.annotations.Controller}
  * <dd>The main annotation marks the class as a controller
  * 
  * <dt>{@link org.zdevra.guice.mvc.annotations.Path}
@@ -146,7 +146,7 @@
  * {@literal @}Controller
  * public class MyController {
  *    {@literal @}Path("/users") {@literal @}View("users_view")
- *    public Model getUsers() {
+ *    public ModelMap getUsers() {
  *    ...
  *    }
  *    

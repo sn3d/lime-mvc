@@ -47,7 +47,7 @@
  *       
  *       // setup views       
  *       install(new VelocityModule(getServletContext()));
- *       bindViewName("someview").toViewInstance(new VelocityView("somehtml.velocity"));
+ *       bindViewName("someview").toViewInstance(new VelocityViewPoint("somehtml.velocity"));
  *    }
  * }
  * </pre>
