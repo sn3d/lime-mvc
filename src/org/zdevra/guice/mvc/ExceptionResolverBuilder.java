@@ -20,7 +20,6 @@ import org.zdevra.guice.mvc.MvcModule.ExceptionResolverBindingBuilder;
 import org.zdevra.guice.mvc.views.NamedView;
 
 import com.google.inject.Binder;
-import com.google.inject.multibindings.Multibinder;
 
 /** 
  * The builder is responsible for building a bindings
@@ -31,19 +30,16 @@ import com.google.inject.multibindings.Multibinder;
  * @see MvcModule
  * @see GuiceExceptionResolver
  */
-class ExceptionResolverBuilder {
+class ExceptionResolverBuilder extends MultibinderBuilder<ExceptionBind> {
 	
 // ------------------------------------------------------------------------
 	
-	private final Multibinder<ExceptionBind> exceptionBinder;
-	private final Binder binder;
 	private int orderIndex;
 	
 // ------------------------------------------------------------------------
 		
 	public ExceptionResolverBuilder(Binder binder) {
-		this.exceptionBinder = Multibinder.newSetBinder(binder, ExceptionBind.class);
-		this.binder = binder;
+		super(binder, ExceptionBind.class);
 		this.orderIndex = 0;
 	}
 
@@ -64,17 +60,16 @@ class ExceptionResolverBuilder {
 		}
 
 		@Override
-		public void toHandler(Class<? extends ExceptionHandler> handlerClass) {
-			exceptionBinder.addBinding().toInstance(
-					ExceptionBind.toClass(handlerClass, exceptionClass, orderIndex));
+		public void toHandler(Class<? extends ExceptionHandler> handlerClass) 
+		{
+			registerInstance(ExceptionBind.toClass(handlerClass, exceptionClass, orderIndex));
 			orderIndex++;
 		}
 
 		@Override
-		public void toHandlerInstance(ExceptionHandler handler) {
-			binder.requestInjection(handler);			
+		public void toHandlerInstance(ExceptionHandler handler) {						
 			ExceptionBind binding = ExceptionBind.toInstance(handler, exceptionClass, orderIndex);
-			exceptionBinder.addBinding().toInstance(binding);
+			registerInstance(binding);
 			orderIndex++;			
 		}
 		
@@ -89,7 +84,7 @@ class ExceptionResolverBuilder {
 			binder.requestInjection(errorView);
 			binder.requestInjection(handler);
 			ExceptionBind exceptionBind = ExceptionBind.toInstance(handler, exceptionClass, orderIndex);
-			exceptionBinder.addBinding().toInstance( exceptionBind );
+			registerInstance( exceptionBind );
 			orderIndex++;
 		};	
 	}

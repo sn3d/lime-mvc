@@ -29,7 +29,7 @@ import com.google.inject.Binder;
  * The class represent definition of controllers in controller building process
  * and creates the MvcDispatcherServler as well.
  * 
- * This class is mainly used by {@link MvcDispatcherServlet}
+ * This class is mainly used by {@link ControllerModuleBuilder}
  */
 class ControllerDefinition extends ServletDefinition {
 	

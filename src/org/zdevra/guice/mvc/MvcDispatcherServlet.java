@@ -50,6 +50,7 @@ class MvcDispatcherServlet extends HttpServlet {
 	@Inject private Injector injector;	
 	@Inject private ViewResolver viewResolver;
 	@Inject private ExceptionResolver exceptionResolver;
+	@Inject private InterceptorService interceptorService;
 
 	protected final Collection<Class<?>> controllers;
 	protected Collection<ClassInvoker> classInvokers;
@@ -66,6 +67,7 @@ class MvcDispatcherServlet extends HttpServlet {
 		this.injector = injector;
 		this.viewResolver = injector.getInstance(ViewResolver.class);
 		this.exceptionResolver = injector.getInstance(ExceptionResolver.class);
+		this.interceptorService = injector.getInstance(InterceptorService.class);
 	}
 	
 
@@ -79,6 +81,7 @@ class MvcDispatcherServlet extends HttpServlet {
 		this.injector = injector;
 		this.viewResolver = injector.getInstance(ViewResolver.class);
 		this.exceptionResolver = injector.getInstance(ExceptionResolver.class);
+		this.interceptorService = injector.getInstance(InterceptorService.class);
 	}
 
 		
@@ -104,7 +107,7 @@ class MvcDispatcherServlet extends HttpServlet {
 	 * Main constructor used by MvcModule
 	 * @param controllers
 	 */	
-	public MvcDispatcherServlet(List<Class<?>> controllers) {
+	public MvcDispatcherServlet(List<Class<?>> controllers) {		
 		this.controllers = Collections.unmodifiableCollection(controllers);
 	}
 	
@@ -164,7 +167,7 @@ class MvcDispatcherServlet extends HttpServlet {
 				logger.finest("request '" + req.getRequestURL().toString() +  "' is handled by Lime MVC Servler ");
 			}
 												
-			//prepare invoke data
+			//prepare invoke data & do preprocessing
 			InvokeData data = 
 				new InvokeData(
 					req,
@@ -172,16 +175,25 @@ class MvcDispatcherServlet extends HttpServlet {
 					null,
 					reqType,
 					injector );
+									
+			boolean res = preprocessing(data);			
+			if (!res) {
+				return;
+			}
 				
 			//invoke method in controller
 			ModelAndView mav = invoke(data);			
-			if (logger.isLoggable(Level.FINEST)) {
-				logger.finest("controller produce model " + mav.getModel().toString() );
+			if (mav != null) {
+				if (logger.isLoggable(Level.FINEST)) {
+					logger.finest("controller produce model " + mav.getModel().toString() );
+				}
+				
+				//postprocessing & resolve view
+				postprocessing(data, mav);
+				viewResolver.resolve(mav.getView(), this, req, resp);			
+				mav = null;
 			}
-							
-			//resolve view
-			viewResolver.resolve(mav.getView(), this, req, resp);			
-			mav = null;		
+			
 		} catch (Throwable e) {			
 			exceptionResolver.handleException(e, this, req, resp); 			
 		}
@@ -189,11 +201,20 @@ class MvcDispatcherServlet extends HttpServlet {
 
 	
 // ------------------------------------------------------------------------
+	
+	protected boolean preprocessing(InvokeData data)
+	{
+		InterceptorChain chain = interceptorService.getGlobalInterceptorChain();			
+		boolean res = chain.preHandle(data.getRequest(), data.getResponse());			
+		return res;
+	}
+
 			
-	protected ModelAndView invoke(InvokeData data) {
-		ModelAndView mav = new ModelAndView();
-				
+	protected ModelAndView invoke(InvokeData data) 
+	{
+		ModelAndView mav = new ModelAndView();				
 		int invokedcount = 0;		
+		
 		for (ClassInvoker invoker : this.classInvokers) {
 			ModelAndView methodMav = invoker.invoke(data);			
 			if (methodMav != null) {
@@ -215,5 +236,13 @@ class MvcDispatcherServlet extends HttpServlet {
 		
 		return mav;
 	}
+		
+	
+	protected void postprocessing(InvokeData data, ModelAndView mav)
+	{
+		InterceptorChain chain = interceptorService.getGlobalInterceptorChain();
+		chain.postHandle(data.getRequest(), data.getResponse(), mav);
+	}
+	
 // ------------------------------------------------------------------------
 }

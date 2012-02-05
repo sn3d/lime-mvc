@@ -34,6 +34,8 @@ interface MethodInvoker {
 	 * 
 	 * Method is called always when is requested controller.
 	 * 
+	 * @return model and view as a product of controller's execution where model is rendered by view.
+	 * When implementation returns null then the view resolver and rendering is skipped. 
 	 */
 	public abstract ModelAndView invoke(InvokeData data);
 

@@ -31,7 +31,7 @@ import com.google.inject.multibindings.Multibinder;
  * @see ParamProcessorFactory
  * @see ParamProcessorsService
  */
-
+@Deprecated
 class ParamProcessorBuilder {
 	
 // ------------------------------------------------------------------------

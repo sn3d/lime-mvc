@@ -25,11 +25,10 @@ import java.util.regex.Pattern;
  * has required type (RequestType)
  *
  */
-class MethodInvokerFilter implements MethodInvoker {
+class MethodInvokerFilter extends MethodInvokerDecorator {
 /*---------------------------- m. variables ----------------------------*/
 	
 	private final Pattern pathPattern;
-	private final MethodInvoker decoratedInvoker;
 	private final HttpMethodType requestTypeFilter;
 
 /*---------------------------- constructors ----------------------------*/
@@ -38,18 +37,18 @@ class MethodInvokerFilter implements MethodInvoker {
 	 * Constructor
 	 */
 	public MethodInvokerFilter(MappingData mapping, MethodInvoker decoratedInvoker) {
-		this.pathPattern = Pattern.compile("(?i)" + mapping.path + "$");
-		this.decoratedInvoker = decoratedInvoker;
+		super(decoratedInvoker);
+		this.pathPattern = Pattern.compile("(?i)" + mapping.path + "$");		
 		this.requestTypeFilter = mapping.httpMethodType;
 	}
 
+	
 	@Override
-	public ModelAndView invoke(InvokeData data) {
-		
+	public ModelAndView invoke(InvokeData data) 
+	{	
 		if (!agreedWithRequestType(data.getReqType())) {
 			return null;
 		}
-
 		
 		String path = data.getRequest().getPathInfo();
 		if ((path == null) || (path.length() == 0)) {
@@ -67,7 +66,8 @@ class MethodInvokerFilter implements MethodInvoker {
 		return res;
 	}
 
-	private boolean agreedWithRequestType(HttpMethodType reqType) {
+	private boolean agreedWithRequestType(HttpMethodType reqType) 
+	{
 		return (this.requestTypeFilter == HttpMethodType.ALL || this.requestTypeFilter == reqType);
 	}
 

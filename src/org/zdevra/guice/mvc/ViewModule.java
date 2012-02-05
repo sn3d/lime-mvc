@@ -31,7 +31,7 @@ public abstract class ViewModule extends AbstractModule {
 	
 // ------------------------------------------------------------------------
 	
-	private ViewScannerBuilder viewScannerBuilder;
+	private MultibinderBuilder<ViewScanner> viewScannerBuilder;
 	private NamedViewBuilder   namedViewBudiler;
 	
 // ------------------------------------------------------------------------
@@ -45,7 +45,7 @@ public abstract class ViewModule extends AbstractModule {
 
 	@Override
 	protected final void configure() {	
-		viewScannerBuilder = new ViewScannerBuilder(binder());
+		viewScannerBuilder = new MultibinderBuilder<ViewScanner>(binder(), ViewScanner.class);
 		namedViewBudiler = new NamedViewBuilder(binder());
 		try {			
 			requireBinding(ViewResolver.class);
@@ -66,7 +66,7 @@ public abstract class ViewModule extends AbstractModule {
 	 * @see ViewScannerService
 	 */
 	protected final void registerViewScanner(Class<? extends ViewScanner> scannerClass) {
-		this.viewScannerBuilder.as(scannerClass);
+		this.viewScannerBuilder.registerClass(scannerClass);
 	}
 
 	
@@ -77,7 +77,7 @@ public abstract class ViewModule extends AbstractModule {
 	 * @see ViewScannerService
 	 */
 	protected final void registerViewScanner(ViewScanner scannerInstance) {
-		this.viewScannerBuilder.asInstance(scannerInstance);
+		this.viewScannerBuilder.registerInstance(scannerInstance);
 	}
 
 	

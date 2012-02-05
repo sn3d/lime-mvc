@@ -17,7 +17,6 @@
 package org.zdevra.guice.mvc;
 
 import com.google.inject.Binder;
-import com.google.inject.multibindings.Multibinder;
 
 /**
  * This builder class provide registering custom and default
@@ -25,12 +24,8 @@ import com.google.inject.multibindings.Multibinder;
  * 
  * @see MvcModule
  */
-class ViewScannerBuilder {
-	
-// ------------------------------------------------------------------------
-	
-	private final Binder binder;
-	private final Multibinder<ViewScanner> scannersBinder;
+@Deprecated
+class ViewScannerBuilder extends MultibinderBuilder<ViewScanner> {
 	
 // ------------------------------------------------------------------------
 	
@@ -38,19 +33,9 @@ class ViewScannerBuilder {
 	 * Constructor
 	 */
 	public ViewScannerBuilder(Binder binder) {
-		this.scannersBinder = Multibinder.newSetBinder(binder, ViewScanner.class);
-		this.binder = binder;
+		super(binder, ViewScanner.class);
 	}
-			
-	public void as(Class<? extends ViewScanner> scannerClass) {
-		scannersBinder.addBinding().to(scannerClass);
-	}
-	
-	public void asInstance(ViewScanner scanner) {		
-		binder.requestInjection(scanner);
-		scannersBinder.addBinding().toInstance(scanner);
-	}
-	
+				
 // ------------------------------------------------------------------------
 
 }

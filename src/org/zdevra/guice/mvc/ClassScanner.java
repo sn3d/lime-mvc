@@ -49,12 +49,17 @@ class ClassScanner {
 	 * @param controllerClass
 	 * @param injector
 	 * 
-	 * @return 
+	 * @return instance of the class invoker for annotated class.
 	 * @throws Exception
 	 */
 	public ClassInvoker scan(Class<?> controllerClass, Injector injector) 
 	{
 		try {
+			InterceptorService interceptorService = injector.getInstance(InterceptorService.class);
+			if (interceptorService == null) {
+				throw new IllegalStateException("The InterceptorService doesn't exists in guice module");
+			}
+			
 			Controller controllerAnotation = controllerClass.getAnnotation(Controller.class);
 			if (controllerAnotation == null) 
 			{
@@ -79,8 +84,19 @@ class ClassScanner {
 					reqMappingData.injector = injector;
 					reqMappingData.controllerClass = controllerClass;
 					reqMappingData.method = method;
+					
+					//create the invoker
 					MethodInvoker invoker = MethodInvokerImpl.createInvoker(reqMappingData);
+					
+					//create a method's interceptor decorator if there are interceptor handlers
+					InterceptorChain chain = interceptorService.getInterceptorChainForMethod(reqMappingData);
+					if (!chain.isEmpty()) {
+						invoker = new MethodInvokerInterceptors(invoker, chain);
+					}
+									
+					//at the end is filter decorator
 					MethodInvoker filteredInvoker = new MethodInvokerFilter(reqMappingData, invoker);
+					
 					scannedInvokers.add(filteredInvoker);							
 				}
 			}
@@ -91,8 +107,7 @@ class ClassScanner {
 		}
 	}
 	
-	
-	
+		
 	/**
 	 * new version of mapping annotations
 	 */

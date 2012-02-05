@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.*;
 
+@Deprecated
 class MvcAsyncDispatcherServlet extends MvcDispatcherServlet {
 
 // ------------------------------------------------------------------------

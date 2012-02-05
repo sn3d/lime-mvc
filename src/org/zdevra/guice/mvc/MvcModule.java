@@ -174,11 +174,12 @@ public abstract class MvcModule extends ServletModule {
 		
 	private static final Logger logger = Logger.getLogger(MvcModule.class.getName());
 	
-	private ConversionServiceBuilder conversionServiceBuilder;
+	private MultibinderBuilder<ConverterFactory> conversionServiceBuilder;
 	private ExceptionResolverBuilder exceptionResolverBuilder;
 	private ControllerModuleBuilder controllerModuleBuilder;
-	private ParamProcessorBuilder paramProcessorBuilder;
-	private ViewScannerBuilder viewScannerBuilder;
+	private MultibinderBuilder<ParamProcessorFactory> paramProcessorBuilder;
+	private MultibinderBuilder<ViewScanner> viewScannerBuilder;
+	private MultibinderBuilder<InterceptorHandler> interceptorHandlersBuilder;
 	private NamedViewBuilder namedViewBudiler;
 	private List<HttpServlet> servlets;
 
@@ -200,11 +201,12 @@ public abstract class MvcModule extends ServletModule {
 			throw new IllegalStateException("Re-entry is not allowed.");
 		}
 		
-		conversionServiceBuilder = new ConversionServiceBuilder(binder());
+		conversionServiceBuilder = new MultibinderBuilder<ConverterFactory>(binder(), ConverterFactory.class);
 		controllerModuleBuilder = new ControllerModuleBuilder();		
 		exceptionResolverBuilder = new ExceptionResolverBuilder(binder());		
-		paramProcessorBuilder = new ParamProcessorBuilder(binder());
-		viewScannerBuilder = new ViewScannerBuilder(binder());
+		paramProcessorBuilder = new MultibinderBuilder<ParamProcessorFactory>(binder(), ParamProcessorFactory.class);
+		viewScannerBuilder = new MultibinderBuilder<ViewScanner>(binder(), ViewScanner.class);
+		interceptorHandlersBuilder = new MultibinderBuilder<InterceptorHandler>(binder(), InterceptorHandler.class);
 		namedViewBudiler = new NamedViewBuilder(binder());		
 		servlets = new LinkedList<HttpServlet>();
 		
@@ -238,6 +240,7 @@ public abstract class MvcModule extends ServletModule {
 			registerParameterProc(HttpSessionParam.Factory.class);
 			registerParameterProc(InjectorParam.Factory.class);
 			
+			bind(InterceptorService.class).asEagerSingleton();			
 			
 			bind(ViewScannerService.class);
 			registerViewScanner(NamedViewScanner.class);
@@ -265,6 +268,7 @@ public abstract class MvcModule extends ServletModule {
 			paramProcessorBuilder = null;
 			namedViewBudiler = null;
 			conversionServiceBuilder = null;
+			interceptorHandlersBuilder = null;
 		}
 	}
 		
@@ -294,7 +298,7 @@ public abstract class MvcModule extends ServletModule {
 	 * The all predefined default converters are placed in the 'converters' sub-package.  
 	 */
 	protected final void registerConverter(ConverterFactory converterFactory) {
-		this.conversionServiceBuilder.registerConverter(converterFactory);
+		this.conversionServiceBuilder.registerInstance(converterFactory);
 	}
 	
 	
@@ -306,7 +310,7 @@ public abstract class MvcModule extends ServletModule {
 	 * The all predefined default convertors are placed in the 'converters' sub-package.  
 	 */
 	protected final void registerConverter(Class<? extends ConverterFactory> convertorFactoryClazz) {
-		this.conversionServiceBuilder.registerConverter(convertorFactoryClazz);
+		this.conversionServiceBuilder.registerClass(convertorFactoryClazz);
 	}
 	
 		
@@ -317,7 +321,7 @@ public abstract class MvcModule extends ServletModule {
 	 * @see ViewScannerService
 	 */
 	protected final void registerViewScanner(Class<? extends ViewScanner> scannerClass) {
-		this.viewScannerBuilder.as(scannerClass);
+		this.viewScannerBuilder.registerClass(scannerClass);
 	}
 	
 	
@@ -328,7 +332,7 @@ public abstract class MvcModule extends ServletModule {
 	 * @see ViewScannerService
 	 */
 	protected final void registerViewScanner(ViewScanner scannerInstance) {
-		this.viewScannerBuilder.asInstance(scannerInstance);
+		this.viewScannerBuilder.registerInstance(scannerInstance);
 	}	
 	
 	
@@ -343,7 +347,30 @@ public abstract class MvcModule extends ServletModule {
 	 * @see ParamProcessor
 	 */
 	protected final void registerParameterProc(Class<? extends ParamProcessorFactory> paramProcFactory) {
-		paramProcessorBuilder.registerParamProc(paramProcFactory);
+		paramProcessorBuilder.registerClass(paramProcFactory);
+	}
+	
+	
+	/** 
+	 * Method registers a global interceptor class as a singleton. These global interceptors do pre/post 
+	 * processing for every request/response.
+	 *  
+	 *  
+	 * @param interceptorHandler
+	 */
+	protected final void registerGlobalInterceptor(Class<? extends InterceptorHandler> interceptorHandlerClass) {
+		interceptorHandlersBuilder.registerClass(interceptorHandlerClass);
+	}
+	
+	
+	/**
+	 * Method registers a global interceptor instance. These global interceptors do pre/post 
+	 * processing for every request/response.
+	 *  
+	 * @param interceptorHandler
+	 */
+	protected final void registerGlobalInterceptorInstance(InterceptorHandler interceptorHandlerInstance) {
+		interceptorHandlersBuilder.registerInstance(interceptorHandlerInstance);
 	}
 	
 	
@@ -373,10 +400,12 @@ public abstract class MvcModule extends ServletModule {
      * @param urlPattern
      * @return
      */
+	@Deprecated
     protected final ControllerAndViewBindingBuilder controlAsync(String urlPattern)
     {
         return this.controllerModuleBuilder.controlAsync(urlPattern);
     }
+    
 
 	
 // ------------------------------------------------------------------------	

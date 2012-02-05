@@ -3,32 +3,18 @@ package org.zdevra.guice.mvc;
 import org.zdevra.guice.mvc.ConversionService.ConverterFactory;
 
 import com.google.inject.Binder;
-import com.google.inject.multibindings.Multibinder;
 
-class ConversionServiceBuilder {
-// ------------------------------------------------------------------------
-	
-	private final Multibinder<ConverterFactory> convertorsBinder;
-		
+@Deprecated
+class ConversionServiceBuilder extends MultibinderBuilder<ConverterFactory> {
 // ------------------------------------------------------------------------
 	
 	/**
 	 * Constructor
 	 */
 	public ConversionServiceBuilder(Binder binder) {
-		this.convertorsBinder = Multibinder.newSetBinder(binder, ConverterFactory.class);
+		super(binder, ConverterFactory.class);
 	}
-	
-	
-	public void registerConverter(Class<? extends ConverterFactory> factoryClazz) {
-		convertorsBinder.addBinding().to(factoryClazz).asEagerSingleton();
-	}
-	
-	
-	public void registerConverter(ConverterFactory factory) {
-		convertorsBinder.addBinding().toInstance(factory);
-	}
-	
+		
 // ------------------------------------------------------------------------
 
 }

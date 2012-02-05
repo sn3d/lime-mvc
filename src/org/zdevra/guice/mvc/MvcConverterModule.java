@@ -14,7 +14,7 @@ public abstract class MvcConverterModule extends AbstractModule {
 	
 // ------------------------------------------------------------------------
 	
-	private ConversionServiceBuilder conversionServiceBuilder;
+	private MultibinderBuilder<ConverterFactory> conversionServiceBuilder;
 	
 // ------------------------------------------------------------------------
 	
@@ -29,7 +29,7 @@ public abstract class MvcConverterModule extends AbstractModule {
 	@Override
 	protected final void configure() {
 		try {
-			conversionServiceBuilder = new ConversionServiceBuilder(binder());
+			conversionServiceBuilder = new MultibinderBuilder<ConverterFactory>(binder(), ConverterFactory.class);
 			configureConvertors();
 		} finally {
 			conversionServiceBuilder = null;
@@ -46,7 +46,7 @@ public abstract class MvcConverterModule extends AbstractModule {
 	 * The all predefined default converters are placed in the 'converters' sub-package.  
 	 */
 	protected final void registerConverter(ConverterFactory converterFactory) {
-		this.conversionServiceBuilder.registerConverter(converterFactory);
+		this.conversionServiceBuilder.registerInstance(converterFactory);
 	}
 	
 	
@@ -58,7 +58,7 @@ public abstract class MvcConverterModule extends AbstractModule {
 	 * The all predefined default convertors are placed in the 'converters' sub-package.  
 	 */
 	protected final void registerConverter(Class<? extends ConverterFactory> convertorFactoryClazz) {
-		this.conversionServiceBuilder.registerConverter(convertorFactoryClazz);
+		this.conversionServiceBuilder.registerClass(convertorFactoryClazz);
 	}
 
 	

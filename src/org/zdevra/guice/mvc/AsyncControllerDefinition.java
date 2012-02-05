@@ -26,6 +26,7 @@ import java.util.logging.Logger;
  *
  * The definition is used when user uses the MvcModule.controlAsync() method.
  */
+@Deprecated
 class AsyncControllerDefinition extends ControllerDefinition {
 
 // ------------------------------------------------------------------------
