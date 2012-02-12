@@ -162,13 +162,16 @@ class MvcDispatcherServlet extends HttpServlet {
 	private void processRequest(HttpServletRequest req, HttpServletResponse resp, HttpMethodType reqType)
 		throws ServletException, IOException
 	{
+		Throwable throwedException = null;
+		InvokeData data = null;
+		
 		try {
 			if (logger.isLoggable(Level.FINEST)) {
 				logger.finest("request '" + req.getRequestURL().toString() +  "' is handled by Lime MVC Servler ");
 			}
 												
 			//prepare invoke data & do preprocessing
-			InvokeData data = 
+			data = 
 				new InvokeData(
 					req,
 					resp,
@@ -194,9 +197,12 @@ class MvcDispatcherServlet extends HttpServlet {
 				mav = null;
 			}
 			
-		} catch (Throwable e) {			
+		} catch (Throwable e) {
+			throwedException = e;
 			exceptionResolver.handleException(e, this, req, resp); 			
 		}
+		
+		afterCompletion(data, throwedException);
 	}
 
 	
@@ -242,6 +248,13 @@ class MvcDispatcherServlet extends HttpServlet {
 	{
 		InterceptorChain chain = interceptorService.getGlobalInterceptorChain();
 		chain.postHandle(data.getRequest(), data.getResponse(), mav);
+	}
+	
+	
+	protected void afterCompletion(InvokeData data, Throwable e) 
+	{
+		InterceptorChain chain = interceptorService.getGlobalInterceptorChain();
+		chain.afterCompletion(data.getRequest(), data.getResponse(), e);		
 	}
 	
 // ------------------------------------------------------------------------

@@ -21,4 +21,10 @@ public class LogInterceptor implements InterceptorHandler {
 		Case10Log.getInstance().log("postHandle executed");
 	}
 
+	@Override
+	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Throwable e) 
+	{
+		Case10Log.getInstance().log("afterCompletion executed");		
+	}
+
 }

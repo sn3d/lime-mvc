@@ -32,6 +32,20 @@ public interface InterceptorHandler {
 	 * @param mav
 	 */
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, ModelAndView mav);
+	
+	
+	/**
+	 * Method is invoked at the end of request processing when the view has been rendered and only in
+	 * case when all interceptors return true.
+	 * 
+	 * You will implement here resource releasing.  
+	 * 
+	 * @param request
+	 * @param response
+	 * @param e
+	 */
+	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Throwable e);
+
 
 	
 }

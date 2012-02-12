@@ -67,6 +67,15 @@ class InterceptorChain {
 			handler.postHandle(request, response, mav);
 		}		
 	}
+	
+	
+	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Throwable e)
+	{
+		for (InterceptorHandler handler: handlers) {
+			handler.afterCompletion(request, response, e);
+		}		
+	}
+
 
 // ------------------------------------------------------------------------
 
