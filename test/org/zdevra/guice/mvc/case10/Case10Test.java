@@ -41,5 +41,6 @@ public class Case10Test extends WebTest {
 		
 		Assert.assertTrue(Case10Log.getInstance().contains("preHandle executed") == 1);
 		Assert.assertTrue(Case10Log.getInstance().contains("postHandle executed") == 1);
+		Assert.assertTrue(Case10Log.getInstance().contains("afterCompletion executed") == 1);
 	}
 }

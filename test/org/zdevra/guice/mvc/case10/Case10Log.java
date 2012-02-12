@@ -24,6 +24,7 @@ public class Case10Log {
 	
 	public void log(String msg)
 	{
+		System.out.println(msg);
 		this.messages.add(msg);
 	}
 	
