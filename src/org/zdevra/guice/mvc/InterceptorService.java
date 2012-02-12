@@ -53,11 +53,5 @@ public class InterceptorService {
 		return new InterceptorChain(globalHandlers);
 	}
 	
-	
-	public InterceptorChain getInterceptorChainForMethod(MappingData data)
-	{
-		return new InterceptorChain();
-	}
-
 /*----------------------------------------------------------------------*/
 }
