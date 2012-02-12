@@ -41,12 +41,19 @@ class ControllerModuleBuilder  {
 	
 // ------------------------------------------------------------------------
 	
-	private class ControllerBindingBuilderImpl implements ControllerBindingBuilder {				
+	private class ControllerBindingBuilderImpl implements ControllerBindingBuilder {
+		
 		@Override
 		public final ControllerBindingBuilder withController(Class<?> controller) {			
 			actualControllersDefinition.addController(controller);
 			return this;
-		}					
+		}		
+		
+		@Override
+		public ControllerBindingBuilder interceptor(Class<? extends InterceptorHandler> handlerClass) {
+			actualControllersDefinition.addInterceptorHandler(handlerClass);
+			return this;
+		}
 	}
 	
 	private class ControllerAndViewBindingBuilderImpl implements ControllerAndViewBindingBuilder {

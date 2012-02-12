@@ -38,6 +38,7 @@ class ControllerDefinition extends ServletDefinition {
 	private static final Logger logger = Logger.getLogger(ControllerDefinition.class.getName());
     public static final Factory FACTORY = new Factory();
 	protected List<Class<?>> controllers;
+	protected List<Class<? extends InterceptorHandler>> interceptorHandlers;
 	
 // ------------------------------------------------------------------------
 
@@ -49,6 +50,7 @@ class ControllerDefinition extends ServletDefinition {
 	protected ControllerDefinition(String urlPattern) {
 		super(urlPattern);
 		this.controllers = new ArrayList<Class<?>>(10);
+		this.interceptorHandlers = new ArrayList<Class<? extends InterceptorHandler>>(10);
 	}
 
 
@@ -67,17 +69,22 @@ class ControllerDefinition extends ServletDefinition {
 	public void addController(Class<?> controller) {
 		controllers.add(controller);
 	}
+	
+	
+	public void addInterceptorHandler(Class<? extends InterceptorHandler> handler) {
+		interceptorHandlers.add(handler);
+	}
 
 	
 	public List<Class<?>> getControllers() {
 		return controllers;
 	}
-
+	
 	
 	@Override
 	public HttpServlet createServlet(Binder binder) {
 		logger.info("for path '" + getUrlPattern() + "' should be registered follwing controllers: " + this.controllers);
-		return new MvcDispatcherServlet(this.controllers);
+		return new MvcDispatcherServlet(this.controllers, this.interceptorHandlers);
 	}
 		
 // ------------------------------------------------------------------------

@@ -53,8 +53,10 @@ class MvcDispatcherServlet extends HttpServlet {
 	@Inject private InterceptorService interceptorService;
 
 	protected final Collection<Class<?>> controllers;
+	protected final Collection<Class<? extends InterceptorHandler>> interceptorHandlerClasses;
 	protected Collection<ClassInvoker> classInvokers;
-	
+	protected InterceptorChain interceptorChain;
+		
 // ------------------------------------------------------------------------
 	
 	/**
@@ -93,14 +95,15 @@ class MvcDispatcherServlet extends HttpServlet {
 		this( Arrays.asList( new Class<?>[] { controllerClass } ) );
 	}
 	
-	
+		
 	/**
-	 * Constructor used by MvcModule
+	 * Constructor for testing purpose
 	 * @param controllers
-	 */
+	 */	
 	public MvcDispatcherServlet(Class<?>[] controllers) {
 		this( Arrays.asList( controllers ) );
 	}
+	
 
 	
 	/**
@@ -108,7 +111,17 @@ class MvcDispatcherServlet extends HttpServlet {
 	 * @param controllers
 	 */	
 	public MvcDispatcherServlet(List<Class<?>> controllers) {		
+		this(controllers, new LinkedList<Class<? extends InterceptorHandler>>());
+	}
+	
+	
+	/**
+	 * Main constructor used by MvcModule
+	 * @param controllers
+	 */	
+	public MvcDispatcherServlet(List<Class<?>> controllers, List<Class<? extends InterceptorHandler>> interceptorHandlerClasses) {		
 		this.controllers = Collections.unmodifiableCollection(controllers);
+		this.interceptorHandlerClasses = Collections.unmodifiableCollection(interceptorHandlerClasses);
 	}
 	
 // ------------------------------------------------------------------------
@@ -146,7 +159,13 @@ class MvcDispatcherServlet extends HttpServlet {
 	
 
 	@Override
-	public final void init() throws ServletException {
+	public final void init() throws ServletException 
+	{
+		//interceptor chain init
+		InterceptorChain globalChain = interceptorService.getGlobalInterceptorChain();
+		this.interceptorChain = globalChain.putInterceptorHandlers(getInterceptorHandlers());
+		
+		//class invokers initialization
 		List<ClassInvoker> allInvokers = new LinkedList<ClassInvoker>();
 		ClassScanner scanner = new ClassScanner();
 		for (Class<?> controller : controllers) {
@@ -154,7 +173,8 @@ class MvcDispatcherServlet extends HttpServlet {
 			allInvokers.add( classInvoker );
 		}
 			
-		this.classInvokers = Collections.unmodifiableCollection(allInvokers);			
+		this.classInvokers = Collections.unmodifiableCollection(allInvokers);		
+		
 		super.init();
 	}
 
@@ -179,7 +199,7 @@ class MvcDispatcherServlet extends HttpServlet {
 					reqType,
 					injector );
 									
-			boolean res = preprocessing(data);			
+			boolean res = interceptorChain.preHandle(data.getRequest(), data.getResponse());			
 			if (!res) {
 				return;
 			}
@@ -192,7 +212,7 @@ class MvcDispatcherServlet extends HttpServlet {
 				}
 				
 				//postprocessing & resolve view
-				postprocessing(data, mav);
+				interceptorChain.postHandle(data.getRequest(), data.getResponse(), mav);
 				viewResolver.resolve(mav.getView(), this, req, resp);			
 				mav = null;
 			}
@@ -202,20 +222,23 @@ class MvcDispatcherServlet extends HttpServlet {
 			exceptionResolver.handleException(e, this, req, resp); 			
 		}
 		
-		afterCompletion(data, throwedException);
+		interceptorChain.afterCompletion(data.getRequest(), data.getResponse(), throwedException);
 	}
 
 	
 // ------------------------------------------------------------------------
 	
-	protected boolean preprocessing(InvokeData data)
+	private List<InterceptorHandler> getInterceptorHandlers() 
 	{
-		InterceptorChain chain = interceptorService.getGlobalInterceptorChain();			
-		boolean res = chain.preHandle(data.getRequest(), data.getResponse());			
-		return res;
+		List<InterceptorHandler> handlers = new LinkedList<InterceptorHandler>(); 
+		for ( Class<? extends InterceptorHandler> ihc : this.interceptorHandlerClasses) {
+			InterceptorHandler handler = this.injector.getInstance(ihc);
+			handlers.add(handler);
+		}		
+		return handlers;
 	}
-
-			
+	
+				
 	protected ModelAndView invoke(InvokeData data) 
 	{
 		ModelAndView mav = new ModelAndView();				
@@ -243,19 +266,7 @@ class MvcDispatcherServlet extends HttpServlet {
 		return mav;
 	}
 		
-	
-	protected void postprocessing(InvokeData data, ModelAndView mav)
-	{
-		InterceptorChain chain = interceptorService.getGlobalInterceptorChain();
-		chain.postHandle(data.getRequest(), data.getResponse(), mav);
-	}
-	
-	
-	protected void afterCompletion(InvokeData data, Throwable e) 
-	{
-		InterceptorChain chain = interceptorService.getGlobalInterceptorChain();
-		chain.afterCompletion(data.getRequest(), data.getResponse(), e);		
-	}
-	
+		
+		
 // ------------------------------------------------------------------------
 }

@@ -2,6 +2,8 @@ package org.zdevra.guice.mvc;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,8 +28,7 @@ class InterceptorChain {
 	InterceptorChain(Collection<InterceptorHandler> handlers)
 	{
 		this.handlers = Collections.unmodifiableCollection(handlers);
-	}
-	
+	}	
 	
 	/**
 	 * Constructor for em
@@ -75,7 +76,22 @@ class InterceptorChain {
 			handler.afterCompletion(request, response, e);
 		}		
 	}
-
+	
+	
+	/**
+	 * Method creates new extended chain and put new collection of handlers into new chain.
+	 * 
+	 * @param handlers
+	 * @return
+	 */
+	public InterceptorChain putInterceptorHandlers(Collection<InterceptorHandler> newHandlers) 
+	{
+		List<InterceptorHandler> newChainHandlers = new LinkedList<InterceptorHandler>();
+		newChainHandlers.addAll(this.handlers);
+		newChainHandlers.addAll(newHandlers);
+		return new InterceptorChain(newChainHandlers);
+	}
+		
 
 // ------------------------------------------------------------------------
 

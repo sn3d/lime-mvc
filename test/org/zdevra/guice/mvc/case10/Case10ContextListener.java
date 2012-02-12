@@ -16,10 +16,21 @@ public class Case10ContextListener extends GuiceServletContextListener {
 			@Override
 			protected void configureControllers() 
 			{
-				registerGlobalInterceptor(LogInterceptor.class);
-				control("/case10/*").withController(Case10Controller.class);				
-			}
-			
+				registerGlobalInterceptor(SecurityInterceptor.class);
+				
+				control("/case10/*")
+				.withController(Case10Controller.class);				
+
+				
+				control("/case10log/*")
+					.withController(Case10Controller.class)
+					.interceptor(LogInterceptor.class);
+
+				
+				control("/case10after/*")
+					.withController(Case10Controller.class);				
+				
+			}			
 		});
 	}
 }

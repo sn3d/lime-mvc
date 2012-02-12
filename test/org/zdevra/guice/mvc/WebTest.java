@@ -119,6 +119,15 @@ public abstract class WebTest {
 	}
 	
 	
+	public HttpMethod doRequest(String url) throws HttpException, IOException
+	{
+		HttpMethod req = new GetMethod(url);
+		client.executeMethod(req);
+		return req;
+	}
+
+	
+	
 	
 
 }

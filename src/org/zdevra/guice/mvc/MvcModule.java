@@ -26,7 +26,13 @@ import javax.servlet.http.HttpServlet;
 
 import org.zdevra.guice.mvc.ConversionService.ConverterFactory;
 import org.zdevra.guice.mvc.annotations.Controller;
-import org.zdevra.guice.mvc.converters.*;
+import org.zdevra.guice.mvc.converters.BooleanConverterFactory;
+import org.zdevra.guice.mvc.converters.DateConverterFactory;
+import org.zdevra.guice.mvc.converters.DoubleConverterFactory;
+import org.zdevra.guice.mvc.converters.FloatConverterFactory;
+import org.zdevra.guice.mvc.converters.IntegerConverterFactory;
+import org.zdevra.guice.mvc.converters.LongConverterFactory;
+import org.zdevra.guice.mvc.converters.StringConverterFactory;
 import org.zdevra.guice.mvc.parameters.HttpPostParam;
 import org.zdevra.guice.mvc.parameters.HttpSessionParam;
 import org.zdevra.guice.mvc.parameters.InjectorParam;
@@ -35,6 +41,7 @@ import org.zdevra.guice.mvc.parameters.ParamProcessor;
 import org.zdevra.guice.mvc.parameters.ParamProcessorFactory;
 import org.zdevra.guice.mvc.parameters.ParamProcessorsService;
 import org.zdevra.guice.mvc.parameters.RequestParam;
+import org.zdevra.guice.mvc.parameters.RequestScopedAttributeParam;
 import org.zdevra.guice.mvc.parameters.ResponseParam;
 import org.zdevra.guice.mvc.parameters.SessionAttributeParam;
 import org.zdevra.guice.mvc.parameters.UriParam;
@@ -128,37 +135,6 @@ import com.google.inject.servlet.ServletModule;
  * </pre>
  * <p>
  *
- * In case above, both controllers will invoke both methods getUser and getGoods. Notice, the Controllers use this same
- * view. In case of different views, Lime MVC choose the first one as the right view and the second one will be ignored.
- * Because there is no ability to set up priority yet, it's recommended to use same view in both controllers.
- *
- * <p>
- * For performance boosting, you may use asynchronnous processing of the controllers. This can be used only if your
- * controllers are stateless and don't share the same resources or share thread-safe resources.
- *
- * <p>example:
- * <pre class="prettyprint">
- * public class WebAppConfiguration extends GuiceServletContextListener {
- * ...
- *   protected Injector getInjector() {
- *     Injector injector =  Guice.createInjector(
- *        new MvcModule() {
- *           protected void configureControllers() {
- *
- *             controlAsync("/someControllers/*")
- *                .withController(SomeController.class)
- *                .withController(AnotherController.class);
- *              ...
- *           }
- *        }
- *     );
- *     return injector;
- *   }
- * }
- * </pre>
- * <p>
- *
- *
  * @see Controller 
  * @see ModelMap
  * @see ModelAndView
@@ -231,7 +207,8 @@ public abstract class MvcModule extends ServletModule {
 			registerConverter(new StringConverterFactory());
 						
 			bind(ParamProcessorsService.class);
-			registerParameterProc(HttpPostParam.Factory.class);			
+			registerParameterProc(HttpPostParam.Factory.class);
+			registerParameterProc(RequestScopedAttributeParam.Factory.class);
 			registerParameterProc(UriParam.Factory.class);
 			registerParameterProc(SessionAttributeParam.Factory.class);
 			registerParameterProc(ModelParam.Factory.class);
@@ -412,10 +389,11 @@ public abstract class MvcModule extends ServletModule {
 
 	public static interface ControllerBindingBuilder {
 		public ControllerBindingBuilder withController(Class<?> controller);
+		public ControllerBindingBuilder interceptor(Class<? extends InterceptorHandler> handlerClass);
 	}
 	
 
-	public static interface ControllerAndViewBindingBuilder {
+	public static interface ControllerAndViewBindingBuilder {		
 		public ControllerBindingBuilder withController(Class<?> controller);
 		public void withView(String name);
 		public void withView(ViewPoint viewInstance);

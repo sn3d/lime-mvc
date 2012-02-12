@@ -6,28 +6,35 @@ import javax.servlet.http.HttpServletResponse;
 import org.zdevra.guice.mvc.InterceptorHandler;
 import org.zdevra.guice.mvc.ModelAndView;
 
-import com.google.inject.Singleton;
-
-@Singleton
-public class LogInterceptor implements InterceptorHandler {
+public class SecurityInterceptor implements InterceptorHandler {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response) 
 	{
-		Case10Log.getInstance().log("preHandle executed");
-		return true;
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		
+		if ( ("admin".equalsIgnoreCase(username)) &&
+		     ("pass123".equalsIgnoreCase(password)) )
+		{
+			request.setAttribute("USER", new User(username, password));
+			return true;
+		}
+		
+		response.setStatus(401);
+		return false;
 	}
 
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) 
 	{
-		Case10Log.getInstance().log("postHandle executed");
+
 	}
 
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Throwable e) 
 	{
-		Case10Log.getInstance().log("afterCompletion executed");		
+
 	}
 
 }
