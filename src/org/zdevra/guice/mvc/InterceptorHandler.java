@@ -5,7 +5,44 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Interface you will implement when you want to do some global 
- * pre/post processing of the requests and responses.
+ * pre/post processing of the requests and responses. Interceptors are executed in
+ * chain. When one of the interceptor's preHandle() method returns false, then the
+ * processing of the request will stop and no postHandle and afterCompletion shouldn't 
+ * be invoked.
+ * 
+ * <br><p>
+ * 
+ * In general, there are 2 ways how to register interceptor handlers. As a global handlers
+ * which is invoked for all controllers, or as a mapped interceptor which is invoked for concrete 
+ * controler of group of controllers.
+ * 
+ * <p>example of the global interceptor handler registration:
+ * <pre class="prettyprint">
+ * public class MyWebAppModule extends MvcModule {
+ *   protected void configureControllers() {
+ *     ...
+ *     registerGlobalInterceptor(LogInterceptor.class);
+ *     registerGlobalInterceptor(SecurityInterceptor.class);
+ *     ...
+ *   }
+ * }   
+ * </pre>
+ * 
+ * 
+ * <p>example of the mapped interceptor handler registration:
+ * <pre class="prettyprint">
+ * public class MyWebAppModule extends MvcModule {
+ *   protected void configureControllers() {
+ *     ...
+ *     control("/somepath")
+ *        .withController(FirstController.class)
+ *        .withController(SecondController.class)
+ *        .interceptor(SecurityInterceptor.class);
+ *     ...
+ *   }
+ * }   
+ *
+ * </pre>
  *  
  */
 public interface InterceptorHandler {

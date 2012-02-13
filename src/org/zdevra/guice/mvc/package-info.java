@@ -186,62 +186,34 @@
  * } 
  * </pre>
  *
+ *
  * <p>
- * <h3>Parallel execution</h3>
- * Let's assume a situation where we've got on the one page several different and 
- * independent informations. Usually, the model with these data is filled in 
- * one thread even the data are independent. 
+ * <h3>Interceptors</h3>
  * 
- * <p><img src="independent-data.png" /><p>
- * 
- * For this case should be good to have the execution of several methods for one URL,  
- * which are producing the data. You could specify 2 controllers for one URL. One controller
- * for books, second for customer data:
+ * Interceptors are very useful when you want to do some specific pre and post processing like security checks etc. The 
+ * Interceptor concept is very simmilar to Interceptors in Spring MVC. Interceptors are in role of filters but they offer less
+ * possibilites because are in context scope. If you want to write your own interceptor, just implement the InterceptorHandler interface
+ * and register the handler as global or for specific controller group:
  * 
  * <br><p>
  * <pre class="prettyprint">
- * {@literal @}Controller
- * public class BooksController {
- *    {@literal @}Path("/get") {@literal @}Model("books")
- *    pubic List<Book> getBooks() {
- *       ...
- *    }
- *    
+ * 
+ * //impl. handler
+ * public class LogInterceptor implements InterceptorHandler {
+ * ...
  * }
  * 
  * ...
- * 
- * {@literal @}Controller
- * public class CustomersController {
- *    {@literal @}Path("/get") {@literal @}Model("customer")
- *    pubic Customer getCustomer() {
- *       ...
- *    }    
- * }
- * 
- * ...
- * 
- * protected void configureControllers() {
- *    control("/page/*")
- *       .withController(CustomersController.class)
- *       .withController(BooksController.class);
- * } 
+ * public class MyWebAppModule extends MvcModule {
+ *   protected void configureControllers() {
+ *     registerGlobalInterceptor(LogInterceptor.class);
+ *   }
+ * }   
  * </pre>
  * 
- * When you'll request the '/page/get', the request will invoke getBooks() and getCustomer() 
- * methods and model results will be merged into one result then. In this specific case, you can invoke methods
- * assynchonnous in 2 separated threads. You will modify the code as following:
- * 
- * <br><p>
- * <pre class="prettyprint">
- * protected void configureControllers() {
- *    controlAsync("/page/*")
- *       .withController(CustomersController.class)
- *       .withController(BooksController.class);
- * } 
- * </pre>
- * 
- * For detailed informations how to use it, see the 'Async' example.
+ * For more detailed info see {@link InterceptorHandler}InterceptorHandler and interceptors example.
+ *
  *
  */
 package org.zdevra.guice.mvc;
+
