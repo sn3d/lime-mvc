@@ -50,7 +50,7 @@ public class JSilverTest {
 		
 		//execute view resolving&rendering
 		ViewResolver vr = g.getInstance(ViewResolver.class);
-		vr.resolve(NamedView.create("testview"), null, req, resp);
+		vr.resolve(NamedView.create("testview"), null, null, req, resp);
 		String output = resp.getOutputAsStr();
 		
 		//evaluate the result

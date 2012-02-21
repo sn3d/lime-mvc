@@ -122,6 +122,7 @@ public abstract class WebTest {
 	public HttpMethod doRequest(String url) throws HttpException, IOException
 	{
 		HttpMethod req = new GetMethod(url);
+		req.setFollowRedirects(false);
 		client.executeMethod(req);
 		return req;
 	}

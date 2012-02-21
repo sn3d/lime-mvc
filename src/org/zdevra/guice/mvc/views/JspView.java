@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.zdevra.guice.mvc.ModelMap;
 import org.zdevra.guice.mvc.ViewPoint;
 import org.zdevra.guice.mvc.exceptions.InvalidJspViewException;
 
@@ -56,7 +57,7 @@ public class JspView implements ViewPoint {
 	
 	
 	@Override
-	public void render(HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) {
+	public void render(ModelMap model, HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) {
 		request = new HttpRequestForForward(request, jspPath);
 		RequestDispatcher dispatcher = servlet.getServletContext().getRequestDispatcher(jspPath);
 		if (dispatcher == null) {

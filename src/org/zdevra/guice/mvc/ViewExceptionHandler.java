@@ -32,7 +32,7 @@ class ViewExceptionHandler implements ExceptionHandler {
 	public void handleException(Throwable t, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) 
 	{
 		logger.log(Level.SEVERE, "Exception caught (" + t.getClass().getName() + ")" , t);
-		viewResolver.resolve(errorView, servlet, req, resp);
+		viewResolver.resolve(errorView, null, servlet, req, resp);
 	}
 
 // ------------------------------------------------------------------------

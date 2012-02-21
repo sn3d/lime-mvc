@@ -21,6 +21,7 @@ import java.lang.annotation.Annotation;
 import org.zdevra.guice.mvc.Utils;
 import org.zdevra.guice.mvc.ViewPoint;
 import org.zdevra.guice.mvc.ViewScanner;
+import org.zdevra.guice.mvc.freemarker.annotations.FreemarkerView;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -51,10 +52,9 @@ class FreemarkerScanner implements ViewScanner {
 // ------------------------------------------------------------------------
 
 	@Override
-	public ViewPoint scan(Annotation[] anots) {
-		org.zdevra.guice.mvc.freemarker.annotations.FreemarkerView anot = 
-				Utils.getAnnotation(org.zdevra.guice.mvc.freemarker.annotations.FreemarkerView.class, anots);
-		
+	public ViewPoint scan(Annotation[] anots) 
+	{
+		FreemarkerView anot = Utils.getAnnotation(FreemarkerView.class, anots);		
 		if (anot == null) {
 			return ViewPoint.NULL_VIEW;
 		}

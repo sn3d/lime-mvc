@@ -53,7 +53,7 @@ public class TestVelocity {
 					.build();
 		
 		TestResponse resp = new TestResponse();
-		view.render(null, req, resp);				
+		view.render(null, null, req, resp);				
 		String output = resp.getOutputAsStr();
 		
 		//evaluate the result
@@ -92,7 +92,7 @@ public class TestVelocity {
 
 		//execute view resolving&rendering
 		ViewResolver vr = g.getInstance(ViewResolver.class);
-		vr.resolve(NamedView.create("testview"), null, req, resp);
+		vr.resolve(NamedView.create("testview"), null, null, req, resp);
 		String output = resp.getOutputAsStr();
 		
 		//evaluate the result

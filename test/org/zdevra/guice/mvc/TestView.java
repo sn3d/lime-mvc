@@ -39,7 +39,7 @@ public class TestView implements ViewPoint {
 // ------------------------------------------------------------------------
 	
 	@Override
-	public void render(HttpServlet servlet, HttpServletRequest request, HttpServletResponse response)  {
+	public void render(ModelMap model, HttpServlet servlet, HttpServletRequest request, HttpServletResponse response)  {
 		try {
 			Object msg = request.getAttribute("testmsg");
 			if (msg == null) {

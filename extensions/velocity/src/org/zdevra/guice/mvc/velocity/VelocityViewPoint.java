@@ -31,6 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
+import org.zdevra.guice.mvc.ModelMap;
 import org.zdevra.guice.mvc.ViewPoint;
 import org.zdevra.guice.mvc.exceptions.VelocityViewException;
 
@@ -82,7 +83,7 @@ public class VelocityViewPoint implements ViewPoint {
 	
 	@Override
 	@SuppressWarnings("unchecked")
-	public void render(HttpServlet servlet, HttpServletRequest request, HttpServletResponse response)  
+	public void render(ModelMap model, HttpServlet servlet, HttpServletRequest request, HttpServletResponse response)  
 	{
 		try {
 			Template velocityTemplate = velocity.getTemplate(viewFile);

@@ -9,7 +9,9 @@ import org.zdevra.guice.mvc.annotations.View;
 @Controller
 public class Case10Controller {
 	
-	@Path("/do-something") @Model("out") @View("/WEB-INF/views/main.html.jsp")
+	@Path("/do-something") 
+	@Model("out") 
+	@View("/WEB-INF/views/main.html.jsp")
 	public String doSomething(@RequestScopedAttribute("USER") User usr) 
 	{
 		if (usr == null) {
@@ -17,5 +19,5 @@ public class Case10Controller {
 		}		
 		return "something:" + usr.toString();
 	}
-
+	
 }

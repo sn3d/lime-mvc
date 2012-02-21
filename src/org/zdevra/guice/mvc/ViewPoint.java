@@ -29,6 +29,6 @@ public interface ViewPoint {
 	
 	public final static ViewPoint NULL_VIEW = NamedView.create("NULL");
 	
-	public void render(HttpServlet servlet, HttpServletRequest request, HttpServletResponse response);
+	public void render(ModelMap model, HttpServlet servlet, HttpServletRequest request, HttpServletResponse response);
 	
 }

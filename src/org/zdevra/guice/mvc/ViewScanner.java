@@ -31,12 +31,12 @@ public interface ViewScanner {
 	 * If your annotation is not presents, then you will return 
 	 * View.NULL_VIEW.
 	 *   
-	 * @param controllerAnotations
+	 * @param annotations - annotations of the controller or controller's method 
 	 * 
 	 * @return instance of view for your annotation or View.NULL. Avoid to
 	 * null value.
 	 * 
 	 * @throws Exception
 	 */
-	public ViewPoint scan(Annotation[] controllerAnotations);
+	public ViewPoint scan(Annotation[] annotations);
 }

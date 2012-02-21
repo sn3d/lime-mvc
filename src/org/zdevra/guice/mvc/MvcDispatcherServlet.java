@@ -213,7 +213,7 @@ class MvcDispatcherServlet extends HttpServlet {
 				
 				//postprocessing & resolve view
 				interceptorChain.postHandle(data.getRequest(), data.getResponse(), mav);
-				viewResolver.resolve(mav.getView(), this, req, resp);			
+				viewResolver.resolve(mav.getView(), mav.getModel(), this, req, resp);			
 				mav = null;
 			}
 			

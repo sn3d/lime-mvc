@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.zdevra.guice.mvc.ModelMap;
 import org.zdevra.guice.mvc.ViewPoint;
 
 /**
@@ -79,7 +80,7 @@ public final class NamedView implements ViewPoint {
 	}
 
 	@Override
-	public final void render(HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) {
+	public final void render(ModelMap model, HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) {
 		//do nothing
 	}
 	

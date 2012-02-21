@@ -53,7 +53,7 @@ class DefaultViewResolver implements ViewResolver {
 // ------------------------------------------------------------------------
 
 	@Override
-	public void resolve(ViewPoint view, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {		
+	public void resolve(ViewPoint view, ModelMap model, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {		
 		if (view == null || view == ViewPoint.NULL_VIEW) {
 			throw new NoViewException(req);
 		}
@@ -71,7 +71,7 @@ class DefaultViewResolver implements ViewResolver {
 			}			
 		}
 						
-		view.render(servlet, req, resp);	
+		view.render(model, servlet, req, resp);	
 	}
 	
 // ------------------------------------------------------------------------

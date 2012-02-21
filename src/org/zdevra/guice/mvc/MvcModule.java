@@ -46,6 +46,7 @@ import org.zdevra.guice.mvc.parameters.ResponseParam;
 import org.zdevra.guice.mvc.parameters.SessionAttributeParam;
 import org.zdevra.guice.mvc.parameters.UriParam;
 import org.zdevra.guice.mvc.views.NamedViewScanner;
+import org.zdevra.guice.mvc.views.RedirectViewScanner;
 
 import com.google.inject.name.Names;
 import com.google.inject.servlet.ServletModule;
@@ -221,6 +222,7 @@ public abstract class MvcModule extends ServletModule {
 			
 			bind(ViewScannerService.class);
 			registerViewScanner(NamedViewScanner.class);
+			registerViewScanner(RedirectViewScanner.class);			
 			
 			configureControllers();
 			
