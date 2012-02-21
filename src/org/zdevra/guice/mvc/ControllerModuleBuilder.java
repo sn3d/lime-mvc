@@ -101,13 +101,6 @@ class ControllerModuleBuilder  {
 		return new ControllerAndViewBindingBuilderImpl(ControllerDefinition.FACTORY);
 	}
 
-	
-	@Deprecated
-    public final ControllerAndViewBindingBuilder controlAsync(String urlPattern) {
-        actualUrlPattern = urlPattern;
-        return new ControllerAndViewBindingBuilderImpl(AsyncControllerDefinition.ASYNCFACTORY);
-    }
-
 
 	public List<ServletDefinition> getControllerDefinitions() {
 		if (actualControllersDefinition != null) {

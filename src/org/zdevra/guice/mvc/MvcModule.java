@@ -110,13 +110,12 @@ import com.google.inject.servlet.ServletModule;
  * }
  * </pre>
  *
- *
- * Be careful when 2 methods are invoked, for the view resolving could make a problem. Let's assume 2 controllers:
+ * In both controllers can be defined the same path. Let's assume 2 controllers:
  * <p>
  * <pre class="prettyprint">
  * {@literal @}Controller
  * {@literal @}View("some_view")
- * public class FirstController {
+ * public class SomeController {
  *    ...
  *    {@literal @}Path("/get") {@literal}Model("user")
  *    public User getUser() {
@@ -126,7 +125,7 @@ import com.google.inject.servlet.ServletModule;
  *
  * {@literal @}Controller
  * {@literal @}View("some_view")
- * public class SecondController {
+ * public class AnotherController {
  *    ...
  *    {@literal @}Path("/get") {@literal}Model("goods")
  *    public List<Product> getGoods() {
@@ -134,6 +133,9 @@ import com.google.inject.servlet.ServletModule;
  *    }
  * }
  * </pre>
+ * 
+ * In that case, both methods 'getUser' and 'getGoods' will be invoked. Be carrefull when you're invoking 2 or more methods. It may
+ * cause problems with multiple views when only first view is choosen.
  * <p>
  *
  * @see Controller 
@@ -373,18 +375,6 @@ public abstract class MvcModule extends ServletModule {
 		return this.controllerModuleBuilder.control(urlPattern);
 	}
 
-
-    /**
-     * Method bind controller class to the concrete url and methods are executed asynchronnous.
-     * @param urlPattern
-     * @return
-     */
-	@Deprecated
-    protected final ControllerAndViewBindingBuilder controlAsync(String urlPattern)
-    {
-        return this.controllerModuleBuilder.controlAsync(urlPattern);
-    }
-    
 
 	
 // ------------------------------------------------------------------------	
