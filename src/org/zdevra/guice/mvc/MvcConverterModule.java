@@ -19,9 +19,9 @@ public abstract class MvcConverterModule extends AbstractModule {
 // ------------------------------------------------------------------------
 	
 	/**
-	 * In this method you will setup your convertors
+	 * In this method you will setup your converters
 	 */
-	protected abstract void configureConvertors();
+	protected abstract void configureConverters();
 	
 
 // ------------------------------------------------------------------------
@@ -30,7 +30,7 @@ public abstract class MvcConverterModule extends AbstractModule {
 	protected final void configure() {
 		try {
 			conversionServiceBuilder = new MultibinderBuilder<ConverterFactory>(binder(), ConverterFactory.class);
-			configureConvertors();
+			configureConverters();
 		} finally {
 			conversionServiceBuilder = null;
 		}
