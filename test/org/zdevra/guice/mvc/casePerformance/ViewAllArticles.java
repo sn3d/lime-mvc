@@ -41,5 +41,4 @@ public class ViewAllArticles implements ViewPoint {
 			//TODO:view exception
 		}
 	}
-
 }
