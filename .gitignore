@@ -21,4 +21,5 @@ examples/jsilver/target/[^.]*
 examples/freemarker/target/[^.]*
 examples/converters/target/[^.]*
 examples/async/target/[^.]*
+examples/interceptors/target/[^.]*
 
