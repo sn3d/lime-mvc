@@ -21,7 +21,7 @@ import org.zdevra.guice.mvc.Utils;
 import org.zdevra.guice.mvc.annotations.RequestScopedAttribute;
 
 /**
- * Processor for {@link RequestScopedValriable} annotation. This class
+ * Processor for {@link org.zdevra.guice.mvc.annotations.RequestScopedAttribute} annotation. This class
  * gets the value and fill-in the method's parameter.
  *
  * @see org.zdevra.guice.mvc.annotations.RequestScopedAttribute

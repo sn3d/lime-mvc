@@ -34,7 +34,7 @@ import java.lang.annotation.Target;
  * <pre class="prettyprint">
  * {@literal @}Path("/somepath")
  * {@literal @}Model("param")
- * {@literal @}RedirectUrl("http://server/path")
+ * {@literal @}RedirectView("http://server/path")
  * public String redirectToSomewhere()
  * {
  *    return "value";
