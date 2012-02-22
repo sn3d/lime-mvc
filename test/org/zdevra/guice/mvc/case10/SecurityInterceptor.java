@@ -3,10 +3,11 @@ package org.zdevra.guice.mvc.case10;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.zdevra.guice.mvc.AbstractInterceptorHandler;
 import org.zdevra.guice.mvc.InterceptorHandler;
 import org.zdevra.guice.mvc.ModelAndView;
 
-public class SecurityInterceptor implements InterceptorHandler {
+public class SecurityInterceptor extends AbstractInterceptorHandler {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response) 
@@ -24,17 +25,5 @@ public class SecurityInterceptor implements InterceptorHandler {
 		response.setStatus(401);
 		return false;
 	}
-
-	@Override
-	public void postHandle(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) 
-	{
-
-	}
-
-	@Override
-	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Throwable e) 
-	{
-
-	}
-
+	
 }
