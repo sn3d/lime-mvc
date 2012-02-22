@@ -5,7 +5,7 @@
   <artifactId>custom-converters</artifactId>
   
   <packaging>war</packaging>
-  <version>0.4.0-SNAPSHOT</version>    
+  <version>0.4.0</version>    
   <name>custom-converters</name>    
   <url>http://code.google.com/p/lime-mvc/</url>
     
@@ -29,7 +29,7 @@
     <dependency>
   	  <groupId>org.zdevra</groupId>
       <artifactId>lime-freemarker</artifactId>
-      <version>0.4.0-SNAPSHOT</version>
+      <version>0.4.0</version>
     </dependency>    
   </dependencies>
     
