@@ -28,7 +28,8 @@ public class InterceptorsExampleContextListener extends GuiceServletContextListe
 					//register security interceptor for concrete controller						
 					control("/secured/*")						
 						.withController(SecuredController.class)
-						.interceptor(SecurityInterceptor.class);												
+						.interceptor(SecurityInterceptor.class);
+																		
 				}
 			}
 		);

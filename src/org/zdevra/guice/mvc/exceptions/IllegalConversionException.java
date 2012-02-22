@@ -16,8 +16,6 @@
  *****************************************************************************/
 package org.zdevra.guice.mvc.exceptions;
 
-
-
 /**
  * The exception is throwed when MVC is not able converts
  * a string value, which is picked up from URL or from Request, to 

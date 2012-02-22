@@ -206,14 +206,28 @@
  * ...
  * public class MyWebAppModule extends MvcModule {
  *   protected void configureControllers() {
+ *   
+ *     //interceptor registration for all controllers
  *     registerGlobalInterceptor(LogInterceptor.class);
+ *     
+ *     //interceptor registration for concrete controller
+ *     control("/someurl/*")
+ *        .withController(Controller.class)
+ *        .interceptor(SomeInterceptor.class)
+ *        .interceptor(AnotherInterceptor.class);
  *   }
  * }   
  * </pre>
  * 
- * For more detailed info see {@link InterceptorHandler}InterceptorHandler and interceptors example.
- *
+ * Interceptor handlers will implement 3 methods 'preHandle', 'postHandle' and 'afterCompletion'. First method
+ * is called at the beginning when request arrive into MVC Servlet dispatcher. When this method returns 'false',
+ * HTTP request execution will stop, in other case the execution will continue. 'postHandle' is called after controller 
+ * finish processing and produce model data but before view rendering. Last one is 'afterCompletion' which should be called
+ * at the end when view finish his rendering job.
+ * 
+ * For more detailed info see {@link org.zdevra.guice.mvc.InterceptorHandler} or interceptors example.
  *
  */
 package org.zdevra.guice.mvc;
+
 
