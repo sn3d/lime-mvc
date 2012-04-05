@@ -20,6 +20,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -56,8 +57,10 @@ class ClassInvoker {
 	 * @param data
 	 */
 	public ModelAndView invoke(InvokeData data) {			
-		ModelAndView mav = new ModelAndView();				
-		mav.getModel().getObjectsFromSession(sessionAttrs, data.getRequest().getSession(true));
+		ModelAndView mav = new ModelAndView();
+		if (sessionAttrs.size() > 0) {
+			mav.getModel().getObjectsFromSession(sessionAttrs, data.getRequest().getSession(true));
+		}
 		InvokeData dataWithModel = new InvokeData(mav.getModel(), data);
 		
 		int invokedcount = 0;				
@@ -82,10 +85,12 @@ class ClassInvoker {
 	 * sessionAttribute from model to session. 
 	 * 
 	 * @param m
-	 * @param session
+	 * @param request
 	 */
-	public void moveDataToSession(ModelMap m, HttpSession session) {
-		m.moveObjectsToSession(sessionAttrs, session);
+	public void moveDataToSession(ModelMap m, HttpServletRequest request) {
+		if (sessionAttrs.size() > 0) {
+			m.moveObjectsToSession(sessionAttrs, request.getSession(true));
+		}
 	}
 
 // ------------------------------------------------------------------------

@@ -259,7 +259,7 @@ class MvcDispatcherServlet extends HttpServlet {
 		
 		//post-production of model
 		for (ClassInvoker classInvoker : this.classInvokers) {
-			classInvoker.moveDataToSession(mav.getModel(), data.getRequest().getSession(true));
+			classInvoker.moveDataToSession(mav.getModel(), data.getRequest());
 		}
 		mav.getModel().moveObjectsToRequestAttrs(data.getRequest());
 		
