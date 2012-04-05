@@ -16,6 +16,8 @@
  *****************************************************************************/
 package org.zdevra.guice.mvc;
 
+import org.zdevra.guice.mvc.exceptions.NoMethodInvoked;
+
 import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,9 +39,11 @@ class DefaultExceptionHandler implements ExceptionHandler {
 
 	@Override
 	public void handleException(Throwable t, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {
-		try {						
+		resp.setStatus(t instanceof NoMethodInvoked ? HttpServletResponse.SC_NOT_FOUND :HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+		resp.setContentType("text/html");
+		try {
 			logger.log(Level.SEVERE, "Unhandled exception caught by Lime default handler (" + t.getClass().getName() + ")" , t);
-			
+
 			String msg = t.getLocalizedMessage() == null ? "" : t.getLocalizedMessage();
 			PrintWriter writer = resp.getWriter();			
 			writer.write(
