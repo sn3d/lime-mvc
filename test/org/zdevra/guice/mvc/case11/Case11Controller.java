@@ -34,6 +34,15 @@ public class Case11Controller
 		return "value2";
 	}
 
+
+	@Path("/npe")
+	@Model("param3")
+	@RedirectView("/welcome")
+	public String throwSomeError()
+	{
+		throw new NullPointerException();
+	}
+
 	
 
 }

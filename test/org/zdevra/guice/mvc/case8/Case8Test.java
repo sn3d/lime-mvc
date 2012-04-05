@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletResponse;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -26,9 +27,8 @@ public class Case8Test extends AbstractTest {
 	@Test
 	public void testNoInt() throws ServletException, IOException {		
 		WebResponse resp = executeSimpleUrl("http://www.test.com/test/int/single");
-		String out = resp.getText();
-		System.out.println(out);
-		Assert.assertTrue(out.contains("java.lang.NumberFormatException.forInputString"));
+		int code = resp.getResponseCode();
+		Assert.assertTrue(code == HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 	}
 	
 	

@@ -19,6 +19,7 @@ package org.zdevra.guice.mvc.case4;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletResponse;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -47,8 +48,8 @@ public class Case4Test extends AbstractTest {
 	@Test
 	public void testDefaultHandler() throws ServletException, IOException {
 		WebResponse resp = executeSimpleUrl("http://www.test.com/test/expetion/npe");
-		String out = resp.getText();
-		Assert.assertTrue(out.contains("Lime MVC default exception handler"));
+		int code = resp.getResponseCode();
+		Assert.assertEquals(code, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 	}
 		
 	@Test 

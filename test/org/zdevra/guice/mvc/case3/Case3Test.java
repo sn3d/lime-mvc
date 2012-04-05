@@ -20,6 +20,7 @@ import java.io.IOException;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletResponse;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -83,8 +84,8 @@ public class Case3Test extends AbstractTest {
 		WebResponse response = ic.getServletResponse();
 		
 		//process response
-		String out = response.getText();
-		Assert.assertTrue( out.contains("no method has been invoked for the") );
+		int code = response.getResponseCode();
+		Assert.assertTrue(code == HttpServletResponse.SC_NOT_FOUND);
 	}
 		
 	

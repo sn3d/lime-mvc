@@ -66,24 +66,7 @@ public class Case1Test extends AbstractTest {
 		String out = response.getText();
 		Assert.assertTrue( out.contains("simple call") );
 	}
-	
-	
-	@Test
-	public void testException() throws IOException, ServletException {
-		//prepare request
-		ServletUnitClient sc = sr.newClient();
-		WebRequest request   = new GetMethodWebRequest( "http://www.bookstore.com/test/do/exception" );
-		InvocationContext ic = sc.newInvocation( request );
-		
-		//invoke request
-		Servlet ss = ic.getServlet();
-		ss.service(ic.getRequest(), ic.getResponse());			
-		WebResponse response = ic.getServletResponse();
-		
-		//process response
-		String out = response.getText();
-		Assert.assertTrue(out.length() > 0);		
-	}
+
 	
 
 	@Test

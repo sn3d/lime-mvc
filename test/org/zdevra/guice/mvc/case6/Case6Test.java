@@ -59,12 +59,4 @@ public class Case6Test extends AbstractTest {
 		Assert.assertTrue(out.contains("case6 view id:people.jsp msg1:people method msg2:null"));
 	}
 
-
-	@Test
-	public void testUnknownMethod() throws IOException, ServletException {
-		WebResponse resp = executeSimpleUrl("http://www.test.com/test/unknown");
-		String out = resp.getText();		
-		Assert.assertTrue(out.contains("Unhandled exception caught (org.zdevra.guice.mvc.exceptions.NoMethodInvoked)"));
-	}
-
 }

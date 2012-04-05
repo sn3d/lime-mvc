@@ -70,4 +70,29 @@ public class Case11Test extends WebTest {
 	}
 
 
+	@Test
+	public void testError() throws HttpException, IOException
+	{
+		HttpMethod method = doRequest("http://localhost:9191/webapp/case11/npe");
+
+		int code = method.getStatusCode();
+		String body = method.getResponseBodyAsString();
+
+		Assert.assertEquals(code, 500);
+		Assert.assertTrue(body.startsWith("<HTML>"));
+	}
+
+	@Test
+	public void testNotFound() throws HttpException, IOException
+	{
+		HttpMethod method = doRequest("http://localhost:9191/webapp/case11/unknown");
+
+		int code = method.getStatusCode();
+		String body = method.getResponseBodyAsString();
+
+		Assert.assertEquals(code, 404);
+		Assert.assertTrue(body.startsWith("<HTML>"));
+	}
+
+
 }
