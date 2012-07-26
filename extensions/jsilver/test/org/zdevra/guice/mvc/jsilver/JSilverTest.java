@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import junit.framework.Assert;
 
 import org.testng.annotations.Test;
+import org.zdevra.guice.mvc.ModelMap;
 import org.zdevra.guice.mvc.TestModule;
 import org.zdevra.guice.mvc.TestRequest;
 import org.zdevra.guice.mvc.TestResponse;
@@ -12,6 +13,8 @@ import org.zdevra.guice.mvc.ViewModule;
 import org.zdevra.guice.mvc.ViewResolver;
 import org.zdevra.guice.mvc.views.NamedView;
 
+import com.google.clearsilver.jsilver.JSilver;
+import com.google.clearsilver.jsilver.data.Data;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
@@ -51,6 +54,37 @@ public class JSilverTest {
 		//execute view resolving&rendering
 		ViewResolver vr = g.getInstance(ViewResolver.class);
 		vr.resolve(NamedView.create("testview"), null, null, req, resp);
+		String output = resp.getOutputAsStr();
+		
+		//evaluate the result
+		System.out.println(output);
+		Assert.assertEquals("Test template val1 and val2", output);
+	}
+	
+	
+	@Test
+	public void testJSilverViewWithData() throws Exception {
+		Injector g = Guice.createInjector(new JSilverTestModule());
+		JSilver jSilver = g.getInstance(JSilver.class);
+		Data d = jSilver.createData();
+		d.setValue("attr1", "val1");
+		d.setValue("attr2", "val2");
+				
+		ModelMap model = new ModelMap();
+		model.addObject("Data", d);
+		
+		//prepare req & resp and render the view
+		HttpServletRequest req = 
+			TestRequest.builder()
+				//.setAttribute("attr1", "val1")
+				//.setAttribute("attr2", "val2")
+				.build();
+	
+		TestResponse resp = new TestResponse();
+		
+		//execute view resolving&rendering
+		ViewResolver vr = g.getInstance(ViewResolver.class);
+		vr.resolve(NamedView.create("testview"), model, null, req, resp);
 		String output = resp.getOutputAsStr();
 		
 		//evaluate the result

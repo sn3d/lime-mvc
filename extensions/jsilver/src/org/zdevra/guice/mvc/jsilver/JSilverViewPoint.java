@@ -19,6 +19,7 @@ package org.zdevra.guice.mvc.jsilver;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -99,6 +100,14 @@ public class JSilverViewPoint implements ViewPoint {
 			for (String attrName : attrNames) {
 				Object attr = request.getAttribute(attrName);
 				modelService.convert(attrName, attr, data);
+			}
+			
+			if (model != null) {
+				for (Map.Entry<String, Object> entry : model.entrySet()) {
+					if (entry.getValue() instanceof Data) {
+						data.copy((Data)entry.getValue());
+					}
+				}
 			}
 			
 			//render view
