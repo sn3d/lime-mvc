@@ -22,6 +22,7 @@ import org.zdevra.guice.mvc.ViewModule;
 
 import com.google.clearsilver.jsilver.JSilver;
 import com.google.clearsilver.jsilver.resourceloader.ClassLoaderResourceLoader;
+import com.google.clearsilver.jsilver.resourceloader.ResourceLoader;
 import com.google.inject.multibindings.Multibinder;
 
 /**
@@ -98,8 +99,8 @@ import com.google.inject.multibindings.Multibinder;
 public class JSilverModule extends ViewModule {
 
 // ------------------------------------------------------------------------
-		
-	private final ServletContext context;
+	
+	private final ResourceLoader resourceLoader;	
 	private Multibinder<ModelConverter> modelConvertors;
 	
 // ------------------------------------------------------------------------
@@ -108,14 +109,21 @@ public class JSilverModule extends ViewModule {
 	 * Constructor for JSilver which loads files from classpath
 	 */
 	public JSilverModule() {
-		this(null);
+		this(new ClassLoaderResourceLoader(JSilverModule.class.getClassLoader()));
 	}
 	
 	/**
 	 * Constructor for JSilver which loads files from WAR
 	 */
 	public JSilverModule(ServletContext context) {
-		this.context = context;
+		this(new ServletContextResourceLoader(context));
+	}
+
+	/**
+	 * Constructor for JSilver which loads files from concrete resource loader
+	 */
+	public JSilverModule(ResourceLoader rl) {
+		this.resourceLoader = rl;
 	}
 	
 // ------------------------------------------------------------------------
@@ -138,16 +146,7 @@ public class JSilverModule extends ViewModule {
 	{
 		try {
 			JSilver jSilver = null;
-			
-			if (context != null) {
-				jSilver = new JSilver( 
-					new ServletContextResourceLoader(context) 
-				);
-			} else {				
-				jSilver = new JSilver( 
-					new	ClassLoaderResourceLoader(JSilverModule.class.getClassLoader()) 
-				);				
-			}
+			jSilver = new JSilver(resourceLoader);
 			
 			bind(JSilver.class).toInstance(jSilver);
 			bind(ModelService.class);
