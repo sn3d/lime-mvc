@@ -57,7 +57,7 @@ class ViewServlet extends HttpServlet {
 		
 	private void redirectToView(HttpServletRequest req, HttpServletResponse resp) {
 		try {
-			viewResolver.resolve(view, null, this, req, resp);
+			viewResolver.resolve(view, new ModelMap(), this, req, resp);
 		} catch (Throwable e) {
 			exceptionResolver.handleException(e, this, req, resp);
 		}
