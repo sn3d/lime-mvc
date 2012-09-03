@@ -39,7 +39,21 @@ abstract class MethodInvokerDecorator implements MethodInvoker {
 	{
 		this.decoratedInvoker = decoratedInvoker;
 	}
-				
-// ------------------------------------------------------------------------
+
+
+	@Override
+	public final int compareTo(MethodInvoker o)
+	{
+		return decoratedInvoker.compareTo(o);
+	}
+
+
+	@Override
+	public int getPriority()
+	{
+		return decoratedInvoker.getPriority();
+	}
+
+	// ------------------------------------------------------------------------
 
 }

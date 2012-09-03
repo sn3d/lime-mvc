@@ -23,6 +23,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.zdevra.guice.mvc.annotations.Priority;
 import org.zdevra.guice.mvc.exceptions.MethodInvokingException;
 import org.zdevra.guice.mvc.parameters.ParamMetadata;
 import org.zdevra.guice.mvc.parameters.ParamProcessor;
@@ -45,9 +46,10 @@ class MethodInvokerImpl implements MethodInvoker {
 	private final String resultName;
 	private final Method method;
 	private final List<ParamProcessor> paramProcs;
-	
+	private final int priority;
+
 /*---------------------------- constructors ----------------------------*/
-	
+
 	
 	public static MethodInvoker createInvoker(MappingData reqMapping) {
 		ParamProcessorsService paramService = reqMapping.injector.getInstance(ParamProcessorsService.class);
@@ -60,8 +62,15 @@ class MethodInvokerImpl implements MethodInvoker {
 		}		
 			
 		List<ParamProcessor> processors = scanParams(reqMapping.method, paramService, convertService);		
-		String resultName = reqMapping.resultName;				
-		MethodInvoker invoker = new MethodInvokerImpl(reqMapping.controllerClass, reqMapping.method, defaultView, resultName, processors);		
+		String resultName = reqMapping.resultName;
+
+		Priority priorityAnnotation = reqMapping.method.getAnnotation(Priority.class);
+		int priority = Priority.DEFAULT;
+		if (priorityAnnotation != null) {
+			priority = priorityAnnotation.value();
+		}
+
+		MethodInvoker invoker = new MethodInvokerImpl(reqMapping.controllerClass, reqMapping.method, defaultView, resultName, processors, priority);
 		return invoker;
 	}
 
@@ -73,12 +82,13 @@ class MethodInvokerImpl implements MethodInvoker {
 	 * @param method
 	 * @param paramProcs
 	 */
-	private MethodInvokerImpl(Class<?> controllerClass, Method method, ViewPoint defaultView, String resultName, List<ParamProcessor> paramProcs) {
+	MethodInvokerImpl(Class<?> controllerClass, Method method, ViewPoint defaultView, String resultName, List<ParamProcessor> paramProcs, int priority) {
 		this.controllerClass = controllerClass;
 		this.defaultView = defaultView;
 		this.resultName = resultName;
 		this.method = method;
 		this.paramProcs = Collections.unmodifiableList(paramProcs);
+		this.priority = priority;
 	}
 		
 /*----------------------------------------------------------------------*/
@@ -166,4 +176,23 @@ class MethodInvokerImpl implements MethodInvoker {
 	
 /*----------------------------------------------------------------------*/
 
+
+	@Override
+	public int getPriority()
+	{
+		return priority;
+	}
+
+
+	@Override
+	public int compareTo(MethodInvoker o)
+	{
+		if (this.getPriority() < o.getPriority()) {
+			return -1;
+		} else if (this.getPriority() > o.getPriority()) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
 }

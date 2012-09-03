@@ -18,6 +18,7 @@ package org.zdevra.guice.mvc;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -93,7 +94,11 @@ class ClassScanner {
 					scannedInvokers.add(filteredInvoker);							
 				}
 			}
-			
+
+			if (scannedInvokers != null) {
+				Collections.sort(scannedInvokers);
+			}
+
 			return new ClassInvoker(controllerClass, scannedInvokers, sessionAttrList);
 		} catch (Exception e) {
 			throw new ScannerException(controllerClass, e);

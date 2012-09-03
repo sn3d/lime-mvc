@@ -6,6 +6,7 @@
        <class name="org.zdevra.guice.mvc.ConversionServiceTest" />
        <class name="org.zdevra.guice.mvc.NamedViewTest"/>
        <class name="org.zdevra.guice.mvc.ModelTest"/>
+		 <class name="org.zdevra.guice.mvc.MethodInvokerTest" />
        
        <class name="org.zdevra.guice.mvc.case1.Case1Test" />
        <class name="org.zdevra.guice.mvc.case2.Case2Test" />

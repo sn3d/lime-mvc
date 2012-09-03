@@ -18,7 +18,7 @@ package org.zdevra.guice.mvc;
 
 
 /**
- * Interface to intercept invokation of controller's method.
+ * Interface to intercept invocation of controller's method.
  * The {@link MethodInvokerImpl} implementing an execution
  * of the controller's method. This can be decorated
  * by another functionality like {@link MethodInvokerFilter}.
@@ -26,7 +26,7 @@ package org.zdevra.guice.mvc;
  * @see MethodInvokerFilter
  * @see MethodInvokerImpl
  */
-interface MethodInvoker {
+interface MethodInvoker extends Comparable<MethodInvoker> {
 
 	/**
 	 * This method is called by MvcServletDispatcher and invoke
@@ -38,5 +38,15 @@ interface MethodInvoker {
 	 * When implementation returns null then the view resolver and rendering is skipped. 
 	 */
 	public abstract ModelAndView invoke(InvokeData data);
+
+
+	/**
+	 * This method returns the priority level. 0 is default priority level. Decreasing
+	 * number means the priority is higher and increasing number means lower priority.
+	 * That means the level Integer.MIN_VALUE is the highest priority and Integer.MAX_VALUE
+	 * on other side means the lowest possible priority.
+	 * @return
+	 */
+	public abstract int getPriority();
 
 }
