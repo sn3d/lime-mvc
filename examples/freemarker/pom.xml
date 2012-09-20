@@ -5,7 +5,7 @@
   <artifactId>freemarker-example</artifactId>
   
   <packaging>war</packaging>
-  <version>0.4.0</version>    
+  <version>0.4.2</version>    
   <name>freemarker-example</name>    
   <url>http://code.google.com/p/lime-mvc/</url>
     
