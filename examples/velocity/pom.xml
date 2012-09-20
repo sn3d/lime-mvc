@@ -30,7 +30,7 @@
     <dependency>
   	  <groupId>org.zdevra</groupId>
       <artifactId>lime-velocity</artifactId>
-      <version>0.4.0</version>
+      <version>0.4.2</version>
     </dependency>
   </dependencies>
   
