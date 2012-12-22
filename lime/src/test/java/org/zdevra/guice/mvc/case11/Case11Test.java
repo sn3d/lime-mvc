@@ -20,7 +20,7 @@ public class Case11Test extends WebTest {
 	protected void setupWebserver() 
 	{
 		setPort(9191);
-		addWebapp("test/org/zdevra/guice/mvc/case11/webapp", "/webapp");
+		addWebapp("src/test/java/org/zdevra/guice/mvc/case11/webapp", "/webapp");
 	}
 
 	

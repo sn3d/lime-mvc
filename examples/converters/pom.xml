@@ -1,11 +1,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
+  
+  <parent>
+      <groupId>org.zdevra.lime.examples</groupId>
+      <artifactId>examples</artifactId>
+      <version>0.5-SNAPSHOT</version>
+  </parent>
+  
+  
   <groupId>org.zdevra.lime.examples</groupId>
   <artifactId>custom-converters</artifactId>
+  <version>0.5-SNAPSHOT</version>    
   
   <packaging>war</packaging>
-  <version>0.4.2</version>    
   <name>custom-converters</name>    
   <url>http://code.google.com/p/lime-mvc/</url>
     
@@ -29,7 +37,7 @@
     <dependency>
   	  <groupId>org.zdevra</groupId>
       <artifactId>lime-freemarker</artifactId>
-      <version>0.4.2</version>
+      <version>0.5-SNAPSHOT</version>
     </dependency>    
   </dependencies>
     

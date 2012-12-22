@@ -27,7 +27,7 @@ public class Case9Test extends WebTest {
 	protected void setupWebserver() 
 	{
 		setPort(9191);
-		addWebapp("test/org/zdevra/guice/mvc/case9/webapp", "/");		
+		addWebapp("src/test/java/org/zdevra/guice/mvc/case9/webapp", "/");		
 	}
 
 	//------------------------------------------------------------------------------------
