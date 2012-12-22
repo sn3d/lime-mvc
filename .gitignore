@@ -23,3 +23,4 @@ examples/converters/target/[^.]*
 examples/async/target/[^.]*
 examples/interceptors/target/[^.]*
 
+/target/
