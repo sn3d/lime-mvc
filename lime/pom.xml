@@ -29,6 +29,15 @@
             <plugin>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.4</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                            <classpathMavenRepositoryLayout>true</classpathMavenRepositoryLayout>
+                        </manifest>
+                    </archive>
+                </configuration>
                 <executions>
                     <execution>
                         <id>test-jar</id>
