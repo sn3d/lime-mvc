@@ -9,9 +9,54 @@
 
     <name>Lime Parent</name>    
     <url>http://code.google.com/p/lime-mvc/</url>
+     
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
+    
+    <developers>
+        <developer>
+            <name>Zdenko Vrabel</name>
+            <email>zdevra@gmail.com</email>
+            <url>http://zdenkovrabel.org</url>
+        </developer>
+    </developers>
+    
+    <contributors>
+        <contributor>
+            <name>Tadas Subonis</name>
+            <email>tadas.subonis@gmail.com</email>
+            <url>http://dev.tasubo.com/</url>
+        </contributor>
+    </contributors>
+    
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/sn3d/lime-mvc/issues</url>
+    </issueManagement>
+    
+    <mailingLists>
+        <mailingList>
+            <name>Lime MVC</name>
+            <subscribe>lime-mvc@googlegroups.com</subscribe>
+            <post>lime-mvc@googlegroups.com</post>
+            <archive>https://groups.google.com/forum/?fromgroups#!forum/lime-mvc</archive>
+        </mailingList>
+    </mailingLists>
+    
+    <scm>
+        <connection>scm:git:https://github.com/sn3d/lime-mvc.git</connection>
+        <url>https://github.com/sn3d/lime-mvc.git</url>
+    </scm>
     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <google.guice.version>3.0</google.guice.version>
     </properties>
 
     <modules>
@@ -19,4 +64,114 @@
         <module>extensions</module>
         <module>examples</module>
     </modules>
+    
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.zdevra</groupId>
+                <artifactId>lime</artifactId>
+                <type>jar</type>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.zdevra</groupId>
+                <artifactId>lime</artifactId>
+                <type>test-jar</type>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.zdevra</groupId>
+                <artifactId>lime-velocity</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.zdevra</groupId>
+                <artifactId>lime-freemarker</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.zdevra</groupId>
+                <artifactId>lime-jsilver</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>servlet-api</artifactId>
+                <version>2.5</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>javax.inject</groupId>
+                <artifactId>javax.inject</artifactId>
+                <version>1</version>
+            </dependency>
+            <dependency>
+                <groupId>aopalliance</groupId>
+                <artifactId>aopalliance</artifactId>
+                <version>1.0</version>
+            </dependency>    
+            <dependency>
+                <groupId>com.google.inject</groupId>
+                <artifactId>guice</artifactId>
+                <version>${google.guice.version}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>com.google.inject.extensions</groupId>
+                <artifactId>guice-servlet</artifactId>
+                <version>${google.guice.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.inject.extensions</groupId>
+                <artifactId>guice-multibindings</artifactId>
+                <version>${google.guice.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet.jsp</groupId>
+                <artifactId>jsp-api</artifactId>
+                <version>2.1</version>
+            </dependency>
+
+                		
+            <!-- JAVA extensions -->                
+            <dependency>
+                <groupId>com.google.jsilver</groupId>
+                <artifactId>jsilver</artifactId>
+                <version>[1.0.0,2.0]</version>
+            </dependency>
+            <dependency>
+                <groupId>org.freemarker</groupId>
+                <artifactId>freemarker</artifactId>
+                <version>[2.3.18,2.4.0]</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity</artifactId>
+                <version>1.7</version>
+            </dependency>
+            
+            
+            
+            
+            <dependency>
+                <groupId>org.testng</groupId>
+                <artifactId>testng</artifactId>
+                <version>6.1.1</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.11</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.easymock</groupId>
+                <artifactId>easymock</artifactId>
+                <version>3.0</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>

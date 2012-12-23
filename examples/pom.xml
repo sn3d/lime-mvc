@@ -12,7 +12,7 @@
     <artifactId>examples</artifactId>
     <packaging>pom</packaging>
 
-    <name>Lime examples</name>
+    <name>Lime examples parent</name>
     
 
     <properties>

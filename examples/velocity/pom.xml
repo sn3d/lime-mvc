@@ -11,39 +11,32 @@
     
     <groupId>org.zdevra.lime.examples</groupId>
     <artifactId>velocity-example</artifactId>
-    <version>0.5-SNAPSHOT</version>
   
   
     <packaging>war</packaging>
-    <name>VelocityExample</name>
+    <name>Lime Velocity example</name>
     <url>http://code.google.com/p/lime-mvc/</url>
   
     <dependencies>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>
-            <version>1</version>
         </dependency>
         <dependency>
             <groupId>aopalliance</groupId>
             <artifactId>aopalliance</artifactId>
-            <version>1.0</version>
         </dependency>    
         <dependency>
             <groupId>org.zdevra</groupId>
             <artifactId>lime-velocity</artifactId>
-            <version>0.5-SNAPSHOT</version>
         </dependency>
     </dependencies>
   
     <build>
-        <finalName>velocity-example</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
