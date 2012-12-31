@@ -34,3 +34,4 @@ examples/interceptors/target/[^.]*
 /extensions/freemarker/target/
 /examples/jsilver/target/
 /examples/velocity/target/
+/.idea/
