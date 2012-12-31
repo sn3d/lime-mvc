@@ -28,7 +28,7 @@
             <artifactId>aopalliance</artifactId>
         </dependency> 
         <dependency>
-            <groupId>org.zdevra</groupId>
+            <groupId>org.zdevra.lime</groupId>
             <artifactId>lime-freemarker</artifactId>
         </dependency>    
     </dependencies>

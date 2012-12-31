@@ -3,12 +3,12 @@
     <modelVersion>4.0.0</modelVersion>
     
     <parent>
-        <groupId>org.zdevra</groupId>
+        <groupId>org.zdevra.lime</groupId>
         <artifactId>lime-parent</artifactId>
         <version>0.5-SNAPSHOT</version>
     </parent>
     
-    <groupId>org.zdevra</groupId>
+    <groupId>org.zdevra.lime</groupId>
     <artifactId>lime</artifactId>
     
     <packaging>jar</packaging>

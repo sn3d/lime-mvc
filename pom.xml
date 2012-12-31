@@ -2,7 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.zdevra</groupId>
+    <groupId>org.zdevra.lime</groupId>
     <artifactId>lime-parent</artifactId>
     <version>0.5-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -66,29 +66,29 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.zdevra</groupId>
+                <groupId>org.zdevra.lime</groupId>
                 <artifactId>lime</artifactId>
                 <type>jar</type>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.zdevra</groupId>
+                <groupId>org.zdevra.lime</groupId>
                 <artifactId>lime</artifactId>
                 <type>test-jar</type>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.zdevra</groupId>
+                <groupId>org.zdevra.lime</groupId>
                 <artifactId>lime-velocity</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.zdevra</groupId>
+                <groupId>org.zdevra.lime</groupId>
                 <artifactId>lime-freemarker</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.zdevra</groupId>
+                <groupId>org.zdevra.lime</groupId>
                 <artifactId>lime-jsilver</artifactId>
                 <version>${project.version}</version>
             </dependency>

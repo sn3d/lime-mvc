@@ -3,17 +3,16 @@
     <modelVersion>4.0.0</modelVersion>
     
     <parent>
-        <groupId>org.zdevra</groupId>
+        <groupId>org.zdevra.lime</groupId>
         <artifactId>extensions-parent</artifactId>
         <version>0.5-SNAPSHOT</version>
     </parent>
     
-    <groupId>org.zdevra</groupId>
+    <groupId>org.zdevra.lime</groupId>
     <artifactId>lime-velocity</artifactId>
     <packaging>jar</packaging>
 
     <name>Lime Velocity extension</name>
-
 
     <build>
         <plugins>
@@ -28,13 +27,14 @@
             </plugin>
         </plugins>
     </build>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>org.zdevra</groupId>
+            <groupId>org.zdevra.lime</groupId>
             <artifactId>lime</artifactId>
             <type>jar</type>
         </dependency>
@@ -42,7 +42,6 @@
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
         </dependency>
-        
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -54,7 +53,7 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.zdevra</groupId>
+            <groupId>org.zdevra.lime</groupId>
             <artifactId>lime</artifactId>
             <type>test-jar</type>
             <scope>test</scope>
