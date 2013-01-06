@@ -38,10 +38,12 @@ import java.lang.annotation.Target;
  * @author Zdenko Vrabel (zdenko.vrabel@celum.com)
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.METHOD })
+@Target({ElementType.METHOD})
 public @interface Priority {
-	public static final int HIGHEST = Integer.MIN_VALUE;
-	public static final int DEFAULT = 0;
-	public static final int LOWEST  = Integer.MAX_VALUE;
-	public int value();
+
+    public static final int HIGHEST = Integer.MIN_VALUE;
+    public static final int DEFAULT = 0;
+    public static final int LOWEST = Integer.MAX_VALUE;
+
+    public int value();
 }

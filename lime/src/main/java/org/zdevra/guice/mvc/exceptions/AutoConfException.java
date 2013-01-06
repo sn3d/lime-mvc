@@ -19,8 +19,8 @@ package org.zdevra.guice.mvc.exceptions;
 /**
  * The exception signalizing a problem in package when is Autoconfiguration module used.
  */
-public class AutoConfException extends MvcException
-{
+public class AutoConfException extends MvcException {
+
     public AutoConfException(Class<?> clazz, Throwable e) {
         super("Autoconfiguration module has problem with the class " + clazz.getName(), e);
     }

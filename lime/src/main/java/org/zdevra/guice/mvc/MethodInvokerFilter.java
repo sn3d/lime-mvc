@@ -26,51 +26,46 @@ import java.util.regex.Pattern;
  *
  */
 class MethodInvokerFilter extends MethodInvokerDecorator {
-/*---------------------------- m. variables ----------------------------*/
-	
-	private final Pattern pathPattern;
-	private final HttpMethodType requestTypeFilter;
+    /*---------------------------- m. variables ----------------------------*/
 
-/*---------------------------- constructors ----------------------------*/
+    private final Pattern pathPattern;
+    private final HttpMethodType requestTypeFilter;
 
-	/**
-	 * Constructor
-	 */
-	public MethodInvokerFilter(MappingData mapping, MethodInvoker decoratedInvoker) {
-		super(decoratedInvoker);
-		this.pathPattern = Pattern.compile("(?i)" + mapping.path + "$");		
-		this.requestTypeFilter = mapping.httpMethodType;
-	}
+    /*---------------------------- constructors ----------------------------*/
+    /**
+     * Constructor
+     */
+    public MethodInvokerFilter(MappingData mapping, MethodInvoker decoratedInvoker) {
+        super(decoratedInvoker);
+        this.pathPattern = Pattern.compile("(?i)" + mapping.path + "$");
+        this.requestTypeFilter = mapping.httpMethodType;
+    }
 
-	
-	@Override
-	public ModelAndView invoke(InvokeData data) 
-	{	
-		if (!agreedWithRequestType(data.getReqType())) {
-			return null;
-		}
-		
-		String path = data.getRequest().getPathInfo();
-		if ((path == null) || (path.length() == 0)) {
-			path = data.getRequest().getServletPath();			
-		}
+    @Override
+    public ModelAndView invoke(InvokeData data) {
+        if (!agreedWithRequestType(data.getReqType())) {
+            return null;
+        }
 
-		Matcher m = pathPattern.matcher(path);							
-		if (!m.find()) {
-			return null;
-		}
-		
-		
-		InvokeData mdata = new InvokeData(m, data); 		
-		ModelAndView res = decoratedInvoker.invoke(mdata);		
-		return res;
-	}
+        String path = data.getRequest().getPathInfo();
+        if ((path == null) || (path.length() == 0)) {
+            path = data.getRequest().getServletPath();
+        }
 
-	private boolean agreedWithRequestType(HttpMethodType reqType) 
-	{
-		return (this.requestTypeFilter == HttpMethodType.ALL || this.requestTypeFilter == reqType);
-	}
+        Matcher m = pathPattern.matcher(path);
+        if (!m.find()) {
+            return null;
+        }
 
-/*----------------------------------------------------------------------*/
 
+        InvokeData mdata = new InvokeData(m, data);
+        ModelAndView res = decoratedInvoker.invoke(mdata);
+        return res;
+    }
+
+    private boolean agreedWithRequestType(HttpMethodType reqType) {
+        return (this.requestTypeFilter == HttpMethodType.ALL || this.requestTypeFilter == reqType);
+    }
+
+    /*----------------------------------------------------------------------*/
 }

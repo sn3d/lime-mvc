@@ -22,6 +22,7 @@ package org.zdevra.guice.mvc.parameters;
  * @see ParamProcessor
  * @see ParamProcessorService
  */
-public interface ParamProcessorFactory {	
-	public ParamProcessor buildParamProcessor(ParamMetadata metadata);	
+public interface ParamProcessorFactory {
+
+    public ParamProcessor buildParamProcessor(ParamMetadata metadata);
 }

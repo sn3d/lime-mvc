@@ -20,15 +20,15 @@ import org.zdevra.guice.mvc.annotations.Controller;
 import org.zdevra.guice.mvc.annotations.Path;
 import org.zdevra.guice.mvc.annotations.View;
 
-@Controller(view="default")
+@Controller(view = "default")
 public class Case3Controller {
 
-	@Path("/view/default")
-	public void defaultView() {		
-	}
-	
-	@Path("/view/5") @View("five")
-	public void viewFive() {
-	}
+    @Path("/view/default")
+    public void defaultView() {
+    }
 
+    @Path("/view/5")
+    @View("five")
+    public void viewFive() {
+    }
 }

@@ -21,10 +21,9 @@ import org.zdevra.guice.mvc.TestView;
 
 public class Case1Module extends MvcModule {
 
-	@Override
-	protected void configureControllers() {
-		bindViewName("default").toViewInstance(new TestView("0"));
-		control("/somepath").withView("someview.jsp");
-	}
-
+    @Override
+    protected void configureControllers() {
+        bindViewName("default").toViewInstance(new TestView("0"));
+        control("/somepath").withView("someview.jsp");
+    }
 }

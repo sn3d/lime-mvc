@@ -43,52 +43,49 @@ import org.zdevra.guice.mvc.annotations.SessionParameter;
  *  
  */
 public class SessionAttributeParam implements ParamProcessor {
-/*---------------------------- m. variables ----------------------------*/
+    /*---------------------------- m. variables ----------------------------*/
 
-	private final String nameInSession;
-	private final Class<?> paramType;
-	
-/*----------------------------------------------------------------------*/
-	
-	/**
-	 * Factory class for {@link SessionAttributeParam}
-	 */
-	public static class Factory implements ParamProcessorFactory {
+    private final String nameInSession;
+    private final Class<?> paramType;
 
-		@Override
-		public ParamProcessor buildParamProcessor(ParamMetadata metadata) {
-			SessionParameter annotation = Utils.getAnnotation(SessionParameter.class, metadata.getAnnotations());
-			if (annotation == null) {
-				return null;
-			}						
-			return new SessionAttributeParam(annotation.value(), metadata.getType());
-		}		
-	}
+    /*----------------------------------------------------------------------*/
+    /**
+     * Factory class for {@link SessionAttributeParam}
+     */
+    public static class Factory implements ParamProcessorFactory {
+
+        @Override
+        public ParamProcessor buildParamProcessor(ParamMetadata metadata) {
+            SessionParameter annotation = Utils.getAnnotation(SessionParameter.class, metadata.getAnnotations());
+            if (annotation == null) {
+                return null;
+            }
+            return new SessionAttributeParam(annotation.value(), metadata.getType());
+        }
+    }
 
 
-/*---------------------------- constructors ----------------------------*/
+    /*---------------------------- constructors ----------------------------*/
+    /**
+     * Constructor
+     */
+    private SessionAttributeParam(String nameInSession, Class<?> paramType) {
+        this.nameInSession = nameInSession;
+        this.paramType = paramType;
+    }
 
-	/**
-	 * Constructor
-	 */
-	private SessionAttributeParam(String nameInSession, Class<?> paramType) {
-		this.nameInSession = nameInSession;
-		this.paramType = paramType;
-	}
-	
-/*------------------------------- methods ------------------------------*/
+    /*------------------------------- methods ------------------------------*/
+    @Override
+    public Object getValue(InvokeData data) {
+        HttpSession session = data.getRequest().getSession(true);
+        Object obj = session.getAttribute(this.nameInSession);
+        if (obj != null) {
+            if (!paramType.isInstance(obj)) {
+                throw new IllegalStateException("the object in the session is not " + paramType.getName() + " but is " + obj.getClass().getName());
+            }
+        }
+        return obj;
+    }
 
-	@Override
-	public Object getValue(InvokeData data) {
-		HttpSession session = data.getRequest().getSession(true);
-		Object obj = session.getAttribute(this.nameInSession);
-		if (obj != null) {
-			if (!paramType.isInstance(obj)) {
-				throw new IllegalStateException("the object in the session is not " + paramType.getName() + " but is " + obj.getClass().getName());
-			}
-		}
-		return obj;
-	}
-
-/*----------------------------------------------------------------------*/
+    /*----------------------------------------------------------------------*/
 }

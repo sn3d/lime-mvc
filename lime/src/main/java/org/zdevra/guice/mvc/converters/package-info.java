@@ -14,7 +14,6 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-
 /**
  * This package contains all classes and related annotations, which provide conversions 
  * from strings to concrete data types.

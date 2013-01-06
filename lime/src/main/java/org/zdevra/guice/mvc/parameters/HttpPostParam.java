@@ -66,51 +66,46 @@ import org.zdevra.guice.mvc.annotations.RequestParameter;
  * @see org.zdevra.guice.mvc.annotations.RequestParameter
  */
 public class HttpPostParam implements ParamProcessor {
-/*---------------------------- m. variables ----------------------------*/
-	
-	private final String requestName;
-	private final Converter<?> converter;
+    /*---------------------------- m. variables ----------------------------*/
 
-/*----------------------------------------------------------------------*/
-	
-	public static class Factory implements ParamProcessorFactory {
+    private final String requestName;
+    private final Converter<?> converter;
 
-		@Override
-		public ParamProcessor buildParamProcessor(ParamMetadata metadata) {
-			Annotation[] paramAnnotations = metadata.getAnnotations();
-			Class<?> paramType = metadata.getType();
-			ConversionService convrtService = metadata.getConversionService();
-			
-			RequestParameter annotation 
-				= Utils.getAnnotation(RequestParameter.class, paramAnnotations);
-			
-			if (annotation == null) {
-				return null;
-			}
+    /*----------------------------------------------------------------------*/
+    public static class Factory implements ParamProcessorFactory {
+
+        @Override
+        public ParamProcessor buildParamProcessor(ParamMetadata metadata) {
+            Annotation[] paramAnnotations = metadata.getAnnotations();
+            Class<?> paramType = metadata.getType();
+            ConversionService convrtService = metadata.getConversionService();
+
+            RequestParameter annotation = Utils.getAnnotation(RequestParameter.class, paramAnnotations);
+
+            if (annotation == null) {
+                return null;
+            }
 
             //choose converter (explicit defined in annotation or implicit if annotation contains NoConverterFactory value)
             Converter<?> typeConverter = convrtService.getConverter(annotation.converterFactory(), paramType, paramAnnotations);
-            
-			return new HttpPostParam(annotation.value(), typeConverter);						
-		}		
-	}
 
-/*----------------------------------------------------------------------*/
+            return new HttpPostParam(annotation.value(), typeConverter);
+        }
+    }
 
-	private HttpPostParam(String requestName, Converter<?> converter) {
-		super();
-		this.requestName = requestName;
-		this.converter = converter;
-	}
-	
-	
-	@Override
-	@SuppressWarnings("unchecked")
-	public Object getValue(InvokeData data) {
-		Map<String, String[]> params = data.getRequest().getParameterMap();
-		Object convertedArray = converter.convert(requestName, params);
-		return convertedArray;
-	}
-	
-/*----------------------------------------------------------------------*/
+    /*----------------------------------------------------------------------*/
+    private HttpPostParam(String requestName, Converter<?> converter) {
+        super();
+        this.requestName = requestName;
+        this.converter = converter;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public Object getValue(InvokeData data) {
+        Map<String, String[]> params = data.getRequest().getParameterMap();
+        Object convertedArray = converter.convert(requestName, params);
+        return convertedArray;
+    }
+    /*----------------------------------------------------------------------*/
 }

@@ -32,58 +32,50 @@ import com.google.inject.Singleton;
  */
 @Singleton
 class ModelService {
-	
-// ------------------------------------------------------------------------
-	
-	private final Collection<ModelConverter> convertors;
-	private ModelConverter defaultConvertor = new ModelStringConverter();
-	
-// ------------------------------------------------------------------------
-
-	public static ModelService createTestService() {
-		return new ModelService(new ModelConverter[] {
-			new ModelCollectionConverter(),
-			new ModelMapConverter()
-		});
-	}
-	
-	public static ModelService createTestService(ModelConverter customConvertor) {
-		return new ModelService(new ModelConverter[] {
-			new ModelCollectionConverter(),
-			new ModelMapConverter(),
-			customConvertor
-		});
-	}
-	
-// ------------------------------------------------------------------------
-		
-	@Inject
-	public ModelService(Set<ModelConverter> convertors) {
-		this((Collection<ModelConverter>)convertors);
-	}
-	
-	
-	public ModelService(ModelConverter[] convertors) {
-		this(Arrays.asList(convertors));
-	}
-	
-	
-	public ModelService(Collection<ModelConverter> convertors) {
-		this.convertors = Collections.unmodifiableCollection(convertors);
-	}
-		
-// ------------------------------------------------------------------------
-	
-	public void convert(String name, Object obj, Data data) {		
-		for (ModelConverter binding : convertors) {
-			boolean res = binding.convert(name, obj, data, this);
-			if (res) {
-				return;
-			}
-		}				
-		defaultConvertor.convert(name, obj, data, this);
-	}
 
 // ------------------------------------------------------------------------
+    private final Collection<ModelConverter> convertors;
+    private ModelConverter defaultConvertor = new ModelStringConverter();
 
+// ------------------------------------------------------------------------
+    public static ModelService createTestService() {
+        return new ModelService(new ModelConverter[]{
+                    new ModelCollectionConverter(),
+                    new ModelMapConverter()
+                });
+    }
+
+    public static ModelService createTestService(ModelConverter customConvertor) {
+        return new ModelService(new ModelConverter[]{
+                    new ModelCollectionConverter(),
+                    new ModelMapConverter(),
+                    customConvertor
+                });
+    }
+
+// ------------------------------------------------------------------------
+    @Inject
+    public ModelService(Set<ModelConverter> convertors) {
+        this((Collection<ModelConverter>) convertors);
+    }
+
+    public ModelService(ModelConverter[] convertors) {
+        this(Arrays.asList(convertors));
+    }
+
+    public ModelService(Collection<ModelConverter> convertors) {
+        this.convertors = Collections.unmodifiableCollection(convertors);
+    }
+
+// ------------------------------------------------------------------------
+    public void convert(String name, Object obj, Data data) {
+        for (ModelConverter binding : convertors) {
+            boolean res = binding.convert(name, obj, data, this);
+            if (res) {
+                return;
+            }
+        }
+        defaultConvertor.convert(name, obj, data, this);
+    }
+// ------------------------------------------------------------------------
 }

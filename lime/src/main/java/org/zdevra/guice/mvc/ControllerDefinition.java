@@ -24,7 +24,6 @@ import javax.servlet.http.HttpServlet;
 
 import com.google.inject.Binder;
 
-
 /**
  * The class represent definition of controllers in controller building process
  * and creates the MvcDispatcherServler as well.
@@ -32,60 +31,51 @@ import com.google.inject.Binder;
  * This class is mainly used by {@link ControllerModuleBuilder}
  */
 class ControllerDefinition extends ServletDefinition {
-	
-// ------------------------------------------------------------------------
 
-	private static final Logger logger = Logger.getLogger(ControllerDefinition.class.getName());
+// ------------------------------------------------------------------------
+    private static final Logger logger = Logger.getLogger(ControllerDefinition.class.getName());
     public static final Factory FACTORY = new Factory();
-	protected List<Class<?>> controllers;
-	protected List<Class<? extends InterceptorHandler>> interceptorHandlers;
-	
+    protected List<Class<?>> controllers;
+    protected List<Class<? extends InterceptorHandler>> interceptorHandlers;
+
 // ------------------------------------------------------------------------
-
-
     /**
      * Hidden constructor. The class is instantiated via ServletDefinition.Factory
      * interface.
      */
-	protected ControllerDefinition(String urlPattern) {
-		super(urlPattern);
-		this.controllers = new ArrayList<Class<?>>(10);
-		this.interceptorHandlers = new ArrayList<Class<? extends InterceptorHandler>>(10);
-	}
-
+    protected ControllerDefinition(String urlPattern) {
+        super(urlPattern);
+        this.controllers = new ArrayList<Class<?>>(10);
+        this.interceptorHandlers = new ArrayList<Class<? extends InterceptorHandler>>(10);
+    }
 
     /**
      * Factory's implementation creates the instance of ControllerDefinition
      */
     public static class Factory {
+
         public ControllerDefinition create(String urlPattern) {
             return new ControllerDefinition(urlPattern);
         }
     }
-	
-	
-// ------------------------------------------------------------------------
-	
-	public void addController(Class<?> controller) {
-		controllers.add(controller);
-	}
-	
-	
-	public void addInterceptorHandler(Class<? extends InterceptorHandler> handler) {
-		interceptorHandlers.add(handler);
-	}
 
-	
-	public List<Class<?>> getControllers() {
-		return controllers;
-	}
-	
-	
-	@Override
-	public HttpServlet createServlet(Binder binder) {
-		logger.info("for path '" + getUrlPattern() + "' should be registered follwing controllers: " + this.controllers);
-		return new MvcDispatcherServlet(this.controllers, this.interceptorHandlers);
-	}
-		
+// ------------------------------------------------------------------------
+    public void addController(Class<?> controller) {
+        controllers.add(controller);
+    }
+
+    public void addInterceptorHandler(Class<? extends InterceptorHandler> handler) {
+        interceptorHandlers.add(handler);
+    }
+
+    public List<Class<?>> getControllers() {
+        return controllers;
+    }
+
+    @Override
+    public HttpServlet createServlet(Binder binder) {
+        logger.info("for path '" + getUrlPattern() + "' should be registered follwing controllers: " + this.controllers);
+        return new MvcDispatcherServlet(this.controllers, this.interceptorHandlers);
+    }
 // ------------------------------------------------------------------------
 }

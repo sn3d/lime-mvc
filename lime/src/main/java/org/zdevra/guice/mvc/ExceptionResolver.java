@@ -44,14 +44,13 @@ import javax.servlet.http.HttpServletResponse;
  * @see MvcModule
  */
 public interface ExceptionResolver {
-	
-	public static final String DEFAULT_EXCEPTIONHANDLER_NAME = "defaultExceptionHandler";
 
-	/**
-	 * Method is invoked in {@link MvcDispatcherServlet}, when a controller
-	 * throw some exception. This method go through all registered
-	 * exception handlers and invoke correct handler for that exception.
-	 */
-	public abstract void handleException(Throwable t, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp);
+    public static final String DEFAULT_EXCEPTIONHANDLER_NAME = "defaultExceptionHandler";
 
+    /**
+     * Method is invoked in {@link MvcDispatcherServlet}, when a controller
+     * throw some exception. This method go through all registered
+     * exception handlers and invoke correct handler for that exception.
+     */
+    public abstract void handleException(Throwable t, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp);
 }

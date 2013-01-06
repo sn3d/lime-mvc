@@ -20,10 +20,11 @@ package org.zdevra.guice.mvc;
  * Enumeration of the HTTP Methods
  */
 public enum HttpMethodType {
-	ALL,
-	GET,
-	POST,
-	PUT,
-	HEAD,
-	DELETE
+
+    ALL,
+    GET,
+    POST,
+    PUT,
+    HEAD,
+    DELETE
 }

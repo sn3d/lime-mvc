@@ -44,36 +44,32 @@ import com.google.inject.name.Names;
  */
 @Singleton
 class DefaultViewResolver implements ViewResolver {
-	
-// ------------------------------------------------------------------------
-	
-	@Inject
-	private Injector injector;
-	
-// ------------------------------------------------------------------------
 
-	@Override
-	public void resolve(ViewPoint view, ModelMap model, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {		
-		if (view == null || view == ViewPoint.NULL_VIEW) {
-			throw new NoViewException(req);
-		}
-
-		if (view instanceof NamedView) {
-			String viewName = ((NamedView)view).getName();
-			try {
-				view = injector.getInstance(Key.get(ViewPoint.class, Names.named(viewName)));
-			} catch (ConfigurationException e) {
-				if (view == null || view == ViewPoint.NULL_VIEW) {
-					throw new NoViewForNameException(viewName);
-				} else {
-					view = new JspView(viewName);
-				}
-			}			
-		}
-						
-		view.render(model, servlet, req, resp);	
-	}
-	
 // ------------------------------------------------------------------------
+    @Inject
+    private Injector injector;
 
+// ------------------------------------------------------------------------
+    @Override
+    public void resolve(ViewPoint view, ModelMap model, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {
+        if (view == null || view == ViewPoint.NULL_VIEW) {
+            throw new NoViewException(req);
+        }
+
+        if (view instanceof NamedView) {
+            String viewName = ((NamedView) view).getName();
+            try {
+                view = injector.getInstance(Key.get(ViewPoint.class, Names.named(viewName)));
+            } catch (ConfigurationException e) {
+                if (view == null || view == ViewPoint.NULL_VIEW) {
+                    throw new NoViewForNameException(viewName);
+                } else {
+                    view = new JspView(viewName);
+                }
+            }
+        }
+
+        view.render(model, servlet, req, resp);
+    }
+// ------------------------------------------------------------------------
 }

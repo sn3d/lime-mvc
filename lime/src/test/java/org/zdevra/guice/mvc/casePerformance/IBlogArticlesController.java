@@ -27,21 +27,20 @@ import org.zdevra.guice.mvc.annotations.View;
 
 @Controller
 public interface IBlogArticlesController {
-	
-	@Path("/blog/allarticles/namedview") @Model("allarticles")
-	@View("allarticles.jsp")
-	public List<String> showAllArticles();
 
-	
-	@Path("/blog/allarticles/directview")
-	public ModelAndView showAllArticlesDirect();
+    @Path("/blog/allarticles/namedview")
+    @Model("allarticles")
+    @View("allarticles.jsp")
+    public List<String> showAllArticles();
 
-	
-	@Path("/blog/article/(\\d+)/namedview") @Model("article")
-	@View("article.jsp")
-	public String showArticle(@UriParameter(1) int id);
+    @Path("/blog/allarticles/directview")
+    public ModelAndView showAllArticlesDirect();
 
+    @Path("/blog/article/(\\d+)/namedview")
+    @Model("article")
+    @View("article.jsp")
+    public String showArticle(@UriParameter(1) int id);
 
-	@Path("/blog/article/(\\d+)/directview")
-	public ModelAndView showArticleDirect(@UriParameter(1) int id);
+    @Path("/blog/article/(\\d+)/directview")
+    public ModelAndView showArticleDirect(@UriParameter(1) int id);
 }

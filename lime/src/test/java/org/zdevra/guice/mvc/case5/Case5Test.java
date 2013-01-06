@@ -33,36 +33,35 @@ import com.meterware.httpunit.WebResponse;
 @Test
 public class Case5Test extends AbstractTest {
 
-	public static class Case5Servlet extends TestServlet {
-		public Case5Servlet() {
-			super(Case5Controller.class, new Case5Module() );
-		}	
-	}
-		
-	public Case5Test() {
-		super(Case5Servlet.class);
-	}
-		
-	@Test
-	public void testDefaultView() throws IOException, ServletException {
-		WebResponse resp = executeSimpleUrl("http://www.test.com/test/action/one");
-		String out = resp.getText();
-		Assert.assertTrue(out.contains("viewId=1 test message:onedata"));		
-	}
-	
-	@Test
-	public void testToViewAnnotation() throws IOException, ServletException {
-		WebResponse resp = executeSimpleUrl("http://www.test.com/test/action/three");
-		String out = resp.getText();
-		Assert.assertTrue(out.contains("viewId=3 test message:threedata"));		
-	}
-	
-	
-	@Test
-	public void testCustomAnnotation() throws IOException, ServletException {
-		WebResponse resp = executeSimpleUrl("http://www.test.com/test/action/custom");
-		String out = resp.getText();
-		Assert.assertTrue(out.contains("viewId=9 test message:customdata"));		
-	}
+    public static class Case5Servlet extends TestServlet {
 
+        public Case5Servlet() {
+            super(Case5Controller.class, new Case5Module());
+        }
+    }
+
+    public Case5Test() {
+        super(Case5Servlet.class);
+    }
+
+    @Test
+    public void testDefaultView() throws IOException, ServletException {
+        WebResponse resp = executeSimpleUrl("http://www.test.com/test/action/one");
+        String out = resp.getText();
+        Assert.assertTrue(out.contains("viewId=1 test message:onedata"));
+    }
+
+    @Test
+    public void testToViewAnnotation() throws IOException, ServletException {
+        WebResponse resp = executeSimpleUrl("http://www.test.com/test/action/three");
+        String out = resp.getText();
+        Assert.assertTrue(out.contains("viewId=3 test message:threedata"));
+    }
+
+    @Test
+    public void testCustomAnnotation() throws IOException, ServletException {
+        WebResponse resp = executeSimpleUrl("http://www.test.com/test/action/custom");
+        String out = resp.getText();
+        Assert.assertTrue(out.contains("viewId=9 test message:customdata"));
+    }
 }

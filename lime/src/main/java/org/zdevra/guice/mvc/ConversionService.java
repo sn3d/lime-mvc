@@ -55,67 +55,62 @@ import com.google.inject.Singleton;
  */
 @Singleton
 public class ConversionService {
-/*---------------------------- m. variables ----------------------------*/
+    /*---------------------------- m. variables ----------------------------*/
 
-	private final Collection<ConverterFactory> factories;
-	
-/*----------------------------------------------------------------------*/
-	
-	/**
-	 * Interface for converter
-	 */
-	public interface Converter<T> {		
-		public T convert(String name, Map<String, String[]> data);
-	}
-	
-	
-	/**
-	 * Interface for contertor factory which is constructing converter impl.
-	 *
-	 */
-	public interface ConverterFactory {
-		public Converter<?> createConverter(Class<?> type, Annotation[] annotations);
-	}
-	
-/*---------------------------- constructors ----------------------------*/
-	
-	/**
-	 * Constructor
-	 */
-	@Inject
-	public ConversionService(Set<ConverterFactory> factories) {
-		this.factories = factories;
-	}
-	
-/*------------------------------- methods ------------------------------*/
+    private final Collection<ConverterFactory> factories;
 
-	/**
-	 * Method return right converter for type
-	 * 
-	 * @param type
-	 * @return
-	 */
-	public Converter<?> getConverter(Class<?> type, Annotation[] annotations) 
-	{
-		for (ConverterFactory factory : factories) {
-			Converter<?> converter = factory.createConverter(type, annotations);
-			if (converter != null) {
-				return converter;
-			}
-		}
-		
-		throw new NoConverterException(type);
-	}
+    /*----------------------------------------------------------------------*/
+    /**
+     * Interface for converter
+     */
+    public interface Converter<T> {
 
+        public T convert(String name, Map<String, String[]> data);
+    }
+
+    /**
+     * Interface for contertor factory which is constructing converter impl.
+     *
+     */
+    public interface ConverterFactory {
+
+        public Converter<?> createConverter(Class<?> type, Annotation[] annotations);
+    }
+
+    /*---------------------------- constructors ----------------------------*/
+    /**
+     * Constructor
+     */
+    @Inject
+    public ConversionService(Set<ConverterFactory> factories) {
+        this.factories = factories;
+    }
+
+    /*------------------------------- methods ------------------------------*/
+    /**
+     * Method return right converter for type
+     * 
+     * @param type
+     * @return
+     */
+    public Converter<?> getConverter(Class<?> type, Annotation[] annotations) {
+        for (ConverterFactory factory : factories) {
+            Converter<?> converter = factory.createConverter(type, annotations);
+            if (converter != null) {
+                return converter;
+            }
+        }
+
+        throw new NoConverterException(type);
+    }
 
     /**
      * Method return converter from given factory class. If factory class is {@link NoConverterFactory}, then
      * is called origin method of getConverter()
      */
-    public Converter<?> getConverter(Class<? extends ConverterFactory> converterFactoryClass, Class<?> type, Annotation[] annotations)
-    {
+    public Converter<?> getConverter(Class<? extends ConverterFactory> converterFactoryClass, Class<?> type, Annotation[] annotations) {
         if (converterFactoryClass == NoConverterFactory.class) {
-            return  getConverter(type, annotations);
+            return getConverter(type, annotations);
         }
 
         for (ConverterFactory factory : factories) {
@@ -128,7 +123,5 @@ public class ConversionService {
         }
         throw new NoConverterException(converterFactoryClass, type);
     }
-
-
-/*----------------------------------------------------------------------*/
+    /*----------------------------------------------------------------------*/
 }

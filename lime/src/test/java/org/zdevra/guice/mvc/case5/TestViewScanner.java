@@ -25,13 +25,12 @@ import org.zdevra.guice.mvc.ViewScanner;
 
 public class TestViewScanner implements ViewScanner {
 
-	@Override
-	public ViewPoint scan(Annotation[] annotations) {
-		ToTestView anot = Utils.getAnnotation(ToTestView.class, annotations);
-		if (anot != null) {
-			return new TestView("9");
-		}
-		return ViewPoint.NULL_VIEW;
-	}
-
+    @Override
+    public ViewPoint scan(Annotation[] annotations) {
+        ToTestView anot = Utils.getAnnotation(ToTestView.class, annotations);
+        if (anot != null) {
+            return new TestView("9");
+        }
+        return ViewPoint.NULL_VIEW;
+    }
 }

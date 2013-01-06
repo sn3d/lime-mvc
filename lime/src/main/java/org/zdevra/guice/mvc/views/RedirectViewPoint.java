@@ -34,102 +34,92 @@ import org.zdevra.guice.mvc.exceptions.ViewPointException;
  * means the relative path will be placed after 'http://server:port/appcontext/servlet/'. 
  */
 public class RedirectViewPoint implements ViewPoint {
-	
-	//-----------------------------------------------------------------------------------------------------------
-	// m. variables
-	//-----------------------------------------------------------------------------------------------------------
-	private final String url;
-	private final boolean contextRelative;
-	private final boolean isAbsolute;
-	
-	//-----------------------------------------------------------------------------------------------------------
-	// constructor
-	//-----------------------------------------------------------------------------------------------------------
-	
-	/**
-	 * Constructor
-	 * @param url
-	 */
-	public RedirectViewPoint(String url) 
-	{
-		this(url, true); 
-	}
+
+    //-----------------------------------------------------------------------------------------------------------
+    // m. variables
+    //-----------------------------------------------------------------------------------------------------------
+    private final String url;
+    private final boolean contextRelative;
+    private final boolean isAbsolute;
+
+    //-----------------------------------------------------------------------------------------------------------
+    // constructor
+    //-----------------------------------------------------------------------------------------------------------
+    /**
+     * Constructor
+     * @param url
+     */
+    public RedirectViewPoint(String url) {
+        this(url, true);
+    }
+
+    /**
+     * Constructor
+     * @param url
+     */
+    public RedirectViewPoint(String url, boolean contextRelative) {
+        this.url = url;
+
+        if (url.startsWith("/")) {
+            this.isAbsolute = false;
+        } else {
+            this.isAbsolute = true;
+        }
+
+        this.contextRelative = contextRelative;
+    }
+
+    //-----------------------------------------------------------------------------------------------------------
+    // methods
+    //-----------------------------------------------------------------------------------------------------------
+    @Override
+    public void render(ModelMap model, HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            String redirectUrl = generateRedirectUrl(model, request);
+            response.sendRedirect(redirectUrl);
+        } catch (IOException e) {
+            throw new ViewPointException("Redirection fails", request, e);
+        }
+    }
+
+    /**
+     * Take base url and construct the final redirection with parameters.
+     * 
+     * @param request
+     * @return
+     */
+    private String generateRedirectUrl(ModelMap model, HttpServletRequest request) {
+        StringBuilder redirectUrl = null;
+        if (isAbsolute) {
+            redirectUrl = new StringBuilder(this.url);
+        } else if (contextRelative) {
+            String ctxPath = request.getContextPath();
+            String servletPath = request.getServletPath();
+            redirectUrl = new StringBuilder(ctxPath + servletPath + this.url);
+        } else {
+            redirectUrl = new StringBuilder(this.url);
+        }
 
 
-	/**
-	 * Constructor
-	 * @param url
-	 */
-	public RedirectViewPoint(String url, boolean contextRelative) 
-	{		
-		this.url = url;
-		
-		if (url.startsWith("/")) {
-			this.isAbsolute = false;
-		} else {
-			this.isAbsolute = true;
-		}
-		
-		this.contextRelative = contextRelative;
-	}
-	
-	
-	//-----------------------------------------------------------------------------------------------------------
-	// methods
-	//-----------------------------------------------------------------------------------------------------------
+        boolean isFirst = true;
+        Iterator<Entry<String, Object>> it = model.entrySet().iterator();
 
-	@Override
-	public void render(ModelMap model, HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) 
-	{
-		try {
-			String redirectUrl = generateRedirectUrl(model, request);				
-			response.sendRedirect(redirectUrl);
-		} catch (IOException e) {
-			throw new ViewPointException("Redirection fails", request, e);
-		}
-	}
-	
-	
-	/**
-	 * Take base url and construct the final redirection with parameters.
-	 * 
-	 * @param request
-	 * @return
-	 */
-	private String generateRedirectUrl(ModelMap model, HttpServletRequest request)
-	{							
-		StringBuilder redirectUrl = null;
-		if (isAbsolute) {
-			redirectUrl = new StringBuilder(this.url);
-		} else if (contextRelative) {
-			String ctxPath = request.getContextPath();
-			String servletPath = request.getServletPath();
-			redirectUrl = new StringBuilder(ctxPath + servletPath + this.url);
-		} else {
-			redirectUrl = new StringBuilder(this.url);
-		}
-		
-		
-		boolean isFirst = true;
-		Iterator<Entry<String, Object>> it = model.entrySet().iterator();
-		
-		while (it.hasNext()) {			
-			Entry<String, Object> pair = it.next();
-						
-			if (isFirst) {
-				redirectUrl.append("?");
-				isFirst = false;
-			} else {
-				redirectUrl.append("&");
-			}
-			
-			redirectUrl.append(pair.getKey());
-			redirectUrl.append("=");
-			redirectUrl.append(pair.getValue().toString());
+        while (it.hasNext()) {
+            Entry<String, Object> pair = it.next();
 
-		}
-				
-		return redirectUrl.toString();
-	}
+            if (isFirst) {
+                redirectUrl.append("?");
+                isFirst = false;
+            } else {
+                redirectUrl.append("&");
+            }
 
+            redirectUrl.append(pair.getKey());
+            redirectUrl.append("=");
+            redirectUrl.append(pair.getValue().toString());
+
+        }
+
+        return redirectUrl.toString();
+    }
 }

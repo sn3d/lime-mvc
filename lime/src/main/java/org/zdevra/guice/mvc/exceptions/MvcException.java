@@ -21,16 +21,15 @@ package org.zdevra.guice.mvc.exceptions;
  */
 public class MvcException extends RuntimeException {
 
-	public MvcException(String arg0, Throwable arg1) {
-		super(arg0, arg1);
-	}
+    public MvcException(String arg0, Throwable arg1) {
+        super(arg0, arg1);
+    }
 
-	public MvcException(String arg0) {
-		super(arg0);
-	}
+    public MvcException(String arg0) {
+        super(arg0);
+    }
 
-	public MvcException(Throwable arg0) {
-		super(arg0);
-	}
-	
+    public MvcException(Throwable arg0) {
+        super(arg0);
+    }
 }

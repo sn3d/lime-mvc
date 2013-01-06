@@ -33,7 +33,6 @@ import java.util.Date;
 public class DateConverterFactory implements ConversionService.ConverterFactory {
 
 // ------------------------------------------------------------------------
-
     @Override
     public ConversionService.Converter<?> createConverter(Class<?> type, Annotation[] annotations) {
         if (type != Date.class) {
@@ -51,7 +50,6 @@ public class DateConverterFactory implements ConversionService.ConverterFactory 
     }
 
 // ------------------------------------------------------------------------
-
     private static class DateConverter extends TypeConverter<Date> {
 
         private final DateFormat dateFormat;
@@ -78,6 +76,5 @@ public class DateConverterFactory implements ConversionService.ConverterFactory 
             }
         }
     }
-
 // ------------------------------------------------------------------------
 }

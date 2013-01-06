@@ -45,13 +45,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface ViewResolver {
 
-	/**
-	 * Called when request is forwarded from controller class
-	 * to view. 
-	 * 
-	 * Keep the implementation small and fast. It's part of 
-	 * code which is called often.
-	 */
-	public void resolve(ViewPoint view, ModelMap model, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp);
-	
+    /**
+     * Called when request is forwarded from controller class
+     * to view. 
+     * 
+     * Keep the implementation small and fast. It's part of 
+     * code which is called often.
+     */
+    public void resolve(ViewPoint view, ModelMap model, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp);
 }

@@ -26,56 +26,50 @@ import java.util.List;
  */
 public final class Utils {
 
-/*----------------------------------------------------------------------*/
-
+    /*----------------------------------------------------------------------*/
     /**
      * Hidden constructor
      */
     private Utils() {
     }
-    
 
-	/**
-	 * Method searchs annotation in annotations array and return
-	 * it. If annotation is not occured, then method return null.
-	 *
-	 * @param annotations
-	 * @return 
-	 * 
-	 * @return
-	 */
-	@SuppressWarnings("unchecked")
-	public static final <T extends Annotation> T getAnnotation(Class<T> lookingFor, Annotation[] annotations) 
-	{
-		if (annotations != null) {
-			for (int i = 0; i < annotations.length; ++i) {
-				if (lookingFor.isInstance(annotations[i])) {
-					return (T) annotations[i];
-				}
-			}
-		}
-		return null;
-	}
-	
-	
-	/**
-	 * The method return all methods in the class annotated by 
-	 * concrete annotation.
-	 * @param annotation
-	 * @return
-	 */
-	public static final List<Method> getAnnotatedMethods(Class<?> type, Class<? extends Annotation> annotation) 
-	{
-		List<Method> res = new LinkedList<Method>();
-		Method[] methods = type.getMethods();
-		for (int i = 0; i < methods.length; ++i) {
-			Annotation a = methods[i].getAnnotation(annotation);
-			if (a != null) {
-				res.add(methods[i]);
-			}
-		}				
-		return res;
-	}
-	
-/*----------------------------------------------------------------------*/
+    /**
+     * Method searchs annotation in annotations array and return
+     * it. If annotation is not occured, then method return null.
+     *
+     * @param annotations
+     * @return 
+     * 
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public static final <T extends Annotation> T getAnnotation(Class<T> lookingFor, Annotation[] annotations) {
+        if (annotations != null) {
+            for (int i = 0; i < annotations.length; ++i) {
+                if (lookingFor.isInstance(annotations[i])) {
+                    return (T) annotations[i];
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * The method return all methods in the class annotated by 
+     * concrete annotation.
+     * @param annotation
+     * @return
+     */
+    public static final List<Method> getAnnotatedMethods(Class<?> type, Class<? extends Annotation> annotation) {
+        List<Method> res = new LinkedList<Method>();
+        Method[] methods = type.getMethods();
+        for (int i = 0; i < methods.length; ++i) {
+            Annotation a = methods[i].getAnnotation(annotation);
+            if (a != null) {
+                res.add(methods[i]);
+            }
+        }
+        return res;
+    }
+    /*----------------------------------------------------------------------*/
 }

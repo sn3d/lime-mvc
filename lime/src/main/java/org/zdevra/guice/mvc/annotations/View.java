@@ -39,7 +39,8 @@ import org.zdevra.guice.mvc.views.NamedViewScanner;
  * @see ViewScannerService
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.METHOD, ElementType.TYPE })
+@Target({ElementType.METHOD, ElementType.TYPE})
 public @interface View {
-	public String value();
+
+    public String value();
 }

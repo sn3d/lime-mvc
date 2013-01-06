@@ -27,23 +27,18 @@ import com.google.inject.Binder;
 abstract class ServletDefinition {
 
 // ------------------------------------------------------------------------
-	
-	private final String urlPattern;
-	
+    private final String urlPattern;
+
 // ------------------------------------------------------------------------
-	
-	public abstract HttpServlet createServlet(Binder binder);
-	
+    public abstract HttpServlet createServlet(Binder binder);
+
 // ------------------------------------------------------------------------
-	
-	public ServletDefinition(String urlPattern) {
-		this.urlPattern = urlPattern;
-	}
-	
-	
-	public final String getUrlPattern() {
-		return urlPattern;
-	}
-	
+    public ServletDefinition(String urlPattern) {
+        this.urlPattern = urlPattern;
+    }
+
+    public final String getUrlPattern() {
+        return urlPattern;
+    }
 // ------------------------------------------------------------------------
 }

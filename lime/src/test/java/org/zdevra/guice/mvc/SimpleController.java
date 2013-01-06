@@ -27,17 +27,14 @@ import org.zdevra.guice.mvc.annotations.UriParameter;
 @Singleton
 public class SimpleController {
 
-	@Path("/someController/(.*)") 
-	@GET
-	public void controllMethod1(@UriParameter(1) String param) {
-		System.out.println("invoked with controllMethod1 param=" + param);
-	}
-	
-	
-	@Path("/someController/controllMethod2/(.*)/(.*)")
-	public void controllMethod2(@UriParameter(1) String param1, @UriParameter(2) String param2) {
-		System.out.println("invoked with controllMethod2 param1=" + param1 + " param2=" + param2);
-	}
-	
-	
+    @Path("/someController/(.*)")
+    @GET
+    public void controllMethod1(@UriParameter(1) String param) {
+        System.out.println("invoked with controllMethod1 param=" + param);
+    }
+
+    @Path("/someController/controllMethod2/(.*)/(.*)")
+    public void controllMethod2(@UriParameter(1) String param1, @UriParameter(2) String param2) {
+        System.out.println("invoked with controllMethod2 param1=" + param1 + " param2=" + param2);
+    }
 }

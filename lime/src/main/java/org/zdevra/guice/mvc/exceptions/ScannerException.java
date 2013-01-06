@@ -22,8 +22,7 @@ package org.zdevra.guice.mvc.exceptions;
  */
 public class ScannerException extends MvcException {
 
-	public ScannerException(Class<?> controllerClass, Throwable e) {
-		super("Exception in scanning of the controller:" + controllerClass.getName() + " error: " + e.getMessage(), e);
-	}
-
+    public ScannerException(Class<?> controllerClass, Throwable e) {
+        super("Exception in scanning of the controller:" + controllerClass.getName() + " error: " + e.getMessage(), e);
+    }
 }

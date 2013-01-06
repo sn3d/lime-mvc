@@ -21,11 +21,10 @@ import org.zdevra.guice.mvc.annotations.Model;
 import org.zdevra.guice.mvc.annotations.Path;
 import org.zdevra.guice.mvc.annotations.UriParameter;
 
-@Controller(view="default")
+@Controller(view = "default")
 public interface Case2Controller {
 
-	@Path("/getcar/(.*)") 
-	@Model("testmsg")
-	public String getCar( @UriParameter(1) String value);
-	
+    @Path("/getcar/(.*)")
+    @Model("testmsg")
+    public String getCar(@UriParameter(1) String value);
 }

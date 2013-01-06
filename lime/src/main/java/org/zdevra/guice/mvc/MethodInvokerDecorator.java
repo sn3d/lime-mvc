@@ -23,37 +23,28 @@ package org.zdevra.guice.mvc;
  * @author sn3d
  */
 abstract class MethodInvokerDecorator implements MethodInvoker {
-	
-// ------------------------------------------------------------------------
-	
-	protected final MethodInvoker decoratedInvoker;
 
 // ------------------------------------------------------------------------
-	
-	/**
-	 * Constructor
-	 * 
-	 * @param decoratedInvoker
-	 */
-	protected MethodInvokerDecorator(MethodInvoker decoratedInvoker)
-	{
-		this.decoratedInvoker = decoratedInvoker;
-	}
+    protected final MethodInvoker decoratedInvoker;
 
+// ------------------------------------------------------------------------
+    /**
+     * Constructor
+     * 
+     * @param decoratedInvoker
+     */
+    protected MethodInvokerDecorator(MethodInvoker decoratedInvoker) {
+        this.decoratedInvoker = decoratedInvoker;
+    }
 
-	@Override
-	public final int compareTo(MethodInvoker o)
-	{
-		return decoratedInvoker.compareTo(o);
-	}
+    @Override
+    public final int compareTo(MethodInvoker o) {
+        return decoratedInvoker.compareTo(o);
+    }
 
-
-	@Override
-	public int getPriority()
-	{
-		return decoratedInvoker.getPriority();
-	}
-
-	// ------------------------------------------------------------------------
-
+    @Override
+    public int getPriority() {
+        return decoratedInvoker.getPriority();
+    }
+    // ------------------------------------------------------------------------
 }

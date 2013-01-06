@@ -14,7 +14,6 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-
 package org.zdevra.guice.mvc.velocity;
 
 import javax.servlet.ServletContext;
@@ -31,56 +30,50 @@ import org.zdevra.guice.mvc.velocity.annotations.VelocityView;
  * @see VelocityView
  */
 public class VelocityModule extends ViewModule {
-	
+
 // ------------------------------------------------------------------------
-	
-	private final ServletContext context;
-	
+    private final ServletContext context;
+
 // ------------------------------------------------------------------------
-	
-	/**
-	 * Constructor where template files are loaded as resources 
-	 * from classpath.
-	 */
-	public VelocityModule() {
-		this.context = null;
-	}
-	
-	
-	/**
-	 * Constructor for MvcModule where template files are loaded
-	 * from WAR as regular JSP-s
-	 * 
-	 * @param context
-	 */
-	public VelocityModule(ServletContext context) {
-		this.context = context;
-	}
-	
+    /**
+     * Constructor where template files are loaded as resources 
+     * from classpath.
+     */
+    public VelocityModule() {
+        this.context = null;
+    }
+
+    /**
+     * Constructor for MvcModule where template files are loaded
+     * from WAR as regular JSP-s
+     * 
+     * @param context
+     */
+    public VelocityModule(ServletContext context) {
+        this.context = context;
+    }
+
 // ------------------------------------------------------------------------
-	
-	@Override
-	protected final void configureViews() 
-	{		
-		VelocityEngine velocity = new VelocityEngine();	    
-		configureVelocity(velocity);	    	    	    
-		velocity.init();	    	    
-	    bind(VelocityEngine.class).toInstance(velocity);
-	    registerViewScanner(VelocityScanner.class);
-	}
-		
-	/**
-	 * You will implement this method your velocity configuration
-	 */
-	protected void configureVelocity(VelocityEngine velocity) {
-		if (context != null) {
-			velocity.addProperty("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.FileResourceLoader");
-			velocity.addProperty("file.resource.loader.path", context.getRealPath("/"));
-		} else {
-			velocity.addProperty("resource.loader", "class");
-			velocity.addProperty("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
-		}		
-	}
-		
+    @Override
+    protected final void configureViews() {
+        VelocityEngine velocity = new VelocityEngine();
+        configureVelocity(velocity);
+        velocity.init();
+        bind(VelocityEngine.class).toInstance(velocity);
+        registerViewScanner(VelocityScanner.class);
+    }
+
+    /**
+     * You will implement this method your velocity configuration
+     */
+    protected void configureVelocity(VelocityEngine velocity) {
+        if (context != null) {
+            velocity.addProperty("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.FileResourceLoader");
+            velocity.addProperty("file.resource.loader.path", context.getRealPath("/"));
+        } else {
+            velocity.addProperty("resource.loader", "class");
+            velocity.addProperty("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+        }
+    }
 // ------------------------------------------------------------------------	
 }

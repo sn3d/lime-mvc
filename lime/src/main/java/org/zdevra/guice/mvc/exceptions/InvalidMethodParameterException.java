@@ -27,12 +27,12 @@ import org.zdevra.guice.mvc.parameters.ParamMetadata;
  * argument/parameter with some param. annotation
  */
 public class InvalidMethodParameterException extends MvcException {
-	
-	/**
-	 * Constructor
-	 * @param metadata
-	 */
-	public InvalidMethodParameterException(ParamMetadata metadata) {
-		super("Invalid source of data for parameter. Check the parameters in the controller's method " + metadata.getMethod().getName() + "().");
-	}
+
+    /**
+     * Constructor
+     * @param metadata
+     */
+    public InvalidMethodParameterException(ParamMetadata metadata) {
+        super("Invalid source of data for parameter. Check the parameters in the controller's method " + metadata.getMethod().getName() + "().");
+    }
 }

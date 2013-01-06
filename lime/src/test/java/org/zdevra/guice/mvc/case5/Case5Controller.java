@@ -21,31 +21,34 @@ import org.zdevra.guice.mvc.annotations.Model;
 import org.zdevra.guice.mvc.annotations.Path;
 import org.zdevra.guice.mvc.annotations.View;
 
-@Controller @View("one.jsp")
+@Controller
+@View("one.jsp")
 public class Case5Controller {
 
-	@Path("/action/one") @Model("testmsg")
-	public String actionOne() {
-		return "onedata";
-	}
+    @Path("/action/one")
+    @Model("testmsg")
+    public String actionOne() {
+        return "onedata";
+    }
 
-	
-	@Path("/action/two") @View("two.jsp") @Model("testmsg")
-	public String actionTwo() {
-		return "twodata";
-	}
-	
-	
-	@Path("/action/three") @Model("testmsg") @View("three.jsp")
-	public String actionThree() {
-		return "threedata";
-	}
-	
-	
-	@Path("/action/custom") @Model("testmsg") @ToTestView
-	public String actionCustom() {
-		return "customdata";
-	}
+    @Path("/action/two")
+    @View("two.jsp")
+    @Model("testmsg")
+    public String actionTwo() {
+        return "twodata";
+    }
 
-	
+    @Path("/action/three")
+    @Model("testmsg")
+    @View("three.jsp")
+    public String actionThree() {
+        return "threedata";
+    }
+
+    @Path("/action/custom")
+    @Model("testmsg")
+    @ToTestView
+    public String actionCustom() {
+        return "customdata";
+    }
 }

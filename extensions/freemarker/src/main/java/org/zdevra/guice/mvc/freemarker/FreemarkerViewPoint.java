@@ -47,60 +47,52 @@ import freemarker.template.TemplateException;
 public class FreemarkerViewPoint implements ViewPoint {
 
 // ------------------------------------------------------------------------
-	
-	@Inject private Configuration freemarkerConf;
-	private final String templateFile;
-	
-// ------------------------------------------------------------------------
-		
-	/**
-	 * Constructor 
-	 */
-	public FreemarkerViewPoint(String templateFile) {
-		this.templateFile = templateFile;
-	}
-	
-	
-	/**
-	 * The constructor 
-	 */
-	public FreemarkerViewPoint(Configuration freemakerConf, String templateFile) 
-	{
-		this.freemarkerConf = freemakerConf;
-		this.templateFile = templateFile;
-	}
+    @Inject
+    private Configuration freemarkerConf;
+    private final String templateFile;
 
-			
 // ------------------------------------------------------------------------
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public void render(ModelMap model, HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) 
-	{
-		try {
-			//prepare data
-			List<String> attrNames = Collections.list(request.getAttributeNames());
-			Map<String, Object> data = new HashMap<String, Object>();
-			for (String attrName : attrNames) {
-				Object attr = request.getAttribute(attrName);
-				data.put(attrName, attr);
-			}
-			
-			Template template = freemarkerConf.getTemplate(templateFile);
-			
-			//render the output
-			ByteArrayOutputStream bout = new ByteArrayOutputStream(2048);		
-			Writer out = new OutputStreamWriter(new BufferedOutputStream(bout));
-			template.process(data, out);
-			out.flush();
-			response.getWriter().write(bout.toString());
-		} catch (TemplateException e) {
-			throw new FreemarkerViewException(templateFile, request, e);
-		} catch (IOException e) {
-			throw new FreemarkerViewException(templateFile, request, e);
-		}
-	}
-	
-// ------------------------------------------------------------------------
+    /**
+     * Constructor 
+     */
+    public FreemarkerViewPoint(String templateFile) {
+        this.templateFile = templateFile;
+    }
 
+    /**
+     * The constructor 
+     */
+    public FreemarkerViewPoint(Configuration freemakerConf, String templateFile) {
+        this.freemarkerConf = freemakerConf;
+        this.templateFile = templateFile;
+    }
+
+// ------------------------------------------------------------------------
+    @SuppressWarnings("unchecked")
+    @Override
+    public void render(ModelMap model, HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            //prepare data
+            List<String> attrNames = Collections.list(request.getAttributeNames());
+            Map<String, Object> data = new HashMap<String, Object>();
+            for (String attrName : attrNames) {
+                Object attr = request.getAttribute(attrName);
+                data.put(attrName, attr);
+            }
+
+            Template template = freemarkerConf.getTemplate(templateFile);
+
+            //render the output
+            ByteArrayOutputStream bout = new ByteArrayOutputStream(2048);
+            Writer out = new OutputStreamWriter(new BufferedOutputStream(bout));
+            template.process(data, out);
+            out.flush();
+            response.getWriter().write(bout.toString());
+        } catch (TemplateException e) {
+            throw new FreemarkerViewException(templateFile, request, e);
+        } catch (IOException e) {
+            throw new FreemarkerViewException(templateFile, request, e);
+        }
+    }
+// ------------------------------------------------------------------------
 }
