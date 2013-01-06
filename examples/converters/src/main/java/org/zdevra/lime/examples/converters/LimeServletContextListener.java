@@ -12,8 +12,8 @@ import org.zdevra.guice.mvc.freemarker.FreemarkerViewPoint;
  */
 public class LimeServletContextListener extends GuiceServletContextListener {
 
-	@Override
-	protected Injector getInjector() {
+    @Override
+    protected Injector getInjector() {
         return Guice.createInjector(new MvcModule() {
             @Override
             protected void configureControllers() {
@@ -29,6 +29,5 @@ public class LimeServletContextListener extends GuiceServletContextListener {
                 bindViewName("main").toViewInstance(new FreemarkerViewPoint("main.ftl"));
             }
         });
-	}
-
+    }
 }

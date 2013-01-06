@@ -1,11 +1,8 @@
 package org.zdevra.lime.examples.converters;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sn3d
- * Date: 9/8/11
- * Time: 12:13 PM
- * To change this template use File | Settings | File Templates.
+ * Created by IntelliJ IDEA. User: sn3d Date: 9/8/11 Time: 12:13 PM To change
+ * this template use File | Settings | File Templates.
  */
 public class Person {
 
@@ -39,11 +36,11 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Person{" +
-                "name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", email='" + email + '\'' +
-                ", age=" + age +
-                '}';
+        return "Person{"
+                + "name='" + name + '\''
+                + ", surname='" + surname + '\''
+                + ", email='" + email + '\''
+                + ", age=" + age
+                + '}';
     }
 }
