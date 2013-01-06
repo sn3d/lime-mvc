@@ -21,8 +21,7 @@ package org.zdevra.guice.mvc.exceptions;
  */
 public class ObsoleteException extends RuntimeException {
 
-	public ObsoleteException(String replace) {
-		super("This part is obsolete. It should be removed in the next release. Use a newest " + replace);
-	}
-	
+    public ObsoleteException(String replace) {
+        super("This part is obsolete. It should be removed in the next release. Use a newest " + replace);
+    }
 }

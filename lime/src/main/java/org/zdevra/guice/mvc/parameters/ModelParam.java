@@ -31,40 +31,39 @@ import org.zdevra.guice.mvc.ModelMap;
  * </pre>
  */
 public class ModelParam implements ParamProcessor {
-/*---------------------------- constructors ----------------------------*/
-	
-	/**
-	 * Factory class for {@link ModelParam}
-	 */
-	public  static class Factory implements ParamProcessorFactory {
-		
-		private final ParamProcessor processor;
-		
-		public Factory() {
-			processor = new ModelParam();
-		}
+    /*---------------------------- constructors ----------------------------*/
 
-		@Override
-		public ParamProcessor buildParamProcessor(ParamMetadata metadata) {
-			if (metadata.getType() != ModelMap.class) {
-				return null;
-			}
-			return processor;
-		}		
-	}
+    /**
+     * Factory class for {@link ModelParam}
+     */
+    public static class Factory implements ParamProcessorFactory {
 
-	/**
-	 * Hidden constructor. Use Factory class.
-	 */
-	private ModelParam() {		
-	}
-	
-/*----------------------------------------------------------------------*/
+        private final ParamProcessor processor;
 
-	@Override
-	public Object getValue(InvokeData data) {
-		return data.getModel();
-	}
+        public Factory() {
+            processor = new ModelParam();
+        }
 
-/*----------------------------------------------------------------------*/
+        @Override
+        public ParamProcessor buildParamProcessor(ParamMetadata metadata) {
+            if (metadata.getType() != ModelMap.class) {
+                return null;
+            }
+            return processor;
+        }
+    }
+
+    /**
+     * Hidden constructor. Use Factory class.
+     */
+    private ModelParam() {
+    }
+
+    /*----------------------------------------------------------------------*/
+    @Override
+    public Object getValue(InvokeData data) {
+        return data.getModel();
+    }
+
+    /*----------------------------------------------------------------------*/
 }

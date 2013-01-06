@@ -34,53 +34,45 @@ import org.zdevra.guice.mvc.exceptions.InvalidJspViewException;
  * The JSP view redirecting request to concrete JSP or HTML page  
  */
 public class JspView implements ViewPoint {
-	
+
 // ------------------------------------------------------------------------	
+    private static final Logger logger = Logger.getLogger(JspView.class.getName());
+    private final String jspPath;
 
-	private static final Logger logger = Logger.getLogger(JspView.class.getName());
-	private final String jspPath;
-	
 // ------------------------------------------------------------------------
-	
-	
-	public JspView(String jspPath) {
-		if (jspPath == null || jspPath.length() == 0) {
-			this.jspPath = "";
-		} else if ( !jspPath.startsWith("/") ) {
-			this.jspPath = "/" + jspPath;
-		} else {
-			this.jspPath = jspPath;
-		}
-	}
-	
-// ------------------------------------------------------------------------
-	
-	
-	@Override
-	public void render(ModelMap model, HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) {
-		request = new HttpRequestForForward(request, jspPath);
-		RequestDispatcher dispatcher = servlet.getServletContext().getRequestDispatcher(jspPath);
-		if (dispatcher == null) {
-			throw new InvalidJspViewException(jspPath);
-		}
-		
-		try {
-			dispatcher.forward(request, response);
-		} catch (ServletException e) {
-			logger.log(Level.SEVERE, "Error in JspView", e);
-		} catch (IOException e) {
-			logger.log(Level.SEVERE, "Error in JspView", e);
-		}
-		
-		request = null;
-	}
+    public JspView(String jspPath) {
+        if (jspPath == null || jspPath.length() == 0) {
+            this.jspPath = "";
+        } else if (!jspPath.startsWith("/")) {
+            this.jspPath = "/" + jspPath;
+        } else {
+            this.jspPath = jspPath;
+        }
+    }
 
-	
-	@Override
-	public String toString() {
-		return "JspView [jsp=" + jspPath + "]";
-	}
-	
 // ------------------------------------------------------------------------
+    @Override
+    public void render(ModelMap model, HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) {
+        request = new HttpRequestForForward(request, jspPath);
+        RequestDispatcher dispatcher = servlet.getServletContext().getRequestDispatcher(jspPath);
+        if (dispatcher == null) {
+            throw new InvalidJspViewException(jspPath);
+        }
 
+        try {
+            dispatcher.forward(request, response);
+        } catch (ServletException e) {
+            logger.log(Level.SEVERE, "Error in JspView", e);
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "Error in JspView", e);
+        }
+
+        request = null;
+    }
+
+    @Override
+    public String toString() {
+        return "JspView [jsp=" + jspPath + "]";
+    }
+// ------------------------------------------------------------------------
 }

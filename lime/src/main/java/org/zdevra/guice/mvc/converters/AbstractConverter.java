@@ -32,7 +32,6 @@ import java.util.Map;
 public abstract class AbstractConverter<T> implements ConversionService.Converter<T> {
 
 // ------------------------------------------------------------------------
-
     /**
      * Short version of the getValue method which returns value on 0 position
      *
@@ -40,11 +39,9 @@ public abstract class AbstractConverter<T> implements ConversionService.Converte
      * @param data
      * @return
      */
-    protected final static String getValue(String name, Map<String, String[]> data)
-    {
+    protected final static String getValue(String name, Map<String, String[]> data) {
         return getValue(name, 0, data);
     }
-
 
     /**
      * Short version of the getValueInt method which returns value on 0 position
@@ -53,13 +50,11 @@ public abstract class AbstractConverter<T> implements ConversionService.Converte
      * @param data
      * @return
      */
-    protected final static int getValueInt(String name, Map<String, String[]> data)
-    {
+    protected final static int getValueInt(String name, Map<String, String[]> data) {
         return getValueInt(name, 0, data);
     }
 
 // ------------------------------------------------------------------------
-
     /**
      * Method extract the value as from the incoming data a String
      *
@@ -69,15 +64,13 @@ public abstract class AbstractConverter<T> implements ConversionService.Converte
      *
      * @return
      */
-    protected final static String getValue(String name, int index, Map<String, String[]> data)
-    {
+    protected final static String getValue(String name, int index, Map<String, String[]> data) {
         String[] values = data.get(name);
         if ((values == null) || (values.length == 0)) {
             return "";
         }
         return values[index];
     }
-
 
     /**
      * Method extract the value from the incoming data as a Int
@@ -88,12 +81,10 @@ public abstract class AbstractConverter<T> implements ConversionService.Converte
      *
      * @return
      */
-    protected final static int getValueInt(String name, int index, Map<String, String[]> data)
-    {
+    protected final static int getValueInt(String name, int index, Map<String, String[]> data) {
         String value = getValue(name, index, data);
         return Integer.parseInt(value);
     }
-
 
     /**
      * Method extract the value from the incoming data as a Long
@@ -104,12 +95,10 @@ public abstract class AbstractConverter<T> implements ConversionService.Converte
      *
      * @return
      */
-    protected final static long getValueLong(String name, int index, Map<String, String[]> data)
-    {
+    protected final static long getValueLong(String name, int index, Map<String, String[]> data) {
         String value = getValue(name, index, data);
         return Long.parseLong(value);
     }
-
 
     /**
      * Method extract the value from the incoming data as a Double
@@ -120,12 +109,10 @@ public abstract class AbstractConverter<T> implements ConversionService.Converte
      *
      * @return
      */
-    protected final static double getValueDouble(String name, int index, Map<String, String[]> data)
-    {
+    protected final static double getValueDouble(String name, int index, Map<String, String[]> data) {
         String value = getValue(name, index, data);
         return Double.parseDouble(value);
     }
-
 
     /**
      * Method extract the value from the incoming data as a Date
@@ -136,8 +123,7 @@ public abstract class AbstractConverter<T> implements ConversionService.Converte
      * @param df
      * @return
      */
-    protected final static Date getValueDate(String name, int index, DateFormat df, Map<String, String[]> data)
-    {
+    protected final static Date getValueDate(String name, int index, DateFormat df, Map<String, String[]> data) {
         try {
             String value = getValue(name, index, data);
             return df.parse(value);
@@ -145,8 +131,5 @@ public abstract class AbstractConverter<T> implements ConversionService.Converte
             return new Date(0);
         }
     }
-
-
 // ------------------------------------------------------------------------
-
 }

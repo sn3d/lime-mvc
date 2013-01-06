@@ -26,9 +26,8 @@ package org.zdevra.guice.mvc.exceptions;
  *
  */
 public class IllegalConversionException extends MvcException {
-	
-	public IllegalConversionException(String msg) {
-		super(msg);
-	}
 
+    public IllegalConversionException(String msg) {
+        super(msg);
+    }
 }

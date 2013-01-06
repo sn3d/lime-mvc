@@ -23,51 +23,47 @@ import org.zdevra.guice.mvc.annotations.Model;
 import org.zdevra.guice.mvc.annotations.Path;
 import org.zdevra.guice.mvc.annotations.SessionParameter;
 
-@Controller(sessionAttributes= { "book" }, view="default")
+@Controller(sessionAttributes = {"book"}, view = "default")
 @Singleton
 public class Case1Controller {
-	
-	
-	@Path("/do/simplecall") @Model("testmsg")
-	public String simpleCall() {
-		return "simple call";
-	}
-	
-	
-	@Path("/do/exception")
-	public void throwException() {
-		throw new NullPointerException("Test exception");
-	}
-	
-	
-	@Path("/do/session")
-	public org.zdevra.guice.mvc.ModelMap getDataFromSession(
-			@SessionParameter(value = "author") String author, 
-			@SessionParameter("year") Integer year ) 
-	{
-		org.zdevra.guice.mvc.ModelMap m = new org.zdevra.guice.mvc.ModelMap();
-		m.addObject("testmsg", author + " " + year);
-		m.addObject("book", "Hamlet");
-		return m;
-	}
-		
-	@Path("/do/sessionmodel") @Model("testmsg")
-	public String getDataFromSessionAsModel(org.zdevra.guice.mvc.ModelMap m) {
-		String out = "in session is book:" + m.getObject("book");
-		m.addObject("book", "Romeo&Juliette");
-		return out;
-	}
-	
-	
-	@Path("/do/pathtest")
-	public String testmsg() {
-		return "default model name & path test done";
-	}
-	
-	@Path("/do/modelnametest")
-	@Model("testmsg")
-	public String pathTest() {
-		return "defined model name & path test done";
-	}
-	
+
+    @Path("/do/simplecall")
+    @Model("testmsg")
+    public String simpleCall() {
+        return "simple call";
+    }
+
+    @Path("/do/exception")
+    public void throwException() {
+        throw new NullPointerException("Test exception");
+    }
+
+    @Path("/do/session")
+    public org.zdevra.guice.mvc.ModelMap getDataFromSession(
+            @SessionParameter(value = "author") String author,
+            @SessionParameter("year") Integer year) {
+        org.zdevra.guice.mvc.ModelMap m = new org.zdevra.guice.mvc.ModelMap();
+        m.addObject("testmsg", author + " " + year);
+        m.addObject("book", "Hamlet");
+        return m;
+    }
+
+    @Path("/do/sessionmodel")
+    @Model("testmsg")
+    public String getDataFromSessionAsModel(org.zdevra.guice.mvc.ModelMap m) {
+        String out = "in session is book:" + m.getObject("book");
+        m.addObject("book", "Romeo&Juliette");
+        return out;
+    }
+
+    @Path("/do/pathtest")
+    public String testmsg() {
+        return "default model name & path test done";
+    }
+
+    @Path("/do/modelnametest")
+    @Model("testmsg")
+    public String pathTest() {
+        return "defined model name & path test done";
+    }
 }

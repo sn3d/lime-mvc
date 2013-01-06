@@ -21,114 +21,91 @@ import org.testng.annotations.BeforeClass;
  */
 public abstract class WebTest {
 
-	//------------------------------------------------------------------------------------
-	// m. variables
-	//------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------
+    // m. variables
+    //------------------------------------------------------------------------------------
+    private int port = 9191;
+    private List<Webapp> webapps = new ArrayList<Webapp>(10);
+    private Server server;
+    protected HttpClient client;
 
-	private int          port = 9191;
-	private List<Webapp> webapps = new ArrayList<Webapp>(10);
-	
-	private   Server       server;
-	protected HttpClient   client;
-	
-	//------------------------------------------------------------------------------------
-	// inner classes & structures
-	//------------------------------------------------------------------------------------
-	
-	/**
-	 * Simple structure represents the webapp
-	 */
-	private static class Webapp 
-	{	
-		public String webappPath;
-		public String contextPath;
-		
-		private Webapp(String webappPath, String contextPath) 
-		{
-			this.webappPath = webappPath;
-			this.contextPath = contextPath;
-		}
-	}
-	
-	//------------------------------------------------------------------------------------
-	// setup
-	//------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------
+    // inner classes & structures
+    //------------------------------------------------------------------------------------
+    /**
+     * Simple structure represents the webapp
+     */
+    private static class Webapp {
 
-	@BeforeClass
-	public void setup() throws Exception 
-	{
-		setupWebserver();
-		
-		client = new HttpClient();
-		
-		System.setProperty("java.naming.factory.url.pkgs", "org.mortbay.naming");
-		System.setProperty("java.naming.factory.initial", "org.mortbay.naming.InitialContextFactory");
-		server = new Server(port);
-		
-		WebAppContext contexts[] = new WebAppContext[webapps.size()];
-		for (int i = 0; i < webapps.size(); ++i) {
-			Webapp app = webapps.get(i);
-			WebAppContext context = new WebAppContext();
-			context.setContextPath(app.contextPath);
-			context.setResourceBase(app.webappPath);
-			context.setDescriptor(app.webappPath + "/WEB-INF/web.xml");
-			context.setParentLoaderPriority(true);
-			contexts[i] = context;
-		}
-				
-		server.setHandlers(contexts);
-		server.start();
-	}
-	
-	
-	@AfterClass
-	public void down() throws Exception
-	{
-		server.stop();
-	}
+        public String webappPath;
+        public String contextPath;
 
-	
-	//------------------------------------------------------------------------------------
-	// abstract methods
-	//------------------------------------------------------------------------------------
+        private Webapp(String webappPath, String contextPath) {
+            this.webappPath = webappPath;
+            this.contextPath = contextPath;
+        }
+    }
 
-	protected abstract void setupWebserver();
-	
-	//------------------------------------------------------------------------------------
-	// methods
-	//------------------------------------------------------------------------------------
-	
-	protected final void setPort(int port)
-	{
-		this.port = port;
-	}
-	
-	
-	protected final void addWebapp(String webappPath, String contextPath)
-	{
-		webapps.add(new Webapp(webappPath, contextPath));
-	}
-	
-	
-	public String doSimpleRequest(String url) throws HttpException, IOException
-	{
-		HttpMethod req = new GetMethod(url);
-		client.executeMethod(req);
-		String out = req.getResponseBodyAsString();
-		return out;
-	}
-	
-	
-	public HttpMethod doRequest(String url) throws HttpException, IOException
-	{
-		HttpMethod req = new GetMethod(url);
-		req.setFollowRedirects(false);
-		client.executeMethod(req);
-		return req;
-	}
+    //------------------------------------------------------------------------------------
+    // setup
+    //------------------------------------------------------------------------------------
+    @BeforeClass
+    public void setup() throws Exception {
+        setupWebserver();
 
-	
-	
-	
+        client = new HttpClient();
 
+        System.setProperty("java.naming.factory.url.pkgs", "org.mortbay.naming");
+        System.setProperty("java.naming.factory.initial", "org.mortbay.naming.InitialContextFactory");
+        server = new Server(port);
+
+        WebAppContext contexts[] = new WebAppContext[webapps.size()];
+        for (int i = 0; i < webapps.size(); ++i) {
+            Webapp app = webapps.get(i);
+            WebAppContext context = new WebAppContext();
+            context.setContextPath(app.contextPath);
+            context.setResourceBase(app.webappPath);
+            context.setDescriptor(app.webappPath + "/WEB-INF/web.xml");
+            context.setParentLoaderPriority(true);
+            contexts[i] = context;
+        }
+
+        server.setHandlers(contexts);
+        server.start();
+    }
+
+    @AfterClass
+    public void down() throws Exception {
+        server.stop();
+    }
+
+    //------------------------------------------------------------------------------------
+    // abstract methods
+    //------------------------------------------------------------------------------------
+    protected abstract void setupWebserver();
+
+    //------------------------------------------------------------------------------------
+    // methods
+    //------------------------------------------------------------------------------------
+    protected final void setPort(int port) {
+        this.port = port;
+    }
+
+    protected final void addWebapp(String webappPath, String contextPath) {
+        webapps.add(new Webapp(webappPath, contextPath));
+    }
+
+    public String doSimpleRequest(String url) throws HttpException, IOException {
+        HttpMethod req = new GetMethod(url);
+        client.executeMethod(req);
+        String out = req.getResponseBodyAsString();
+        return out;
+    }
+
+    public HttpMethod doRequest(String url) throws HttpException, IOException {
+        HttpMethod req = new GetMethod(url);
+        req.setFollowRedirects(false);
+        client.executeMethod(req);
+        return req;
+    }
 }

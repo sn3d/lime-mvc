@@ -23,56 +23,50 @@ import com.google.inject.name.Names;
 
 class NamedViewBuilder {
 // ------------------------------------------------------------------------
-	
-	private final Binder binder;
-	
+
+    private final Binder binder;
+
 // ------------------------------------------------------------------------
-	
-	/**
-	 * Constructor
-	 */
-	public NamedViewBuilder(Binder binder) {
-		this.binder = binder;
-	}
-	
-	
-	public MvcModule.NamedViewBindingBuilder bindViewName(String viewName) {
-		return new NamedViewBindingBudilerImpl(viewName);
-	}
-	
+    /**
+     * Constructor
+     */
+    public NamedViewBuilder(Binder binder) {
+        this.binder = binder;
+    }
+
+    public MvcModule.NamedViewBindingBuilder bindViewName(String viewName) {
+        return new NamedViewBindingBudilerImpl(viewName);
+    }
+
 // ------------------------------------------------------------------------
-	
-	class NamedViewBindingBudilerImpl implements MvcModule.NamedViewBindingBuilder {
-		
-		private final String viewName;
-		
-		public NamedViewBindingBudilerImpl(String viewName) {
-			this.viewName = viewName;
-		}
+    class NamedViewBindingBudilerImpl implements MvcModule.NamedViewBindingBuilder {
 
-		@Override
-		public void toView(Class<? extends ViewPoint> viewClass) {			
-			binder.bind(ViewPoint.class)
-				.annotatedWith(Names.named(viewName))
-				.to(viewClass);
-		}
+        private final String viewName;
 
-		@Override
-		public void toViewInstance(ViewPoint view) {
-			binder.bind(ViewPoint.class)
-			.annotatedWith(Names.named(viewName))
-			.toInstance(view);			
-		}
+        public NamedViewBindingBudilerImpl(String viewName) {
+            this.viewName = viewName;
+        }
 
-		@Override
-		public void toJsp(String pathToJsp) {
-			binder.bind(ViewPoint.class)
-			.annotatedWith(Names.named(viewName))
-			.toInstance(new JspView(pathToJsp));						
-		}
-		
-	}
-	
+        @Override
+        public void toView(Class<? extends ViewPoint> viewClass) {
+            binder.bind(ViewPoint.class)
+                    .annotatedWith(Names.named(viewName))
+                    .to(viewClass);
+        }
+
+        @Override
+        public void toViewInstance(ViewPoint view) {
+            binder.bind(ViewPoint.class)
+                    .annotatedWith(Names.named(viewName))
+                    .toInstance(view);
+        }
+
+        @Override
+        public void toJsp(String pathToJsp) {
+            binder.bind(ViewPoint.class)
+                    .annotatedWith(Names.named(viewName))
+                    .toInstance(new JspView(pathToJsp));
+        }
+    }
 // ------------------------------------------------------------------------
-
 }

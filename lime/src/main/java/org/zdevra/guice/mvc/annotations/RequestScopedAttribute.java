@@ -49,7 +49,8 @@ import java.lang.annotation.Target;
  * 
  */
 @Retention(RUNTIME)
-@Target({ ElementType.FIELD, ElementType.PARAMETER })
+@Target({ElementType.FIELD, ElementType.PARAMETER})
 public @interface RequestScopedAttribute {
-	String value();
+
+    String value();
 }

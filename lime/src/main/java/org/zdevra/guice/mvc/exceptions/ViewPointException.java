@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ViewPointException extends MvcException {
 
-	public ViewPointException(String msg, HttpServletRequest request, Throwable e) {
-		super(msg, e);
-	}
+    public ViewPointException(String msg, HttpServletRequest request, Throwable e) {
+        super(msg, e);
+    }
 }

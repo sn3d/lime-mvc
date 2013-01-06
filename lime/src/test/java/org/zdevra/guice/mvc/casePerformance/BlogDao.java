@@ -23,27 +23,23 @@ import com.google.inject.Singleton;
 
 @Singleton
 public class BlogDao {
-	
-	private final String[] articles = 
-		{
-			"Article 1",
-			"Article 2",
-			"Article 3",
-			"Article 4",
-			"Article 5" 
-		};
-	
-	
-	public List<String> getAllArticles() {
-		return Arrays.asList(articles);
-	}
-	
-	
-	public String getArticle(int id) {
-		if (id >= articles.length) {
-			return "unknown";
-		}
-		return articles[id];
-	}
 
+    private final String[] articles = {
+        "Article 1",
+        "Article 2",
+        "Article 3",
+        "Article 4",
+        "Article 5"
+    };
+
+    public List<String> getAllArticles() {
+        return Arrays.asList(articles);
+    }
+
+    public String getArticle(int id) {
+        if (id >= articles.length) {
+            return "unknown";
+        }
+        return articles[id];
+    }
 }

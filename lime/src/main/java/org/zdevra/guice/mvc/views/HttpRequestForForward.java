@@ -35,25 +35,23 @@ import javax.servlet.http.HttpServletRequestWrapper;
  *
  */
 class HttpRequestForForward extends HttpServletRequestWrapper {
-	
-	private String pathForForward;
 
-	public HttpRequestForForward(HttpServletRequest request, String pathForForward) {
-		super(request);
-		this.pathForForward = pathForForward;
-	}
+    private String pathForForward;
 
-	@Override
-	public String getPathInfo() {
-		super.getPathInfo();		
-		return pathForForward;		
-	}
+    public HttpRequestForForward(HttpServletRequest request, String pathForForward) {
+        super(request);
+        this.pathForForward = pathForForward;
+    }
 
-	@Override
-	public String getServletPath() {
-		super.getServletPath();
-		return "";
-	}
-	
-	
+    @Override
+    public String getPathInfo() {
+        super.getPathInfo();
+        return pathForForward;
+    }
+
+    @Override
+    public String getServletPath() {
+        super.getServletPath();
+        return "";
+    }
 }

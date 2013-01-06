@@ -39,50 +39,46 @@ import com.google.inject.Singleton;
  */
 @Singleton
 public class NamedViewScanner implements ViewScanner {
-	
+
 // ------------------------------------------------------------------------
-	
-	@Override
-	public ViewPoint scan(Annotation[] annotations) {
-		ViewPoint view = lookForView(annotations);
-		if (view == ViewPoint.NULL_VIEW) {
-			view = lookForController(annotations);
-		}
-		return view;
-	}
-	
+    @Override
+    public ViewPoint scan(Annotation[] annotations) {
+        ViewPoint view = lookForView(annotations);
+        if (view == ViewPoint.NULL_VIEW) {
+            view = lookForController(annotations);
+        }
+        return view;
+    }
+
 // ------------------------------------------------------------------------
-	
-	/**
-	 * This method looks for {@link ViewPoint} annotation
-	 * and create {@link NamedView}
-	 * 
-	 * @param annotations
-	 * @return Named view if annotation is presented, otherwise View.NULL_VIEW.
-	 */
-	private ViewPoint lookForView(Annotation[] annotations) {
-		View anot = Utils.getAnnotation(View.class, annotations);
-		if (anot != null) {
-			return NamedView.create(anot.value());
-		}
-		return ViewPoint.NULL_VIEW;
-	}
-	
-	
-	/**
-	 * This method looks for {@literal @}Controller's view
-	 * 
-	 * @param annotations
-	 * @return
-	 * 
-	 * @see Controller
-	 */
-	private ViewPoint lookForController(Annotation[] annotations) {
-		Controller ant = Utils.getAnnotation(Controller.class, annotations);
-		if (ant != null) {
-			return NamedView.create(ant.view());
-		}
-		return ViewPoint.NULL_VIEW;
-	}
-	
+    /**
+     * This method looks for {@link ViewPoint} annotation
+     * and create {@link NamedView}
+     * 
+     * @param annotations
+     * @return Named view if annotation is presented, otherwise View.NULL_VIEW.
+     */
+    private ViewPoint lookForView(Annotation[] annotations) {
+        View anot = Utils.getAnnotation(View.class, annotations);
+        if (anot != null) {
+            return NamedView.create(anot.value());
+        }
+        return ViewPoint.NULL_VIEW;
+    }
+
+    /**
+     * This method looks for {@literal @}Controller's view
+     * 
+     * @param annotations
+     * @return
+     * 
+     * @see Controller
+     */
+    private ViewPoint lookForController(Annotation[] annotations) {
+        Controller ant = Utils.getAnnotation(Controller.class, annotations);
+        if (ant != null) {
+            return NamedView.create(ant.view());
+        }
+        return ViewPoint.NULL_VIEW;
+    }
 }

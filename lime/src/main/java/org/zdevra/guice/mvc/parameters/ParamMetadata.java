@@ -31,47 +31,42 @@ import org.zdevra.guice.mvc.Utils;
  * 
  */
 public class ParamMetadata {
-/*---------------------------- m. variables ----------------------------*/
+    /*---------------------------- m. variables ----------------------------*/
 
-	private final Method method;
-	private final Class<?> type;
-	private final Annotation[] annotations;
-	private final ConversionService conversionService;
+    private final Method method;
+    private final Class<?> type;
+    private final Annotation[] annotations;
+    private final ConversionService conversionService;
 
-/*---------------------------- constructors ----------------------------*/
-	
-	public ParamMetadata(Class<?> type, Annotation[] annotations, ConversionService conversionService, Method method) 
-	{
-		super();
-		this.type = type;
-		this.annotations = annotations;
-		this.conversionService = conversionService;
-		this.method = method;
-	}
-	
-/*-------------------------- getters/setters ---------------------------*/
+    /*---------------------------- constructors ----------------------------*/
+    public ParamMetadata(Class<?> type, Annotation[] annotations, ConversionService conversionService, Method method) {
+        super();
+        this.type = type;
+        this.annotations = annotations;
+        this.conversionService = conversionService;
+        this.method = method;
+    }
 
-	public Class<?> getType() {
-		return type;
-	}
+    /*-------------------------- getters/setters ---------------------------*/
+    public Class<?> getType() {
+        return type;
+    }
 
-	public Annotation[] getAnnotations() {
-		return annotations;
-	}
-	
-	
-	public <T extends Annotation> T getAnnotation(Class<T> annotationClazz) {
-		return Utils.getAnnotation(annotationClazz, this.annotations);
-	}
-	
-	
-	public ConversionService getConversionService() {
-		return conversionService;
-	}
+    public Annotation[] getAnnotations() {
+        return annotations;
+    }
 
-	public Method getMethod() {
-		return method;
-	}	
+    public <T extends Annotation> T getAnnotation(Class<T> annotationClazz) {
+        return Utils.getAnnotation(annotationClazz, this.annotations);
+    }
 
-/*----------------------------------------------------------------------*/
+    public ConversionService getConversionService() {
+        return conversionService;
+    }
+
+    public Method getMethod() {
+        return method;
+    }
+
+    /*----------------------------------------------------------------------*/
 }

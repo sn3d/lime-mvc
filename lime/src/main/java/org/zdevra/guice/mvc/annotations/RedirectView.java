@@ -46,8 +46,10 @@ import java.lang.annotation.Target;
  * @see org.zdevra.guice.mvc.views.RedirectViewPoint
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.METHOD, ElementType.TYPE })
+@Target({ElementType.METHOD, ElementType.TYPE})
 public @interface RedirectView {
-	public String value();	
-	boolean contextRelative() default true;
+
+    public String value();
+
+    boolean contextRelative() default true;
 }

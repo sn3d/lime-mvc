@@ -28,17 +28,16 @@ import org.zdevra.guice.mvc.ViewPoint;
 
 public class ViewAllArticles implements ViewPoint {
 
-	@Override
-	public void render(ModelMap model, HttpServlet servlet, HttpServletRequest request, HttpServletResponse response)  
-	{
-		try {
-			List<String> articles = (List<String>) request.getAttribute("allarticles");
-			response.getWriter().write("Articles list\n");
-			for (String article : articles) {
-				response.getWriter().write("Article:" + article + "\n");
-			}
-		} catch (IOException e) {
-			//TODO:view exception
-		}
-	}
+    @Override
+    public void render(ModelMap model, HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            List<String> articles = (List<String>) request.getAttribute("allarticles");
+            response.getWriter().write("Articles list\n");
+            for (String article : articles) {
+                response.getWriter().write("Article:" + article + "\n");
+            }
+        } catch (IOException e) {
+            //TODO:view exception
+        }
+    }
 }

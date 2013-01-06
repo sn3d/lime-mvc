@@ -23,40 +23,36 @@ import org.zdevra.guice.mvc.MvcModule.ControllerAndViewBindingBuilder;
 import org.zdevra.guice.mvc.MvcModule.ControllerBindingBuilder;
 import org.zdevra.guice.mvc.views.NamedView;
 
-
-
 /** 
  * Builder provide building of controller. It's used
  * internally by {@link MvcModule}
  * 
  * @see MvcModule
  */
-class ControllerModuleBuilder  {
-	
+class ControllerModuleBuilder {
+
 // ------------------------------------------------------------------------
-	
-	private String actualUrlPattern;
-	private ControllerDefinition actualControllersDefinition = null;
-	private List<ServletDefinition> servletDefinitions = new LinkedList<ServletDefinition>();
-	
+    private String actualUrlPattern;
+    private ControllerDefinition actualControllersDefinition = null;
+    private List<ServletDefinition> servletDefinitions = new LinkedList<ServletDefinition>();
+
 // ------------------------------------------------------------------------
-	
-	private class ControllerBindingBuilderImpl implements ControllerBindingBuilder {
-		
-		@Override
-		public final ControllerBindingBuilder withController(Class<?> controller) {			
-			actualControllersDefinition.addController(controller);
-			return this;
-		}		
-		
-		@Override
-		public ControllerBindingBuilder interceptor(Class<? extends InterceptorHandler> handlerClass) {
-			actualControllersDefinition.addInterceptorHandler(handlerClass);
-			return this;
-		}
-	}
-	
-	private class ControllerAndViewBindingBuilderImpl implements ControllerAndViewBindingBuilder {
+    private class ControllerBindingBuilderImpl implements ControllerBindingBuilder {
+
+        @Override
+        public final ControllerBindingBuilder withController(Class<?> controller) {
+            actualControllersDefinition.addController(controller);
+            return this;
+        }
+
+        @Override
+        public ControllerBindingBuilder interceptor(Class<? extends InterceptorHandler> handlerClass) {
+            actualControllersDefinition.addInterceptorHandler(handlerClass);
+            return this;
+        }
+    }
+
+    private class ControllerAndViewBindingBuilderImpl implements ControllerAndViewBindingBuilder {
 
         private ControllerDefinition.Factory definitionFactory;
 
@@ -64,51 +60,44 @@ class ControllerModuleBuilder  {
             this.definitionFactory = definitionFactory;
         }
 
-		@Override
-		public ControllerBindingBuilder withController(Class<?> controller)
-        {
+        @Override
+        public ControllerBindingBuilder withController(Class<?> controller) {
             //store prev. controller definition
-			if (actualControllersDefinition != null) {
-				servletDefinitions.add(actualControllersDefinition);
-			}
+            if (actualControllersDefinition != null) {
+                servletDefinitions.add(actualControllersDefinition);
+            }
 
             //create new actual definition.
             actualControllersDefinition = definitionFactory.create(actualUrlPattern);
-			actualControllersDefinition.addController(controller);
+            actualControllersDefinition.addController(controller);
 
-			return new ControllerBindingBuilderImpl();
-		}
+            return new ControllerBindingBuilderImpl();
+        }
 
         @Override
-		public void withView(String name) {
-			ServletDefinition def = new DirectViewDefinition(actualUrlPattern, NamedView.create(name));
-			servletDefinitions.add(def);
-		}
+        public void withView(String name) {
+            ServletDefinition def = new DirectViewDefinition(actualUrlPattern, NamedView.create(name));
+            servletDefinitions.add(def);
+        }
 
-		@Override
-		public void withView(ViewPoint viewInstance) {
-			ServletDefinition def = new DirectViewDefinition(actualUrlPattern, viewInstance);
-			servletDefinitions.add(def);			
-		}
-		
-	}
-	
-	
+        @Override
+        public void withView(ViewPoint viewInstance) {
+            ServletDefinition def = new DirectViewDefinition(actualUrlPattern, viewInstance);
+            servletDefinitions.add(def);
+        }
+    }
+
 // ------------------------------------------------------------------------
-		
-	public final ControllerAndViewBindingBuilder control(String urlPattern) {
-		actualUrlPattern = urlPattern;
-		return new ControllerAndViewBindingBuilderImpl(ControllerDefinition.FACTORY);
-	}
+    public final ControllerAndViewBindingBuilder control(String urlPattern) {
+        actualUrlPattern = urlPattern;
+        return new ControllerAndViewBindingBuilderImpl(ControllerDefinition.FACTORY);
+    }
 
-
-	public List<ServletDefinition> getControllerDefinitions() {
-		if (actualControllersDefinition != null) {
-			servletDefinitions.add(actualControllersDefinition);
-		}
-		return servletDefinitions;
-	}
-	
+    public List<ServletDefinition> getControllerDefinitions() {
+        if (actualControllersDefinition != null) {
+            servletDefinitions.add(actualControllersDefinition);
+        }
+        return servletDefinitions;
+    }
 // ------------------------------------------------------------------------
-	
 }

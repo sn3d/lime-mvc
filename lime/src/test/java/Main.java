@@ -15,28 +15,28 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-
 class Trest<T> {
-	public T getTrest() {
-		return null;
-	}
+
+    public T getTrest() {
+        return null;
+    }
 }
 
-
 class TrestInt extends Trest<Integer> {
-	@Override
-	public Integer getTrest() {
-		return 1;
-	}	
+
+    @Override
+    public Integer getTrest() {
+        return 1;
+    }
 }
 
 class TrestString extends Trest<String> {
-	@Override
-	public String getTrest() {
-		return "asd";
-	}	
-}
 
+    @Override
+    public String getTrest() {
+        return "asd";
+    }
+}
 
 /**
  * This class exists for debugging and testing
@@ -45,15 +45,14 @@ class TrestString extends Trest<String> {
  */
 public class Main {
 
-	public static void main(String[] args) {
-		try {			
-			Trest<?> x = new TrestInt();
-			x.getTrest();
-			
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+    public static void main(String[] args) {
+        try {
+            Trest<?> x = new TrestInt();
+            x.getTrest();
 
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

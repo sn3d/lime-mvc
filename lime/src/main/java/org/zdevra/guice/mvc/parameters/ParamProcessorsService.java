@@ -35,29 +35,27 @@ import com.google.inject.Singleton;
  */
 @Singleton
 public class ParamProcessorsService {
-/*---------------------------- m. variables ----------------------------*/
-	
-	private final Collection<ParamProcessorFactory> factories;
+    /*---------------------------- m. variables ----------------------------*/
 
-/*---------------------------- constructors ----------------------------*/
-	
-	@Inject
-	public ParamProcessorsService(Set<ParamProcessorFactory> factories) {
-		this.factories = new ArrayList<ParamProcessorFactory>(factories);
-	}
-		
-/*------------------------------- methods ------------------------------*/
-		
-	public ParamProcessor createProcessor(ParamMetadata metadata) {
-		for (ParamProcessorFactory factory : factories) {
-			ParamProcessor processor = factory.buildParamProcessor(metadata);
-			if (processor != null) {
-				return processor;
-			}
-		}
-		
-		throw new InvalidMethodParameterException(metadata);
-	}
+    private final Collection<ParamProcessorFactory> factories;
 
-/*----------------------------------------------------------------------*/
+    /*---------------------------- constructors ----------------------------*/
+    @Inject
+    public ParamProcessorsService(Set<ParamProcessorFactory> factories) {
+        this.factories = new ArrayList<ParamProcessorFactory>(factories);
+    }
+
+    /*------------------------------- methods ------------------------------*/
+    public ParamProcessor createProcessor(ParamMetadata metadata) {
+        for (ParamProcessorFactory factory : factories) {
+            ParamProcessor processor = factory.buildParamProcessor(metadata);
+            if (processor != null) {
+                return processor;
+            }
+        }
+
+        throw new InvalidMethodParameterException(metadata);
+    }
+
+    /*----------------------------------------------------------------------*/
 }

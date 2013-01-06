@@ -38,56 +38,50 @@ import org.zdevra.guice.mvc.ViewPoint;
  * @see org.zdevra.guice.mvc.MvcModule
  */
 public final class NamedView implements ViewPoint {
-	
-// ------------------------------------------------------------------------
-	
-	private final String name;
 
 // ------------------------------------------------------------------------
-	
-	/**
-	 * Deprecated and it's here only for test purpose
-	 */
-	public static ViewPoint create(Class<?> clazz) {
-		NamedViewScanner scanner = new NamedViewScanner();
-		return scanner.scan(clazz.getAnnotations());
-	}
-	
-	
-	/**
-	 * Factory static method which NamedView is constructed
-	 * through.
-	 * 
-	 * @param name
-	 * @return
-	 */
-	public static ViewPoint create(String name) {
-		if (name == null || name.length() == 0) {
-			return ViewPoint.NULL_VIEW;
-		}
-		return new NamedView(name);
-	}
-	
-	
-	private NamedView(String name) {
-		this.name = name;
-	}
-	
-// ------------------------------------------------------------------------
-	
-	public String getName() {
-		return this.name;
-	}
+    private final String name;
 
-	@Override
-	public final void render(ModelMap model, HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) {
-		//do nothing
-	}
-	
-	@Override
-	public String toString() {
-		return "NamedView [name=" + name + "]";
-	}
-		
+// ------------------------------------------------------------------------
+    /**
+     * Deprecated and it's here only for test purpose
+     */
+    public static ViewPoint create(Class<?> clazz) {
+        NamedViewScanner scanner = new NamedViewScanner();
+        return scanner.scan(clazz.getAnnotations());
+    }
+
+    /**
+     * Factory static method which NamedView is constructed
+     * through.
+     * 
+     * @param name
+     * @return
+     */
+    public static ViewPoint create(String name) {
+        if (name == null || name.length() == 0) {
+            return ViewPoint.NULL_VIEW;
+        }
+        return new NamedView(name);
+    }
+
+    private NamedView(String name) {
+        this.name = name;
+    }
+
+// ------------------------------------------------------------------------
+    public String getName() {
+        return this.name;
+    }
+
+    @Override
+    public final void render(ModelMap model, HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) {
+        //do nothing
+    }
+
+    @Override
+    public String toString() {
+        return "NamedView [name=" + name + "]";
+    }
 // ------------------------------------------------------------------------
 }

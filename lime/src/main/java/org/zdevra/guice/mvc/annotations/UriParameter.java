@@ -43,8 +43,10 @@ import org.zdevra.guice.mvc.converters.NoConverterFactory;
  * @see org.zdevra.guice.mvc.parameters.UriParam
  */
 @Retention(RUNTIME)
-@Target({ ElementType.FIELD, ElementType.PARAMETER })
+@Target({ElementType.FIELD, ElementType.PARAMETER})
 public @interface UriParameter {
-	int value();
+
+    int value();
+
     Class<? extends ConversionService.ConverterFactory> converterFactory() default NoConverterFactory.class;
 }

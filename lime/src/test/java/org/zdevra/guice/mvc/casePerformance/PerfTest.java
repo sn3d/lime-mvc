@@ -30,56 +30,50 @@ import org.zdevra.guice.mvc.AbstractTest;
  */
 @Test
 public class PerfTest extends AbstractTest {
-	
-	private final static int COUNT = 1000;
-	
-	public PerfTest() {
-		super(PerfServlet.class);
-	}
-	
-	
-	@Test
-	public void testAllArticlesNamed() throws IOException, ServletException {
-		for (int i = 0; i < COUNT; ++i) {
-			for (int x = 0; x < 5; ++x) {
-				executeSimpleUrl(BASE_URL + "/blog/allarticles/namedview");
-			}
-		}
-	}
-	
-	
-	@Test
-	public void testAllArticlesDirect() throws IOException, ServletException {
-		for (int i = 0; i < COUNT; ++i) { 
-			for (int x = 0; x < 5; ++x) {
-				executeSimpleUrl(BASE_URL + "/blog/allarticles/directview");
-			}
-		}
-	}
-	
-	
-	@Test
-	public void testArticleDetailNamed() throws IOException, ServletException {
-		for (int i = 0; i < COUNT; ++i) { 
-			executeSimpleUrl(BASE_URL + "/blog/article/1/namedview");
-			executeSimpleUrl(BASE_URL + "/blog/article/2/namedview");
-			executeSimpleUrl(BASE_URL + "/blog/article/3/namedview");
-			executeSimpleUrl(BASE_URL + "/blog/article/4/namedview");
-			executeSimpleUrl(BASE_URL + "/blog/article/5/namedview");
-		}
-	}
 
+    private final static int COUNT = 1000;
 
-	@Test
-	public void testArticleDetailDirect() throws IOException, ServletException {
-		for (int i = 0; i < COUNT; ++i) { 
-			executeSimpleUrl(BASE_URL + "/blog/article/1/directview");
-			executeSimpleUrl(BASE_URL + "/blog/article/2/directview");
-			executeSimpleUrl(BASE_URL + "/blog/article/3/directview");
-			executeSimpleUrl(BASE_URL + "/blog/article/4/directview");
-			executeSimpleUrl(BASE_URL + "/blog/article/5/directview");
-		}
-	}
+    public PerfTest() {
+        super(PerfServlet.class);
+    }
 
-	
+    @Test
+    public void testAllArticlesNamed() throws IOException, ServletException {
+        for (int i = 0; i < COUNT; ++i) {
+            for (int x = 0; x < 5; ++x) {
+                executeSimpleUrl(BASE_URL + "/blog/allarticles/namedview");
+            }
+        }
+    }
+
+    @Test
+    public void testAllArticlesDirect() throws IOException, ServletException {
+        for (int i = 0; i < COUNT; ++i) {
+            for (int x = 0; x < 5; ++x) {
+                executeSimpleUrl(BASE_URL + "/blog/allarticles/directview");
+            }
+        }
+    }
+
+    @Test
+    public void testArticleDetailNamed() throws IOException, ServletException {
+        for (int i = 0; i < COUNT; ++i) {
+            executeSimpleUrl(BASE_URL + "/blog/article/1/namedview");
+            executeSimpleUrl(BASE_URL + "/blog/article/2/namedview");
+            executeSimpleUrl(BASE_URL + "/blog/article/3/namedview");
+            executeSimpleUrl(BASE_URL + "/blog/article/4/namedview");
+            executeSimpleUrl(BASE_URL + "/blog/article/5/namedview");
+        }
+    }
+
+    @Test
+    public void testArticleDetailDirect() throws IOException, ServletException {
+        for (int i = 0; i < COUNT; ++i) {
+            executeSimpleUrl(BASE_URL + "/blog/article/1/directview");
+            executeSimpleUrl(BASE_URL + "/blog/article/2/directview");
+            executeSimpleUrl(BASE_URL + "/blog/article/3/directview");
+            executeSimpleUrl(BASE_URL + "/blog/article/4/directview");
+            executeSimpleUrl(BASE_URL + "/blog/article/5/directview");
+        }
+    }
 }

@@ -26,7 +26,6 @@ import java.lang.annotation.Target;
  * be invoked only for HTTP HEAD requests.   
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.METHOD })
+@Target({ElementType.METHOD})
 public @interface HEAD {
-
 }
