@@ -7,7 +7,8 @@ import javax.servlet.http.HttpServletRequest;
  * JSilver view.
  */
 public class JSilverViewException extends ViewException {
-	public JSilverViewException(String viewId, HttpServletRequest request, Throwable e) {
-		super(viewId, request, e);
-	}
+
+    public JSilverViewException(String viewId, HttpServletRequest request, Throwable e) {
+        super(viewId, request, e);
+    }
 }

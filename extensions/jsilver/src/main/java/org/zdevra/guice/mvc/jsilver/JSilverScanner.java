@@ -35,33 +35,28 @@ import com.google.inject.Singleton;
  */
 @Singleton
 class JSilverScanner implements ViewScanner {
-	
-// ------------------------------------------------------------------------
-
-	private final JSilver jSilver;
-	private final ModelService modelService;
 
 // ------------------------------------------------------------------------
-	
-	@Inject
-	public JSilverScanner(JSilver jSilver, ModelService modelService) {
-		this.jSilver = jSilver;
-		this.modelService = modelService;
-	}
-	
+    private final JSilver jSilver;
+    private final ModelService modelService;
+
 // ------------------------------------------------------------------------
-	
-	@Override
-	public ViewPoint scan(Annotation[] controllerAnotations)  
-	{
-		org.zdevra.guice.mvc.jsilver.annotations.JSilverView anot = 
-				Utils.getAnnotation(org.zdevra.guice.mvc.jsilver.annotations.JSilverView.class, controllerAnotations);
-		
-		if (anot == null) {
-			return ViewPoint.NULL_VIEW;
-		}
-		return new JSilverViewPoint(anot.value(), jSilver, modelService);
-	}
-	
+    @Inject
+    public JSilverScanner(JSilver jSilver, ModelService modelService) {
+        this.jSilver = jSilver;
+        this.modelService = modelService;
+    }
+
+// ------------------------------------------------------------------------
+    @Override
+    public ViewPoint scan(Annotation[] controllerAnotations) {
+        org.zdevra.guice.mvc.jsilver.annotations.JSilverView anot =
+                Utils.getAnnotation(org.zdevra.guice.mvc.jsilver.annotations.JSilverView.class, controllerAnotations);
+
+        if (anot == null) {
+            return ViewPoint.NULL_VIEW;
+        }
+        return new JSilverViewPoint(anot.value(), jSilver, modelService);
+    }
 // ------------------------------------------------------------------------
 }

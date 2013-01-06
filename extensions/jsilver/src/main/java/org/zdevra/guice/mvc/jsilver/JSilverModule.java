@@ -99,91 +99,82 @@ import com.google.inject.multibindings.Multibinder;
 public class JSilverModule extends ViewModule {
 
 // ------------------------------------------------------------------------
-	
-	private final ResourceLoader resourceLoader;	
-	private Multibinder<ModelConverter> modelConvertors;
-	
-// ------------------------------------------------------------------------
-
-	/**
-	 * Constructor for JSilver which loads files from classpath
-	 */
-	public JSilverModule() {
-		this(new ClassLoaderResourceLoader(JSilverModule.class.getClassLoader()));
-	}
-	
-	/**
-	 * Constructor for JSilver which loads files from WAR
-	 */
-	public JSilverModule(ServletContext context) {
-		this(new ServletContextResourceLoader(context));
-	}
-
-	/**
-	 * Constructor for JSilver which loads files from concrete resource loader
-	 */
-	public JSilverModule(ResourceLoader rl) {
-		this.resourceLoader = rl;
-	}
-	
-// ------------------------------------------------------------------------
-	
-	/**
-	 * You will put your MVC configuration and convertor's registration 
-	 * into this method.
-	 * 
-	 * @param jSilver
-	 * @throws Exception
-	 */
-	protected void configureJSilver(JSilver jSilver) {
-		
-	}
+    private final ResourceLoader resourceLoader;
+    private Multibinder<ModelConverter> modelConvertors;
 
 // ------------------------------------------------------------------------
+    /**
+     * Constructor for JSilver which loads files from classpath
+     */
+    public JSilverModule() {
+        this(new ClassLoaderResourceLoader(JSilverModule.class.getClassLoader()));
+    }
 
-	@Override
-	protected final void configureViews()
-	{
-		try {
-			JSilver jSilver = null;
-			jSilver = new JSilver(resourceLoader);
-			
-			bind(JSilver.class).toInstance(jSilver);
-			bind(ModelService.class);
-			
-			registerViewScanner(JSilverScanner.class);		
-			modelConvertors = Multibinder.newSetBinder(binder(), ModelConverter.class);
-			
-			registerModelConvertor(ModelCollectionConverter.class);
-			registerModelConvertor(ModelMapConverter.class);
-			
-			configureJSilver(jSilver);		
-		} finally {
-			modelConvertors = null;
-		}
-	}
-	
-	
-	/**
-	 * Method registers the concrete {@link ModelConverter}. Model converters
-	 * are used for transforming Lime data model to JSIlver data model.
-	 * @param modelConvClass
-	 */
-	protected final void registerModelConvertor(Class<? extends ModelConverter> modelConvClass) {
-		modelConvertors.addBinding().to(modelConvClass);
-	}
-	
+    /**
+     * Constructor for JSilver which loads files from WAR
+     */
+    public JSilverModule(ServletContext context) {
+        this(new ServletContextResourceLoader(context));
+    }
 
-	/**
-	 * Method registers the concrete instance of the {@link ModelConverter}. 
-	 * Model converters are used for transforming Lime data model to JSIlver 
-	 * data model.
-	 * 
-	 * @param modelConvClass
-	 */
-	protected final void registerModelConvertor(ModelConverter modelConv) {
-		modelConvertors.addBinding().toInstance(modelConv);
-	}
-		
+    /**
+     * Constructor for JSilver which loads files from concrete resource loader
+     */
+    public JSilverModule(ResourceLoader rl) {
+        this.resourceLoader = rl;
+    }
+
+// ------------------------------------------------------------------------
+    /**
+     * You will put your MVC configuration and convertor's registration 
+     * into this method.
+     * 
+     * @param jSilver
+     * @throws Exception
+     */
+    protected void configureJSilver(JSilver jSilver) {
+    }
+
+// ------------------------------------------------------------------------
+    @Override
+    protected final void configureViews() {
+        try {
+            JSilver jSilver = null;
+            jSilver = new JSilver(resourceLoader);
+
+            bind(JSilver.class).toInstance(jSilver);
+            bind(ModelService.class);
+
+            registerViewScanner(JSilverScanner.class);
+            modelConvertors = Multibinder.newSetBinder(binder(), ModelConverter.class);
+
+            registerModelConvertor(ModelCollectionConverter.class);
+            registerModelConvertor(ModelMapConverter.class);
+
+            configureJSilver(jSilver);
+        } finally {
+            modelConvertors = null;
+        }
+    }
+
+    /**
+     * Method registers the concrete {@link ModelConverter}. Model converters
+     * are used for transforming Lime data model to JSIlver data model.
+     * @param modelConvClass
+     */
+    protected final void registerModelConvertor(Class<? extends ModelConverter> modelConvClass) {
+        modelConvertors.addBinding().to(modelConvClass);
+    }
+
+    /**
+     * Method registers the concrete instance of the {@link ModelConverter}. 
+     * Model converters are used for transforming Lime data model to JSIlver 
+     * data model.
+     * 
+     * @param modelConvClass
+     */
+    protected final void registerModelConvertor(ModelConverter modelConv) {
+        modelConvertors.addBinding().toInstance(modelConv);
+    }
 // ------------------------------------------------------------------------
 }

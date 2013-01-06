@@ -14,7 +14,6 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-
 /**
  * The package implements JSilver (http://code.google.com/p/jsilver/) as a 
  * template engine responsible for views rendering. JSilver is a pure-Java 

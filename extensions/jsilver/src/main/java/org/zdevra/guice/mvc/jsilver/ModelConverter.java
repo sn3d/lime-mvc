@@ -31,6 +31,5 @@ import com.google.clearsilver.jsilver.data.Data;
  */
 public interface ModelConverter {
 
-	public boolean convert(String name, Object obj, Data data, ModelService service);
-	
+    public boolean convert(String name, Object obj, Data data, ModelService service);
 }

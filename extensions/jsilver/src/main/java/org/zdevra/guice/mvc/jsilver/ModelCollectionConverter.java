@@ -23,37 +23,33 @@ import java.util.List;
 import com.google.clearsilver.jsilver.data.Data;
 import com.google.inject.Singleton;
 
-
 /**
  * The class is responsible for converting collections
  * to JSilver data
  */
 @Singleton
 class ModelCollectionConverter implements ModelConverter {
-	
-// ------------------------------------------------------------------------
 
-	@Override
-	public boolean convert(String name, Object obj, Data data, ModelService convetorService) {
-		
-		if (!List.class.isInstance(obj)) {
-			return false;	
-		}
-		
-		Data collectionData = data.createChild(name);
-		Collection<?> collection = (Collection<?>)obj;
-		Iterator<?> iterator = collection.iterator();
-		
-		int pos = 0;
-		while (iterator.hasNext()) {
-			Object item = iterator.next();
-			convetorService.convert(Integer.toString(pos), item, collectionData);
-			pos++;
-		}
-		
-		return true;
-	}
-	
 // ------------------------------------------------------------------------
+    @Override
+    public boolean convert(String name, Object obj, Data data, ModelService convetorService) {
 
+        if (!List.class.isInstance(obj)) {
+            return false;
+        }
+
+        Data collectionData = data.createChild(name);
+        Collection<?> collection = (Collection<?>) obj;
+        Iterator<?> iterator = collection.iterator();
+
+        int pos = 0;
+        while (iterator.hasNext()) {
+            Object item = iterator.next();
+            convetorService.convert(Integer.toString(pos), item, collectionData);
+            pos++;
+        }
+
+        return true;
+    }
+// ------------------------------------------------------------------------
 }

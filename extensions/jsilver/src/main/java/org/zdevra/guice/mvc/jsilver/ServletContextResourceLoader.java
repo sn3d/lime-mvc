@@ -26,13 +26,11 @@ import com.google.clearsilver.jsilver.resourceloader.FileSystemResourceLoader;
  */
 class ServletContextResourceLoader extends FileSystemResourceLoader {
 
-	public ServletContextResourceLoader(ServletContext context) {
-		super(context.getRealPath("/"));
-	}
-	
+    public ServletContextResourceLoader(ServletContext context) {
+        super(context.getRealPath("/"));
+    }
 
-	public ServletContextResourceLoader(ServletContext context, String webappDir ) {
-		super(context.getRealPath(webappDir));
-	}
-	
+    public ServletContextResourceLoader(ServletContext context, String webappDir) {
+        super(context.getRealPath(webappDir));
+    }
 }

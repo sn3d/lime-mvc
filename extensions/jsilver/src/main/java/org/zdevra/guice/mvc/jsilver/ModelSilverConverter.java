@@ -23,14 +23,13 @@ import com.google.clearsilver.jsilver.data.Data;
  * add put the data as symlink to parent.
  */
 class ModelSilverConverter implements ModelConverter {
-	
-	@Override
-	public boolean convert(String name, Object obj, Data data, ModelService convertService) {
-		if (Data.class.isInstance(obj)) {
-			data.setSymlink(name, (Data)obj);
-			return true;
-		}
-		return false;		
-	}
 
+    @Override
+    public boolean convert(String name, Object obj, Data data, ModelService convertService) {
+        if (Data.class.isInstance(obj)) {
+            data.setSymlink(name, (Data) obj);
+            return true;
+        }
+        return false;
+    }
 }
