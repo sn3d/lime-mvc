@@ -16,8 +16,8 @@ public class SecondPersonConverterFactory implements ConversionService.Converter
         return null;
     }
 
-    private static class SecondPersonConverter extends AbstractConverter<Person> {
 
+    private static class SecondPersonConverter extends AbstractConverter<Person> {
         @Override
         public Person convert(String formName, Map<String, String[]> data) {
             String name = "2 " + getValue(formName + "-name", data);
