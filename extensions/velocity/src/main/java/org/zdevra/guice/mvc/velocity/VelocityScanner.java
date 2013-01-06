@@ -35,31 +35,26 @@ import com.google.inject.Singleton;
  */
 @Singleton
 public class VelocityScanner implements ViewScanner {
-	
-// ------------------------------------------------------------------------
-	
-	private final VelocityEngine velocity;
-		
-// ------------------------------------------------------------------------
-			
-	@Inject
-	public VelocityScanner(VelocityEngine velocity) {
-		this.velocity = velocity;
-	}
-		
-// ------------------------------------------------------------------------
-	
-	@Override
-	public ViewPoint scan(Annotation[] controllerAnotations) {
-		org.zdevra.guice.mvc.velocity.annotations.VelocityView anot = 
-				Utils.getAnnotation(org.zdevra.guice.mvc.velocity.annotations.VelocityView.class, controllerAnotations);
-		
-		if (anot == null) {
-			return ViewPoint.NULL_VIEW;
-		}		
-		return new VelocityViewPoint(anot.value(), velocity);
-	}
-	
-// ------------------------------------------------------------------------
 
+// ------------------------------------------------------------------------
+    private final VelocityEngine velocity;
+
+// ------------------------------------------------------------------------
+    @Inject
+    public VelocityScanner(VelocityEngine velocity) {
+        this.velocity = velocity;
+    }
+
+// ------------------------------------------------------------------------
+    @Override
+    public ViewPoint scan(Annotation[] controllerAnotations) {
+        org.zdevra.guice.mvc.velocity.annotations.VelocityView anot =
+                Utils.getAnnotation(org.zdevra.guice.mvc.velocity.annotations.VelocityView.class, controllerAnotations);
+
+        if (anot == null) {
+            return ViewPoint.NULL_VIEW;
+        }
+        return new VelocityViewPoint(anot.value(), velocity);
+    }
+// ------------------------------------------------------------------------
 }

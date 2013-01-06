@@ -14,7 +14,6 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-
 /**
  * The package implements into Lime MVC a Velocity as a 
  * template engine responsible for views rendering.   
