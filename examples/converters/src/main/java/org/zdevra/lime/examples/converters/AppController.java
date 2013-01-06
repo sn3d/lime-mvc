@@ -10,15 +10,14 @@ import org.zdevra.guice.mvc.annotations.View;
 @View("main")
 public class AppController {
 
-    @Path("/")
-    @Model("msg")
+    @Path("/") @Model("msg")
     public String main() {
         return "none";
     }
 
-    @Path("/person/add")
-    @Model("msg")
-    public String addPerson(@RequestParameter("person") Person p) {
+    @Path("/person/add") @Model("msg")
+    public String addPerson( @RequestParameter("person") Person p) {
         return p.toString();
     }
+
 }
