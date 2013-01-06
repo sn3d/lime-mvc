@@ -34,59 +34,54 @@ import freemarker.template.DefaultObjectWrapper;
  * @see MvcModule
  */
 public class FreemarkerModule extends ViewModule {
-	
-// ------------------------------------------------------------------------
-	
-	private final ServletContext context;
-	private Configuration conf;
-	
-// ------------------------------------------------------------------------
-	
-	/**
-	 * Constructor ov Freemarker module which loads templates from classpath
-	 */
-	public FreemarkerModule() {
-		this(null);
-	}
 
-	/**
-	 * Constructor ov Freemarker module which loads template files
-	 * from WAR as JSPs.
-	 */
-	public FreemarkerModule(ServletContext context) {
-		this.context = context;
-	}
-		
 // ------------------------------------------------------------------------
-	
-	/**
-	 * You will implement the MVC configuration and setup into this method
-	 *  
-	 * @param freemakerConfiguration
-	 */
-	protected void configureFreemarker(Configuration freemakerConfiguration) {
-		if (context != null) {
-			conf.setServletContextForTemplateLoading(context, "/");
-		} else {
-			conf.setClassForTemplateLoading(FreemarkerModule.class, "/");
-		}		
-		conf.setObjectWrapper(new DefaultObjectWrapper());
-	}
-	
+    private final ServletContext context;
+    private Configuration conf;
+
 // ------------------------------------------------------------------------
-	
-	@Override
-	protected final void configureViews() {
-		try {
-			//create freemaker's configuration
-			conf = new Configuration();
-			configureFreemarker(conf);
-			bind(Configuration.class).toInstance(conf);					
-			registerViewScanner(FreemarkerScanner.class);						
-		} finally {
-			conf = null;
-		}
-	}
-		
+    /**
+     * Constructor ov Freemarker module which loads templates from classpath
+     */
+    public FreemarkerModule() {
+        this(null);
+    }
+
+    /**
+     * Constructor ov Freemarker module which loads template files
+     * from WAR as JSPs.
+     */
+    public FreemarkerModule(ServletContext context) {
+        this.context = context;
+    }
+
+// ------------------------------------------------------------------------
+    /**
+     * You will implement the MVC configuration and setup into this method
+     *  
+     * @param freemakerConfiguration
+     */
+    protected void configureFreemarker(Configuration freemakerConfiguration) {
+        if (context != null) {
+            conf.setServletContextForTemplateLoading(context, "/");
+        } else {
+            conf.setClassForTemplateLoading(FreemarkerModule.class, "/");
+        }
+        conf.setObjectWrapper(new DefaultObjectWrapper());
+    }
+
+// ------------------------------------------------------------------------
+    @Override
+    protected final void configureViews() {
+        try {
+            //create freemaker's configuration
+            conf = new Configuration();
+            configureFreemarker(conf);
+            bind(Configuration.class).toInstance(conf);
+            registerViewScanner(FreemarkerScanner.class);
+        } finally {
+            conf = null;
+        }
+    }
 // ------------------------------------------------------------------------	
 }
