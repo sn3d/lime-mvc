@@ -56,42 +56,37 @@ import com.google.inject.name.Named;
  */
 @Singleton
 class GuiceExceptionResolver implements ExceptionResolver {
-	
+
 // ------------------------------------------------------------------------
-	
-	@Inject
-	private Injector injector;
-	
-	private final ExceptionHandler defaultHandler; 
-	private final Collection<ExceptionBind> binds;
-	
+    @Inject
+    private Injector injector;
+    private final ExceptionHandler defaultHandler;
+    private final Collection<ExceptionBind> binds;
+
 // ------------------------------------------------------------------------
-				
-	@Inject 
-	public GuiceExceptionResolver(Set<ExceptionBind> exceptionBinds, @Named(ExceptionResolver.DEFAULT_EXCEPTIONHANDLER_NAME) ExceptionHandler defaultHandler) {		
-		List<ExceptionBind> bindsArray = new ArrayList<ExceptionBind>(exceptionBinds);
-		Collections.sort(bindsArray);
-		this.binds = Collections.unmodifiableCollection(bindsArray);
-		this.defaultHandler = defaultHandler;
-	}
-	
+    @Inject
+    public GuiceExceptionResolver(Set<ExceptionBind> exceptionBinds, @Named(ExceptionResolver.DEFAULT_EXCEPTIONHANDLER_NAME) ExceptionHandler defaultHandler) {
+        List<ExceptionBind> bindsArray = new ArrayList<ExceptionBind>(exceptionBinds);
+        Collections.sort(bindsArray);
+        this.binds = Collections.unmodifiableCollection(bindsArray);
+        this.defaultHandler = defaultHandler;
+    }
+
 // ------------------------------------------------------------------------	
-	
-	@Override
-	public void handleException(Throwable t, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {
-		if (t instanceof MethodInvokingException) {
-			t = t.getCause();
-		}
-		
-		for (ExceptionBind bind : binds) {
-			if (bind.getExceptionClass().isInstance(t)) {
-				bind.getHandler(injector).handleException(t, servlet, req, resp);
-				return;
-			}
-		}		
-		
-		defaultHandler.handleException(t, servlet, req, resp);
-	}
-	
+    @Override
+    public void handleException(Throwable t, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {
+        if (t instanceof MethodInvokingException) {
+            t = t.getCause();
+        }
+
+        for (ExceptionBind bind : binds) {
+            if (bind.getExceptionClass().isInstance(t)) {
+                bind.getHandler(injector).handleException(t, servlet, req, resp);
+                return;
+            }
+        }
+
+        defaultHandler.handleException(t, servlet, req, resp);
+    }
 // ------------------------------------------------------------------------
 }

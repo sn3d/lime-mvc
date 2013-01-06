@@ -39,11 +39,11 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Person{" +
-                "name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", email='" + email + '\'' +
-                ", age=" + age +
-                '}';
+        return "Person{"
+                + "name='" + name + '\''
+                + ", surname='" + surname + '\''
+                + ", email='" + email + '\''
+                + ", age=" + age
+                + '}';
     }
 }

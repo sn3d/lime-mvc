@@ -25,9 +25,10 @@ import org.zdevra.guice.mvc.ConversionService;
  *
  */
 public class NoConverterException extends MvcException {
-	public NoConverterException(Class<?> type) {
-		super("No converter for String -> " + type.getCanonicalName() + " is defined.");
-	}
+
+    public NoConverterException(Class<?> type) {
+        super("No converter for String -> " + type.getCanonicalName() + " is defined.");
+    }
 
     public NoConverterException(Class<? extends ConversionService.ConverterFactory> factory, Class<?> type) {
         super("Invalid converter factory '" + factory.getName() + "' for String -> " + type.getCanonicalName() + " is defined.");

@@ -49,23 +49,21 @@ import com.google.inject.Singleton;
  */
 @Singleton
 class ViewScannerService {
-	
-	private Collection<ViewScanner> scanners;
-	
-	@Inject
-	public ViewScannerService(Set<ViewScanner> scanners) {
-		this.scanners = Collections.unmodifiableCollection(scanners); 
-	}
-	
-	
-	public ViewPoint scan(Annotation[] controllerAnnotations) {
-		for (ViewScanner scanner : scanners) {
-			ViewPoint view = scanner.scan(controllerAnnotations);
-			if (view != null && view != ViewPoint.NULL_VIEW) {
-				return view;
-			}
-		}
-		return ViewPoint.NULL_VIEW;
-	}
-		
+
+    private Collection<ViewScanner> scanners;
+
+    @Inject
+    public ViewScannerService(Set<ViewScanner> scanners) {
+        this.scanners = Collections.unmodifiableCollection(scanners);
+    }
+
+    public ViewPoint scan(Annotation[] controllerAnnotations) {
+        for (ViewScanner scanner : scanners) {
+            ViewPoint view = scanner.scan(controllerAnnotations);
+            if (view != null && view != ViewPoint.NULL_VIEW) {
+                return view;
+            }
+        }
+        return ViewPoint.NULL_VIEW;
+    }
 }

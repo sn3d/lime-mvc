@@ -26,13 +26,12 @@ import org.zdevra.guice.mvc.ExceptionHandler;
 
 public class CustomExceptionHandler implements ExceptionHandler {
 
-	@Override
-	public void handleException(Throwable t, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {
-		try {
-			resp.getWriter().write("customized handler:" + t.getMessage());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
+    @Override
+    public void handleException(Throwable t, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {
+        try {
+            resp.getWriter().write("customized handler:" + t.getMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

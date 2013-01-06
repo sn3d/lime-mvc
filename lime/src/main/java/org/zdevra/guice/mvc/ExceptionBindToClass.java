@@ -27,24 +27,20 @@ import com.google.inject.Injector;
  * @see GuiceExceptionResolver
  */
 class ExceptionBindToClass extends ExceptionBind {
-	
-// ------------------------------------------------------------------------
-	
-	private final Class<? extends ExceptionHandler> handlerClass;
-	
-// ------------------------------------------------------------------------
 
-	public ExceptionBindToClass(Class<? extends ExceptionHandler> handlerClass, Class<? extends Throwable> exceptionClass, int order) {
-		super(exceptionClass, order);
-		this.handlerClass = handlerClass; 
-	}
-	
 // ------------------------------------------------------------------------
+    private final Class<? extends ExceptionHandler> handlerClass;
 
-	@Override
-	public ExceptionHandler getHandler(Injector injector) {
-		return injector.getInstance(handlerClass);
-	}
+// ------------------------------------------------------------------------
+    public ExceptionBindToClass(Class<? extends ExceptionHandler> handlerClass, Class<? extends Throwable> exceptionClass, int order) {
+        super(exceptionClass, order);
+        this.handlerClass = handlerClass;
+    }
 
+// ------------------------------------------------------------------------
+    @Override
+    public ExceptionHandler getHandler(Injector injector) {
+        return injector.getInstance(handlerClass);
+    }
 // ------------------------------------------------------------------------
 }

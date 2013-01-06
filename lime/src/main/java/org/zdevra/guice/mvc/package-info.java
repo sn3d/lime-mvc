@@ -14,7 +14,6 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-
 /**
  * The core package of Lime contains main classes like {@link org.zdevra.guice.mvc.MvcModule} and interfaces which
  * can be implemented for custom functionality.
@@ -229,5 +228,3 @@
  *
  */
 package org.zdevra.guice.mvc;
-
-

@@ -23,12 +23,10 @@ import org.zdevra.guice.mvc.ConversionService;
 public class StringConverterFactory implements ConversionService.ConverterFactory {
 
 // ------------------------------------------------------------------------
-
     private final ConversionService.Converter<String> stringConverter = new StringConverter();
     private final ConversionService.Converter<String[]> stringArrayConverter = new StringArrayConverter();
 
 // ------------------------------------------------------------------------
-
     @Override
     public ConversionService.Converter<?> createConverter(Class<?> type, Annotation[] annotations) {
         if (type == String.class) {
@@ -40,14 +38,13 @@ public class StringConverterFactory implements ConversionService.ConverterFactor
     }
 
 // ------------------------------------------------------------------------
-
     private static class StringConverter extends TypeConverter<String> {
+
         @Override
         protected String convertType(String stringValue) {
             return stringValue;
         }
     }
-
 
     private static class StringArrayConverter extends ArrayConverter<String> {
 
@@ -60,6 +57,5 @@ public class StringConverterFactory implements ConversionService.ConverterFactor
             return value;
         }
     }
-
 // ------------------------------------------------------------------------
 }

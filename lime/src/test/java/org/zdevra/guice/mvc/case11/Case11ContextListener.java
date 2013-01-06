@@ -8,17 +8,14 @@ import com.google.inject.servlet.GuiceServletContextListener;
 
 public class Case11ContextListener extends GuiceServletContextListener {
 
-	@Override
-	protected Injector getInjector() 
-	{
-		return Guice.createInjector(new MvcModule() {
-			@Override
-			protected void configureControllers() 
-			{
-				control("/case11/*")
-					.withController(Case11Controller.class);
-			}			
-		});
-	}
-
+    @Override
+    protected Injector getInjector() {
+        return Guice.createInjector(new MvcModule() {
+            @Override
+            protected void configureControllers() {
+                control("/case11/*")
+                        .withController(Case11Controller.class);
+            }
+        });
+    }
 }

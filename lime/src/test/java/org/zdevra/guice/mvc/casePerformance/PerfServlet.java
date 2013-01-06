@@ -20,13 +20,11 @@ import org.zdevra.guice.mvc.TestServlet;
 
 public class PerfServlet extends TestServlet {
 
-	public PerfServlet() {
-		super(
-			new Class<?>[] { 
-				IBlogArticlesController.class 
-			},
-			new BlogModule() 
-		);
-	}
-	
+    public PerfServlet() {
+        super(
+                new Class<?>[]{
+                    IBlogArticlesController.class
+                },
+                new BlogModule());
+    }
 }

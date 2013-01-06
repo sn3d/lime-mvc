@@ -37,73 +37,65 @@ package org.zdevra.guice.mvc;
  */
 public class ModelAndView {
 
-/*---------------------------- m. variables ----------------------------*/
-	
-	private ModelMap model;
-	private ViewPoint view;
-	
-/*---------------------------- constructors ----------------------------*/
-	
-	/**
-	 * constructs a ModelAndView object and as a view is set
-	 * undefined view View.NULL_VIEW.
-	 */
-	public ModelAndView() {
-		this(new ModelMap(), ViewPoint.NULL_VIEW);
-	}
+    /*---------------------------- m. variables ----------------------------*/
+    private ModelMap model;
+    private ViewPoint view;
 
-	/**
-	 * constructs a ModelAndView object with empty model 
-	 * and concrete view.
-	 * @param view
-	 */
-	public ModelAndView(ViewPoint view) {
-		this(new ModelMap(), view);
-	}
-	
-	/**
-	 * constructos a ModelAndView object with concrete model
-	 * and view. 
-	 * @param model
-	 * @param view
-	 */
-	public ModelAndView(ModelMap model, ViewPoint view) {
-		this.model = model;
-		this.view = view;
-	}
-		
-/*------------------------------- methods ------------------------------*/
+    /*---------------------------- constructors ----------------------------*/
+    /**
+     * constructs a ModelAndView object and as a view is set
+     * undefined view View.NULL_VIEW.
+     */
+    public ModelAndView() {
+        this(new ModelMap(), ViewPoint.NULL_VIEW);
+    }
 
-	public ModelMap getModel() {
-		return model;
-	}
+    /**
+     * constructs a ModelAndView object with empty model 
+     * and concrete view.
+     * @param view
+     */
+    public ModelAndView(ViewPoint view) {
+        this(new ModelMap(), view);
+    }
 
-	
-	public ViewPoint getView() {
-		return view;
-	}
-	
-	public void addModel(ModelMap m) {
-		this.model.addModel(m);
-	}
-	
-	
-	public void addView(ViewPoint v) {
-		if (v != ViewPoint.NULL_VIEW) { 
-			this.view = v;
-		}
-	}	
-	
-	/**
-	 * Method is used internally by {@link MvcDispatcherServlet}.
-	 * @param mav
-	 */
-	void mergeModelAndView(ModelAndView mav) {
-		this.addModel(mav.model);
-		this.addView(mav.view);
-	}
-	
-	
-	
-/*---------------------------------------------------------------------*/
+    /**
+     * constructos a ModelAndView object with concrete model
+     * and view. 
+     * @param model
+     * @param view
+     */
+    public ModelAndView(ModelMap model, ViewPoint view) {
+        this.model = model;
+        this.view = view;
+    }
+
+    /*------------------------------- methods ------------------------------*/
+    public ModelMap getModel() {
+        return model;
+    }
+
+    public ViewPoint getView() {
+        return view;
+    }
+
+    public void addModel(ModelMap m) {
+        this.model.addModel(m);
+    }
+
+    public void addView(ViewPoint v) {
+        if (v != ViewPoint.NULL_VIEW) {
+            this.view = v;
+        }
+    }
+
+    /**
+     * Method is used internally by {@link MvcDispatcherServlet}.
+     * @param mav
+     */
+    void mergeModelAndView(ModelAndView mav) {
+        this.addModel(mav.model);
+        this.addView(mav.view);
+    }
+    /*---------------------------------------------------------------------*/
 }

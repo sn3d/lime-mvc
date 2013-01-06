@@ -47,7 +47,10 @@ import java.lang.annotation.RetentionPolicy;
  */
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Controller {
-	public String[] sessionAttributes() default {};
-	public String view() default "";
-	public String path() default "";	
+
+    public String[] sessionAttributes() default {};
+
+    public String view() default "";
+
+    public String path() default "";
 }

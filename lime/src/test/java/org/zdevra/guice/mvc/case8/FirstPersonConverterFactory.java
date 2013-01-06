@@ -16,8 +16,8 @@ public class FirstPersonConverterFactory implements ConversionService.ConverterF
         return null;
     }
 
-
     private static class FirstPersonConverter extends AbstractConverter<Person> {
+
         @Override
         public Person convert(String formName, Map<String, String[]> data) {
             String name = "1 " + getValue(formName + "-name", data);

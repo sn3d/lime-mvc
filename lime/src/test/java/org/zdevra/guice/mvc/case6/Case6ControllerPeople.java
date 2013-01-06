@@ -24,15 +24,16 @@ import org.zdevra.guice.mvc.annotations.View;
 @Controller
 @View("people.jsp")
 public class Case6ControllerPeople {
-	
-	@Path("/common") @Model("msg1")
-	public String commonMethod() {
-		return "people common";
-	}
-	
-	@Path("/people") @Model("msg1")
-	public String peopleMethod() {
-		return "people method";
-	}
 
+    @Path("/common")
+    @Model("msg1")
+    public String commonMethod() {
+        return "people common";
+    }
+
+    @Path("/people")
+    @Model("msg1")
+    public String peopleMethod() {
+        return "people method";
+    }
 }

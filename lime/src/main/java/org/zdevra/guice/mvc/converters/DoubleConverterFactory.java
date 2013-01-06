@@ -26,73 +26,67 @@ import org.zdevra.guice.mvc.ConversionService.ConverterFactory;
  * The factory creates a converter which provide conversion of double values
  */
 public class DoubleConverterFactory implements ConverterFactory {
-	
-// ------------------------------------------------------------------------
-	
-	private final static Converter<Double>    typeConverter     = new DoubleConverter();
-	private final static Converter<Double[]>  objArrayConverter = new DoubleObjArrayConverter();
-	private final static Converter<double[]>  arrayConverter    = new DoubleArrayConverter();
 
 // ------------------------------------------------------------------------
+    private final static Converter<Double> typeConverter = new DoubleConverter();
+    private final static Converter<Double[]> objArrayConverter = new DoubleObjArrayConverter();
+    private final static Converter<double[]> arrayConverter = new DoubleArrayConverter();
 
-	@Override
-	public Converter<?> createConverter(Class<?> type, Annotation[] annotations)
-	{
-		if ((type == Double.class) || (type == double.class)) {
-			return typeConverter;
-		} else if (type == Double[].class) {
-			return objArrayConverter;
-		} else if (type == double[].class) {
-			return arrayConverter;
-		}
-		
-		return null;
-	}
-	
 // ------------------------------------------------------------------------
-	
-	
-	private static class DoubleConverter extends TypeConverter<Double> {
-		@Override
-		protected Double convertType(String stringValue) {
-			return Double.parseDouble(stringValue);
-		}		
-	}
-		
-	private static class DoubleArrayConverter implements Converter<double[]> {
+    @Override
+    public Converter<?> createConverter(Class<?> type, Annotation[] annotations) {
+        if ((type == Double.class) || (type == double.class)) {
+            return typeConverter;
+        } else if (type == Double[].class) {
+            return objArrayConverter;
+        } else if (type == double[].class) {
+            return arrayConverter;
+        }
 
-		@Override
-		public double[] convert(String name, Map<String, String[]> data) {
-			String[] values = data.get(name);
-			if (values == null) {
-				return new double[] {};
-			}
-			
-			double[] out = new double[values.length];
-			for (int i = 0; i < values.length; ++i) {
-				out[i] = Double.parseDouble(values[i]);
-			}
-			return out;
-		}		
-	}
-	
-	private static class DoubleObjArrayConverter implements Converter<Double[]> {
+        return null;
+    }
 
-		@Override
-		public Double[] convert(String name, Map<String, String[]> data) {
-			String[] values = data.get(name);
-			if (values == null) {
-				return new Double[] {};
-			}
-			
-			Double[] out = new Double[values.length];
-			for (int i = 0; i < values.length; ++i) {
-				out[i] = Double.parseDouble(values[i]);
-			}
-			return out;
-		}		
-	}
-	
 // ------------------------------------------------------------------------
+    private static class DoubleConverter extends TypeConverter<Double> {
 
+        @Override
+        protected Double convertType(String stringValue) {
+            return Double.parseDouble(stringValue);
+        }
+    }
+
+    private static class DoubleArrayConverter implements Converter<double[]> {
+
+        @Override
+        public double[] convert(String name, Map<String, String[]> data) {
+            String[] values = data.get(name);
+            if (values == null) {
+                return new double[]{};
+            }
+
+            double[] out = new double[values.length];
+            for (int i = 0; i < values.length; ++i) {
+                out[i] = Double.parseDouble(values[i]);
+            }
+            return out;
+        }
+    }
+
+    private static class DoubleObjArrayConverter implements Converter<Double[]> {
+
+        @Override
+        public Double[] convert(String name, Map<String, String[]> data) {
+            String[] values = data.get(name);
+            if (values == null) {
+                return new Double[]{};
+            }
+
+            Double[] out = new Double[values.length];
+            for (int i = 0; i < values.length; ++i) {
+                out[i] = Double.parseDouble(values[i]);
+            }
+            return out;
+        }
+    }
+// ------------------------------------------------------------------------
 }

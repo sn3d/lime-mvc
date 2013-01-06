@@ -35,61 +35,53 @@ import com.google.inject.name.Named;
  * 
  */
 public class InjectorParam implements ParamProcessor {
-/*---------------------------- m. variables ----------------------------*/
+    /*---------------------------- m. variables ----------------------------*/
 
-	private final Key<?> key;
+    private final Key<?> key;
 
-/*----------------------------------------------------------------------*/
+    /*----------------------------------------------------------------------*/
+    /**
+     * Factory class for {@link InjectorParam}
+     */
+    public static class Factory implements ParamProcessorFactory {
 
-	/**
-	 * Factory class for {@link InjectorParam}
-	 */
-	public  static class Factory implements ParamProcessorFactory {
-		
-		@Override
-		public ParamProcessor buildParamProcessor(ParamMetadata metadata) {
-			if (isInjectAnnotated(metadata.getMethod())) {
-				Annotation namedAnnotation = metadata.getAnnotation(Named.class);
-				if (namedAnnotation == null) {
-					namedAnnotation = metadata.getAnnotation(javax.inject.Named.class);
-				}				
-				return new InjectorParam(metadata.getType(), namedAnnotation);
-			}
-			return null;
-		}
-		
-		
-		private boolean isInjectAnnotated(Method method) {
-			Annotation inject = method.getAnnotation(Inject.class);
-			if (inject != null) {
-				return true;
-			}
-			return false;
-		}
-		
-	}
+        @Override
+        public ParamProcessor buildParamProcessor(ParamMetadata metadata) {
+            if (isInjectAnnotated(metadata.getMethod())) {
+                Annotation namedAnnotation = metadata.getAnnotation(Named.class);
+                if (namedAnnotation == null) {
+                    namedAnnotation = metadata.getAnnotation(javax.inject.Named.class);
+                }
+                return new InjectorParam(metadata.getType(), namedAnnotation);
+            }
+            return null;
+        }
 
-/*----------------------------------------------------------------------*/
-	
-	/**
-	 * Constructor
-	 */
-	private InjectorParam(Class<?> type, Annotation annotation) {		
-		if (annotation == null) {
-			this.key = Key.get(type);
-		} else {
-			this.key = Key.get(type, annotation);
-		}
-	}
+        private boolean isInjectAnnotated(Method method) {
+            Annotation inject = method.getAnnotation(Inject.class);
+            if (inject != null) {
+                return true;
+            }
+            return false;
+        }
+    }
 
-	
-	@Override
-	public Object getValue(InvokeData data) {				
-		Object instance = data.getInjector().getInstance(key);
-		return instance;
-	}
-	
-	
+    /*----------------------------------------------------------------------*/
+    /**
+     * Constructor
+     */
+    private InjectorParam(Class<?> type, Annotation annotation) {
+        if (annotation == null) {
+            this.key = Key.get(type);
+        } else {
+            this.key = Key.get(type, annotation);
+        }
+    }
 
-/*----------------------------------------------------------------------*/
+    @Override
+    public Object getValue(InvokeData data) {
+        Object instance = data.getInjector().getInstance(key);
+        return instance;
+    }
+    /*----------------------------------------------------------------------*/
 }

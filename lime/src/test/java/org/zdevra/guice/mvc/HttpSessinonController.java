@@ -22,8 +22,8 @@ import org.zdevra.guice.mvc.annotations.Controller;
 
 @Controller
 public class HttpSessinonController {
-	
-	public String sessionMethod(HttpSession session) {
-		return "sessionMethod:" + session.getAttribute("test");
-	}
+
+    public String sessionMethod(HttpSession session) {
+        return "sessionMethod:" + session.getAttribute("test");
+    }
 }

@@ -22,15 +22,14 @@ import com.google.clearsilver.jsilver.data.Data;
  * This is default transformations class which is used, if 
  * there is no converter class for object. 
  */
-class ModelStringConverter implements ModelConverter{
-	
-	@Override
-	public boolean convert(String name, Object obj, Data data, ModelService service) {
-		if (obj == null) {
-			data.setValue(name, "null"); 
-		}
-		data.setValue(name, obj.toString());
-		return true;
-	}
+class ModelStringConverter implements ModelConverter {
 
+    @Override
+    public boolean convert(String name, Object obj, Data data, ModelService service) {
+        if (obj == null) {
+            data.setValue(name, "null");
+        }
+        data.setValue(name, obj.toString());
+        return true;
+    }
 }

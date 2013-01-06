@@ -44,8 +44,10 @@ import java.lang.annotation.Target;
  * @see BooleanConverter
  */
 @Retention(RUNTIME)
-@Target({ ElementType.FIELD, ElementType.PARAMETER })
+@Target({ElementType.FIELD, ElementType.PARAMETER})
 public @interface BooleanConv {
-	public String trueVal() default "true";
-	public String falseVal() default "false";
+
+    public String trueVal() default "true";
+
+    public String falseVal() default "false";
 }

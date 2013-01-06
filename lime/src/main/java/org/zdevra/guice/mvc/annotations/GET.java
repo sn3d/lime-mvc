@@ -26,6 +26,6 @@ import java.lang.annotation.Target;
  * be invoked only for HTTP GET requests.   
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.METHOD })
+@Target({ElementType.METHOD})
 public @interface GET {
 }

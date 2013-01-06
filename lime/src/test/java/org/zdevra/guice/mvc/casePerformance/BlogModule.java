@@ -20,14 +20,13 @@ import org.zdevra.guice.mvc.MvcModule;
 
 public class BlogModule extends MvcModule {
 
-	@Override
-	protected void configureControllers() {
-		
-		bind(IBlogArticlesController.class).to(BlogArticlesController.class);
-		
-		//setup views
-		bindViewName("allarticles.jsp").toView(ViewAllArticles.class);
-		bindViewName("article.jsp").toView(ViewArticle.class);
-	}
+    @Override
+    protected void configureControllers() {
 
+        bind(IBlogArticlesController.class).to(BlogArticlesController.class);
+
+        //setup views
+        bindViewName("allarticles.jsp").toView(ViewAllArticles.class);
+        bindViewName("article.jsp").toView(ViewArticle.class);
+    }
 }

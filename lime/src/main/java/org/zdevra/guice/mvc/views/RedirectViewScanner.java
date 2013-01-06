@@ -29,19 +29,16 @@ import org.zdevra.guice.mvc.annotations.RedirectView;
  * 
  */
 public class RedirectViewScanner implements ViewScanner {
-	
-	//-----------------------------------------------------------------------------------------------------------
-	// methods
-	//-----------------------------------------------------------------------------------------------------------
 
-	@Override
-	public final ViewPoint scan(Annotation[] annotations) 
-	{
-		RedirectView redirectAnnotation = Utils.getAnnotation(RedirectView.class, annotations);
-		if (redirectAnnotation == null) {
-			return ViewPoint.NULL_VIEW;
-		}		
-		return new RedirectViewPoint(redirectAnnotation.value(), redirectAnnotation.contextRelative());
-	}
-
+    //-----------------------------------------------------------------------------------------------------------
+    // methods
+    //-----------------------------------------------------------------------------------------------------------
+    @Override
+    public final ViewPoint scan(Annotation[] annotations) {
+        RedirectView redirectAnnotation = Utils.getAnnotation(RedirectView.class, annotations);
+        if (redirectAnnotation == null) {
+            return ViewPoint.NULL_VIEW;
+        }
+        return new RedirectViewPoint(redirectAnnotation.value(), redirectAnnotation.contextRelative());
+    }
 }

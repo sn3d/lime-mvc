@@ -27,5 +27,6 @@ import org.zdevra.guice.mvc.InvokeData;
  * @see ParamProcessorService
  */
 public interface ParamProcessor {
-	public Object getValue(InvokeData data);
+
+    public Object getValue(InvokeData data);
 }

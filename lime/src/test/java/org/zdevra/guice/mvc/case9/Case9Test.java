@@ -19,68 +19,55 @@ import org.zdevra.guice.mvc.WebTest;
  */
 public class Case9Test extends WebTest {
 
-	//------------------------------------------------------------------------------------
-	// setup
-	//------------------------------------------------------------------------------------
-	
-	@Override
-	protected void setupWebserver() 
-	{
-		setPort(9191);
-		addWebapp("src/test/java/org/zdevra/guice/mvc/case9/webapp", "/");		
-	}
+    //------------------------------------------------------------------------------------
+    // setup
+    //------------------------------------------------------------------------------------
+    @Override
+    protected void setupWebserver() {
+        setPort(9191);
+        addWebapp("src/test/java/org/zdevra/guice/mvc/case9/webapp", "/");
+    }
 
-	//------------------------------------------------------------------------------------
-	// tests
-	//------------------------------------------------------------------------------------
-	
-	@Test
-	public void testPeople() throws InterruptedException, HttpException, IOException
-	{
-		HttpMethod req = new GetMethod("http://localhost:9191/case9/people");
-		client.executeMethod(req);
-		String out = req.getResponseBodyAsString();		
-		Assert.assertEquals("SUCCESS", out);
-	}
-	
-	
-	@Test
-	public void testPeopleNew() throws InterruptedException, HttpException, IOException
-	{
-		HttpMethod req = new GetMethod("http://localhost:9191/case9/people/new");
-		client.executeMethod(req);
-		String out = req.getResponseBodyAsString();
-		Assert.assertEquals("FORM", out);
-	}
+    //------------------------------------------------------------------------------------
+    // tests
+    //------------------------------------------------------------------------------------
+    @Test
+    public void testPeople() throws InterruptedException, HttpException, IOException {
+        HttpMethod req = new GetMethod("http://localhost:9191/case9/people");
+        client.executeMethod(req);
+        String out = req.getResponseBodyAsString();
+        Assert.assertEquals("SUCCESS", out);
+    }
 
-	
-	@Test
-	public void testPeopleNewSecond() throws InterruptedException, HttpException, IOException
-	{
-		HttpMethod req = new GetMethod("http://localhost:9191/case9/people/new/second");
-		client.executeMethod(req);
-		String out = req.getResponseBodyAsString();
-		Assert.assertEquals("FORM 2", out);
-	}
-	
-	
-	@Test
-	public void testGetPeople() throws InterruptedException, HttpException, IOException
-	{
-		HttpMethod req = new GetMethod("http://localhost:9191/case9/people/rest");
-		client.executeMethod(req);
-		String out = req.getResponseBodyAsString();
-		Assert.assertEquals("FORM GET", out);
-	}
+    @Test
+    public void testPeopleNew() throws InterruptedException, HttpException, IOException {
+        HttpMethod req = new GetMethod("http://localhost:9191/case9/people/new");
+        client.executeMethod(req);
+        String out = req.getResponseBodyAsString();
+        Assert.assertEquals("FORM", out);
+    }
 
+    @Test
+    public void testPeopleNewSecond() throws InterruptedException, HttpException, IOException {
+        HttpMethod req = new GetMethod("http://localhost:9191/case9/people/new/second");
+        client.executeMethod(req);
+        String out = req.getResponseBodyAsString();
+        Assert.assertEquals("FORM 2", out);
+    }
 
-	@Test
-	public void testPostPeople() throws InterruptedException, HttpException, IOException
-	{
-		HttpMethod req = new PostMethod("http://localhost:9191/case9/people/rest");
-		client.executeMethod(req);
-		String out = req.getResponseBodyAsString();
-		Assert.assertEquals("FORM POST", out);
-	}
+    @Test
+    public void testGetPeople() throws InterruptedException, HttpException, IOException {
+        HttpMethod req = new GetMethod("http://localhost:9191/case9/people/rest");
+        client.executeMethod(req);
+        String out = req.getResponseBodyAsString();
+        Assert.assertEquals("FORM GET", out);
+    }
 
+    @Test
+    public void testPostPeople() throws InterruptedException, HttpException, IOException {
+        HttpMethod req = new PostMethod("http://localhost:9191/case9/people/rest");
+        client.executeMethod(req);
+        String out = req.getResponseBodyAsString();
+        Assert.assertEquals("FORM POST", out);
+    }
 }

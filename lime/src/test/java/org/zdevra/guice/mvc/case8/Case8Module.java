@@ -5,11 +5,10 @@ import org.zdevra.guice.mvc.TestView;
 
 public class Case8Module extends MvcModule {
 
-	@Override
-	protected void configureControllers() {
+    @Override
+    protected void configureControllers() {
         registerConverter(FirstPersonConverterFactory.class);
         registerConverter(SecondPersonConverterFactory.class);
-		bindViewName("default").toViewInstance(new TestView("0"));
-	}
-
+        bindViewName("default").toViewInstance(new TestView("0"));
+    }
 }

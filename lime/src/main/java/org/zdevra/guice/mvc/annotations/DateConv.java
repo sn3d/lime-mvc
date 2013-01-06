@@ -31,8 +31,10 @@ import org.zdevra.guice.mvc.converters.DateConverterFactory;
  * @see DateConverterFactory
  */
 @Retention(RUNTIME)
-@Target({ ElementType.FIELD, ElementType.PARAMETER })
+@Target({ElementType.FIELD, ElementType.PARAMETER})
 public @interface DateConv {
-	public String value() default "YYYYMMDD";
-	public String defaultValue() default "";
+
+    public String value() default "YYYYMMDD";
+
+    public String defaultValue() default "";
 }

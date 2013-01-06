@@ -31,63 +31,58 @@ import com.google.inject.Binder;
  * @see GuiceExceptionResolver
  */
 class ExceptionResolverBuilder extends MultibinderBuilder<ExceptionBind> {
-	
-// ------------------------------------------------------------------------
-	
-	private int orderIndex;
-	
-// ------------------------------------------------------------------------
-		
-	public ExceptionResolverBuilder(Binder binder) {
-		super(binder, ExceptionBind.class);
-		this.orderIndex = 0;
-	}
 
 // ------------------------------------------------------------------------
-	
-	public ExceptionResolverBindingBuilder bindException(Class<? extends Throwable> exceptionClass) {
-		return new ExceptionResolverBindBuilderImpl(exceptionClass);
-	}
-	
+    private int orderIndex;
+
 // ------------------------------------------------------------------------
-		
-	public class ExceptionResolverBindBuilderImpl implements ExceptionResolverBindingBuilder {
-		
-		private final Class<? extends Throwable> exceptionClass;
-		
-		public ExceptionResolverBindBuilderImpl(Class<? extends Throwable> exceptionClass) {
-			this.exceptionClass = exceptionClass;
-		}
+    public ExceptionResolverBuilder(Binder binder) {
+        super(binder, ExceptionBind.class);
+        this.orderIndex = 0;
+    }
 
-		@Override
-		public void toHandler(Class<? extends ExceptionHandler> handlerClass) 
-		{
-			registerInstance(ExceptionBind.toClass(handlerClass, exceptionClass, orderIndex));
-			orderIndex++;
-		}
+// ------------------------------------------------------------------------
+    public ExceptionResolverBindingBuilder bindException(Class<? extends Throwable> exceptionClass) {
+        return new ExceptionResolverBindBuilderImpl(exceptionClass);
+    }
 
-		@Override
-		public void toHandlerInstance(ExceptionHandler handler) {						
-			ExceptionBind binding = ExceptionBind.toInstance(handler, exceptionClass, orderIndex);
-			registerInstance(binding);
-			orderIndex++;			
-		}
-		
-		@Override
-		public void toErrorView(String viewName) {			
-			toErrorView( NamedView.create(viewName) );
-		}
-		
-		@Override
-		public void toErrorView(ViewPoint errorView) {			
-			ExceptionHandler handler = new ViewExceptionHandler( errorView );
-			binder.requestInjection(errorView);
-			binder.requestInjection(handler);
-			ExceptionBind exceptionBind = ExceptionBind.toInstance(handler, exceptionClass, orderIndex);
-			registerInstance( exceptionBind );
-			orderIndex++;
-		};	
-	}
-	
+// ------------------------------------------------------------------------
+    public class ExceptionResolverBindBuilderImpl implements ExceptionResolverBindingBuilder {
+
+        private final Class<? extends Throwable> exceptionClass;
+
+        public ExceptionResolverBindBuilderImpl(Class<? extends Throwable> exceptionClass) {
+            this.exceptionClass = exceptionClass;
+        }
+
+        @Override
+        public void toHandler(Class<? extends ExceptionHandler> handlerClass) {
+            registerInstance(ExceptionBind.toClass(handlerClass, exceptionClass, orderIndex));
+            orderIndex++;
+        }
+
+        @Override
+        public void toHandlerInstance(ExceptionHandler handler) {
+            ExceptionBind binding = ExceptionBind.toInstance(handler, exceptionClass, orderIndex);
+            registerInstance(binding);
+            orderIndex++;
+        }
+
+        @Override
+        public void toErrorView(String viewName) {
+            toErrorView(NamedView.create(viewName));
+        }
+
+        @Override
+        public void toErrorView(ViewPoint errorView) {
+            ExceptionHandler handler = new ViewExceptionHandler(errorView);
+            binder.requestInjection(errorView);
+            binder.requestInjection(handler);
+            ExceptionBind exceptionBind = ExceptionBind.toInstance(handler, exceptionClass, orderIndex);
+            registerInstance(exceptionBind);
+            orderIndex++;
+        }
+    ;
+}
 // ------------------------------------------------------------------------
 }

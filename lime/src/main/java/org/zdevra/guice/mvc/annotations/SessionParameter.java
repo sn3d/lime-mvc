@@ -41,7 +41,8 @@ import java.lang.annotation.Target;
  * @see org.zdevra.guice.mvc.parameters.SessionAttributeParam
  */
 @Retention(RUNTIME)
-@Target({ ElementType.FIELD, ElementType.PARAMETER })
+@Target({ElementType.FIELD, ElementType.PARAMETER})
 public @interface SessionParameter {
-	String value();
+
+    String value();
 }

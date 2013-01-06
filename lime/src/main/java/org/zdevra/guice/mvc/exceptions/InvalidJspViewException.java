@@ -20,9 +20,8 @@ package org.zdevra.guice.mvc.exceptions;
  * The exception is throwed if the Jsp is invalid or doesn't exists
  */
 public class InvalidJspViewException extends MvcException {
-	
-	public InvalidJspViewException(String jspView) {
-		super("The path to the jsp view '" + jspView + "' is invalid. Example of the valid jsp: '/test.jsp'.");
-	}
 
+    public InvalidJspViewException(String jspView) {
+        super("The path to the jsp view '" + jspView + "' is invalid. Example of the valid jsp: '/test.jsp'.");
+    }
 }
