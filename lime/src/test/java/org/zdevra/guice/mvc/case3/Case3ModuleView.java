@@ -5,9 +5,8 @@ import org.zdevra.guice.mvc.ViewModule;
 
 public class Case3ModuleView extends ViewModule {
 
-	@Override
-	protected void configureViews() {
-		bindViewName("five").toViewInstance(new TestView("5"));
-	}
-
+    @Override
+    protected void configureViews() {
+        bindViewName("five").toViewInstance(new TestView("5"));
+    }
 }

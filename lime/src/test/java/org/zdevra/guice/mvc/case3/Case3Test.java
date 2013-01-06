@@ -1,19 +1,21 @@
-/*****************************************************************************
+/**
+ * ***************************************************************************
  * Copyright 2011 Zdenko Vrabel
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * 
- *****************************************************************************/
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ *
+ ****************************************************************************
+ */
 package org.zdevra.guice.mvc.case3;
 
 import java.io.IOException;
@@ -33,78 +35,71 @@ import com.meterware.httpunit.WebResponse;
 import com.meterware.servletunit.InvocationContext;
 import com.meterware.servletunit.ServletUnitClient;
 
-
 /**
- * This test is testing views and view resolver 
- * functionality
+ * This test is testing views and view resolver functionality
  */
 @Test
 public class Case3Test extends AbstractTest {
 
-	public static class Case3Servlet extends TestServlet {
-		public Case3Servlet() {
-			super(Case3Controller.class, new Case3Module() );
-		}	
-	}
-	
-	
-	public Case3Test() {
-		super(Case3Servlet.class);
-	}
-	
-	
-	@Test
-	public void testDefaultView() throws IOException, ServletException {
-		//prepare request
-		ServletUnitClient sc = sr.newClient();
-		WebRequest request   = new GetMethodWebRequest( "http://www.test.com/test/view/default" );
-		InvocationContext ic = sc.newInvocation( request );		
-		
-		//invoke request
-		Servlet ss = ic.getServlet();
-		ss.service(ic.getRequest(), ic.getResponse());			
-		WebResponse response = ic.getServletResponse();
-		
-		//process response
-		String out = response.getText();
-		Assert.assertTrue( out.contains("viewId=0") );
-	}
-	
-	
-	@Test
-	public void testUnknownView() throws IOException, ServletException {
-		//prepare request
-		ServletUnitClient sc = sr.newClient();
-		WebRequest request   = new GetMethodWebRequest( "http://www.test.com/test/view/unknown" );
-		InvocationContext ic = sc.newInvocation( request );		
-		
-		//invoke request
-		Servlet ss = ic.getServlet();
-		ss.service(ic.getRequest(), ic.getResponse());			
-		WebResponse response = ic.getServletResponse();
-		
-		//process response
-		int code = response.getResponseCode();
-		Assert.assertTrue(code == HttpServletResponse.SC_NOT_FOUND);
-	}
-		
-	
-	@Test
-	public void testView5() throws IOException, ServletException {
-		//prepare request
-		ServletUnitClient sc = sr.newClient();
-		WebRequest request   = new GetMethodWebRequest( "http://www.test.com/test/view/5" );
-		InvocationContext ic = sc.newInvocation( request );		
-		
-		//invoke request
-		Servlet ss = ic.getServlet();
-		ss.service(ic.getRequest(), ic.getResponse());			
-		WebResponse response = ic.getServletResponse();
-		
-		//process response
-		String out = response.getText();
-		Assert.assertTrue( out.contains("viewId=5") );
-	}
+    public static class Case3Servlet extends TestServlet {
 
+        public Case3Servlet() {
+            super(Case3Controller.class, new Case3Module());
+        }
+    }
 
+    public Case3Test() {
+        super(Case3Servlet.class);
+    }
+
+    @Test
+    public void testDefaultView() throws IOException, ServletException {
+        //prepare request
+        ServletUnitClient sc = sr.newClient();
+        WebRequest request = new GetMethodWebRequest("http://www.test.com/test/view/default");
+        InvocationContext ic = sc.newInvocation(request);
+
+        //invoke request
+        Servlet ss = ic.getServlet();
+        ss.service(ic.getRequest(), ic.getResponse());
+        WebResponse response = ic.getServletResponse();
+
+        //process response
+        String out = response.getText();
+        Assert.assertTrue(out.contains("viewId=0"));
+    }
+
+    @Test
+    public void testUnknownView() throws IOException, ServletException {
+        //prepare request
+        ServletUnitClient sc = sr.newClient();
+        WebRequest request = new GetMethodWebRequest("http://www.test.com/test/view/unknown");
+        InvocationContext ic = sc.newInvocation(request);
+
+        //invoke request
+        Servlet ss = ic.getServlet();
+        ss.service(ic.getRequest(), ic.getResponse());
+        WebResponse response = ic.getServletResponse();
+
+        //process response
+        int code = response.getResponseCode();
+        Assert.assertTrue(code == HttpServletResponse.SC_NOT_FOUND);
+    }
+
+    @Test
+    public void testView5() throws IOException, ServletException {
+        //prepare request
+        ServletUnitClient sc = sr.newClient();
+        WebRequest request = new GetMethodWebRequest("http://www.test.com/test/view/5");
+        InvocationContext ic = sc.newInvocation(request);
+
+        //invoke request
+        Servlet ss = ic.getServlet();
+        ss.service(ic.getRequest(), ic.getResponse());
+        WebResponse response = ic.getServletResponse();
+
+        //process response
+        String out = response.getText();
+        Assert.assertTrue(out.contains("viewId=5"));
+    }
 }
