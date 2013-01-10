@@ -16,7 +16,6 @@
  *****************************************************************************/
 package org.zdevra.guice.mvc;
 
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -148,263 +147,251 @@ import com.google.inject.servlet.ServletModule;
  *  
  */
 public abstract class MvcModule extends ServletModule {
-	
-// ------------------------------------------------------------------------
-		
-	private static final Logger logger = Logger.getLogger(MvcModule.class.getName());
-	
-	private MultibinderBuilder<ConverterFactory> conversionServiceBuilder;
-	private ExceptionResolverBuilder exceptionResolverBuilder;
-	private ControllerModuleBuilder controllerModuleBuilder;
-	private MultibinderBuilder<ParamProcessorFactory> paramProcessorBuilder;
-	private MultibinderBuilder<ViewScanner> viewScannerBuilder;
-	private MultibinderBuilder<InterceptorHandler> interceptorHandlersBuilder;
-	private NamedViewBuilder namedViewBudiler;
-	private List<HttpServlet> servlets;
 
 // ------------------------------------------------------------------------
-	
-	/**
-	 * Put into this method your controllers configuration
-	 */
-	protected abstract void configureControllers();
-	
-	
-	/**
-	 * This method initializate controller servlets
-	 */
-	@Override
-	protected final void configureServlets() 
-	{
-		if (controllerModuleBuilder != null) {
-			throw new IllegalStateException("Re-entry is not allowed.");
-		}
-		
-		conversionServiceBuilder = new MultibinderBuilder<ConverterFactory>(binder(), ConverterFactory.class);
-		controllerModuleBuilder = new ControllerModuleBuilder();		
-		exceptionResolverBuilder = new ExceptionResolverBuilder(binder());		
-		paramProcessorBuilder = new MultibinderBuilder<ParamProcessorFactory>(binder(), ParamProcessorFactory.class);
-		viewScannerBuilder = new MultibinderBuilder<ViewScanner>(binder(), ViewScanner.class);
-		interceptorHandlersBuilder = new MultibinderBuilder<InterceptorHandler>(binder(), InterceptorHandler.class);
-		namedViewBudiler = new NamedViewBuilder(binder());		
-		servlets = new LinkedList<HttpServlet>();
-		
-		try {
-			//default registrations
-			bind(ViewResolver.class).to(DefaultViewResolver.class);
-			
-			bind(ExceptionResolver.class)
-				.to(GuiceExceptionResolver.class);
-			
-			bind(ExceptionHandler.class)
-				.annotatedWith(Names.named(ExceptionResolver.DEFAULT_EXCEPTIONHANDLER_NAME))
-				.to(DefaultExceptionHandler.class);
-			
-			bind(ConversionService.class).asEagerSingleton();
-			registerConverter(new BooleanConverterFactory());
-			registerConverter(new DateConverterFactory());
-			registerConverter(new DoubleConverterFactory());
-			registerConverter(new LongConverterFactory());
-			registerConverter(new FloatConverterFactory());
-			registerConverter(new IntegerConverterFactory());
-			registerConverter(new StringConverterFactory());
-						
-			bind(ParamProcessorsService.class);
-			registerParameterProc(HttpPostParam.Factory.class);
-			registerParameterProc(RequestScopedAttributeParam.Factory.class);
-			registerParameterProc(UriParam.Factory.class);
-			registerParameterProc(SessionAttributeParam.Factory.class);
-			registerParameterProc(ModelParam.Factory.class);
-			registerParameterProc(RequestParam.Factory.class);
-			registerParameterProc(ResponseParam.Factory.class);
-			registerParameterProc(HttpSessionParam.Factory.class);
-			registerParameterProc(InjectorParam.Factory.class);
-			
-			bind(InterceptorService.class).asEagerSingleton();			
-			
-			bind(ViewScannerService.class);
-			registerViewScanner(NamedViewScanner.class);
-			registerViewScanner(RedirectViewScanner.class);			
-			
-			configureControllers();
-			
-			//register MVC controllers
-			List<ServletDefinition> defs = controllerModuleBuilder.getControllerDefinitions();
-			if (defs.size() == 0) {
-				logger.log(Level.WARNING, "None controller has been defined in the MVC module");
-			}
-			
-			for (ServletDefinition def : defs) {
-				String pattern = def.getUrlPattern();				
-				HttpServlet servlet = def.createServlet(binder());
-				requestInjection(servlet);
-				serve(pattern).with(servlet);
-				servlets.add(servlet);
-			}			
-			
-		} finally {
-			exceptionResolverBuilder = null;
-			controllerModuleBuilder = null;
-			viewScannerBuilder = null;
-			paramProcessorBuilder = null;
-			namedViewBudiler = null;
-			conversionServiceBuilder = null;
-			interceptorHandlersBuilder = null;
-		}
-	}
-		
+    private static final Logger logger = Logger.getLogger(MvcModule.class.getName());
+    private MultibinderBuilder<ConverterFactory> conversionServiceBuilder;
+    private ExceptionResolverBuilder exceptionResolverBuilder;
+    private ControllerModuleBuilder controllerModuleBuilder;
+    private MultibinderBuilder<ParamProcessorFactory> paramProcessorBuilder;
+    private MultibinderBuilder<ViewScanner> viewScannerBuilder;
+    private MultibinderBuilder<InterceptorHandler> interceptorHandlersBuilder;
+    private NamedViewBuilder namedViewBudiler;
+    private List<HttpServlet> servlets;
+
 // ------------------------------------------------------------------------
-	
-	/**
-	 * This method can be used only for testing purpose
-	 */
-	public final List<HttpServlet> getServlets() {
-		return this.servlets;
-	}
+    /**
+     * Put into this method your controllers configuration
+     */
+    protected abstract void configureControllers();
 
-	
-	/**
-	 * Method bind to view's name some view.
-	 */
-	protected final NamedViewBindingBuilder bindViewName(String viewName) {
-		return this.namedViewBudiler.bindViewName(viewName);
-	}
-		
-	
-	/**
-	 * The method registers a custom converter which converts strings to the
-	 * concrete types. These converters are used for conversions from a HTTP request 
-	 * to the method's parameters.
-	 * 
-	 * The all predefined default converters are placed in the 'converters' sub-package.  
-	 */
-	protected final void registerConverter(ConverterFactory converterFactory) {
-		this.conversionServiceBuilder.registerInstance(converterFactory);
-	}
-	
-	
-	/**
-	 * The method registers a custom converter which converts strings to the
-	 * concrete types. These converters are used for conversions from a HTTP request 
-	 * to the method's parameters.
-	 * 
-	 * The all predefined default convertors are placed in the 'converters' sub-package.  
-	 */
-	protected final void registerConverter(Class<? extends ConverterFactory> convertorFactoryClazz) {
-		this.conversionServiceBuilder.registerClass(convertorFactoryClazz);
-	}
-	
-		
-	/**
-	 * The method register into {@link ViewScannerService} a custom
-	 * view scanner as a class
-	 * 
-	 * @see ViewScannerService
-	 */
-	protected final void registerViewScanner(Class<? extends ViewScanner> scannerClass) {
-		this.viewScannerBuilder.registerClass(scannerClass);
-	}
-	
-	
-	/**
-	 * The method register into {@link ViewScannerService} a custom
-	 * view scanner as a instance.
-	 * 
-	 * @see ViewScannerService
-	 */
-	protected final void registerViewScanner(ViewScanner scannerInstance) {
-		this.viewScannerBuilder.registerInstance(scannerInstance);
-	}	
-	
-	
-	/**
-	 * The method registers a custom parameter processor. The parameter processors
-	 * converts/prepares/fills the values into invoked method's parameters.  
-	 * All predefined processors are placed in 'parameters' sub-package.
-	 * 
-	 * @param paramProcFactory
-	 * 
-	 * @see ParamProcessorFactory
-	 * @see ParamProcessor
-	 */
-	protected final void registerParameterProc(Class<? extends ParamProcessorFactory> paramProcFactory) {
-		paramProcessorBuilder.registerClass(paramProcFactory);
-	}
-	
-	
-	/** 
-	 * Method registers a global interceptor class as a singleton. These global interceptors do pre/post 
-	 * processing for every request/response.
-	 *  
-	 *  
-	 * @param interceptorHandler
-	 */
-	protected final void registerGlobalInterceptor(Class<? extends InterceptorHandler> interceptorHandlerClass) {
-		interceptorHandlersBuilder.registerClass(interceptorHandlerClass);
-	}
-	
-	
-	/**
-	 * Method registers a global interceptor instance. These global interceptors do pre/post 
-	 * processing for every request/response.
-	 *  
-	 * @param interceptorHandler
-	 */
-	protected final void registerGlobalInterceptorInstance(InterceptorHandler interceptorHandlerInstance) {
-		interceptorHandlersBuilder.registerInstance(interceptorHandlerInstance);
-	}
-	
-	
-	/**
-	 * Method binds the exception handler to concrete exception type
-	 * @param exceptionClazz
-	 * @return
-	 */
-	protected final ExceptionResolverBindingBuilder bindException(Class<? extends Throwable> exceptionClazz) {
-		return this.exceptionResolverBuilder.bindException(exceptionClazz);
-	}
-	
-	
-	/**
-	 * Method bind controller class to the concrete url.
-	 * @param urlPattern
-	 * @return
-	 */
-	protected final ControllerAndViewBindingBuilder control(String urlPattern) 
-	{
-		return this.controllerModuleBuilder.control(urlPattern);
-	}
+    /**
+     * This method initializate controller servlets
+     */
+    @Override
+    protected final void configureServlets() {
+        if (controllerModuleBuilder != null) {
+            throw new IllegalStateException("Re-entry is not allowed.");
+        }
 
+        conversionServiceBuilder = new MultibinderBuilder<ConverterFactory>(binder(), ConverterFactory.class);
+        controllerModuleBuilder = new ControllerModuleBuilder();
+        exceptionResolverBuilder = new ExceptionResolverBuilder(binder());
+        paramProcessorBuilder = new MultibinderBuilder<ParamProcessorFactory>(binder(), ParamProcessorFactory.class);
+        viewScannerBuilder = new MultibinderBuilder<ViewScanner>(binder(), ViewScanner.class);
+        interceptorHandlersBuilder = new MultibinderBuilder<InterceptorHandler>(binder(), InterceptorHandler.class);
+        namedViewBudiler = new NamedViewBuilder(binder());
+        servlets = new LinkedList<HttpServlet>();
 
-	
+        try {
+            //default registrations
+            bind(ViewResolver.class).to(DefaultViewResolver.class);
+
+            bind(ExceptionResolver.class)
+                    .to(GuiceExceptionResolver.class);
+
+            bind(ExceptionHandler.class)
+                    .annotatedWith(Names.named(ExceptionResolver.DEFAULT_EXCEPTIONHANDLER_NAME))
+                    .to(DefaultExceptionHandler.class);
+
+            bind(ConversionService.class).asEagerSingleton();
+            registerConverter(new BooleanConverterFactory());
+            registerConverter(new DateConverterFactory());
+            registerConverter(new DoubleConverterFactory());
+            registerConverter(new LongConverterFactory());
+            registerConverter(new FloatConverterFactory());
+            registerConverter(new IntegerConverterFactory());
+            registerConverter(new StringConverterFactory());
+
+            bind(ParamProcessorsService.class);
+            registerParameterProc(HttpPostParam.Factory.class);
+            registerParameterProc(RequestScopedAttributeParam.Factory.class);
+            registerParameterProc(UriParam.Factory.class);
+            registerParameterProc(SessionAttributeParam.Factory.class);
+            registerParameterProc(ModelParam.Factory.class);
+            registerParameterProc(RequestParam.Factory.class);
+            registerParameterProc(ResponseParam.Factory.class);
+            registerParameterProc(HttpSessionParam.Factory.class);
+            registerParameterProc(InjectorParam.Factory.class);
+
+            bind(InterceptorService.class).asEagerSingleton();
+
+            bind(ViewScannerService.class);
+            registerViewScanner(NamedViewScanner.class);
+            registerViewScanner(RedirectViewScanner.class);
+
+            configureControllers();
+
+            //register MVC controllers
+            List<ServletDefinition> defs = controllerModuleBuilder.getControllerDefinitions();
+            if (defs.size() == 0) {
+                logger.log(Level.WARNING, "None controller has been defined in the MVC module");
+            }
+
+            for (ServletDefinition def : defs) {
+                String pattern = def.getUrlPattern();
+                HttpServlet servlet = def.createServlet(binder());
+                requestInjection(servlet);
+                serve(pattern).with(servlet);
+                servlets.add(servlet);
+            }
+
+        } finally {
+            exceptionResolverBuilder = null;
+            controllerModuleBuilder = null;
+            viewScannerBuilder = null;
+            paramProcessorBuilder = null;
+            namedViewBudiler = null;
+            conversionServiceBuilder = null;
+            interceptorHandlersBuilder = null;
+        }
+    }
+
+// ------------------------------------------------------------------------
+    /**
+     * This method can be used only for testing purpose
+     */
+    public final List<HttpServlet> getServlets() {
+        return this.servlets;
+    }
+
+    /**
+     * Method bind to view's name some view.
+     */
+    protected final NamedViewBindingBuilder bindViewName(String viewName) {
+        return this.namedViewBudiler.bindViewName(viewName);
+    }
+
+    /**
+     * The method registers a custom converter which converts strings to the
+     * concrete types. These converters are used for conversions from a HTTP request 
+     * to the method's parameters.
+     * 
+     * The all predefined default converters are placed in the 'converters' sub-package.  
+     */
+    protected final void registerConverter(ConverterFactory converterFactory) {
+        this.conversionServiceBuilder.registerInstance(converterFactory);
+    }
+
+    /**
+     * The method registers a custom converter which converts strings to the
+     * concrete types. These converters are used for conversions from a HTTP request 
+     * to the method's parameters.
+     * 
+     * The all predefined default convertors are placed in the 'converters' sub-package.  
+     */
+    protected final void registerConverter(Class<? extends ConverterFactory> convertorFactoryClazz) {
+        this.conversionServiceBuilder.registerClass(convertorFactoryClazz);
+    }
+
+    /**
+     * The method register into {@link ViewScannerService} a custom
+     * view scanner as a class
+     * 
+     * @see ViewScannerService
+     */
+    protected final void registerViewScanner(Class<? extends ViewScanner> scannerClass) {
+        this.viewScannerBuilder.registerClass(scannerClass);
+    }
+
+    /**
+     * The method register into {@link ViewScannerService} a custom
+     * view scanner as a instance.
+     * 
+     * @see ViewScannerService
+     */
+    protected final void registerViewScanner(ViewScanner scannerInstance) {
+        this.viewScannerBuilder.registerInstance(scannerInstance);
+    }
+
+    /**
+     * The method registers a custom parameter processor. The parameter processors
+     * converts/prepares/fills the values into invoked method's parameters.  
+     * All predefined processors are placed in 'parameters' sub-package.
+     * 
+     * @param paramProcFactory
+     * 
+     * @see ParamProcessorFactory
+     * @see ParamProcessor
+     */
+    protected final void registerParameterProc(Class<? extends ParamProcessorFactory> paramProcFactory) {
+        paramProcessorBuilder.registerClass(paramProcFactory);
+    }
+
+    /** 
+     * Method registers a global interceptor class as a singleton. These global interceptors do pre/post 
+     * processing for every request/response.
+     *  
+     *  
+     * @param interceptorHandler
+     */
+    protected final void registerGlobalInterceptor(Class<? extends InterceptorHandler> interceptorHandlerClass) {
+        interceptorHandlersBuilder.registerClass(interceptorHandlerClass);
+    }
+
+    /**
+     * Method registers a global interceptor instance. These global interceptors do pre/post 
+     * processing for every request/response.
+     *  
+     * @param interceptorHandler
+     */
+    protected final void registerGlobalInterceptorInstance(InterceptorHandler interceptorHandlerInstance) {
+        interceptorHandlersBuilder.registerInstance(interceptorHandlerInstance);
+    }
+
+    /**
+     * Method binds the exception handler to concrete exception type
+     * @param exceptionClazz
+     * @return
+     */
+    protected final ExceptionResolverBindingBuilder bindException(Class<? extends Throwable> exceptionClazz) {
+        return this.exceptionResolverBuilder.bindException(exceptionClazz);
+    }
+
+    /**
+     * Method bind controller class to the concrete url.
+     * @param urlPattern
+     * @return
+     */
+    protected final ControllerAndViewBindingBuilder control(String urlPattern) {
+        return this.controllerModuleBuilder.control(urlPattern);
+    }
+
 // ------------------------------------------------------------------------	
+    public static interface ControllerBindingBuilder {
 
-	public static interface ControllerBindingBuilder {
-		public ControllerBindingBuilder withController(Class<?> controller);
-		public ControllerBindingBuilder interceptor(Class<? extends InterceptorHandler> handlerClass);
-	}
-	
+        public ControllerBindingBuilder withController(Class<?> controller);
 
-	public static interface ControllerAndViewBindingBuilder {		
-		public ControllerBindingBuilder withController(Class<?> controller);
-		public void withView(String name);
-		public void withView(ViewPoint viewInstance);
-	}
-	
-	
-	public static interface ExceptionResolverBindingBuilder {
-		public void toHandler(Class<? extends ExceptionHandler> handlerClass);
-		public void toHandlerInstance(ExceptionHandler handler);
-		public void toErrorView(String viewName);
-		public void toErrorView(ViewPoint errorView);
-	}
-	
-	
-	public static interface NamedViewBindingBuilder {
-		public void toView(Class<? extends ViewPoint> viewCLass);
-		public void toViewInstance(ViewPoint view);
-		public void toJsp(String pathToFile);
-	}
-		
+        public ControllerBindingBuilder interceptor(Class<? extends InterceptorHandler> handlerClass);
+    }
+
+    public static interface ControllerAndViewBindingBuilder {
+
+        public ControllerBindingBuilder withController(Class<?> controller);
+
+        public void withView(String name);
+
+        public void withView(ViewPoint viewInstance);
+    }
+
+    public static interface ExceptionResolverBindingBuilder {
+
+        public void toHandler(Class<? extends ExceptionHandler> handlerClass);
+
+        public void toHandlerInstance(ExceptionHandler handler);
+
+        public void toErrorView(String viewName);
+
+        public void toErrorView(ViewPoint errorView);
+    }
+
+    public static interface NamedViewBindingBuilder {
+
+        public void toView(Class<? extends ViewPoint> viewCLass);
+
+        public void toViewInstance(ViewPoint view);
+
+        public void toJsp(String pathToFile);
+    }
 // ------------------------------------------------------------------------
 }

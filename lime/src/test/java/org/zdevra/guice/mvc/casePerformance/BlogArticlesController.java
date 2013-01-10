@@ -27,34 +27,29 @@ import com.google.inject.Singleton;
 
 @Singleton
 public class BlogArticlesController implements IBlogArticlesController {
-	
-	private final BlogDao dao;
-	
-	
-	@Inject
-	public BlogArticlesController(BlogDao dao) {
-		this.dao = dao;
-	}
 
-	
-	public List<String> showAllArticles() {
-		return dao.getAllArticles();
-	}
-	
-	
-	public ModelAndView showAllArticlesDirect() {
-		ModelMap m = new ModelMap("allarticles", dao.getAllArticles());
-		return new ModelAndView(m, new ViewAllArticles());
-	}
-	
-	
-	public String showArticle(@UriParameter(1) int id) {
-		return dao.getArticle(id);
-	}
-	
+    private final BlogDao dao;
 
-	public ModelAndView showArticleDirect(@UriParameter(1) int id) {
-		ModelMap m = new ModelMap("article", dao.getArticle(id));
-		return new ModelAndView(m, new ViewArticle());
-	}
+    @Inject
+    public BlogArticlesController(BlogDao dao) {
+        this.dao = dao;
+    }
+
+    public List<String> showAllArticles() {
+        return dao.getAllArticles();
+    }
+
+    public ModelAndView showAllArticlesDirect() {
+        ModelMap m = new ModelMap("allarticles", dao.getAllArticles());
+        return new ModelAndView(m, new ViewAllArticles());
+    }
+
+    public String showArticle(@UriParameter(1) int id) {
+        return dao.getArticle(id);
+    }
+
+    public ModelAndView showArticleDirect(@UriParameter(1) int id) {
+        ModelMap m = new ModelMap("article", dao.getArticle(id));
+        return new ModelAndView(m, new ViewArticle());
+    }
 }

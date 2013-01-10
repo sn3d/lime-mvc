@@ -5,10 +5,9 @@ import org.zdevra.guice.mvc.jsilver.JSilverModule;
 
 public class JSilverExampleModule extends MvcModule {
 
-	@Override
-	protected void configureControllers() {
-		install(new JSilverModule(getServletContext()));
-		control("/*").withController(JSilverExampleController.class);
-	}
-
+    @Override
+    protected void configureControllers() {
+        install(new JSilverModule(getServletContext()));
+        control("/*").withController(JSilverExampleController.class);
+    }
 }

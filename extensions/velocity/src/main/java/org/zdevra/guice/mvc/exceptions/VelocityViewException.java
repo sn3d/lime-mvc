@@ -9,7 +9,8 @@ import org.zdevra.guice.mvc.exceptions.ViewException;
  * Velocity view.
  */
 public class VelocityViewException extends ViewException {
-	public VelocityViewException(String viewId, HttpServletRequest request, Throwable e) {
-		super(viewId, request, e);
-	}
+
+    public VelocityViewException(String viewId, HttpServletRequest request, Throwable e) {
+        super(viewId, request, e);
+    }
 }

@@ -27,16 +27,14 @@ import org.zdevra.guice.mvc.ViewPoint;
 
 public class ViewArticle implements ViewPoint {
 
-	@Override
-	public void render(ModelMap model, HttpServlet servlet, HttpServletRequest request, HttpServletResponse response)
-	{		
-		try {
-			String article = (String) request.getAttribute("article");	
-			response.getWriter().write("Article detail\n");
-			response.getWriter().write("Article:" + article + "\n");
-		} catch (IOException e) {
-			//TODO: dopisat ViewException
-		}
-	}
-
+    @Override
+    public void render(ModelMap model, HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            String article = (String) request.getAttribute("article");
+            response.getWriter().write("Article detail\n");
+            response.getWriter().write("Article:" + article + "\n");
+        } catch (IOException e) {
+            //TODO: dopisat ViewException
+        }
+    }
 }

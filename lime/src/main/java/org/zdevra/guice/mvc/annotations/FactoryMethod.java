@@ -27,6 +27,6 @@ import java.lang.annotation.Target;
  * by Conversion service and creates a object from a input string value.
  */
 @Retention(RUNTIME)
-@Target({ ElementType.METHOD })
+@Target({ElementType.METHOD})
 public @interface FactoryMethod {
 }

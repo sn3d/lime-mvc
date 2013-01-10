@@ -23,27 +23,26 @@ import org.zdevra.guice.mvc.views.NamedView;
 
 @Test
 public class NamedViewTest {
-	
-	@Controller(view="test")
-	public static class TestController {		
-	}
-	
-	@Controller(view="")
-	public static class TestControllerNull{		
-	}
-	
-	@Test
-	public void testControllerToView() {
-		ViewPoint view = NamedView.create(TestController.class);
-		Assert.assertNotNull(view);
-		Assert.assertEquals(view.toString(), "NamedView [name=test]");
-	}
-	
-	@Test
-	public void testControllerToViewNull() {
-		ViewPoint view = NamedView.create(TestControllerNull.class);
-		ViewPoint viewnull = ViewPoint.NULL_VIEW;
-		Assert.assertTrue( view == viewnull );
-	}
 
+    @Controller(view = "test")
+    public static class TestController {
+    }
+
+    @Controller(view = "")
+    public static class TestControllerNull {
+    }
+
+    @Test
+    public void testControllerToView() {
+        ViewPoint view = NamedView.create(TestController.class);
+        Assert.assertNotNull(view);
+        Assert.assertEquals(view.toString(), "NamedView [name=test]");
+    }
+
+    @Test
+    public void testControllerToViewNull() {
+        ViewPoint view = NamedView.create(TestControllerNull.class);
+        ViewPoint viewnull = ViewPoint.NULL_VIEW;
+        Assert.assertTrue(view == viewnull);
+    }
 }

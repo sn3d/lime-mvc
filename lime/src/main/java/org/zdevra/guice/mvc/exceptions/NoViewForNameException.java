@@ -22,7 +22,8 @@ package org.zdevra.guice.mvc.exceptions;
  * to this name.
  */
 public class NoViewForNameException extends MvcException {
-	public NoViewForNameException(String viewName) {
-		super("No view is associated to the view name '" + viewName + "'");
-	}
+
+    public NoViewForNameException(String viewName) {
+        super("No view is associated to the view name '" + viewName + "'");
+    }
 }

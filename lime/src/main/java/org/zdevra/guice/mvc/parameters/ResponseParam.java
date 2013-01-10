@@ -35,36 +35,35 @@ import org.zdevra.guice.mvc.InvokeData;
  * </pre>
  */
 public class ResponseParam implements ParamProcessor {
-	
-/*----------------------------------------------------------------------*/
-	
-	/**
-	 * Factory class for {@link ResponseParam}
-	 */
-	public static class Factory implements ParamProcessorFactory 
-	{
-		private ParamProcessor processor = new ResponseParam();
-		
-		@Override
-		public ParamProcessor buildParamProcessor(ParamMetadata metadata) {
-			if (metadata.getType() != HttpServletResponse.class) {
-				return null;
-			}
-			return processor;
-		}
-	}
-	
-/*----------------------------------------------------------------------*/
-	/**
-	 * Constructor
-	 */
-	private ResponseParam() {
-	}
-	
-	@Override
-	public Object getValue(InvokeData data) {
-		return data.getResponse();
-	}
 
-/*----------------------------------------------------------------------*/
+    /*----------------------------------------------------------------------*/
+    /**
+     * Factory class for {@link ResponseParam}
+     */
+    public static class Factory implements ParamProcessorFactory {
+
+        private ParamProcessor processor = new ResponseParam();
+
+        @Override
+        public ParamProcessor buildParamProcessor(ParamMetadata metadata) {
+            if (metadata.getType() != HttpServletResponse.class) {
+                return null;
+            }
+            return processor;
+        }
+    }
+
+    /*----------------------------------------------------------------------*/
+    /**
+     * Constructor
+     */
+    private ResponseParam() {
+    }
+
+    @Override
+    public Object getValue(InvokeData data) {
+        return data.getResponse();
+    }
+
+    /*----------------------------------------------------------------------*/
 }

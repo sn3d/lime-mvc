@@ -67,7 +67,8 @@ import org.zdevra.guice.mvc.HttpMethodType;
  * @see Controller
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.METHOD })
+@Target({ElementType.METHOD})
 public @interface Path {
-	public String value();
+
+    public String value();
 }

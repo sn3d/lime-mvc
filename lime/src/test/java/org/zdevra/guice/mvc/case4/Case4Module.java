@@ -21,13 +21,12 @@ import org.zdevra.guice.mvc.TestView;
 
 public class Case4Module extends MvcModule {
 
-	@Override
-	protected void configureControllers() {		
-		bindException(CustomException.class).toHandler(CustomExceptionHandler.class);
-		bindException(AdvancedHandledException.class).toHandlerInstance(new AdvancedHandler());
-		bindException(ExceptionForErrorPage.class).toErrorView("errorView");
-		bindViewName("default").toViewInstance(new TestView("0"));
-		bindViewName("errorView").toViewInstance(new TestView("errorpage"));
-	}
-
+    @Override
+    protected void configureControllers() {
+        bindException(CustomException.class).toHandler(CustomExceptionHandler.class);
+        bindException(AdvancedHandledException.class).toHandlerInstance(new AdvancedHandler());
+        bindException(ExceptionForErrorPage.class).toErrorView("errorView");
+        bindViewName("default").toViewInstance(new TestView("0"));
+        bindViewName("errorView").toViewInstance(new TestView("errorpage"));
+    }
 }

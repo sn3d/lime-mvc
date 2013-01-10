@@ -25,32 +25,27 @@ import javax.servlet.http.HttpServletResponse;
 
 public class TestView implements ViewPoint {
 // ------------------------------------------------------------------------
-	
-	private static final Logger logger = Logger.getLogger(TestView.class.getName());
-	private final String id;
-	
-// ------------------------------------------------------------------------
-	
-		
-	public TestView(String id) {
-		this.id = id;
-	}
+
+    private static final Logger logger = Logger.getLogger(TestView.class.getName());
+    private final String id;
 
 // ------------------------------------------------------------------------
-	
-	@Override
-	public void render(ModelMap model, HttpServlet servlet, HttpServletRequest request, HttpServletResponse response)  {
-		try {
-			Object msg = request.getAttribute("testmsg");
-			if (msg == null) {
-				msg = request.getAttribute("msg");
-			}
-			response.getWriter().write("viewId=" + id + " test message:" + msg);
-		} catch (Exception e) {
-			logger.log(Level.SEVERE, "Error in TestView", e);
-		}
-	}
-	
-// ------------------------------------------------------------------------
+    public TestView(String id) {
+        this.id = id;
+    }
 
+// ------------------------------------------------------------------------
+    @Override
+    public void render(ModelMap model, HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            Object msg = request.getAttribute("testmsg");
+            if (msg == null) {
+                msg = request.getAttribute("msg");
+            }
+            response.getWriter().write("viewId=" + id + " test message:" + msg);
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Error in TestView", e);
+        }
+    }
+// ------------------------------------------------------------------------
 }

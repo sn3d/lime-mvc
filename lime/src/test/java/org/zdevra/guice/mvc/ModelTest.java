@@ -21,12 +21,11 @@ import org.testng.annotations.Test;
 
 @Test
 public class ModelTest {
-	
-	@Test
-	public void testConstructor() {
-		ModelMap m = new ModelMap("test1", "value1");
-		String v = (String) m.getObject("test1");
-		Assert.assertEquals("value1", v);
-	}
-	
+
+    @Test
+    public void testConstructor() {
+        ModelMap m = new ModelMap("test1", "value1");
+        String v = (String) m.getObject("test1");
+        Assert.assertEquals("value1", v);
+    }
 }

@@ -14,7 +14,6 @@
  * limitations under the License.
  * 
  *****************************************************************************/
-
 /**
  * In the package are various classes responsible for processing of various parameters 
  * in controller methods. These parameter-processors are used when Lime invoke 
@@ -24,5 +23,4 @@
  * parameter is processed.
  * 
  */
-
 package org.zdevra.guice.mvc.parameters;

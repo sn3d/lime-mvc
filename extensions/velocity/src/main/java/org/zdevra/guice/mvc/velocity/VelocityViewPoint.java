@@ -43,72 +43,66 @@ import com.google.inject.Injector;
  * engine
  */
 public class VelocityViewPoint implements ViewPoint {
-	
-// ------------------------------------------------------------------------
-	
-	private final String viewFile;
-	@Inject private VelocityEngine velocity;
-	
-// ------------------------------------------------------------------------
-
-	/**
-	 * Constructor 
-	 */
-	public VelocityViewPoint(String viewFile) {
-		this.viewFile = viewFile;
-	}
-
-	/**
-	 * Constructor 
-	 * @param viewFile
-	 * @param injector
-	 */
-	public VelocityViewPoint(String viewFile, Injector injector) {
-		this.viewFile = viewFile;
-		this.velocity = injector.getInstance(VelocityEngine.class);  
-	}
-	
-	/**
-	 * Constructor
-	 * @param viewFile
-	 * @param velocity
-	 */
-	public VelocityViewPoint(String viewFile, VelocityEngine velocity) 
-	{
-		this.viewFile = viewFile;
-		this.velocity = velocity;
-	}
 
 // ------------------------------------------------------------------------
-	
-	@Override
-	@SuppressWarnings("unchecked")
-	public void render(ModelMap model, HttpServlet servlet, HttpServletRequest request, HttpServletResponse response)  
-	{
-		try {
-			Template velocityTemplate = velocity.getTemplate(viewFile);
-		
-			if (velocityTemplate != null) {
-				//prepare data
-				VelocityContext context = new VelocityContext();
-				List<String> attrNames = Collections.list(request.getAttributeNames());
-				for (String attrName : attrNames) {
-					Object attr = request.getAttribute(attrName);
-					context.put(attrName, attr);
-				}
-				
-				//render
-				ByteArrayOutputStream bout = new ByteArrayOutputStream(2048);		
-				Writer out = new OutputStreamWriter(new BufferedOutputStream(bout));	
-				velocityTemplate.merge(context, out);
-				out.flush();
-				response.getWriter().write(bout.toString());
-			}
-		} catch (IOException e) {
-			throw new VelocityViewException(viewFile, request, e);
-		}
-	}
-	
+    private final String viewFile;
+    @Inject
+    private VelocityEngine velocity;
+
 // ------------------------------------------------------------------------
-	
+    /**
+     * Constructor 
+     */
+    public VelocityViewPoint(String viewFile) {
+        this.viewFile = viewFile;
+    }
+
+    /**
+     * Constructor 
+     * @param viewFile
+     * @param injector
+     */
+    public VelocityViewPoint(String viewFile, Injector injector) {
+        this.viewFile = viewFile;
+        this.velocity = injector.getInstance(VelocityEngine.class);
+    }
+
+    /**
+     * Constructor
+     * @param viewFile
+     * @param velocity
+     */
+    public VelocityViewPoint(String viewFile, VelocityEngine velocity) {
+        this.viewFile = viewFile;
+        this.velocity = velocity;
+    }
+
+// ------------------------------------------------------------------------
+    @Override
+    @SuppressWarnings("unchecked")
+    public void render(ModelMap model, HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            Template velocityTemplate = velocity.getTemplate(viewFile);
+
+            if (velocityTemplate != null) {
+                //prepare data
+                VelocityContext context = new VelocityContext();
+                List<String> attrNames = Collections.list(request.getAttributeNames());
+                for (String attrName : attrNames) {
+                    Object attr = request.getAttribute(attrName);
+                    context.put(attrName, attr);
+                }
+
+                //render
+                ByteArrayOutputStream bout = new ByteArrayOutputStream(2048);
+                Writer out = new OutputStreamWriter(new BufferedOutputStream(bout));
+                velocityTemplate.merge(context, out);
+                out.flush();
+                response.getWriter().write(bout.toString());
+            }
+        } catch (IOException e) {
+            throw new VelocityViewException(viewFile, request, e);
+        }
+    }
+// ------------------------------------------------------------------------
 }

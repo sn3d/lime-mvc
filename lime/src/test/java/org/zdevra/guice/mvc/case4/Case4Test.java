@@ -33,52 +33,50 @@ import com.meterware.httpunit.WebResponse;
  */
 @Test
 public class Case4Test extends AbstractTest {
-	
-	public static class Case4Servlet extends TestServlet {
-		public Case4Servlet() {
-			super(Case4Controller.class, new Case4Module() );
-		}	
-	}
-	
-	
-	public Case4Test() {
-		super(Case4Servlet.class);
-	}
-		
-	@Test
-	public void testDefaultHandler() throws ServletException, IOException {
-		WebResponse resp = executeSimpleUrl("http://www.test.com/test/expetion/npe");
-		int code = resp.getResponseCode();
-		Assert.assertEquals(code, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-	}
-		
-	@Test 
-	public void testCustomHandler() throws ServletException, IOException {
-		WebResponse resp = executeSimpleUrl("http://www.test.com/test/expetion/custom");
-		String out = resp.getText();
-		Assert.assertTrue(out.contains("customized handler:CustomException"));		
-	}
-	
-	@Test 
-	public void testAdvancedCustomHandler() throws ServletException, IOException {
-		WebResponse resp = executeSimpleUrl("http://www.test.com/test/expetion/advancedcustom");
-		String out = resp.getText();
-		Assert.assertTrue(out.contains("customized handler:AdvancedCustomException->CustomException"));		
-	}
-		
-	@Test
-	public void testAdvancedHandled() throws ServletException, IOException {
-		WebResponse resp = executeSimpleUrl("http://www.test.com/test/expetion/advancedhandledexception");
-		String out = resp.getText();
-		Assert.assertTrue(out.contains("AdvancedHandledException->CustomException"));		
-	}
-	
-	@Test
-	public void testErrorView() throws IOException, ServletException {
-		WebResponse resp = executeSimpleUrl("http://www.test.com/test/expetion/errorview");
-		String out = resp.getText();
-		Assert.assertTrue(out.contains("viewId=errorpage"));				
-	}
 
+    public static class Case4Servlet extends TestServlet {
 
+        public Case4Servlet() {
+            super(Case4Controller.class, new Case4Module());
+        }
+    }
+
+    public Case4Test() {
+        super(Case4Servlet.class);
+    }
+
+    @Test
+    public void testDefaultHandler() throws ServletException, IOException {
+        WebResponse resp = executeSimpleUrl("http://www.test.com/test/expetion/npe");
+        int code = resp.getResponseCode();
+        Assert.assertEquals(code, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+    }
+
+    @Test
+    public void testCustomHandler() throws ServletException, IOException {
+        WebResponse resp = executeSimpleUrl("http://www.test.com/test/expetion/custom");
+        String out = resp.getText();
+        Assert.assertTrue(out.contains("customized handler:CustomException"));
+    }
+
+    @Test
+    public void testAdvancedCustomHandler() throws ServletException, IOException {
+        WebResponse resp = executeSimpleUrl("http://www.test.com/test/expetion/advancedcustom");
+        String out = resp.getText();
+        Assert.assertTrue(out.contains("customized handler:AdvancedCustomException->CustomException"));
+    }
+
+    @Test
+    public void testAdvancedHandled() throws ServletException, IOException {
+        WebResponse resp = executeSimpleUrl("http://www.test.com/test/expetion/advancedhandledexception");
+        String out = resp.getText();
+        Assert.assertTrue(out.contains("AdvancedHandledException->CustomException"));
+    }
+
+    @Test
+    public void testErrorView() throws IOException, ServletException {
+        WebResponse resp = executeSimpleUrl("http://www.test.com/test/expetion/errorview");
+        String out = resp.getText();
+        Assert.assertTrue(out.contains("viewId=errorpage"));
+    }
 }

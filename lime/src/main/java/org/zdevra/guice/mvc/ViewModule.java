@@ -28,66 +28,58 @@ import com.google.inject.AbstractModule;
  *  
  */
 public abstract class ViewModule extends AbstractModule {
-	
-// ------------------------------------------------------------------------
-	
-	private MultibinderBuilder<ViewScanner> viewScannerBuilder;
-	private NamedViewBuilder   namedViewBudiler;
-	
-// ------------------------------------------------------------------------
 
-	/**
-	 * In this method you will setup your views
-	 */
-	protected abstract void configureViews();
-	
 // ------------------------------------------------------------------------
+    private MultibinderBuilder<ViewScanner> viewScannerBuilder;
+    private NamedViewBuilder namedViewBudiler;
 
-	@Override
-	protected final void configure() {	
-		viewScannerBuilder = new MultibinderBuilder<ViewScanner>(binder(), ViewScanner.class);
-		namedViewBudiler = new NamedViewBuilder(binder());
-		try {			
-			requireBinding(ViewResolver.class);
-			requireBinding(ViewScannerService.class);
-			configureViews();
-		} finally {
-			viewScannerBuilder = null;
-			namedViewBudiler = null;
-		}
-	}
-	
 // ------------------------------------------------------------------------
-	
-	/**
-	 * The method register into {@link ViewScannerService} a custom
-	 * view scanner as a class
-	 * 
-	 * @see ViewScannerService
-	 */
-	protected final void registerViewScanner(Class<? extends ViewScanner> scannerClass) {
-		this.viewScannerBuilder.registerClass(scannerClass);
-	}
+    /**
+     * In this method you will setup your views
+     */
+    protected abstract void configureViews();
 
-	
-	/**
-	 * The method register into {@link ViewScannerService} a custom
-	 * view scanner as a instance.
-	 * 
-	 * @see ViewScannerService
-	 */
-	protected final void registerViewScanner(ViewScanner scannerInstance) {
-		this.viewScannerBuilder.registerInstance(scannerInstance);
-	}
-
-	
-	/**
-	 * Method bind to view's name some view.
-	 */
-	protected final NamedViewBindingBuilder bindViewName(String viewName) {
-		return this.namedViewBudiler.bindViewName(viewName);
-	}
-	
 // ------------------------------------------------------------------------
+    @Override
+    protected final void configure() {
+        viewScannerBuilder = new MultibinderBuilder<ViewScanner>(binder(), ViewScanner.class);
+        namedViewBudiler = new NamedViewBuilder(binder());
+        try {
+            requireBinding(ViewResolver.class);
+            requireBinding(ViewScannerService.class);
+            configureViews();
+        } finally {
+            viewScannerBuilder = null;
+            namedViewBudiler = null;
+        }
+    }
 
+// ------------------------------------------------------------------------
+    /**
+     * The method register into {@link ViewScannerService} a custom
+     * view scanner as a class
+     * 
+     * @see ViewScannerService
+     */
+    protected final void registerViewScanner(Class<? extends ViewScanner> scannerClass) {
+        this.viewScannerBuilder.registerClass(scannerClass);
+    }
+
+    /**
+     * The method register into {@link ViewScannerService} a custom
+     * view scanner as a instance.
+     * 
+     * @see ViewScannerService
+     */
+    protected final void registerViewScanner(ViewScanner scannerInstance) {
+        this.viewScannerBuilder.registerInstance(scannerInstance);
+    }
+
+    /**
+     * Method bind to view's name some view.
+     */
+    protected final NamedViewBindingBuilder bindViewName(String viewName) {
+        return this.namedViewBudiler.bindViewName(viewName);
+    }
+// ------------------------------------------------------------------------
 }

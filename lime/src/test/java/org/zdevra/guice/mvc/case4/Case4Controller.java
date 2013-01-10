@@ -19,33 +19,31 @@ package org.zdevra.guice.mvc.case4;
 import org.zdevra.guice.mvc.annotations.Controller;
 import org.zdevra.guice.mvc.annotations.Path;
 
-@Controller(view="default")
+@Controller(view = "default")
 public class Case4Controller {
 
-	@Path("/expetion/npe")
-	public void throwNpe() {
-		throw new NullPointerException("");
-	}
-	
-	@Path("/expetion/custom")
-	public void throwCustom() {
-		throw new CustomException();
-	}
-	
-	@Path("/expetion/advancedcustom")
-	public void throwAdvCustom() {
-		throw new AdvancedCustomException();
-	}
-		
-	@Path("/expetion/advancedhandledexception")
-	public void throwAdvHandledException() {
-		throw new AdvancedHandledException();
-	}
-	
-	@Path("/expetion/errorview")
-	public void throwErrorViewException() {
-		throw new ExceptionForErrorPage();
-	}
+    @Path("/expetion/npe")
+    public void throwNpe() {
+        throw new NullPointerException("");
+    }
 
+    @Path("/expetion/custom")
+    public void throwCustom() {
+        throw new CustomException();
+    }
 
+    @Path("/expetion/advancedcustom")
+    public void throwAdvCustom() {
+        throw new AdvancedCustomException();
+    }
+
+    @Path("/expetion/advancedhandledexception")
+    public void throwAdvHandledException() {
+        throw new AdvancedHandledException();
+    }
+
+    @Path("/expetion/errorview")
+    public void throwErrorViewException() {
+        throw new ExceptionForErrorPage();
+    }
 }

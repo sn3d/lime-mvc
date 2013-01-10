@@ -45,80 +45,72 @@ import com.google.inject.Injector;
 public class JSilverViewPoint implements ViewPoint {
 
 // ------------------------------------------------------------------------
-	
-	private final String viewFile;
-	@Inject private JSilver jSilver;		
-	@Inject private ModelService modelService;
-	
-// ------------------------------------------------------------------------
-	
-	/**
-	 * Constructor
-	 */
-	public JSilverViewPoint(String file, Injector injector) 
-	{
-		this(
-			file,
-			(JSilver)injector.getInstance(JSilver.class),
-			(ModelService)injector.getInstance(ModelService.class) );
-	}
-
-	
-	/**
-	 * Constructor used by {@link JSilverModule}
-	 */
-	public JSilverViewPoint(String file) 
-	{	
-		this.viewFile = file;
-	}
-		
-	
-	/**
-	 * Constructor
-	 * 
-	 * @param jSilver
-	 * @param viewFile
-	 * @param modelName
-	 */
-	JSilverViewPoint(String viewFile, JSilver jSilver, ModelService modelService) 
-	{
-		this.jSilver = jSilver;
-		this.viewFile = viewFile;
-		this.modelService = modelService;
-	}
+    private final String viewFile;
+    @Inject
+    private JSilver jSilver;
+    @Inject
+    private ModelService modelService;
 
 // ------------------------------------------------------------------------
+    /**
+     * Constructor
+     */
+    public JSilverViewPoint(String file, Injector injector) {
+        this(
+                file,
+                (JSilver) injector.getInstance(JSilver.class),
+                (ModelService) injector.getInstance(ModelService.class));
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public void render(ModelMap model, HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) 
-	{		
-		try {
-			//prepare data
-			Data data = jSilver.createData();
-			List<String> attrNames = Collections.list(request.getAttributeNames());
-			for (String attrName : attrNames) {
-				Object attr = request.getAttribute(attrName);
-				modelService.convert(attrName, attr, data);
-			}
-			
-			if (model != null) {
-				for (Map.Entry<String, Object> entry : model.entrySet()) {
-					if (entry.getValue() instanceof Data) {
-						data.copy((Data)entry.getValue());
-					}
-				}
-			}
-			
-			//render view
-			StringBuffer buf = new StringBuffer();
-			jSilver.render(viewFile, data, buf);
-			response.getOutputStream().write(buf.toString().getBytes());
-			response.getOutputStream().flush();
-		} catch (IOException e) {
-			throw new JSilverViewException(viewFile, request, e);
-		}
-	}
-	
+    /**
+     * Constructor used by {@link JSilverModule}
+     */
+    public JSilverViewPoint(String file) {
+        this.viewFile = file;
+    }
+
+    /**
+     * Constructor
+     * 
+     * @param jSilver
+     * @param viewFile
+     * @param modelName
+     */
+    JSilverViewPoint(String viewFile, JSilver jSilver, ModelService modelService) {
+        this.jSilver = jSilver;
+        this.viewFile = viewFile;
+        this.modelService = modelService;
+    }
+
+// ------------------------------------------------------------------------
+    @SuppressWarnings("unchecked")
+    @Override
+    public void render(ModelMap model, HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            //prepare data
+            Data data = jSilver.createData();
+            List<String> attrNames = Collections.list(request.getAttributeNames());
+            for (String attrName : attrNames) {
+                Object attr = request.getAttribute(attrName);
+                modelService.convert(attrName, attr, data);
+            }
+
+            if (model != null) {
+                for (Map.Entry<String, Object> entry : model.entrySet()) {
+                    if (entry.getValue() instanceof Data) {
+                        data.copy((Data) entry.getValue());
+                    }
+                }
+            }
+
+            //render view
+            StringBuffer buf = new StringBuffer();
+            jSilver.render(viewFile, data, buf);
+            response.getOutputStream().write(buf.toString().getBytes());
+            response.getOutputStream().flush();
+        } catch (IOException e) {
+            throw new JSilverViewException(viewFile, request, e);
+        }
+    }
 // ------------------------------------------------------------------------
 }

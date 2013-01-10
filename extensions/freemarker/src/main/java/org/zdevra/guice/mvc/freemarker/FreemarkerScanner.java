@@ -37,31 +37,25 @@ import freemarker.template.Configuration;
  */
 @Singleton
 class FreemarkerScanner implements ViewScanner {
-	
-// ------------------------------------------------------------------------
-		
-	private final Configuration freemarkerConf;
-	
-// ------------------------------------------------------------------------
-		
-	@Inject
-	public FreemarkerScanner(Configuration configuration) {
-		this.freemarkerConf = configuration;
-	}
-	
-// ------------------------------------------------------------------------
 
-	@Override
-	public ViewPoint scan(Annotation[] anots) 
-	{
-		FreemarkerView anot = Utils.getAnnotation(FreemarkerView.class, anots);		
-		if (anot == null) {
-			return ViewPoint.NULL_VIEW;
-		}
-		
-		return new FreemarkerViewPoint(freemarkerConf, anot.value());
-	}
-	
 // ------------------------------------------------------------------------
+    private final Configuration freemarkerConf;
 
+// ------------------------------------------------------------------------
+    @Inject
+    public FreemarkerScanner(Configuration configuration) {
+        this.freemarkerConf = configuration;
+    }
+
+// ------------------------------------------------------------------------
+    @Override
+    public ViewPoint scan(Annotation[] anots) {
+        FreemarkerView anot = Utils.getAnnotation(FreemarkerView.class, anots);
+        if (anot == null) {
+            return ViewPoint.NULL_VIEW;
+        }
+
+        return new FreemarkerViewPoint(freemarkerConf, anot.value());
+    }
+// ------------------------------------------------------------------------
 }

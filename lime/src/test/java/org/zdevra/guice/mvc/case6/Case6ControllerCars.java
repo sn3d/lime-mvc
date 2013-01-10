@@ -25,14 +25,15 @@ import org.zdevra.guice.mvc.annotations.View;
 @View("cars.jsp")
 public class Case6ControllerCars {
 
-	@Path("/common") @Model("msg2")
-	public String commonMethod() {
-		return "cars common";
-	}
-		
-	@Path("/cars") @Model("msg1")
-	public String carsMethod() {
-		return "cars method";
-	}
+    @Path("/common")
+    @Model("msg2")
+    public String commonMethod() {
+        return "cars common";
+    }
 
+    @Path("/cars")
+    @Model("msg1")
+    public String carsMethod() {
+        return "cars method";
+    }
 }

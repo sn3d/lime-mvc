@@ -21,21 +21,19 @@ import org.zdevra.guice.mvc.TestView;
 
 class ThreeView extends TestView {
 
-	public ThreeView() {
-		super("3");
-	}
-	
+    public ThreeView() {
+        super("3");
+    }
 }
 
 public class Case3Module extends MvcModule {
 
-	@Override
-	protected void configureControllers() {
-		install(new Case3ModuleView() );
-		bindViewName("default").toViewInstance(new TestView("0"));
-		bindViewName("one").toViewInstance( new TestView("1") );
-		bindViewName("two").toViewInstance( new TestView("2") );
-		bindViewName("three").toView( ThreeView.class );
-	}
-
+    @Override
+    protected void configureControllers() {
+        install(new Case3ModuleView());
+        bindViewName("default").toViewInstance(new TestView("0"));
+        bindViewName("one").toViewInstance(new TestView("1"));
+        bindViewName("two").toViewInstance(new TestView("2"));
+        bindViewName("three").toView(ThreeView.class);
+    }
 }

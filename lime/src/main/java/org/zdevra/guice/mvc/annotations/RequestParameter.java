@@ -68,8 +68,10 @@ import org.zdevra.guice.mvc.converters.NoConverterFactory;
  * <
  */
 @Retention(RUNTIME)
-@Target({ ElementType.FIELD, ElementType.PARAMETER })
+@Target({ElementType.FIELD, ElementType.PARAMETER})
 public @interface RequestParameter {
-	String value();
+
+    String value();
+
     Class<? extends ConversionService.ConverterFactory> converterFactory() default NoConverterFactory.class;
 }

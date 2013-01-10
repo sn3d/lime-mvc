@@ -28,76 +28,70 @@ import javax.servlet.http.HttpSession;
  * and separate invocation of the class's methods. 
  */
 class ClassInvoker {
-	
-// ------------------------------------------------------------------------
-	
-	private final Class<?> controllerClass;
-	private final Collection<String> sessionAttrs;
-	private final Collection<MethodInvoker> methodInvokers;
-	
-// ------------------------------------------------------------------------
-	
-	/**
-	 * Constructor
-	 * 
-	 * @param controllerClass
-	 * @param methodInvokers
-	 * @param sessionAttrList 
-	 */
-	public ClassInvoker(Class<?> controllerClass, Collection<MethodInvoker> methodInvokers, List<String> sessionAttrList) {
-		this.controllerClass = controllerClass;
-		this.methodInvokers = Collections.unmodifiableCollection(methodInvokers);
-		this.sessionAttrs = Collections.unmodifiableCollection(sessionAttrList);
-	}
-	
-// ------------------------------------------------------------------------
-	
-	/**
-	 * It invokes concrete methods of the controller class.
-	 * @param data
-	 */
-	public ModelAndView invoke(InvokeData data) {			
-		ModelAndView mav = new ModelAndView();
-		if (sessionAttrs.size() > 0) {
-			mav.getModel().getObjectsFromSession(sessionAttrs, data.getRequest().getSession(true));
-		}
-		InvokeData dataWithModel = new InvokeData(mav.getModel(), data);
-		
-		int invokedcount = 0;				
-		for (MethodInvoker invoker : this.methodInvokers) {
-			ModelAndView methodMav = invoker.invoke(dataWithModel);			
-			if (methodMav != null) {
-				mav.mergeModelAndView(methodMav);
-				invokedcount++;
-			}
-		}
-		
-		if (invokedcount == 0) {
-			return null;
-		}
-						
-		return mav;	
-	}
-	
-	
-	/**
-	 * Method moves the data defined in {@literal @}Controller's
-	 * sessionAttribute from model to session. 
-	 * 
-	 * @param m
-	 * @param request
-	 */
-	public void moveDataToSession(ModelMap m, HttpServletRequest request) {
-		if (sessionAttrs.size() > 0) {
-			m.moveObjectsToSession(sessionAttrs, request.getSession(true));
-		}
-	}
 
 // ------------------------------------------------------------------------
-	
-	public Class<?> getControllerClass() {
-		return controllerClass;
-	}
-	
+    private final Class<?> controllerClass;
+    private final Collection<String> sessionAttrs;
+    private final Collection<MethodInvoker> methodInvokers;
+
+// ------------------------------------------------------------------------
+    /**
+     * Constructor
+     * 
+     * @param controllerClass
+     * @param methodInvokers
+     * @param sessionAttrList 
+     */
+    public ClassInvoker(Class<?> controllerClass, Collection<MethodInvoker> methodInvokers, List<String> sessionAttrList) {
+        this.controllerClass = controllerClass;
+        this.methodInvokers = Collections.unmodifiableCollection(methodInvokers);
+        this.sessionAttrs = Collections.unmodifiableCollection(sessionAttrList);
+    }
+
+// ------------------------------------------------------------------------
+    /**
+     * It invokes concrete methods of the controller class.
+     * @param data
+     */
+    public ModelAndView invoke(InvokeData data) {
+        ModelAndView mav = new ModelAndView();
+        if (sessionAttrs.size() > 0) {
+            mav.getModel().getObjectsFromSession(sessionAttrs, data.getRequest().getSession(true));
+        }
+        InvokeData dataWithModel = new InvokeData(mav.getModel(), data);
+
+        int invokedcount = 0;
+        for (MethodInvoker invoker : this.methodInvokers) {
+            ModelAndView methodMav = invoker.invoke(dataWithModel);
+            if (methodMav != null) {
+                mav.mergeModelAndView(methodMav);
+                invokedcount++;
+            }
+        }
+
+        if (invokedcount == 0) {
+            return null;
+        }
+
+        return mav;
+    }
+
+    /**
+     * Method moves the data defined in {@literal @}Controller's
+     * sessionAttribute from model to session. 
+     * 
+     * @param m
+     * @param request
+     */
+    public void moveDataToSession(ModelMap m, HttpServletRequest request) {
+        if (sessionAttrs.size() > 0) {
+            m.moveObjectsToSession(sessionAttrs, request.getSession(true));
+        }
+    }
+
+// ------------------------------------------------------------------------
+    public Class<?> getControllerClass() {
+        return controllerClass;
+    }
 // ------------------------------------------------------------------------
 }

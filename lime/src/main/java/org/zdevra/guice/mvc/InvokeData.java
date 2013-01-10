@@ -23,78 +23,71 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.inject.Injector;
 
-
 /**
  * The class collects all data which may be important for 
  * one invocation of the method.
  */
 public class InvokeData {
-/*---------------------------- m. variables ----------------------------*/
+    /*---------------------------- m. variables ----------------------------*/
 
-	private final Matcher uriMatcher;
-	private final HttpServletRequest request;
-	private final HttpServletResponse response;
-	private final ModelMap model;
-	private final HttpMethodType reqType;
-	private final Injector injector;
+    private final Matcher uriMatcher;
+    private final HttpServletRequest request;
+    private final HttpServletResponse response;
+    private final ModelMap model;
+    private final HttpMethodType reqType;
+    private final Injector injector;
 
-/*---------------------------- constructors ----------------------------*/
+    /*---------------------------- constructors ----------------------------*/
+    public InvokeData(HttpServletRequest request, HttpServletResponse response, ModelMap model, HttpMethodType reqType, Injector injector) {
+        this.request = request;
+        this.response = response;
+        this.model = model;
+        this.reqType = reqType;
+        this.injector = injector;
+        this.uriMatcher = null;
+    }
 
-	
-	public InvokeData(HttpServletRequest request, HttpServletResponse response, ModelMap model, HttpMethodType reqType, Injector injector) {
-		this.request = request;
-		this.response = response;
-		this.model = model;
-		this.reqType = reqType;
-		this.injector = injector;
-		this.uriMatcher = null;
-	}
-	
-	
-	public InvokeData(Matcher uriMatcher, InvokeData copy) {
-		this.uriMatcher = uriMatcher;
-		this.request = copy.request;
-		this.response = copy.response;
-		this.model = copy.model;
-		this.reqType = copy.reqType;
-		this.injector = copy.injector;
-	}
-	
-	public InvokeData(ModelMap m, InvokeData copy) {
-		this.model = m;
-		this.uriMatcher = copy.uriMatcher;
-		this.request = copy.request;
-		this.response = copy.response;		
-		this.reqType = copy.reqType;
-		this.injector = copy.injector;		
-	}
-		
-/*-------------------------- getters/setters ---------------------------*/
+    public InvokeData(Matcher uriMatcher, InvokeData copy) {
+        this.uriMatcher = uriMatcher;
+        this.request = copy.request;
+        this.response = copy.response;
+        this.model = copy.model;
+        this.reqType = copy.reqType;
+        this.injector = copy.injector;
+    }
 
-	public Matcher getUriMatcher() {
-		return uriMatcher;
-	}
+    public InvokeData(ModelMap m, InvokeData copy) {
+        this.model = m;
+        this.uriMatcher = copy.uriMatcher;
+        this.request = copy.request;
+        this.response = copy.response;
+        this.reqType = copy.reqType;
+        this.injector = copy.injector;
+    }
 
-	public HttpServletRequest getRequest() {
-		return request;
-	}
+    /*-------------------------- getters/setters ---------------------------*/
+    public Matcher getUriMatcher() {
+        return uriMatcher;
+    }
 
-	public HttpServletResponse getResponse() {
-		return response;
-	}
+    public HttpServletRequest getRequest() {
+        return request;
+    }
 
-	public ModelMap getModel() {
-		return model;
-	}
+    public HttpServletResponse getResponse() {
+        return response;
+    }
 
-	public HttpMethodType getReqType() {
-		return reqType;
-	}
+    public ModelMap getModel() {
+        return model;
+    }
 
-	public Injector getInjector() {
-		return injector;
-	}
-	
-	
-/*----------------------------------------------------------------------*/
+    public HttpMethodType getReqType() {
+        return reqType;
+    }
+
+    public Injector getInjector() {
+        return injector;
+    }
+    /*----------------------------------------------------------------------*/
 }
