@@ -26,7 +26,6 @@ import java.util.List;
  */
 public final class Utils {
 
-    /*----------------------------------------------------------------------*/
     /**
      * Hidden constructor
      */
@@ -71,5 +70,4 @@ public final class Utils {
         }
         return res;
     }
-    /*----------------------------------------------------------------------*/
 }

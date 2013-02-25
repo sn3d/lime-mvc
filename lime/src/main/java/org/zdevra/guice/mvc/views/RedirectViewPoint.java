@@ -35,16 +35,10 @@ import org.zdevra.guice.mvc.exceptions.ViewPointException;
  */
 public class RedirectViewPoint implements ViewPoint {
 
-    //-----------------------------------------------------------------------------------------------------------
-    // m. variables
-    //-----------------------------------------------------------------------------------------------------------
     private final String url;
     private final boolean contextRelative;
     private final boolean isAbsolute;
 
-    //-----------------------------------------------------------------------------------------------------------
-    // constructor
-    //-----------------------------------------------------------------------------------------------------------
     /**
      * Constructor
      * @param url
@@ -69,9 +63,14 @@ public class RedirectViewPoint implements ViewPoint {
         this.contextRelative = contextRelative;
     }
 
-    //-----------------------------------------------------------------------------------------------------------
-    // methods
-    //-----------------------------------------------------------------------------------------------------------
+    /**
+     * {@inheritDoc}
+     *
+     * @param model
+     * @param servlet
+     * @param request
+     * @param response
+     */
     @Override
     public void render(ModelMap model, HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) {
         try {

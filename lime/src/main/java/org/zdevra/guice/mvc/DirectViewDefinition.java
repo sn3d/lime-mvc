@@ -30,11 +30,10 @@ import com.google.inject.Binder;
  */
 class DirectViewDefinition extends ServletDefinition {
 
-// ------------------------------------------------------------------------
     private static final Logger logger = Logger.getLogger(DirectViewDefinition.class.getName());
     private final ViewPoint view;
 
-// ------------------------------------------------------------------------
+
     /**
      * Constructor
      */
@@ -43,12 +42,14 @@ class DirectViewDefinition extends ServletDefinition {
         this.view = view;
     }
 
-// ------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public HttpServlet createServlet(Binder binder) {
         logger.info("for path '" + getUrlPattern() + "' should be registered follwing direct view " + this.view.toString());
         binder.requestInjection(view);
         return new ViewServlet(view);
     }
-// ------------------------------------------------------------------------
 }

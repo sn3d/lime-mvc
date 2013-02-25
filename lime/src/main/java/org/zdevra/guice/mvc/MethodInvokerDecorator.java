@@ -24,13 +24,12 @@ package org.zdevra.guice.mvc;
  */
 abstract class MethodInvokerDecorator implements MethodInvoker {
 
-// ------------------------------------------------------------------------
+    /** next method invoker */
     protected final MethodInvoker decoratedInvoker;
 
-// ------------------------------------------------------------------------
+
     /**
      * Constructor
-     * 
      * @param decoratedInvoker
      */
     protected MethodInvokerDecorator(MethodInvoker decoratedInvoker) {
@@ -46,5 +45,4 @@ abstract class MethodInvokerDecorator implements MethodInvoker {
     public int getPriority() {
         return decoratedInvoker.getPriority();
     }
-    // ------------------------------------------------------------------------
 }

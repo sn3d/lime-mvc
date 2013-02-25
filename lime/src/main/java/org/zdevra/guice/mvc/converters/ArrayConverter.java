@@ -29,13 +29,10 @@ import org.zdevra.guice.mvc.ConversionService.Converter;
  */
 public abstract class ArrayConverter<T> implements Converter<T[]> {
 
-// ------------------------------------------------------------------------
     private final T[] empty;
 
-// ------------------------------------------------------------------------
     protected abstract T convertItem(String value);
 
-// ------------------------------------------------------------------------
     public ArrayConverter(T[] emptyArray) {
         this.empty = emptyArray;
     }
@@ -56,5 +53,4 @@ public abstract class ArrayConverter<T> implements Converter<T[]> {
         }
         return out.toArray(empty);
     }
-// ------------------------------------------------------------------------
 }

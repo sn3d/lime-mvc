@@ -32,21 +32,25 @@ import com.google.inject.Binder;
  */
 class ExceptionResolverBuilder extends MultibinderBuilder<ExceptionBind> {
 
-// ------------------------------------------------------------------------
+    /** the number is incremented for each exception handler */
     private int orderIndex;
 
-// ------------------------------------------------------------------------
+    /**
+     * Constructor
+     * @param binder
+     */
     public ExceptionResolverBuilder(Binder binder) {
         super(binder, ExceptionBind.class);
         this.orderIndex = 0;
     }
 
-// ------------------------------------------------------------------------
     public ExceptionResolverBindingBuilder bindException(Class<? extends Throwable> exceptionClass) {
         return new ExceptionResolverBindBuilderImpl(exceptionClass);
     }
 
-// ------------------------------------------------------------------------
+    /**
+     * nested implementation of {@link ExceptionResolverBindingBuilder builder}
+     */
     public class ExceptionResolverBindBuilderImpl implements ExceptionResolverBindingBuilder {
 
         private final Class<? extends Throwable> exceptionClass;
@@ -82,7 +86,5 @@ class ExceptionResolverBuilder extends MultibinderBuilder<ExceptionBind> {
             registerInstance(exceptionBind);
             orderIndex++;
         }
-    ;
-}
-// ------------------------------------------------------------------------
+    }
 }

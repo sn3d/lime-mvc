@@ -20,9 +20,12 @@ import java.lang.reflect.Method;
 
 import com.google.inject.Injector;
 
+/**
+ * Simple POJO holds data for invocation like what controller, method
+ * should be invoked etc.
+ */
 class MappingData {
 
-// ------------------------------------------------------------------------
     public HttpMethodType httpMethodType;
     public String path;
     public String resultName;
@@ -30,7 +33,9 @@ class MappingData {
     public Class<?> controllerClass;
     public Method method;
 
-// ------------------------------------------------------------------------
+    /**
+     * Constructor
+     */
     public MappingData(Class<?> controllerClass, Method method, HttpMethodType httpMethodType, String path, String resultName, Injector injector) {
         this.controllerClass = controllerClass;
         this.method = method;
@@ -39,5 +44,4 @@ class MappingData {
         this.httpMethodType = httpMethodType;
         this.injector = injector;
     }
-// ------------------------------------------------------------------------
 }

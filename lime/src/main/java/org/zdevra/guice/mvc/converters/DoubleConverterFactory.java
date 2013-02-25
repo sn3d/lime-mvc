@@ -27,12 +27,17 @@ import org.zdevra.guice.mvc.ConversionService.ConverterFactory;
  */
 public class DoubleConverterFactory implements ConverterFactory {
 
-// ------------------------------------------------------------------------
     private final static Converter<Double> typeConverter = new DoubleConverter();
     private final static Converter<Double[]> objArrayConverter = new DoubleObjArrayConverter();
     private final static Converter<double[]> arrayConverter = new DoubleArrayConverter();
 
-// ------------------------------------------------------------------------
+    /**
+     * {@inheritDoc}
+     *
+     * @param type
+     * @param annotations
+     * @return
+     */
     @Override
     public Converter<?> createConverter(Class<?> type, Annotation[] annotations) {
         if ((type == Double.class) || (type == double.class)) {
@@ -46,7 +51,10 @@ public class DoubleConverterFactory implements ConverterFactory {
         return null;
     }
 
-// ------------------------------------------------------------------------
+
+    /**
+     * Nested converted that convert string to doubles
+     */
     private static class DoubleConverter extends TypeConverter<Double> {
 
         @Override
@@ -55,6 +63,9 @@ public class DoubleConverterFactory implements ConverterFactory {
         }
     }
 
+    /**
+     * Nested converted for conversion of doubles array
+     */
     private static class DoubleArrayConverter implements Converter<double[]> {
 
         @Override
@@ -72,6 +83,9 @@ public class DoubleConverterFactory implements ConverterFactory {
         }
     }
 
+    /**
+     * Nested converted for conversion of doubles array
+     */
     private static class DoubleObjArrayConverter implements Converter<Double[]> {
 
         @Override
@@ -88,5 +102,4 @@ public class DoubleConverterFactory implements ConverterFactory {
             return out;
         }
     }
-// ------------------------------------------------------------------------
 }

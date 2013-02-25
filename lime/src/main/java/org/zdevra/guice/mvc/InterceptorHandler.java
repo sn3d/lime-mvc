@@ -78,6 +78,7 @@ public interface InterceptorHandler {
      */
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response);
 
+
     /**
      * Dispatcher calls the postHandler after controller's method execution but before
      * the view is rendering.
@@ -87,6 +88,7 @@ public interface InterceptorHandler {
      * @param mav
      */
     public void postHandle(HttpServletRequest request, HttpServletResponse response, ModelAndView mav);
+
 
     /**
      * Method is invoked at the end of request processing when the view has been rendered and only in

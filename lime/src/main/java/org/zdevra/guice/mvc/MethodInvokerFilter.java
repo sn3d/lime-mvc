@@ -26,12 +26,10 @@ import java.util.regex.Pattern;
  *
  */
 class MethodInvokerFilter extends MethodInvokerDecorator {
-    /*---------------------------- m. variables ----------------------------*/
 
     private final Pattern pathPattern;
     private final HttpMethodType requestTypeFilter;
 
-    /*---------------------------- constructors ----------------------------*/
     /**
      * Constructor
      */
@@ -41,6 +39,9 @@ class MethodInvokerFilter extends MethodInvokerDecorator {
         this.requestTypeFilter = mapping.httpMethodType;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ModelAndView invoke(InvokeData data) {
         if (!agreedWithRequestType(data.getReqType())) {
@@ -66,6 +67,4 @@ class MethodInvokerFilter extends MethodInvokerDecorator {
     private boolean agreedWithRequestType(HttpMethodType reqType) {
         return (this.requestTypeFilter == HttpMethodType.ALL || this.requestTypeFilter == reqType);
     }
-
-    /*----------------------------------------------------------------------*/
 }

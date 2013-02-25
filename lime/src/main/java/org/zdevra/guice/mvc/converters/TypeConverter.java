@@ -26,13 +26,11 @@ import org.zdevra.guice.mvc.ConversionService.Converter;
  */
 public abstract class TypeConverter<T> implements Converter<T> {
 
-// ------------------------------------------------------------------------
     /**
      * Implements your own conversion method
      */
     protected abstract T convertType(String stringValue);
 
-// ------------------------------------------------------------------------
     /**
      * Constructor
      * @param clazz
@@ -40,7 +38,14 @@ public abstract class TypeConverter<T> implements Converter<T> {
     public TypeConverter() {
     }
 
-// ------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param name
+     * @param data
+     * @return
+     */
     @Override
     public final T convert(String name, Map<String, String[]> data) {
         String[] values = data.get(name);
@@ -50,5 +55,4 @@ public abstract class TypeConverter<T> implements Converter<T> {
             return convertType("");
         }
     }
-// ------------------------------------------------------------------------
 }

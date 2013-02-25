@@ -35,7 +35,9 @@ import org.zdevra.guice.mvc.InvokeData;
  */
 public class HttpSessionParam implements ParamProcessor {
 
-    /*----------------------------------------------------------------------*/
+    /**
+     * Nested factory class for {@link HttpSessionParam}
+     */
     public static class Factory implements ParamProcessorFactory {
 
         private final ParamProcessor processor = new HttpSessionParam();
@@ -49,18 +51,23 @@ public class HttpSessionParam implements ParamProcessor {
         }
     }
 
-    /*---------------------------- constructors ----------------------------*/
+
     /**
      * Constructor
      */
     private HttpSessionParam() {
     }
 
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param data
+     * @return
+     */
     @Override
     public Object getValue(InvokeData data) {
         HttpSession session = data.getRequest().getSession();
         return session;
     }
-
-    /*----------------------------------------------------------------------*/
 }

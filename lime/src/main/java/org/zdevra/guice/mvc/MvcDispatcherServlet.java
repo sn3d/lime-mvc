@@ -42,22 +42,30 @@ import com.google.inject.Injector;
  */
 class MvcDispatcherServlet extends HttpServlet {
 
-// ------------------------------------------------------------------------
     private static final Logger logger = Logger.getLogger(MvcDispatcherServlet.class.getName());
+
     @Inject
     private Injector injector;
+
     @Inject
     private ViewResolver viewResolver;
+
     @Inject
     private ExceptionResolver exceptionResolver;
+
     @Inject
     private InterceptorService interceptorService;
+
+    /** collection of all controllers associated to this servlet */
     protected final Collection<Class<?>> controllers;
+
+    /** collection of all interceptors associated tu this servlet */
     protected final Collection<Class<? extends InterceptorHandler>> interceptorHandlerClasses;
+
     protected Collection<ClassInvoker> classInvokers;
+
     protected InterceptorChain interceptorChain;
 
-// ------------------------------------------------------------------------
     /**
      * Constructor for testing purpose
      * @param controllerClass
@@ -117,7 +125,6 @@ class MvcDispatcherServlet extends HttpServlet {
         this.interceptorHandlerClasses = Collections.unmodifiableCollection(interceptorHandlerClasses);
     }
 
-// ------------------------------------------------------------------------
     @Override
     protected final void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
@@ -161,6 +168,15 @@ class MvcDispatcherServlet extends HttpServlet {
         super.init();
     }
 
+    /**
+     * main processing of MVC dispatcher servlet.
+     *
+     * @param req
+     * @param resp
+     * @param reqType
+     * @throws ServletException
+     * @throws IOException
+     */
     private void processRequest(HttpServletRequest req, HttpServletResponse resp, HttpMethodType reqType)
             throws ServletException, IOException {
         Throwable throwedException = null;
@@ -206,7 +222,12 @@ class MvcDispatcherServlet extends HttpServlet {
         interceptorChain.afterCompletion(data.getRequest(), data.getResponse(), throwedException);
     }
 
-// ------------------------------------------------------------------------
+
+    /**
+     * returns list of all interceptor handlers
+     *
+     * @return
+     */
     private List<InterceptorHandler> getInterceptorHandlers() {
         List<InterceptorHandler> handlers = new LinkedList<InterceptorHandler>();
         for (Class<? extends InterceptorHandler> ihc : this.interceptorHandlerClasses) {
@@ -216,6 +237,13 @@ class MvcDispatcherServlet extends HttpServlet {
         return handlers;
     }
 
+
+    /**
+     * Invoke the controller's method
+     *
+     * @param data
+     * @return
+     */
     protected ModelAndView invoke(InvokeData data) {
         ModelAndView mav = new ModelAndView();
         int invokedcount = 0;
@@ -241,5 +269,4 @@ class MvcDispatcherServlet extends HttpServlet {
 
         return mav;
     }
-// ------------------------------------------------------------------------
 }

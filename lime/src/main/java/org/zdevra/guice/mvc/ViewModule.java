@@ -29,17 +29,19 @@ import com.google.inject.AbstractModule;
  */
 public abstract class ViewModule extends AbstractModule {
 
-// ------------------------------------------------------------------------
     private MultibinderBuilder<ViewScanner> viewScannerBuilder;
     private NamedViewBuilder namedViewBudiler;
 
-// ------------------------------------------------------------------------
+
     /**
      * In this method you will setup your views
      */
     protected abstract void configureViews();
 
-// ------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected final void configure() {
         viewScannerBuilder = new MultibinderBuilder<ViewScanner>(binder(), ViewScanner.class);
@@ -54,7 +56,7 @@ public abstract class ViewModule extends AbstractModule {
         }
     }
 
-// ------------------------------------------------------------------------
+
     /**
      * The method register into {@link ViewScannerService} a custom
      * view scanner as a class
@@ -64,6 +66,7 @@ public abstract class ViewModule extends AbstractModule {
     protected final void registerViewScanner(Class<? extends ViewScanner> scannerClass) {
         this.viewScannerBuilder.registerClass(scannerClass);
     }
+
 
     /**
      * The method register into {@link ViewScannerService} a custom
@@ -75,11 +78,11 @@ public abstract class ViewModule extends AbstractModule {
         this.viewScannerBuilder.registerInstance(scannerInstance);
     }
 
+
     /**
      * Method bind to view's name some view.
      */
     protected final NamedViewBindingBuilder bindViewName(String viewName) {
         return this.namedViewBudiler.bindViewName(viewName);
     }
-// ------------------------------------------------------------------------
 }

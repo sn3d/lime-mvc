@@ -43,12 +43,10 @@ import org.zdevra.guice.mvc.annotations.SessionParameter;
  *  
  */
 public class SessionAttributeParam implements ParamProcessor {
-    /*---------------------------- m. variables ----------------------------*/
 
     private final String nameInSession;
     private final Class<?> paramType;
 
-    /*----------------------------------------------------------------------*/
     /**
      * Factory class for {@link SessionAttributeParam}
      */
@@ -65,7 +63,6 @@ public class SessionAttributeParam implements ParamProcessor {
     }
 
 
-    /*---------------------------- constructors ----------------------------*/
     /**
      * Constructor
      */
@@ -74,7 +71,13 @@ public class SessionAttributeParam implements ParamProcessor {
         this.paramType = paramType;
     }
 
-    /*------------------------------- methods ------------------------------*/
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param data
+     * @return
+     */
     @Override
     public Object getValue(InvokeData data) {
         HttpSession session = data.getRequest().getSession(true);
@@ -86,6 +89,4 @@ public class SessionAttributeParam implements ParamProcessor {
         }
         return obj;
     }
-
-    /*----------------------------------------------------------------------*/
 }

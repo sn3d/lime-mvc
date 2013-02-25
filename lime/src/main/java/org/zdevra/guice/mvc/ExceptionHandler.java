@@ -51,7 +51,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface ExceptionHandler {
 
-    /*------------------------------- methods ------------------------------*/
     /**
      * Is invoked when in the controller was throwed exception which 
      * is instance of registered class.
@@ -60,5 +59,4 @@ public interface ExceptionHandler {
      *         when method returns false, the resolver continue going through other handlers
      */
     public void handleException(Throwable t, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp);
-    /*----------------------------------------------------------------------*/
 }

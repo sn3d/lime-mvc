@@ -35,11 +35,13 @@ import org.zdevra.guice.mvc.exceptions.InvalidJspViewException;
  */
 public class JspView implements ViewPoint {
 
-// ------------------------------------------------------------------------	
     private static final Logger logger = Logger.getLogger(JspView.class.getName());
     private final String jspPath;
 
-// ------------------------------------------------------------------------
+    /**
+     * Constructor
+     * @param jspPath
+     */
     public JspView(String jspPath) {
         if (jspPath == null || jspPath.length() == 0) {
             this.jspPath = "";
@@ -50,7 +52,14 @@ public class JspView implements ViewPoint {
         }
     }
 
-// ------------------------------------------------------------------------
+    /**
+     * {@inheritDoc}
+     *
+     * @param model
+     * @param servlet
+     * @param request
+     * @param response
+     */
     @Override
     public void render(ModelMap model, HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) {
         request = new HttpRequestForForward(request, jspPath);
@@ -70,9 +79,13 @@ public class JspView implements ViewPoint {
         request = null;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return "JspView [jsp=" + jspPath + "]";
     }
-// ------------------------------------------------------------------------
 }

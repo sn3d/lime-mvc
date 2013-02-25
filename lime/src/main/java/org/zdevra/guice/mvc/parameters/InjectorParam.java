@@ -35,11 +35,9 @@ import com.google.inject.name.Named;
  * 
  */
 public class InjectorParam implements ParamProcessor {
-    /*---------------------------- m. variables ----------------------------*/
 
     private final Key<?> key;
 
-    /*----------------------------------------------------------------------*/
     /**
      * Factory class for {@link InjectorParam}
      */
@@ -66,7 +64,6 @@ public class InjectorParam implements ParamProcessor {
         }
     }
 
-    /*----------------------------------------------------------------------*/
     /**
      * Constructor
      */
@@ -83,5 +80,4 @@ public class InjectorParam implements ParamProcessor {
         Object instance = data.getInjector().getInstance(key);
         return instance;
     }
-    /*----------------------------------------------------------------------*/
 }

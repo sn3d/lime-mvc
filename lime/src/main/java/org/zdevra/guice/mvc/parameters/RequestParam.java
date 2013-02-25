@@ -35,7 +35,6 @@ import org.zdevra.guice.mvc.InvokeData;
  * </pre>
  */
 public class RequestParam implements ParamProcessor {
-    /*----------------------------------------------------------------------*/
 
     /**
      * Factory class for {@link RequestParam}
@@ -57,7 +56,6 @@ public class RequestParam implements ParamProcessor {
         }
     }
 
-    /*------------------------------- methods ------------------------------*/
     /**
      * Hidden constructor
      */
@@ -68,6 +66,4 @@ public class RequestParam implements ParamProcessor {
     public Object getValue(InvokeData data) {
         return data.getRequest();
     }
-
-    /*----------------------------------------------------------------------*/
 }

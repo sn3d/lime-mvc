@@ -30,9 +30,12 @@ import org.zdevra.guice.mvc.annotations.RedirectView;
  */
 public class RedirectViewScanner implements ViewScanner {
 
-    //-----------------------------------------------------------------------------------------------------------
-    // methods
-    //-----------------------------------------------------------------------------------------------------------
+    /**
+     * {@inheritDoc}
+     *
+     * @param annotations - annotations of the controller or controller's method
+     * @return
+     */
     @Override
     public final ViewPoint scan(Annotation[] annotations) {
         RedirectView redirectAnnotation = Utils.getAnnotation(RedirectView.class, annotations);

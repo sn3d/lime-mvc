@@ -31,17 +31,14 @@ import com.google.inject.Inject;
  */
 class ViewServlet extends HttpServlet {
 
-// ------------------------------------------------------------------------
     private final ViewPoint view;
     private ViewResolver viewResolver;
     private ExceptionResolver exceptionResolver;
 
-// ------------------------------------------------------------------------
     public ViewServlet(ViewPoint view) {
         this.view = view;
     }
 
-// ------------------------------------------------------------------------
     @Inject
     public final void setViewResolver(ViewResolver viewResolver) {
         this.viewResolver = viewResolver;
@@ -60,7 +57,6 @@ class ViewServlet extends HttpServlet {
         }
     }
 
-// ------------------------------------------------------------------------
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
@@ -102,5 +98,4 @@ class ViewServlet extends HttpServlet {
             throws ServletException, IOException {
         this.redirectToView(req, resp);
     }
-// ------------------------------------------------------------------------
 }

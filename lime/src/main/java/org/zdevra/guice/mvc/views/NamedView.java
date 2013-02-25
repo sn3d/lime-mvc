@@ -39,10 +39,8 @@ import org.zdevra.guice.mvc.ViewPoint;
  */
 public final class NamedView implements ViewPoint {
 
-// ------------------------------------------------------------------------
     private final String name;
 
-// ------------------------------------------------------------------------
     /**
      * Deprecated and it's here only for test purpose
      */
@@ -69,7 +67,6 @@ public final class NamedView implements ViewPoint {
         this.name = name;
     }
 
-// ------------------------------------------------------------------------
     public String getName() {
         return this.name;
     }
@@ -83,5 +80,4 @@ public final class NamedView implements ViewPoint {
     public String toString() {
         return "NamedView [name=" + name + "]";
     }
-// ------------------------------------------------------------------------
 }

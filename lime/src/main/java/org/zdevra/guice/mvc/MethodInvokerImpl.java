@@ -39,7 +39,6 @@ import org.zdevra.guice.mvc.parameters.ParamProcessorsService;
  */
 class MethodInvokerImpl implements MethodInvoker {
 
-    /*---------------------------- m. variables ----------------------------*/
     private final Class<?> controllerClass;
     private final ViewPoint defaultView;
     private final String resultName;
@@ -47,7 +46,13 @@ class MethodInvokerImpl implements MethodInvoker {
     private final List<ParamProcessor> paramProcs;
     private final int priority;
 
-    /*---------------------------- constructors ----------------------------*/
+    /**
+     * static factory method creates the invoker during
+     * scanning phase.
+     *
+     * @param reqMapping
+     * @return
+     */
     public static MethodInvoker createInvoker(MappingData reqMapping) {
         ParamProcessorsService paramService = reqMapping.injector.getInstance(ParamProcessorsService.class);
         ConversionService convertService = reqMapping.injector.getInstance(ConversionService.class);
@@ -87,7 +92,16 @@ class MethodInvokerImpl implements MethodInvoker {
         this.priority = priority;
     }
 
-    /*----------------------------------------------------------------------*/
+    /**
+     * static method scanning method and returns list of
+     * {@link ParamProcessor processors} for each method's parameter.
+     *
+     * @param method
+     * @param paramService
+     * @param convertService
+     *
+     * @return
+     */
     private static final List<ParamProcessor> scanParams(Method method, ParamProcessorsService paramService, ConversionService convertService) {
         Annotation[][] annotations = method.getParameterAnnotations();
         Class<?>[] types = method.getParameterTypes();
@@ -102,6 +116,12 @@ class MethodInvokerImpl implements MethodInvoker {
         return result;
     }
 
+    /**
+     * invokes the method for controller
+     *
+     * @param data
+     * @return
+     */
     public ModelAndView invoke(InvokeData data) {
         try {
             Object controllerObj = data.getInjector().getInstance(controllerClass);
@@ -124,6 +144,12 @@ class MethodInvokerImpl implements MethodInvoker {
         }
     }
 
+
+    /**
+     * returns concrete values for method invocation.
+     * @param data
+     * @return
+     */
     private Object[] getValues(InvokeData data) {
         Object[] out = new Object[paramProcs.size()];
         for (int i = 0; i < paramProcs.size(); ++i) {
@@ -133,6 +159,13 @@ class MethodInvokerImpl implements MethodInvoker {
         return out;
     }
 
+
+    /**
+     * do processing of method result
+     *
+     * @param result
+     * @return
+     */
     private ModelAndView processResult(Object result) {
         ModelAndView out = new ModelAndView(this.defaultView);
 
@@ -154,6 +187,7 @@ class MethodInvokerImpl implements MethodInvoker {
         return out;
     }
 
+
     private String getResultModelName() {
         if (this.resultName == null || this.resultName.length() == 0) {
             return this.method.getName();
@@ -161,12 +195,20 @@ class MethodInvokerImpl implements MethodInvoker {
         return this.resultName;
     }
 
-    /*----------------------------------------------------------------------*/
+
     @Override
     public int getPriority() {
         return priority;
     }
 
+
+    /**
+     * comparator of invokers determines which
+     * method invoker will be used first
+     *
+     * @param o
+     * @return
+     */
     @Override
     public int compareTo(MethodInvoker o) {
         if (this.getPriority() < o.getPriority()) {

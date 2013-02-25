@@ -27,12 +27,18 @@ import org.zdevra.guice.mvc.ConversionService.ConverterFactory;
  */
 public class FloatConverterFactory implements ConverterFactory {
 
-// ------------------------------------------------------------------------
     private final static Converter<Float> floatConverter = new FloatConverter();
     private final static Converter<Float[]> floatObjArrayConverter = new FloatObjArrayConverter();
     private final static Converter<float[]> floatArrayConverter = new FloatArrayConverter();
 
-// ------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param type
+     * @param annotations
+     * @return
+     */
     @Override
     public Converter<?> createConverter(Class<?> type, Annotation[] annotations) {
         if ((type == Float.class) || (type == float.class)) {
@@ -46,7 +52,9 @@ public class FloatConverterFactory implements ConverterFactory {
         return null;
     }
 
-// ------------------------------------------------------------------------
+    /**
+     * Nested converted string -> float
+     */
     private static class FloatConverter extends TypeConverter<Float> {
 
         @Override
@@ -55,6 +63,9 @@ public class FloatConverterFactory implements ConverterFactory {
         }
     }
 
+    /**
+     * Nested converted string[] -> float[]
+     */
     private static class FloatArrayConverter implements Converter<float[]> {
 
         @Override
@@ -72,6 +83,9 @@ public class FloatConverterFactory implements ConverterFactory {
         }
     }
 
+    /**
+     * Nested converted string[] -> Float[]
+     */
     private static class FloatObjArrayConverter implements Converter<Float[]> {
 
         @Override
@@ -88,5 +102,4 @@ public class FloatConverterFactory implements ConverterFactory {
             return out;
         }
     }
-// ------------------------------------------------------------------------
 }

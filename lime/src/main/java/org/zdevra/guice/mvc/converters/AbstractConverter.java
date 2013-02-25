@@ -31,7 +31,6 @@ import java.util.Map;
  */
 public abstract class AbstractConverter<T> implements ConversionService.Converter<T> {
 
-// ------------------------------------------------------------------------
     /**
      * Short version of the getValue method which returns value on 0 position
      *
@@ -54,7 +53,6 @@ public abstract class AbstractConverter<T> implements ConversionService.Converte
         return getValueInt(name, 0, data);
     }
 
-// ------------------------------------------------------------------------
     /**
      * Method extract the value as from the incoming data a String
      *
@@ -131,5 +129,4 @@ public abstract class AbstractConverter<T> implements ConversionService.Converte
             return new Date(0);
         }
     }
-// ------------------------------------------------------------------------
 }

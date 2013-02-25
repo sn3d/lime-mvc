@@ -66,12 +66,13 @@ import org.zdevra.guice.mvc.annotations.RequestParameter;
  * @see org.zdevra.guice.mvc.annotations.RequestParameter
  */
 public class HttpPostParam implements ParamProcessor {
-    /*---------------------------- m. variables ----------------------------*/
 
     private final String requestName;
     private final Converter<?> converter;
 
-    /*----------------------------------------------------------------------*/
+    /**
+     * Nested factory class for {@link HttpPostParam}
+     */
     public static class Factory implements ParamProcessorFactory {
 
         @Override
@@ -93,7 +94,12 @@ public class HttpPostParam implements ParamProcessor {
         }
     }
 
-    /*----------------------------------------------------------------------*/
+    /**
+     * Hidden constructor
+     *
+     * @param requestName
+     * @param converter
+     */
     private HttpPostParam(String requestName, Converter<?> converter) {
         super();
         this.requestName = requestName;
@@ -107,5 +113,4 @@ public class HttpPostParam implements ParamProcessor {
         Object convertedArray = converter.convert(requestName, params);
         return convertedArray;
     }
-    /*----------------------------------------------------------------------*/
 }

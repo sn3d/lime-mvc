@@ -22,10 +22,15 @@ package org.zdevra.guice.mvc.parameters;
  */
 public class DefaultParamFactory implements ParamProcessorFactory {
 
-// ------------------------------------------------------------------------
+    /**
+     * {@inheritDoc}
+     *
+     * @param metadata
+     * @return
+     */
     @Override
     public ParamProcessor buildParamProcessor(ParamMetadata metadata) {
         throw new IllegalStateException("illegal parameter in method:" + metadata.getMethod().getName());
     }
-// ------------------------------------------------------------------------
+
 }

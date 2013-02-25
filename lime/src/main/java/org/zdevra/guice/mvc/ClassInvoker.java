@@ -29,12 +29,10 @@ import javax.servlet.http.HttpSession;
  */
 class ClassInvoker {
 
-// ------------------------------------------------------------------------
     private final Class<?> controllerClass;
     private final Collection<String> sessionAttrs;
     private final Collection<MethodInvoker> methodInvokers;
 
-// ------------------------------------------------------------------------
     /**
      * Constructor
      * 
@@ -48,7 +46,6 @@ class ClassInvoker {
         this.sessionAttrs = Collections.unmodifiableCollection(sessionAttrList);
     }
 
-// ------------------------------------------------------------------------
     /**
      * It invokes concrete methods of the controller class.
      * @param data
@@ -89,9 +86,13 @@ class ClassInvoker {
         }
     }
 
-// ------------------------------------------------------------------------
+
+    /**
+     * returns the controller class associated to
+     * this invoker.
+     */
     public Class<?> getControllerClass() {
         return controllerClass;
     }
-// ------------------------------------------------------------------------
+
 }

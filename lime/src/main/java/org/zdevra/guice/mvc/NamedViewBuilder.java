@@ -22,11 +22,9 @@ import com.google.inject.Binder;
 import com.google.inject.name.Names;
 
 class NamedViewBuilder {
-// ------------------------------------------------------------------------
 
     private final Binder binder;
 
-// ------------------------------------------------------------------------
     /**
      * Constructor
      */
@@ -38,7 +36,6 @@ class NamedViewBuilder {
         return new NamedViewBindingBudilerImpl(viewName);
     }
 
-// ------------------------------------------------------------------------
     class NamedViewBindingBudilerImpl implements MvcModule.NamedViewBindingBuilder {
 
         private final String viewName;
@@ -68,5 +65,4 @@ class NamedViewBuilder {
                     .toInstance(new JspView(pathToJsp));
         }
     }
-// ------------------------------------------------------------------------
 }

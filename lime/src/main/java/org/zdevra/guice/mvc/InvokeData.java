@@ -28,7 +28,6 @@ import com.google.inject.Injector;
  * one invocation of the method.
  */
 public class InvokeData {
-    /*---------------------------- m. variables ----------------------------*/
 
     private final Matcher uriMatcher;
     private final HttpServletRequest request;
@@ -37,7 +36,9 @@ public class InvokeData {
     private final HttpMethodType reqType;
     private final Injector injector;
 
-    /*---------------------------- constructors ----------------------------*/
+    /**
+     * Constructor
+     */
     public InvokeData(HttpServletRequest request, HttpServletResponse response, ModelMap model, HttpMethodType reqType, Injector injector) {
         this.request = request;
         this.response = response;
@@ -47,6 +48,9 @@ public class InvokeData {
         this.uriMatcher = null;
     }
 
+    /**
+     * Constructor
+     */
     public InvokeData(Matcher uriMatcher, InvokeData copy) {
         this.uriMatcher = uriMatcher;
         this.request = copy.request;
@@ -56,6 +60,9 @@ public class InvokeData {
         this.injector = copy.injector;
     }
 
+    /**
+     * Constructor
+     */
     public InvokeData(ModelMap m, InvokeData copy) {
         this.model = m;
         this.uriMatcher = copy.uriMatcher;
@@ -65,7 +72,6 @@ public class InvokeData {
         this.injector = copy.injector;
     }
 
-    /*-------------------------- getters/setters ---------------------------*/
     public Matcher getUriMatcher() {
         return uriMatcher;
     }
@@ -89,5 +95,4 @@ public class InvokeData {
     public Injector getInjector() {
         return injector;
     }
-    /*----------------------------------------------------------------------*/
 }

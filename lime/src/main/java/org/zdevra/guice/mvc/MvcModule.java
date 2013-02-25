@@ -148,7 +148,6 @@ import com.google.inject.servlet.ServletModule;
  */
 public abstract class MvcModule extends ServletModule {
 
-// ------------------------------------------------------------------------
     private static final Logger logger = Logger.getLogger(MvcModule.class.getName());
     private MultibinderBuilder<ConverterFactory> conversionServiceBuilder;
     private ExceptionResolverBuilder exceptionResolverBuilder;
@@ -159,7 +158,6 @@ public abstract class MvcModule extends ServletModule {
     private NamedViewBuilder namedViewBudiler;
     private List<HttpServlet> servlets;
 
-// ------------------------------------------------------------------------
     /**
      * Put into this method your controllers configuration
      */
@@ -247,7 +245,6 @@ public abstract class MvcModule extends ServletModule {
         }
     }
 
-// ------------------------------------------------------------------------
     /**
      * This method can be used only for testing purpose
      */
@@ -357,13 +354,14 @@ public abstract class MvcModule extends ServletModule {
         return this.controllerModuleBuilder.control(urlPattern);
     }
 
-// ------------------------------------------------------------------------	
+
     public static interface ControllerBindingBuilder {
 
         public ControllerBindingBuilder withController(Class<?> controller);
 
         public ControllerBindingBuilder interceptor(Class<? extends InterceptorHandler> handlerClass);
     }
+
 
     public static interface ControllerAndViewBindingBuilder {
 
@@ -373,6 +371,7 @@ public abstract class MvcModule extends ServletModule {
 
         public void withView(ViewPoint viewInstance);
     }
+
 
     public static interface ExceptionResolverBindingBuilder {
 
@@ -385,6 +384,7 @@ public abstract class MvcModule extends ServletModule {
         public void toErrorView(ViewPoint errorView);
     }
 
+
     public static interface NamedViewBindingBuilder {
 
         public void toView(Class<? extends ViewPoint> viewCLass);
@@ -393,5 +393,4 @@ public abstract class MvcModule extends ServletModule {
 
         public void toJsp(String pathToFile);
     }
-// ------------------------------------------------------------------------
 }

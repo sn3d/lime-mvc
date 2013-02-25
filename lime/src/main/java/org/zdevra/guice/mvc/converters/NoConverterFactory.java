@@ -28,6 +28,13 @@ import java.lang.annotation.Annotation;
  */
 public class NoConverterFactory implements ConversionService.ConverterFactory {
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param type
+     * @param annotations
+     * @return
+     */
     @Override
     public ConversionService.Converter<?> createConverter(Class<?> type, Annotation[] annotations) {
         return null;

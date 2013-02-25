@@ -36,7 +36,6 @@ import org.zdevra.guice.mvc.InvokeData;
  */
 public class ResponseParam implements ParamProcessor {
 
-    /*----------------------------------------------------------------------*/
     /**
      * Factory class for {@link ResponseParam}
      */
@@ -53,7 +52,6 @@ public class ResponseParam implements ParamProcessor {
         }
     }
 
-    /*----------------------------------------------------------------------*/
     /**
      * Constructor
      */
@@ -65,5 +63,4 @@ public class ResponseParam implements ParamProcessor {
         return data.getResponse();
     }
 
-    /*----------------------------------------------------------------------*/
 }

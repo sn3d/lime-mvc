@@ -31,10 +31,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 class InterceptorChain {
 
-// ------------------------------------------------------------------------
     private final Collection<InterceptorHandler> handlers;
 
-// ------------------------------------------------------------------------
     /**
      * Constructor
      * @param handlers
@@ -51,7 +49,6 @@ class InterceptorChain {
         this.handlers = Collections.emptyList();
     }
 
-// ------------------------------------------------------------------------
     public boolean isEmpty() {
         if (handlers.size() > 0) {
             return false;
@@ -59,6 +56,9 @@ class InterceptorChain {
         return true;
     }
 
+    /**
+     * is called before the controller's method is invoked
+     */
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response) {
         for (InterceptorHandler handler : handlers) {
             boolean res = handler.preHandle(request, response);
@@ -69,17 +69,25 @@ class InterceptorChain {
         return true;
     }
 
+    /**
+     * is called after the controller's method is invoked
+     * @param request
+     * @param response
+     * @param mav
+     */
     public void postHandle(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
         for (InterceptorHandler handler : handlers) {
             handler.postHandle(request, response, mav);
         }
     }
 
+
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Throwable e) {
         for (InterceptorHandler handler : handlers) {
             handler.afterCompletion(request, response, e);
         }
     }
+
 
     /**
      * Method creates new extended chain and put new collection of handlers into new chain.

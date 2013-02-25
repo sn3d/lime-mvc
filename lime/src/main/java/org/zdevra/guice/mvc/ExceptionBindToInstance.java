@@ -28,19 +28,27 @@ import com.google.inject.Injector;
  */
 public class ExceptionBindToInstance extends ExceptionBind {
 
-// ------------------------------------------------------------------------
+    /** holds reference to exception handler */
     private final ExceptionHandler handler;
 
-// ------------------------------------------------------------------------
+
+    /**
+     * Constructor
+     * @param handler
+     * @param exceptionClass
+     * @param order
+     */
     public ExceptionBindToInstance(ExceptionHandler handler, Class<? extends Throwable> exceptionClass, int order) {
         super(exceptionClass, order);
         this.handler = handler;
     }
 
-// ------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ExceptionHandler getHandler(Injector injetor) {
         return handler;
     }
-// ------------------------------------------------------------------------
 }

@@ -23,20 +23,21 @@ import com.google.inject.AbstractModule;
 /**
  * It's regular Guice's abstract module but it's enriched 
  * by methods which provides converter registration.
- *
  */
 public abstract class MvcConverterModule extends AbstractModule {
 
-// ------------------------------------------------------------------------
+    /** all binders for service {@link ConverterFactory services} */
     private MultibinderBuilder<ConverterFactory> conversionServiceBuilder;
 
-// ------------------------------------------------------------------------
     /**
      * In this method you will setup your converters
      */
     protected abstract void configureConverters();
 
-// ------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected final void configure() {
         try {
@@ -47,7 +48,6 @@ public abstract class MvcConverterModule extends AbstractModule {
         }
     }
 
-// ------------------------------------------------------------------------
     /**
      * The method registers a custom converter which converts strings to the
      * concrete types. These converters are used for conversions from a HTTP request 
@@ -69,5 +69,4 @@ public abstract class MvcConverterModule extends AbstractModule {
     protected final void registerConverter(Class<? extends ConverterFactory> convertorFactoryClazz) {
         this.conversionServiceBuilder.registerClass(convertorFactoryClazz);
     }
-// ------------------------------------------------------------------------
 }

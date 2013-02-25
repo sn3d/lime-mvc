@@ -32,13 +32,11 @@ import com.google.inject.Binder;
  */
 class ControllerDefinition extends ServletDefinition {
 
-// ------------------------------------------------------------------------
     private static final Logger logger = Logger.getLogger(ControllerDefinition.class.getName());
     public static final Factory FACTORY = new Factory();
     protected List<Class<?>> controllers;
     protected List<Class<? extends InterceptorHandler>> interceptorHandlers;
 
-// ------------------------------------------------------------------------
     /**
      * Hidden constructor. The class is instantiated via ServletDefinition.Factory
      * interface.
@@ -59,23 +57,39 @@ class ControllerDefinition extends ServletDefinition {
         }
     }
 
-// ------------------------------------------------------------------------
+    /**
+     * adds new class controller. Controller will be instanciated
+     * via Guice.
+     *
+     * @param controller
+     */
     public void addController(Class<?> controller) {
         controllers.add(controller);
     }
 
+    /**
+     * Adds interceptor handler for controlled path
+     * @param handler
+     */
     public void addInterceptorHandler(Class<? extends InterceptorHandler> handler) {
         interceptorHandlers.add(handler);
     }
 
+    /**
+     * returns all controllers associated to path
+     */
     public List<Class<?>> getControllers() {
         return controllers;
     }
 
+    /**
+     * method will create dispatcher servlet for concrete path
+     * @param binder
+     * @return
+     */
     @Override
     public HttpServlet createServlet(Binder binder) {
         logger.info("for path '" + getUrlPattern() + "' should be registered follwing controllers: " + this.controllers);
         return new MvcDispatcherServlet(this.controllers, this.interceptorHandlers);
     }
-// ------------------------------------------------------------------------
 }

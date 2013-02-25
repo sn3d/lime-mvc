@@ -26,13 +26,19 @@ import org.zdevra.guice.mvc.ConversionService.ConverterFactory;
  * The factory creates a converter which provide conversion of integer values
  */
 public class IntegerConverterFactory implements ConverterFactory {
-// ------------------------------------------------------------------------	
 
     private final static Converter<Integer> integerConverter = new IntegerConverter();
     private final static Converter<Integer[]> integerArrayConverter = new IntegerArrayConverter();
     private final static Converter<int[]> intArrayConverter = new IntArrayConverter();
 
-// ------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param type
+     * @param annotations
+     * @return
+     */
     @Override
     public Converter<?> createConverter(Class<?> type, Annotation[] annotations) {
         if ((type == Integer.class) || (type == int.class)) {
@@ -46,7 +52,9 @@ public class IntegerConverterFactory implements ConverterFactory {
         return null;
     }
 
-// ------------------------------------------------------------------------
+    /**
+     * Nested converter string -> Integer
+     */
     private static class IntegerConverter extends TypeConverter<Integer> {
 
         @Override
@@ -55,6 +63,9 @@ public class IntegerConverterFactory implements ConverterFactory {
         }
     }
 
+    /**
+     * Nested converter string[] -> integer[]
+     */
     private static class IntArrayConverter implements Converter<int[]> {
 
         @Override
@@ -72,6 +83,9 @@ public class IntegerConverterFactory implements ConverterFactory {
         }
     }
 
+    /**
+     * Nested converter string[] -> Integer[]
+     */
     private static class IntegerArrayConverter implements Converter<Integer[]> {
 
         @Override
@@ -88,5 +102,4 @@ public class IntegerConverterFactory implements ConverterFactory {
             return out;
         }
     }
-// ------------------------------------------------------------------------
 }

@@ -29,7 +29,13 @@ import org.zdevra.guice.mvc.Utils;
  */
 public class BooleanConverterFactory implements ConverterFactory {
 
-// ------------------------------------------------------------------------
+    /**
+     * {@inheritDoc}
+     *
+     * @param type
+     * @param annotations
+     * @return
+     */
     @Override
     public Converter<?> createConverter(Class<?> type, Annotation[] annotations) {
         if ((type == boolean.class) || (type == Boolean.class)) {
@@ -43,7 +49,6 @@ public class BooleanConverterFactory implements ConverterFactory {
         return null;
     }
 
-// ------------------------------------------------------------------------
     /**
      * The class provides conversion of string to boolean object
      */
@@ -115,7 +120,6 @@ public class BooleanConverterFactory implements ConverterFactory {
         }
     }
 
-// ------------------------------------------------------------------------
     /**
      * This is acutally the main conversion method
      */
@@ -131,5 +135,4 @@ public class BooleanConverterFactory implements ConverterFactory {
         }
         return Boolean.parseBoolean(stringValue);
     }
-// ------------------------------------------------------------------------
 }

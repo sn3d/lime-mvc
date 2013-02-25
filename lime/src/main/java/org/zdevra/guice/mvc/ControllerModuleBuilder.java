@@ -31,12 +31,13 @@ import org.zdevra.guice.mvc.views.NamedView;
  */
 class ControllerModuleBuilder {
 
-// ------------------------------------------------------------------------
     private String actualUrlPattern;
     private ControllerDefinition actualControllersDefinition = null;
     private List<ServletDefinition> servletDefinitions = new LinkedList<ServletDefinition>();
 
-// ------------------------------------------------------------------------
+    /**
+     * builder for controller binding
+     */
     private class ControllerBindingBuilderImpl implements ControllerBindingBuilder {
 
         @Override

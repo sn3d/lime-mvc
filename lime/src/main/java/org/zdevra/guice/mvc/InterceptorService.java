@@ -29,10 +29,9 @@ import com.google.inject.Inject;
  */
 public class InterceptorService {
 
-    /*---------------------------- m. variables ----------------------------*/
     private Collection<InterceptorHandler> globalHandlers;
 
-    /*---------------------------- constructors ----------------------------*/
+
     /**
      * Constructor
      * @param scanners
@@ -42,9 +41,9 @@ public class InterceptorService {
         this.globalHandlers = Collections.unmodifiableCollection(globalHandlers);
     }
 
-    /*------------------------------- methods ------------------------------*/
+
     public InterceptorChain getGlobalInterceptorChain() {
         return new InterceptorChain(globalHandlers);
     }
-    /*----------------------------------------------------------------------*/
+
 }

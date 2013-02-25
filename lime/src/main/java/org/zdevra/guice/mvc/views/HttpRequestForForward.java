@@ -38,6 +38,12 @@ class HttpRequestForForward extends HttpServletRequestWrapper {
 
     private String pathForForward;
 
+    /**
+     * Constructor
+     *
+     * @param request
+     * @param pathForForward
+     */
     public HttpRequestForForward(HttpServletRequest request, String pathForForward) {
         super(request);
         this.pathForForward = pathForForward;

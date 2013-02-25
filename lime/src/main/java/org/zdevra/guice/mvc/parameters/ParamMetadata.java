@@ -31,14 +31,19 @@ import org.zdevra.guice.mvc.Utils;
  * 
  */
 public class ParamMetadata {
-    /*---------------------------- m. variables ----------------------------*/
 
     private final Method method;
     private final Class<?> type;
     private final Annotation[] annotations;
     private final ConversionService conversionService;
 
-    /*---------------------------- constructors ----------------------------*/
+    /**
+     * Constructor
+     * @param type
+     * @param annotations
+     * @param conversionService
+     * @param method
+     */
     public ParamMetadata(Class<?> type, Annotation[] annotations, ConversionService conversionService, Method method) {
         super();
         this.type = type;
@@ -47,7 +52,6 @@ public class ParamMetadata {
         this.method = method;
     }
 
-    /*-------------------------- getters/setters ---------------------------*/
     public Class<?> getType() {
         return type;
     }

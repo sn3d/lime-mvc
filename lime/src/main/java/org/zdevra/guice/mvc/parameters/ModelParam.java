@@ -31,7 +31,6 @@ import org.zdevra.guice.mvc.ModelMap;
  * </pre>
  */
 public class ModelParam implements ParamProcessor {
-    /*---------------------------- constructors ----------------------------*/
 
     /**
      * Factory class for {@link ModelParam}
@@ -59,11 +58,14 @@ public class ModelParam implements ParamProcessor {
     private ModelParam() {
     }
 
-    /*----------------------------------------------------------------------*/
+    /**
+     * {@inheritDoc}
+     *
+     * @param data
+     * @return
+     */
     @Override
     public Object getValue(InvokeData data) {
         return data.getModel();
     }
-
-    /*----------------------------------------------------------------------*/
 }

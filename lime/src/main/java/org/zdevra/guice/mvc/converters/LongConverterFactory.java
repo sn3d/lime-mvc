@@ -27,12 +27,18 @@ import org.zdevra.guice.mvc.ConversionService.ConverterFactory;
  */
 public class LongConverterFactory implements ConverterFactory {
 
-// ------------------------------------------------------------------------
     private final static Converter<Long> typeConverter = new LongConverter();
     private final static Converter<Long[]> objArrayConverter = new LongObjArrayConverter();
     private final static Converter<long[]> arrayConverter = new LongArrayConverter();
 
-// ------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param type
+     * @param annotations
+     * @return
+     */
     @Override
     public Converter<?> createConverter(Class<?> type, Annotation[] annotations) {
         if ((type == Long.class) || (type == long.class)) {
@@ -46,7 +52,10 @@ public class LongConverterFactory implements ConverterFactory {
         return null;
     }
 
-// ------------------------------------------------------------------------
+
+    /**
+     * Nested converter for string -> Long
+     */
     private static class LongConverter extends TypeConverter<Long> {
 
         @Override
@@ -55,6 +64,10 @@ public class LongConverterFactory implements ConverterFactory {
         }
     }
 
+
+    /**
+     * Nested converter for string[] -> long[]
+     */
     private static class LongArrayConverter implements Converter<long[]> {
 
         @Override
@@ -72,6 +85,10 @@ public class LongConverterFactory implements ConverterFactory {
         }
     }
 
+
+    /**
+     * Nested converter for string[] -> Long[]
+     */
     private static class LongObjArrayConverter implements Converter<Long[]> {
 
         @Override
@@ -88,5 +105,4 @@ public class LongConverterFactory implements ConverterFactory {
             return out;
         }
     }
-// ------------------------------------------------------------------------
 }

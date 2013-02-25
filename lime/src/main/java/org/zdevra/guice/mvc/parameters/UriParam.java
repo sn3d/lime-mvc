@@ -39,11 +39,9 @@ import org.zdevra.guice.mvc.Utils;
  */
 public final class UriParam implements ParamProcessor {
 
-    /*---------------------------- m. variables ----------------------------*/
     private final int group;
     private final Converter<?> converter;
 
-    /*----------------------------------------------------------------------*/
     /**
      * Factory class for {@link UriParam}
      */
@@ -66,7 +64,6 @@ public final class UriParam implements ParamProcessor {
         }
     }
 
-    /*----------------------------------------------------------------------*/
     /**
      * Hidden constructor. For the processor's constuction is used Factory 
      * class.  
@@ -88,5 +85,4 @@ public final class UriParam implements ParamProcessor {
         return convertedValue;
     }
 
-    /*----------------------------------------------------------------------*/
 }

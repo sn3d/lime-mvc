@@ -28,15 +28,9 @@ import org.zdevra.guice.mvc.annotations.RequestScopedAttribute;
  */
 public class RequestScopedAttributeParam implements ParamProcessor {
 
-    //-----------------------------------------------------------------------------------------------------------
-    // m. variables
-    //-----------------------------------------------------------------------------------------------------------
     private final String attributeName;
     private final Class<?> methodParamType;
 
-    //-----------------------------------------------------------------------------------------------------------
-    // constructor & factory class
-    //-----------------------------------------------------------------------------------------------------------
     /**
      * Class construct and initialize parameter processor
      */
@@ -63,9 +57,12 @@ public class RequestScopedAttributeParam implements ParamProcessor {
         this.methodParamType = methodParamType;
     }
 
-    //-----------------------------------------------------------------------------------------------------------
-    // methods
-    //-----------------------------------------------------------------------------------------------------------
+    /**
+     * {@inheritDoc}
+     *
+     * @param data
+     * @return
+     */
     @Override
     public Object getValue(InvokeData data) {
         Object value = data.getRequest().getAttribute(attributeName);

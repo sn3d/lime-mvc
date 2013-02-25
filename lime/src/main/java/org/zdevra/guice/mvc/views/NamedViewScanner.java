@@ -40,7 +40,11 @@ import com.google.inject.Singleton;
 @Singleton
 public class NamedViewScanner implements ViewScanner {
 
-// ------------------------------------------------------------------------
+    /**
+     * {@inheritDoc}
+     * @param annotations - annotations of the controller or controller's method
+     * @return
+     */
     @Override
     public ViewPoint scan(Annotation[] annotations) {
         ViewPoint view = lookForView(annotations);
@@ -50,7 +54,6 @@ public class NamedViewScanner implements ViewScanner {
         return view;
     }
 
-// ------------------------------------------------------------------------
     /**
      * This method looks for {@link ViewPoint} annotation
      * and create {@link NamedView}

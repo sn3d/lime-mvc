@@ -55,29 +55,27 @@ import com.google.inject.Singleton;
  */
 @Singleton
 public class ConversionService {
-    /*---------------------------- m. variables ----------------------------*/
 
+    /** holds all registered converter factories */
     private final Collection<ConverterFactory> factories;
 
-    /*----------------------------------------------------------------------*/
+
     /**
      * Interface for converter
      */
     public interface Converter<T> {
-
         public T convert(String name, Map<String, String[]> data);
     }
 
+
     /**
-     * Interface for contertor factory which is constructing converter impl.
-     *
+     * Interface for converter factory which is constructing converter impl.
      */
     public interface ConverterFactory {
-
         public Converter<?> createConverter(Class<?> type, Annotation[] annotations);
     }
 
-    /*---------------------------- constructors ----------------------------*/
+
     /**
      * Constructor
      */
@@ -86,7 +84,7 @@ public class ConversionService {
         this.factories = factories;
     }
 
-    /*------------------------------- methods ------------------------------*/
+
     /**
      * Method return right converter for type
      * 
@@ -123,5 +121,4 @@ public class ConversionService {
         }
         throw new NoConverterException(converterFactoryClass, type);
     }
-    /*----------------------------------------------------------------------*/
 }

@@ -45,11 +45,9 @@ import com.google.inject.name.Names;
 @Singleton
 class DefaultViewResolver implements ViewResolver {
 
-// ------------------------------------------------------------------------
     @Inject
     private Injector injector;
 
-// ------------------------------------------------------------------------
     @Override
     public void resolve(ViewPoint view, ModelMap model, HttpServlet servlet, HttpServletRequest req, HttpServletResponse resp) {
         if (view == null || view == ViewPoint.NULL_VIEW) {
@@ -71,5 +69,4 @@ class DefaultViewResolver implements ViewResolver {
 
         view.render(model, servlet, req, resp);
     }
-// ------------------------------------------------------------------------
 }
